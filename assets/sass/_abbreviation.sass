@@ -1,0 +1,43 @@
+.fw-300
+	font-weight: 300
+.fw-400
+	font-weight: 400
+.fw-500
+	font-weight: 500
+.fw-600
+	font-weight: 600
+.fw-700
+	font-weight: 700
+
+.rotate-90
+	transform: rotate(90deg)
+	
+.w100
+	width: 100%
+
+.h100
+	height: 100%
+
+.text-right
+  text-align: right
+
+.text-left
+  text-align: left
+
+.text-center
+  text-align: center
+
+@for $i from 1 through ceil(205/5)
+	$value: ($i - 1) * 5
+	.mt-#{$value} 
+		margin-top: #{$value}px
+	.mb-#{$value}
+		margin-bottom: #{$value}px
+	.pt-#{$value}
+		padding-top: #{$value}px
+	.pb-#{$value}
+		padding-bottom: #{$value}px
+	.pl-#{$value}
+		padding-left: #{$value}px
+	.pr-#{$value}
+		padding-right: #{$value}px
