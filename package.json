@@ -1,7 +1,7 @@
 {
   "name": "central-panel",
   "version": "1.0.0",
-  "description": "My legendary Nuxt.js project",
+  "description": "My grand Nuxt.js project",
   "author": "srsad",
   "private": true,
   "scripts": {
@@ -16,10 +16,10 @@
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "cross-env": "^5.2.0",
+    "element-ui": "^2.4.11",
     "express": "^4.16.4",
     "mongoose": "^5.9.3",
-    "nuxt": "^2.0.0",
-    "vuesax": "^3.11.13"
+    "nuxt": "^2.0.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^1.0.1",
