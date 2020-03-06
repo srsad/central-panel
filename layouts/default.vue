@@ -1,7 +1,13 @@
 <template>
   <div>
-    <navbar />
-    <nuxt />
+    <el-row type="flex">
+      <div>
+        <navbar />
+      </div>
+      <div>
+        <nuxt />
+      </div>
+    </el-row>
   </div>
 </template>
 
