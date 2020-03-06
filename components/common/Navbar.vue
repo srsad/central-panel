@@ -3,10 +3,12 @@
     <el-menu
       :collapse="$store.state.settings.isCollapse"
       class="el-menu-vertical"
-      background-color="#545c64"
-      text-color="#fff"
+      background-color="#304156"
+      text-color="#bfcbd9"
       active-text-color="#ffd04b"
     >
+      <!-- content -->
+      <!-- end content -->
       <el-menu-item
         @click="
           $store.dispatch(
@@ -22,39 +24,59 @@
           {{ $store.state.settings.isCollapse ? 'Открыть' : 'Скрыть' }}
         </span>
       </el-menu-item>
-      <el-submenu index="1">
+      <el-submenu index="companies">
         <template slot="title">
-          <i class="el-icon-location" />
-          <span slot="title">Navigator One</span>
+          <i class="fa fa-database" />
+          <span slot="title">Компании</span>
         </template>
+        <!--  -->
         <el-menu-item-group>
-          <span slot="title">Group One</span>
-          <el-menu-item index="1-1">item one</el-menu-item>
-          <el-menu-item index="1-2">item two</el-menu-item>
+          <el-submenu index="rservice">
+            <span slot="title">Rservice</span>
+            <el-menu-item index="Canon1">Canon</el-menu-item>
+            <el-menu-item index="Nicon1">Nicon</el-menu-item>
+          </el-submenu>
+          <el-submenu index="impuls">
+            <span slot="title">Impuls</span>
+            <el-menu-item index="Apple2">Apple</el-menu-item>
+            <el-menu-item index="MSI2">MSI</el-menu-item>
+          </el-submenu>
         </el-menu-item-group>
-        <el-menu-item-group title="Group Two">
-          <el-menu-item index="1-3">item three</el-menu-item>
-        </el-menu-item-group>
-        <el-submenu index="1-4">
-          <span slot="title">item four</span>
-          <el-menu-item index="1-4-1">item one</el-menu-item>
-        </el-submenu>
+        <!--  -->
       </el-submenu>
-      <el-menu-item index="2">
-        <i class="el-icon-menu"></i>
-        <span slot="title">Navigator Two</span>
+
+      <el-submenu index="2-1">
+        <span slot="title">Rservice</span>
+        <el-menu-item index="2-1-1">Canon</el-menu-item>
+        <el-menu-item index="2-1-2">Nicon</el-menu-item>
+      </el-submenu>
+      <el-submenu index="2-2">
+        <span slot="title">Impuls</span>
+        <el-menu-item index="2-2-1">Apple</el-menu-item>
+        <el-menu-item index="2-2-2">MSI</el-menu-item>
+      </el-submenu>
+
+      <el-menu-item index="files">
+        <i class="fa fa-file-excel-o" />
+        <span slot="title">Отчеты</span>
       </el-menu-item>
-      <el-menu-item index="3" disabled>
-        <i class="el-icon-document"></i>
-        <span slot="title">Navigator Three</span>
+      <el-menu-item index="map">
+        <i class="fa fa-map-o" />
+        <span slot="title">Тепловые карты</span>
       </el-menu-item>
       <el-menu-item index="4">
-        <i class="el-icon-setting"></i>
-        <span slot="title">Navigator Four</span>
+        <i class="fa fa-users" />
+        <span slot="users">Пользователи</span>
       </el-menu-item>
       <!--  -->
-      <el-menu-item index="5">
-        <i class="el-icon-setting"></i>
+      <el-menu-item index="settings">
+        <i class="el-icon-setting" />
+        <span slot="title">Настройки</span>
+      </el-menu-item>
+      <!-- TODO в разделе "Настройки" будем кранить логи деталей -->
+      <!--  -->
+      <el-menu-item index="sign-out">
+        <i class="fa fa-sign-out" />
         <span slot="title">Выход</span>
       </el-menu-item>
     </el-menu>
