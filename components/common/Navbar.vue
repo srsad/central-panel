@@ -64,9 +64,9 @@
         <i class="fa fa-map-o" />
         <span slot="title">Тепловые карты</span>
       </el-menu-item>
-      <el-menu-item index="4">
+      <el-menu-item index="users">
         <i class="fa fa-users" />
-        <span slot="users">Пользователи</span>
+        <span slot="title">Пользователи</span>
       </el-menu-item>
       <!--  -->
       <el-menu-item index="settings">
