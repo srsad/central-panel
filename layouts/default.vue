@@ -12,7 +12,8 @@
                 logo
               </n-link>
             </div>
-            <div class="col-lg-9 align-items-center"><app-breadcrumb /></div>
+            <div class="col-lg-7 align-items-center"><app-breadcrumb /></div>
+            <div class="col-lg-2 text-right"><app-main-search /></div>
             <div class="col-lg-2 text-right"><app-navbar /></div>
           </div>
         </el-header>
@@ -28,13 +29,15 @@
 import AppSidebar from '~/components/common/Sidebar'
 import AppNavbar from '~/components/common/Navbar'
 import AppBreadcrumb from '~/components/common/Breadcrumb'
+import AppMainSearch from '~/components/common/MainSearch'
 
 export default {
   // midleware: ['auth']
   components: {
     AppSidebar,
     AppNavbar,
-    AppBreadcrumb
+    AppBreadcrumb,
+    AppMainSearch
   }
 }
 </script>
