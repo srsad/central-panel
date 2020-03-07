@@ -1,18 +1,9 @@
 <template>
-  <div class="container">
-    <div>
-      <!-- <logo /> -->
-      content
-    </div>
-  </div>
+  <el-container class="container">
+    content
+  </el-container>
 </template>
 
 <script>
-// import Logo from '~/components/Logo.vue'
-
-export default {
-  components: {
-    // Logo
-  }
-}
+export default {}
 </script>
