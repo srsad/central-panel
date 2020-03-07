@@ -5,20 +5,14 @@
     </el-aside>
     <el-container>
       <el-header class="main-header">
-        <el-row type="flex" class="w100">
-          <el-col :span="18" class="align-items-center">
-            <breadcrumb />
-          </el-col>
-          <el-col :span="6" class="text-right">
-            <navbar />
-          </el-col>
-        </el-row>
+        <div class="row">
+          <div class="col-lg-10"><breadcrumb /></div>
+          <div class="col-lg-10"><navbar /></div>
+        </div>
       </el-header>
-      <el-row type="flex" class="w100">
-        <el-col :span="24">
-          <nuxt />
-        </el-col>
-      </el-row>
+      <div class="m-15">
+        <nuxt />
+      </div>
     </el-container>
   </el-row>
 </template>
