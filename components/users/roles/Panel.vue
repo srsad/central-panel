@@ -9,9 +9,9 @@
       Добаивть роль
     </el-button>
     <!--  -->
-    <app-role-list />
+    <app-list />
     <!--  -->
-    <app-role-drawer
+    <app-drawer
       :drawer="drawer"
       @closeDrawner="(status) => (drawer = status)"
     />
@@ -19,13 +19,13 @@
 </template>
 
 <script>
-import AppRoleDrawer from '~/components/users/roles/Drawer'
-import AppRoleList from '~/components/users/roles/RoleList'
+import AppDrawer from '~/components/users/roles/Drawer'
+import AppList from '~/components/users/roles/List'
 
 export default {
   components: {
-    AppRoleDrawer,
-    AppRoleList
+    AppDrawer,
+    AppList
   },
   data() {
     return {
