@@ -48,7 +48,13 @@
                 v-model="items[idx].apiKey"
                 disabled
                 placeholder="API ключ"
-              />
+              >
+                <el-button
+                  slot="append"
+                  @click="copyToBuffer(items[idx].apiKey)"
+                  icon="el-icon-document-copy"
+                />
+              </el-input>
             </el-form-item>
             <el-form-item>
               <el-popover
@@ -92,6 +98,7 @@
 
 <script>
 import md5 from 'js-md5'
+import { writeText } from 'clipboard-polyfill'
 
 export default {
   props: {
@@ -157,6 +164,13 @@ export default {
         } else {
           return false
         }
+      })
+    },
+    copyToBuffer(apiKey) {
+      writeText(apiKey)
+      this.$notify({
+        message: 'API ключ успешно скопирован в буфер обмена',
+        customClass: 'success-notyfy'
       })
     },
     removeAPIKey(idx) {
