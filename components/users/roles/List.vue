@@ -58,12 +58,15 @@ export default {
   },
   methods: {
     handleClick() {
+      // eslint-disable-next-line no-console
       console.log('click')
     },
     handleEdit(index, row) {
+      // eslint-disable-next-line no-console
       console.log(index, row)
     },
     handleDelete(index, row) {
+      // eslint-disable-next-line no-console
       console.log(index, row)
     }
   }

@@ -71,6 +71,7 @@ export default {
         if (valid) {
           this.sendForm()
         } else {
+          // eslint-disable-next-line no-console
           console.log('error submit!!')
           return false
         }
@@ -78,6 +79,7 @@ export default {
     },
     sendForm() {
       this.loading = true
+      // eslint-disable-next-line no-console
       console.log('sendForm submit!')
     }
   }

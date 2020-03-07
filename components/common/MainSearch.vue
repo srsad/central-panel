@@ -51,6 +51,7 @@ export default {
       }
     },
     handleSelect(item) {
+      // eslint-disable-next-line no-console
       console.log('search handleSelect', item)
     }
   }

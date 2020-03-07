@@ -41,7 +41,6 @@
           <el-menu-item index="MSI2">MSI</el-menu-item>
         </el-submenu>
       </el-menu-item-group>
-      <!--  -->
     </el-submenu>
 
     <el-submenu index="2-1">
@@ -68,6 +67,12 @@
     <el-menu-item index="/users">
       <i class="fa fa-users" />
       <span slot="title">Пользователи</span>
+    </el-menu-item>
+    <el-menu-item index="/domains">
+      <i class="fa fa-sitemap" />
+      <span slot="title">
+        Домены / Сайты
+      </span>
     </el-menu-item>
     <!--  -->
     <el-menu-item index="/settings">
