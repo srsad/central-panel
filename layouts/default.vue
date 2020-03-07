@@ -1,33 +1,40 @@
 <template>
-  <el-row type="flex">
-    <el-aside style="width:auto">
-      <sidebar />
-    </el-aside>
-    <el-container>
-      <el-header class="main-header">
-        <div class="row">
-          <div class="col-lg-10"><breadcrumb /></div>
-          <div class="col-lg-10"><navbar /></div>
-        </div>
-      </el-header>
-      <div class="m-15">
-        <nuxt />
+  <div class="container-fluid">
+    <div class="row">
+      <div>
+        <app-sidebar />
       </div>
-    </el-container>
-  </el-row>
+      <div class="col prl-0">
+        <el-header class="main-header">
+          <div class="row prl-0">
+            <div class="col-1">
+              <n-link to="/">
+                logo
+              </n-link>
+            </div>
+            <div class="col-lg-9 align-items-center"><app-breadcrumb /></div>
+            <div class="col-lg-2 text-right"><app-navbar /></div>
+          </div>
+        </el-header>
+        <div class="m-15">
+          <nuxt />
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import Sidebar from '~/components/common/Sidebar'
-import Navbar from '~/components/common/Navbar'
-import Breadcrumb from '~/components/common/Breadcrumb'
+import AppSidebar from '~/components/common/Sidebar'
+import AppNavbar from '~/components/common/Navbar'
+import AppBreadcrumb from '~/components/common/Breadcrumb'
 
 export default {
   // midleware: ['auth']
   components: {
-    Sidebar,
-    Navbar,
-    Breadcrumb
+    AppSidebar,
+    AppNavbar,
+    AppBreadcrumb
   }
 }
 </script>
