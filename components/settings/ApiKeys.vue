@@ -7,7 +7,7 @@
           <el-input v-model="form.comments" placeholder="Комментарий" />
         </el-form-item>
         <el-form-item>
-          <el-input v-model="form.apiKey" disabled placeholder="API ключ" />
+          <el-input v-model="form.key" disabled placeholder="API ключ" />
         </el-form-item>
         <el-form-item>
           <el-popover
@@ -45,13 +45,13 @@
             </el-form-item>
             <el-form-item>
               <el-input
-                v-model="items[idx].apiKey"
+                v-model="items[idx].key"
                 disabled
                 placeholder="API ключ"
               >
                 <el-button
                   slot="append"
-                  @click="copyToBuffer(items[idx].apiKey)"
+                  @click="copyToBuffer(items[idx].key)"
                   icon="el-icon-document-copy"
                 />
               </el-input>
@@ -116,7 +116,7 @@ export default {
       loading: false,
       form: {
         comments: '',
-        apiKey: ''
+        key: ''
       },
       rules: {
         comments: [
@@ -179,11 +179,11 @@ export default {
       this.items.splice(idx, 1)
     },
     generateAPIKey() {
-      this.form.apiKey = md5(Date())
+      this.form.key = md5(Date())
     },
     clearForm() {
       this.form.comments = ''
-      this.form.apiKey = ''
+      this.form.key = ''
     }
   }
 }

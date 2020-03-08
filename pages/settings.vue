@@ -25,21 +25,21 @@ export default {
         {
           _id: '_idasdkasdkasd',
           comments: 'Комментарий 1',
-          apiKey: '7a62c3ecf4fb8b3f3f956341e8f43ac8',
+          key: '7a62c3ecf4fb8b3f3f956341e8f43ac8',
           created: 'дата создания',
           updated: 'дата обновления'
         },
         {
           _id: '_idasdkasdkasd',
           comments: 'Комментарий 2',
-          apiKey: 'a230ce13cbffd20d6dfdde7a9786c293',
+          key: 'a230ce13cbffd20d6dfdde7a9786c293',
           created: 'дата создания',
           updated: 'дата обновления'
         },
         {
           _id: '_idasdkasdkasd',
           comments: 'Комментарий 3',
-          apiKey: '3484db6e3de76e9281a13910f37dd0f3',
+          key: '3484db6e3de76e9281a13910f37dd0f3',
           created: 'дата создания',
           updated: 'дата обновления'
         }
