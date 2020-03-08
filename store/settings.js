@@ -4,10 +4,14 @@
 import Cookie from 'cookie'
 import Cookies from 'js-cookie'
 
-// TODO вешать отдельные настройки в куку
+/**
+ * Общие настройки интерфейса сайта
+ */
 
 export const state = () => ({
-  isCollapse: true // скрытие/раскрытие бокового меню
+  isCollapse: true, // скрытие/раскрытие бокового меню
+  drawerCreate: false, // Окно для создания роли
+  drawerUpdate: false // Окно для редактироавния роли
 })
 
 export const actions = {
@@ -28,5 +32,9 @@ export const mutations = {
   SWITCH_ISCOLLAPSE(state, status) {
     state.isCollapse = status
     Cookies.set('sitebarStatus', status)
+  },
+  /** открыть/закрыть ящик */
+  SWITCH_DRAWNER(state, { dranwer, status }) {
+    state[dranwer] = status
   }
 }
