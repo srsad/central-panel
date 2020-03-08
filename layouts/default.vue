@@ -4,7 +4,7 @@
       <div>
         <app-sidebar />
       </div>
-      <div class="col prl-0">
+      <div class="col prl-0" style="width:50%">
         <el-header class="main-header">
           <div class="row prl-0">
             <div class="col-1">
@@ -38,6 +38,22 @@ export default {
     AppNavbar,
     AppBreadcrumb,
     AppMainSearch
+  },
+  computed: {
+    error() {
+      return this.$store.getters.error
+    }
+  },
+  watch: {
+    async error(value) {
+      if (value === null) return
+      await this.$notify({
+        title: 'Ошибка',
+        message: value,
+        customClass: 'error-notyfy'
+      })
+      this.$store.commit('CLEAR_ERROR')
+    }
   }
 }
 </script>
