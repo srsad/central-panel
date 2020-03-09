@@ -78,6 +78,13 @@ export default {
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.form.access = this.$refs.tree.getCheckedKeys()
+          if (this.form.access.length === 0) {
+            this.$notify({
+              message: 'Выберите хотябы один параметр!',
+              customClass: 'error-notyfy'
+            })
+            return
+          }
           this.onCreate()
         } else {
           return false
@@ -90,7 +97,6 @@ export default {
         const formData = this.form
         await this.$store.dispatch('users/createRole', formData)
         this.$store.dispatch('users/fetchRoles')
-        this.$emit('closeDrawner', false)
         this.clearForm()
         this.$notify({
           message: 'Роль успушно добавленна!',
