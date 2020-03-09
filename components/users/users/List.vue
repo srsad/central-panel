@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="tableData" stripe class="w100">
+  <el-table :data="tableData" empty-text="Нет данных" stripe class="w100">
     <el-table-column prop="login" label="Логин" />
     <el-table-column prop="fullname" label="ФИО" />
     <el-table-column prop="email" label="Email" />
@@ -64,15 +64,12 @@ export default {
   },
   methods: {
     handleClick() {
-      // eslint-disable-next-line no-console
       console.log('click')
     },
     handleEdit(index, row) {
-      // eslint-disable-next-line no-console
       console.log(index, row)
     },
     handleDelete(index, row) {
-      // eslint-disable-next-line no-console
       console.log(index, row)
     }
   }

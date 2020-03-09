@@ -27,7 +27,6 @@ export default {
       }
     },
     logout() {
-      // eslint-disable-next-line no-console
       console.log('logout')
     }
   }

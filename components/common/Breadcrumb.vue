@@ -5,3 +5,11 @@
     <el-breadcrumb-item>Вложенность 3</el-breadcrumb-item>
   </el-breadcrumb>
 </template>
+
+<script>
+export default {
+  mounted() {
+    // console.log('this.$route.matched', this.$route.matched)
+  }
+}
+</script>
