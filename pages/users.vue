@@ -19,6 +19,15 @@ export default {
   components: {
     AppRolesPanel,
     AppUsersPanel
+  },
+  async fetch({ store, error }) {
+    try {
+      if (store.getters['users/roles'].length === 0) {
+        await store.dispatch('users/fetchRoles')
+      }
+    } catch (e) {
+      error(e)
+    }
   }
 }
 </script>
