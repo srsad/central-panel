@@ -1,27 +1,42 @@
 <template>
-  <el-table :data="tableData" class="w100">
-    <el-table-column prop="role" label="Роль"> </el-table-column>
-    <el-table-column prop="name" label="Кто создал"> </el-table-column>
-    <el-table-column prop="date" label="Дата создания"> </el-table-column>
+  <el-table
+    :data="items"
+    @row-dblclick="edit"
+    empty-text="Нет данных"
+    stripe
+    class="w100"
+  >
+    <el-table-column prop="name" label="Роль"> </el-table-column>
+    <el-table-column prop="username" label="Кто создал"> </el-table-column>
+    <el-table-column prop="created" label="Дата создания"> </el-table-column>
     <el-table-column label="Действия" label-class-name="text-center">
       <template slot-scope="scope">
         <div class="text-center">
           <el-tooltip content="Редактировать" placement="left">
             <el-button
-              @click="handleEdit(scope.$index, scope.row)"
+              @click="edit(scope.row)"
+              :loading="loading"
               size="mini"
               icon="el-icon-edit"
             />
           </el-tooltip>
 
-          <el-tooltip content="Удалить" placement="right">
+          <el-popconfirm
+            @onConfirm="remove(scope.$index, scope.row)"
+            title="Удалить роль?"
+            confirm-button-text="Да"
+            confirm-button-type="success"
+            cancel-button-type="default"
+            cancel-button-text="Нет, спасибо"
+          >
             <el-button
-              @click="handleDelete(scope.$index, scope.row)"
+              slot="reference"
+              :loading="loading"
               size="mini"
               type="danger"
               icon="el-icon-delete"
             />
-          </el-tooltip>
+          </el-popconfirm>
         </div>
       </template>
     </el-table-column>
@@ -30,44 +45,40 @@
 
 <script>
 export default {
+  props: {
+    items: {
+      type: Array,
+      default: () => []
+    }
+  },
   data() {
     return {
-      tableData: [
-        {
-          date: '2016-05-03',
-          name: 'Tom',
-          role: 'Роль 1'
-        },
-        {
-          date: '2016-05-02',
-          name: 'Tom',
-          role: 'Роль 2'
-        },
-        {
-          date: '2016-05-04',
-          name: 'Tom',
-          role: 'Роль 3'
-        },
-        {
-          date: '2016-05-01',
-          name: 'Tom',
-          role: 'Роль 4'
-        }
-      ]
+      loading: false
     }
   },
   methods: {
-    handleClick() {
-      // eslint-disable-next-line no-console
-      console.log('click')
+    async remove(idx, item) {
+      this.loading = true
+      try {
+        await this.$axios.$delete('/api/v1/role/remove/' + item._id)
+        this.$store.dispatch('users/fetchRoles')
+        this.$notify({
+          message: 'Роль успушно удалена!',
+          customClass: 'success-notyfy'
+        })
+      } catch (e) {
+        this.$store.commit('SET_ERROR', e.response.data.message)
+        throw e
+      } finally {
+        this.loading = false
+      }
     },
-    handleEdit(index, row) {
-      // eslint-disable-next-line no-console
-      console.log(index, row)
-    },
-    handleDelete(index, row) {
-      // eslint-disable-next-line no-console
-      console.log(index, row)
+    edit(item) {
+      this.$store.commit('users/SET_ROLE', item)
+      this.$store.commit('settings/SWITCH_DRAWNER', {
+        dranwer: 'drawerUpdate',
+        status: true
+      })
     }
   }
 }
