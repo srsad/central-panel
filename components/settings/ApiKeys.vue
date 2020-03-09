@@ -148,7 +148,6 @@ export default {
         if (valid) {
           this.clearForm()
           this.generateAPIKey()
-          // eslint-disable-next-line no-console
           console.log('sendForm!!')
         } else {
           return false
@@ -161,7 +160,6 @@ export default {
           // this.sendForm()
           // this.clearForm()
           // this.generateAPIKey()
-          // eslint-disable-next-line no-console
           console.log('update!!')
         } else {
           return false
