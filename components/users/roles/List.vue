@@ -6,9 +6,9 @@
     stripe
     class="w100"
   >
-    <el-table-column prop="name" label="Роль"> </el-table-column>
-    <el-table-column prop="username" label="Кто создал"> </el-table-column>
-    <el-table-column prop="created" label="Дата создания"> </el-table-column>
+    <el-table-column prop="name" label="Роль" />>
+    <el-table-column prop="username" label="Кто создал" />
+    <el-table-column prop="created" label="Дата создания" />
     <el-table-column label="Действия" label-class-name="text-center">
       <template slot-scope="scope">
         <div class="text-center">
