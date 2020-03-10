@@ -37,17 +37,39 @@ export const actions = {
       throw e
     }
   },
-  updateUser({ commit }, formData) {
-    commit('UPDATE_USER', formData)
+  async createUser({ commit }, formData) {
+    // TODO вставлять в запрос userID
+    try {
+      await this.$axios.$post('/api/v1/user/create', formData)
+    } catch (e) {
+      commit('SET_ERROR', e.response.data.message, { root: true })
+      throw e
+    }
   },
-  fetchUsers({ commit }, params) {
-    const users = []
-    commit('LOAD_USERS', users)
+  async updateUser({ commit }, formData) {
+    try {
+      await this.$axios.$post(
+        '/api/v1/user/update/' + formData.get('_id'),
+        formData
+      )
+      // commit('SET_USER', [])
+    } catch (e) {
+      commit('SET_ERROR', e.response.data.message, { root: true })
+      throw e
+    }
+  },
+  async fetchUsers({ commit }) {
+    try {
+      const users = await this.$axios.$get('/api/v1/user/getall')
+      commit('SET_USERS', users.data)
+    } catch (e) {
+      commit('SET_ERROR', e.response.data.message, { root: true })
+      throw e
+    }
   }
 }
 
 export const mutations = {
-  UPDATE_USER(state, formData) {},
   SET_USERS(state, users) {
     state.users = users
   },
