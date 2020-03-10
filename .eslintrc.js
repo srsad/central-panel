@@ -21,6 +21,7 @@ module.exports = {
   rules: {
     // TODO отключить при билде
     'no-console': 'off',
+    'import/order': 'off',
     'nuxt/no-cjs-in-config': 'off'
   }
 }
