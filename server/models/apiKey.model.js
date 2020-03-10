@@ -8,7 +8,8 @@ const apiKeySchema = new Schema({
   comments: {
     type: String,
     maxlength: 255,
-    required: true
+    required: true,
+    index: true
   },
   key: {
     type: String,

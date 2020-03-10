@@ -8,19 +8,22 @@ const userSchema = new Schema({
   login: {
     type: String,
     unique: true,
-    required: true
+    required: true,
+    index: true
   },
   password: {
     type: String,
     required: true
   },
   fullname: {
-    type: String
+    type: String,
+    index: true
   },
   email: {
     type: String,
     unique: true,
-    required: true
+    required: true,
+    index: true
   },
   description: {
     type: String,
@@ -30,7 +33,8 @@ const userSchema = new Schema({
     type: Number,
     unique: true,
     required: true,
-    maxlength: 32
+    maxlength: 32,
+    index: true
   },
   active: {
     type: Boolean,

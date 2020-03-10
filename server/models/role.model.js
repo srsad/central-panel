@@ -9,7 +9,8 @@ const roleSchema = new Schema({
     type: String,
     maxlength: 255,
     unique: true,
-    required: true
+    required: true,
+    index: true
   },
   access: {
     type: Array,
