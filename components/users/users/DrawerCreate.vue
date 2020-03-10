@@ -162,7 +162,7 @@ export default {
             trigger: 'blur'
           },
           {
-            min: 3,
+            min: 6,
             message: 'Минимум 6 символов',
             trigger: 'blur'
           }
