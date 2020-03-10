@@ -43,12 +43,6 @@
 import access from '../../../utils/access'
 
 export default {
-  props: {
-    drawer: {
-      type: Boolean,
-      default: false
-    }
-  },
   data() {
     return {
       loading: false,
