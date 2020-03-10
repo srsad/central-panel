@@ -1,7 +1,12 @@
 <template>
   <div>
     <el-button
-      @click="drawer = true"
+      @click="
+        $store.commit('settings/SWITCH_DRAWNER', {
+          dranwer: 'drawerCreateUser',
+          status: true
+        })
+      "
       type="success"
       class="mb-20"
       icon="el-icon-plus"
@@ -9,22 +14,22 @@
       Добаивть пользователя
     </el-button>
     <!--  -->
-    <app-list />
+    <app-list :items="$store.getters['users/users']" />
     <!--  -->
-    <app-drawer
-      :drawer="drawer"
-      @closeDrawner="(status) => (drawer = status)"
-    />
+    <app-drawer-create />
+    <app-drawer-update />
   </div>
 </template>
 
 <script>
-import AppDrawer from '~/components/users/users/Drawer'
+import AppDrawerCreate from '~/components/users/users/DrawerCreate'
+import AppDrawerUpdate from '~/components/users/users/DrawerUpdate'
 import AppList from '~/components/users/users/List'
 
 export default {
   components: {
-    AppDrawer,
+    AppDrawerCreate,
+    AppDrawerUpdate,
     AppList
   },
   data() {
