@@ -11,7 +11,9 @@ import Cookies from 'js-cookie'
 export const state = () => ({
   isCollapse: true, // скрытие/раскрытие бокового меню
   drawerCreateRole: false, // Окно для создания роли
-  drawerUpdateRole: false // Окно для редактироавния роли
+  drawerUpdateRole: false, // Окно для редактироавния роли
+  drawerCreateUser: false, // Окно для создания пользователя
+  drawerUpdateUser: false // Окно для редактироавния пользователя
 })
 
 export const actions = {
@@ -29,6 +31,7 @@ export const actions = {
 }
 
 export const mutations = {
+  /** Сайдбар админки */
   SWITCH_ISCOLLAPSE(state, status) {
     state.isCollapse = status
     Cookies.set('sitebarStatus', status)
