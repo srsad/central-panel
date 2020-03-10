@@ -23,6 +23,9 @@
       :class="['row m-15', !loadContent ? 'd-none' : '']"
     >
       <div class="col-12">
+        <h3 class="mb-20">Редактировать роль</h3>
+      </div>
+      <div class="col-12">
         <el-form-item prop="name">
           <el-input v-model="form.name" placeholder="Роль" />
         </el-form-item>
