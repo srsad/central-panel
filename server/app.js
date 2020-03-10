@@ -5,8 +5,8 @@ const compression = require('compression')
 const bodyParser = require('body-parser')
 
 // TODO eslint тупит в этом файле почемуто
-// eslint-disable-next-line import/order
 const roleRoutes = require('./routes/v1/role.routs')
+const userRoutes = require('./routes/v1/user.routs')
 
 const app = express()
 
@@ -29,9 +29,10 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 // app.use(accessesCASL)
-// // app.use(busboyBodyParser())
+// app.use(busboyBodyParser())
 
 // public REST API
 app.use('/api/v1/role', roleRoutes)
+app.use('/api/v1/user', userRoutes)
 
 module.exports = app
