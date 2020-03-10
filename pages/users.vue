@@ -22,8 +22,13 @@ export default {
   },
   async fetch({ store, error }) {
     try {
+      // загрузка ролей
       if (store.getters['users/roles'].length === 0) {
         await store.dispatch('users/fetchRoles')
+      }
+      // загрузка пользователей
+      if (store.getters['users/users'].length === 0) {
+        await store.dispatch('users/fetchUsers')
       }
     } catch (e) {
       error(e)
