@@ -12,31 +12,33 @@
     <el-table-column label="Действия" label-class-name="text-center">
       <template slot-scope="scope">
         <div class="text-center">
-          <el-tooltip content="Редактировать" placement="left">
-            <el-button
-              @click="edit(scope.row)"
-              :loading="loading"
-              size="mini"
-              icon="el-icon-edit"
-            />
-          </el-tooltip>
-
-          <el-popconfirm
-            @onConfirm="remove(scope.$index, scope.row)"
-            title="Удалить роль?"
-            confirm-button-text="Да"
-            confirm-button-type="success"
-            cancel-button-type="default"
-            cancel-button-text="Нет, спасибо"
-          >
-            <el-button
-              slot="reference"
-              :loading="loading"
-              size="mini"
-              type="danger"
-              icon="el-icon-delete"
-            />
-          </el-popconfirm>
+          <el-button-group>
+            <el-tooltip content="Редактировать" placement="left">
+              <el-button
+                @click="edit(scope.row)"
+                :loading="loading"
+                type="primary"
+                size="mini"
+                icon="el-icon-edit"
+              />
+            </el-tooltip>
+            <el-popconfirm
+              @onConfirm="remove(scope.$index, scope.row)"
+              title="Удалить роль?"
+              confirm-button-text="Да"
+              confirm-button-type="success"
+              cancel-button-type="default"
+              cancel-button-text="Нет, спасибо"
+            >
+              <el-button
+                slot="reference"
+                :loading="loading"
+                size="mini"
+                type="danger"
+                icon="el-icon-delete"
+              />
+            </el-popconfirm>
+          </el-button-group>
         </div>
       </template>
     </el-table-column>
@@ -74,6 +76,7 @@ export default {
       }
     },
     edit(item) {
+      if (this.loading === true) return
       this.$store.commit('users/SET_ROLE', item)
       this.$store.commit('settings/SWITCH_DRAWNER', {
         dranwer: 'drawerUpdateRole',
