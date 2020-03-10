@@ -10,8 +10,8 @@ import Cookies from 'js-cookie'
 
 export const state = () => ({
   isCollapse: true, // скрытие/раскрытие бокового меню
-  drawerCreate: false, // Окно для создания роли
-  drawerUpdate: false // Окно для редактироавния роли
+  drawerCreateRole: false, // Окно для создания роли
+  drawerUpdateRole: false // Окно для редактироавния роли
 })
 
 export const actions = {

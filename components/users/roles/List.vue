@@ -76,7 +76,7 @@ export default {
     edit(item) {
       this.$store.commit('users/SET_ROLE', item)
       this.$store.commit('settings/SWITCH_DRAWNER', {
-        dranwer: 'drawerUpdate',
+        dranwer: 'drawerUpdateRole',
         status: true
       })
     }

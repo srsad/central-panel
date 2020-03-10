@@ -1,6 +1,6 @@
 <template>
   <el-drawer
-    :visible.sync="$store.state.settings.drawerUpdate"
+    :visible.sync="$store.state.settings.drawerUpdateRole"
     :with-header="false"
     :before-close="close"
     @open="onOpen"
@@ -113,7 +113,7 @@ export default {
           customClass: 'success-notyfy'
         })
         this.$store.commit('settings/SWITCH_DRAWNER', {
-          dranwer: 'drawerUpdate',
+          dranwer: 'drawerUpdateRole',
           status: false
         })
       } catch (error) {
@@ -155,7 +155,7 @@ export default {
     close() {
       this.loadContent = false
       this.$store.commit('settings/SWITCH_DRAWNER', {
-        dranwer: 'drawerUpdate',
+        dranwer: 'drawerUpdateRole',
         status: false
       })
     }

@@ -1,6 +1,6 @@
 <template>
   <el-drawer
-    :visible.sync="$store.state.settings.drawerCreate"
+    :visible.sync="$store.state.settings.drawerCreateRole"
     :with-header="false"
     :before-close="onClose"
     title="Создать новую роль"
@@ -103,7 +103,7 @@ export default {
           customClass: 'success-notyfy'
         })
         this.$store.commit('settings/SWITCH_DRAWNER', {
-          dranwer: 'drawerCreate',
+          dranwer: 'drawerCreateRole',
           status: false
         })
       } catch (error) {
@@ -120,7 +120,7 @@ export default {
     },
     onClose() {
       this.$store.commit('settings/SWITCH_DRAWNER', {
-        dranwer: 'drawerCreate',
+        dranwer: 'drawerCreateRole',
         status: false
       })
     }
