@@ -13,8 +13,10 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.4.1",
+    "busboy-body-parser": "^0.3.2",
     "clipboard-polyfill": "^2.8.6",
     "compression": "^1.7.4",
     "cross-env": "^5.2.0",
@@ -28,6 +30,7 @@
     "nuxt": "^2.0.0",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
+    "v-mask": "^2.0.2",
     "vuedraggable": "^2.23.2"
   },
   "devDependencies": {
