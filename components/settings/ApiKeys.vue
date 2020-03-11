@@ -64,7 +64,7 @@
                 @click="updateAPIKey(`APIKeyForm${idx}`, items[idx])"
                 title="Редактировать"
                 type="primary"
-                icon="el-icon-edit"
+                icon="fa fa-floppy-o"
               />
             </el-form-item>
             <!--  -->
