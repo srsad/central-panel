@@ -4,9 +4,10 @@ const express = require('express')
 const compression = require('compression')
 const bodyParser = require('body-parser')
 
-// TODO eslint тупит в этом файле почемуто
 const roleRoutes = require('./routes/v1/role.routs')
 const userRoutes = require('./routes/v1/user.routs')
+const authRoutes = require('./routes/v1/auth.routs')
+const settingsRoutes = require('./routes/v1/settings')
 
 const app = express()
 
@@ -34,5 +35,7 @@ app.use(bodyParser.json())
 // public REST API
 app.use('/api/v1/role', roleRoutes)
 app.use('/api/v1/user', userRoutes)
+app.use('/api/v1/auth', authRoutes)
+app.use('/api/v1/settings', settingsRoutes)
 
 module.exports = app
