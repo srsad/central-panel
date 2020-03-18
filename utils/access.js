@@ -17,6 +17,14 @@ export default [
     label: 'Левый сайдбар'
   },
   {
+    _id: 'rservice',
+    label: 'Привязать Rservice'
+  },
+  {
+    _id: 'impuls',
+    label: 'Привязать Impuls'
+  },
+  {
     _id: 'report',
     label: 'Отчеты',
     children: [
