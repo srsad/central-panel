@@ -7,7 +7,7 @@ module.exports.create = async (req, res) => {
     await apiKey.save()
     res.status(201).json({ message: 'Ключ успешно создан!' })
   } catch (error) {
-    res.status(500).json({ message: 'Не создать ключ!', error })
+    res.status(500).json({ message: 'Не удалось создать ключ!', error })
   }
 }
 
