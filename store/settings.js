@@ -13,7 +13,9 @@ export const state = () => ({
   drawerCreateRole: false, // Окно для создания роли
   drawerUpdateRole: false, // Окно для редактироавния роли
   drawerCreateUser: false, // Окно для создания пользователя
-  drawerUpdateUser: false // Окно для редактироавния пользователя
+  drawerUpdateUser: false, // Окно для редактироавния пользователя
+  drawerCreateDomains: false, // Окно для добавления доменного имени
+  drawerUpdateDomains: false // Окно для редактироавния доменного имени
 })
 
 export const actions = {
