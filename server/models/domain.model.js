@@ -19,6 +19,7 @@ const domainSchema = new Schema({
     type: String,
     maxlength: 255,
     required: true,
+    unique: true,
     index: true
   },
   description: {
