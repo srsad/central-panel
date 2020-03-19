@@ -8,8 +8,6 @@ const {
 } = require('../../../controllers/apikey.controller')
 const router = Router()
 
-console.log('asdasd')
-
 // /api/v1/settings/api-key
 router.post('/create', create)
 router.post('/update/:id', update)
