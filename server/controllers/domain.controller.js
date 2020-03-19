@@ -7,7 +7,11 @@ module.exports.create = async (req, res) => {
     await domain.save()
     res.status(201).json({ message: 'Домен успешно создан!' })
   } catch (error) {
-    res.status(500).json({ message: 'Не создать домен!', error })
+    let msg = ''
+    if (error.errmsg.includes('$domain_1')) {
+      msg = ' Доменное имя уже существует!'
+    }
+    res.status(409).json({ message: 'Домен не добавлен!' + msg, error })
   }
 }
 
@@ -39,8 +43,8 @@ module.exports.remove = async (req, res) => {
 /** Вернуть по id */
 module.exports.getById = async (req, res) => {
   try {
-    const user = await Domain.findById()
-    res.status(200).json(user)
+    const domain = await Domain.findById()
+    res.status(200).json(domain)
   } catch (error) {
     req.status(500).json({ message: 'Не удалось полуичть домен!', error })
   }
@@ -49,8 +53,8 @@ module.exports.getById = async (req, res) => {
 /** Вернуть весь список */
 module.exports.getAll = async (req, res) => {
   try {
-    const apis = await Domain.find().sort({ created: -1 })
-    res.json({ data: apis })
+    const domains = await Domain.find().sort({ created: -1 })
+    res.json({ data: domains })
   } catch (error) {
     res.status(500).json({ message: 'Не удалось получить список доменов!' })
   }
