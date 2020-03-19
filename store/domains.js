@@ -37,11 +37,11 @@ export const actions = {
 }
 
 export const mutations = {
-  SET_DOMAINS(state, roles) {
-    state.roles = roles
+  SET_DOMAINS(state, damains) {
+    state.damains = damains
   },
-  SET_DOMAIN(state, role) {
-    state.role = role
+  SET_DOMAIN(state, damain) {
+    state.damain = damain
   }
 }
 
