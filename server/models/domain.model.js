@@ -31,7 +31,7 @@ const domainSchema = new Schema({
     maxlength: 255,
     index: true
   },
-  ststus: {
+  status: {
     type: Boolean,
     default: true
   },
