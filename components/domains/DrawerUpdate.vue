@@ -1,0 +1,248 @@
+<template>
+  <el-drawer
+    :visible.sync="$store.state.settings.drawerUpdateDomains"
+    :with-header="false"
+    :before-close="close"
+    @open="onOpen"
+    title="Редактировать домен"
+    custom-class="drawer"
+  >
+    <div
+      v-loading="!loadContent"
+      v-if="loadContent === false"
+      class="mt-100"
+      element-loading-text="Загрузка..."
+      element-loading-spinner="el-icon-loading"
+    />
+    <el-form
+      ref="form"
+      :model="form"
+      :rules="rules"
+      :disabled="loading"
+      :class="['row m-15', !loadContent ? 'd-none' : '']"
+    >
+      <div class="col-12">
+        <h3 class="mb-20">Редактировать домен</h3>
+      </div>
+      <div class="col-6">
+        <el-form-item prop="name">
+          <el-input v-model="form.name" placeholder="Наименование" />
+        </el-form-item>
+      </div>
+      <div class="col-6">
+        <el-form-item prop="brand">
+          <el-input v-model="form.brand" placeholder="Бренд" />
+        </el-form-item>
+      </div>
+      <div class="col-6">
+        <el-form-item prop="domain">
+          <el-input v-model="form.domain" placeholder="Домен">
+            <template slot="prepend">https://</template>
+          </el-input>
+        </el-form-item>
+      </div>
+      <div class="col-6">
+        <el-form-item prop="vendor">
+          <el-input v-model="form.vendor" placeholder="Исполнитель" />
+        </el-form-item>
+      </div>
+      <div class="col-6 text-left">
+        <div class="row align-items-center">
+          <div class="col-3">
+            <el-form-item prop="color">
+              <el-color-picker
+                v-model="form.color"
+                :predefine="predefineColors"
+                placeholder="Цвет"
+              />
+            </el-form-item>
+          </div>
+          <div class="col-8" style="margin-bottom:33px">
+            {{ form.color }}
+          </div>
+        </div>
+      </div>
+      <div class="col-6 text-left">
+        <el-form-item prop="status">
+          <el-checkbox v-model="form.status">Статус</el-checkbox>
+        </el-form-item>
+      </div>
+      <div class="col-12">
+        <el-form-item prop="description">
+          <el-input
+            v-model="form.description"
+            type="textarea"
+            placeholder="Описание"
+            maxlength="255"
+            rows="3"
+            show-word-limit
+          />
+        </el-form-item>
+      </div>
+      <div class="col-12 text-right">
+        <el-button @click="validateForm" :loading="loading" type="success">
+          Редактировать
+        </el-button>
+      </div>
+    </el-form>
+  </el-drawer>
+</template>
+
+<script>
+// import access from '../../../utils/access'
+
+export default {
+  data() {
+    return {
+      loadContent: false,
+      loading: false,
+      form: {
+        name: '',
+        brand: '',
+        domain: '',
+        vendor: '',
+        color: '',
+        status: false,
+        description: ''
+      },
+      predefineColors: [
+        '#ffffff',
+        '#ff4500',
+        '#ff8c00',
+        '#ffd700',
+        '#90ee90',
+        '#00ced1',
+        '#1e90ff',
+        '#c71585'
+      ],
+      rules: {
+        name: [
+          {
+            required: true,
+            message: 'Наименование',
+            trigger: 'blur'
+          },
+          {
+            min: 3,
+            message: 'Минимум 3 символа',
+            trigger: 'blur'
+          },
+          {
+            max: 255,
+            message: 'Максимум 255 символов',
+            trigger: 'blur'
+          }
+        ],
+        brand: [
+          {
+            required: true,
+            message: 'Бренд',
+            trigger: 'blur'
+          },
+          {
+            min: 2,
+            message: 'Минимум 2 символа',
+            trigger: 'blur'
+          },
+          {
+            max: 255,
+            message: 'Максимум 255 символов',
+            trigger: 'blur'
+          }
+        ],
+        domain: [
+          {
+            required: true,
+            message: 'Доменное имя',
+            trigger: 'blur'
+          },
+          {
+            min: 6,
+            message: 'Минимум 6 символа',
+            trigger: 'blur'
+          },
+          {
+            max: 255,
+            message: 'Максимум 255 символов',
+            trigger: 'blur'
+          }
+        ],
+        vendor: [
+          {
+            required: true,
+            message: 'Исполнитель',
+            trigger: 'blur'
+          },
+          {
+            min: 3,
+            message: 'Минимум 3 символа',
+            trigger: 'blur'
+          },
+          {
+            max: 255,
+            message: 'Максимум 255 символов',
+            trigger: 'blur'
+          }
+        ]
+      }
+    }
+  },
+  methods: {
+    validateForm() {
+      this.$refs.form.validate((valid) => {
+        return valid ? this.onUpdate() : false
+      })
+    },
+    async onUpdate() {
+      this.loading = true
+      try {
+        const formData = this.form
+        await this.$store.dispatch('domains/updateDomain', formData)
+        this.$store.dispatch('domains/fetchDomains')
+        this.clearForm()
+        this.$notify({
+          message: 'Данные обновлены!',
+          customClass: 'success-notyfy'
+        })
+        this.$store.commit('settings/SWITCH_DRAWNER', {
+          dranwer: 'drawerUpdateDomains',
+          status: false
+        })
+      } catch (error) {
+        //
+      } finally {
+        this.loading = false
+      }
+    },
+    onOpen() {
+      if (this.$store.getters['domains/domain']) {
+        this.form = JSON.parse(
+          JSON.stringify(this.$store.getters['domains/domain'])
+        )
+        this.onLoadContent()
+      }
+    },
+    onLoadContent() {
+      this.loadContent = true
+    },
+    clearForm() {
+      this.form.name = ''
+      this.form.brand = ''
+      this.form.domain = ''
+      this.form.vendor = ''
+      this.form.color = '#ffffff'
+      this.form.status = false
+      this.form.description = ''
+      this.loading = false
+      this.loadContent = false
+    },
+    close() {
+      this.loadContent = false
+      this.$store.commit('settings/SWITCH_DRAWNER', {
+        dranwer: 'drawerUpdateDomains',
+        status: false
+      })
+    }
+  }
+}
+</script>
