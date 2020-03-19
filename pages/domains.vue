@@ -1,18 +1,41 @@
 <template>
-  <el-container>
-    <pre>
-      TODO список сайтов
-        - выделение отдельным цветом
-        - привязка к бренду
-        - их текущий статус (доступен/нет)
-        - привязанные API ключи
-        - кем делался
-        - логи по отключениям и подключения + описание действиям
-        - общее описание
-    </pre>
-  </el-container>
+  <div class="row w100" style="margin-top:15px;">
+    <div class="col-12">
+      <app-domains-panel />
+    </div>
+    <div class="col-12">
+      <!--  -->
+      <pre>
+        TODO список сайтов
+          + выделение отдельным цветом
+          + привязка к бренду
+          + их текущий статус (доступен/нет)
+          - привязанные API ключи
+          + кем делался
+          - логи по отключениям и подключения + описание действиям
+          + общее описание
+      </pre>
+    </div>
+  </div>
 </template>
 
 <script>
-export default {}
+import AppDomainsPanel from '~/components/domains/Panel'
+
+export default {
+  components: {
+    AppDomainsPanel
+  },
+  async fetch({ store, error }) {
+    try {
+      // загрузка списка доменных имен
+      if (store.getters['domains/domains'].length === 0) {
+        await store.dispatch('domains/fetchDomains')
+      }
+    } catch (e) {
+      error(e)
+      // TODO вызывать общий стор ошибок
+    }
+  }
+}
 </script>
