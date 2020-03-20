@@ -42,8 +42,15 @@
         </el-form-item>
       </div>
       <div class="col-6">
-        <el-form-item prop="vendor">
-          <el-input v-model="form.vendor" placeholder="Исполнитель" />
+        <el-form-item prop="city">
+          <el-select v-model="form.city" placeholder="Город">
+            <el-option
+              v-for="item in cities"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
         </el-form-item>
       </div>
       <div class="col-6 text-left">
@@ -65,6 +72,11 @@
       <div class="col-6 text-left">
         <el-form-item prop="status">
           <el-checkbox v-model="form.status">Статус</el-checkbox>
+        </el-form-item>
+      </div>
+      <div class="col-12">
+        <el-form-item prop="vendor">
+          <el-input v-model="form.vendor" placeholder="Исполнитель" />
         </el-form-item>
       </div>
       <div class="col-12">
@@ -99,12 +111,18 @@ export default {
       form: {
         name: '',
         brand: '',
+        city: '',
         domain: '',
         vendor: '',
         color: '',
         status: false,
         description: ''
       },
+      cities: [
+        { value: 'spb', label: 'Санкт-Петербург' },
+        { value: 'msk', label: 'Москва' },
+        { value: 'krd', label: 'Краснодар' }
+      ],
       predefineColors: [
         '#ffffff',
         '#ff4500',

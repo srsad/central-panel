@@ -21,7 +21,23 @@
         <div>{{ scope.row.status }}</div>
       </template>
     </el-table-column> -->
-    <el-table-column prop="brand" label="Бренд" />
+    <el-table-column prop="brand" label="Бренд" width="100" />
+    <el-table-column
+      :filters="[
+        { value: 'spb', text: 'Санкт-Петербург' },
+        { value: 'msk', text: 'Москва' },
+        { value: 'krd', text: 'Краснодар' }
+      ]"
+      :filter-method="filterHandler"
+      label="Город"
+      width="200"
+    >
+      <template slot-scope="scope">
+        <el-tag type="primary" disable-transitions>
+          {{ getCity(scope.row.city) }}
+        </el-tag>
+      </template>
+    </el-table-column>
     <el-table-column label="Домен">
       <template slot-scope="scope">
         <a :href="`https://${scope.row.domain}`" target="_blank">
@@ -88,7 +104,12 @@ export default {
   },
   data() {
     return {
-      loading: false
+      loading: false,
+      cities: [
+        { value: 'spb', label: 'Санкт-Петербург' },
+        { value: 'msk', label: 'Москва' },
+        { value: 'krd', label: 'Краснодар' }
+      ]
     }
   },
   methods: {
@@ -116,9 +137,7 @@ export default {
         status: true
       })
     },
-    tableRowStyle({ row, rowIndex }) {
-      return { background: row.color + '1f' }
-    },
+    /** Смена статуса */
     async switchStatus(item) {
       this.loading = true
       await console.log('switchStatus', item)
@@ -137,6 +156,20 @@ export default {
       } finally {
         this.loading = false
       }
+    },
+    /** Подцветка строк и проверка на опубликовонность */
+    tableRowStyle({ row, rowIndex }) {
+      const style = { background: row.color + '3f' }
+      if (!row.status) style.opacity = '0.7'
+      return style
+    },
+    /** Возврощает название города */
+    getCity(city) {
+      return this.cities.find((el) => el.value === city).label
+    },
+    /** Фильтр по городам */
+    filterHandler(value, row) {
+      return row.city === value
     }
   }
 }

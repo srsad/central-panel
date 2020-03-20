@@ -10,6 +10,11 @@ const domainSchema = new Schema({
     maxlength: 255,
     index: true
   },
+  city: {
+    type: String,
+    maxlength: 32,
+    index: true
+  },
   brand: {
     type: String,
     maxlength: 255,
