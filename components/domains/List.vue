@@ -23,11 +23,7 @@
     </el-table-column> -->
     <el-table-column prop="brand" label="Бренд" width="100" />
     <el-table-column
-      :filters="[
-        { value: 'spb', text: 'Санкт-Петербург' },
-        { value: 'msk', text: 'Москва' },
-        { value: 'krd', text: 'Краснодар' }
-      ]"
+      :filters="cities_"
       :filter-method="filterHandler"
       label="Город"
       width="200"
@@ -105,12 +101,14 @@ export default {
   data() {
     return {
       loading: false,
-      cities: [
-        { value: 'spb', label: 'Санкт-Петербург' },
-        { value: 'msk', label: 'Москва' },
-        { value: 'krd', label: 'Краснодар' }
-      ]
+      // список для фильтра в таблице
+      cities_: [],
+      // список для фильтрации
+      cities: []
     }
+  },
+  mounted() {
+    this.getCities()
   },
   methods: {
     async remove(idx, item) {
@@ -162,9 +160,25 @@ export default {
       if (!row.status) style.opacity = '0.6'
       return style
     },
+    /** Загрузка списка городов */
+    async getCities() {
+      await this.$store.dispatch('city/fetchItems')
+      this.cities = await this.$store.getters['city/сityes'].map((el) => {
+        return { value: el._id, label: el.name }
+      })
+      this.cities_ = await this.$store.getters['city/сityes'].map((el) => {
+        return { value: el._id, text: el.name }
+      })
+    },
     /** Возврощает название города */
     getCity(city) {
-      return this.cities.find((el) => el.value === city).label
+      try {
+        if (this.cities_.length === 0 || this.cities.length === 0) return ''
+        return this.cities.find((el) => el.value === city).label
+      } catch (error) {
+        console.error(`Не удалось получить данные города "${city}"`, error)
+        return 'ГОРОД НЕ НАЙДЕН'
+      }
     },
     /** Фильтр по городам */
     filterHandler(value, row) {

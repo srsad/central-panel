@@ -46,9 +46,9 @@
           <el-select v-model="form.city" placeholder="Город">
             <el-option
               v-for="item in cities"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              :key="item._id"
+              :label="item.name"
+              :value="item._id"
             />
           </el-select>
         </el-form-item>
@@ -233,9 +233,15 @@ export default {
       }
     },
     onOpen() {
+      // загружаем данные домена
       if (this.$store.getters['domains/domain']) {
         this.form = JSON.parse(
           JSON.stringify(this.$store.getters['domains/domain'])
+        )
+        // загружаем список городов
+        this.$store.dispatch('city/fetchItems')
+        this.cities = JSON.parse(
+          JSON.stringify(this.$store.getters['city/сityes'])
         )
         this.onLoadContent()
       }

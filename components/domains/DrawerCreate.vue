@@ -3,6 +3,7 @@
     :visible.sync="$store.state.settings.drawerCreateDomains"
     :with-header="false"
     :before-close="onClose"
+    @open="onOpen"
     title="Добавить домен"
     custom-class="drawer"
   >
@@ -38,9 +39,9 @@
           <el-select v-model="form.city" placeholder="Город">
             <el-option
               v-for="item in cities"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              :key="item._id"
+              :label="item.name"
+              :value="item._id"
             />
           </el-select>
         </el-form-item>
@@ -109,11 +110,7 @@ export default {
         status: false,
         description: ''
       },
-      cities: [
-        { value: 'spb', label: 'Санкт-Петербург' },
-        { value: 'msk', label: 'Москва' },
-        { value: 'krd', label: 'Краснодар' }
-      ],
+      cities: [],
       predefineColors: [
         '#ffffff',
         '#ff4500',
@@ -227,6 +224,13 @@ export default {
       } finally {
         this.loading = false
       }
+    },
+    onOpen() {
+      // загружаем список городов
+      this.$store.dispatch('city/fetchItems')
+      this.cities = JSON.parse(
+        JSON.stringify(this.$store.getters['city/сityes'])
+      )
     },
     clearForm() {
       this.form.name = ''
