@@ -157,10 +157,10 @@ export default {
         this.loading = false
       }
     },
-    /** Подцветка строк и проверка на опубликовонность */
+    /** Подцветка строк и проверка на активность */
     tableRowStyle({ row, rowIndex }) {
       const style = { background: row.color + '3f' }
-      if (!row.status) style.opacity = '0.7'
+      if (!row.status) style.opacity = '0.6'
       return style
     },
     /** Возврощает название города */

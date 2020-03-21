@@ -5,7 +5,9 @@
         <el-tab-pane label="API ключи" name="apikey">
           <AppApiKey />
         </el-tab-pane>
-        <el-tab-pane label="Два" name="second">Два</el-tab-pane>
+        <el-tab-pane label="Список городов" name="second">
+          <app-cityes />
+        </el-tab-pane>
         <el-tab-pane label="Три" name="third">Три</el-tab-pane>
       </el-tabs>
     </div>
@@ -14,10 +16,12 @@
 
 <script>
 import AppApiKey from '~/components/settings/ApiKeys'
+import AppCityes from '~/components/settings/Cityes'
 
 export default {
   components: {
-    AppApiKey
+    AppApiKey,
+    AppCityes
   }
 }
 </script>
