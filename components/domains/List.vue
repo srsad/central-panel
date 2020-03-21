@@ -140,7 +140,6 @@ export default {
     /** Смена статуса */
     async switchStatus(item) {
       this.loading = true
-      await console.log('switchStatus', item)
       try {
         const formData = JSON.parse(JSON.stringify(item))
         formData.status = !formData.status
