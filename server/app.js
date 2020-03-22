@@ -9,6 +9,7 @@ const userRoutes = require('./routes/v1/user.routs')
 const authRoutes = require('./routes/v1/auth.routs')
 const settingsRoutes = require('./routes/v1/settings')
 const domainRoutes = require('./routes/v1/domain.routs')
+const ssiteRoutes = require('./routes/v1/sourceSite.routs')
 
 const app = express()
 
@@ -39,5 +40,6 @@ app.use('/api/v1/user', userRoutes)
 app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/settings', settingsRoutes)
 app.use('/api/v1/domain', domainRoutes)
+app.use('/api/v1/source-site', ssiteRoutes)
 
 module.exports = app
