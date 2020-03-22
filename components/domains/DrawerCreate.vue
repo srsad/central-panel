@@ -227,7 +227,6 @@ export default {
     },
     onOpen() {
       // загружаем список городов
-      this.$store.dispatch('city/fetchItems')
       this.cities = JSON.parse(
         JSON.stringify(this.$store.getters['city/сityes'])
       )
