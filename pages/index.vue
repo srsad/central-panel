@@ -19,12 +19,17 @@
     <!--  -->
     <div class="col-6">
       <div class="text-center mb-15">
-        <el-button type="success" size="mini" icon="el-icon-plus">
+        <el-button
+          @click="createSiteSource('rservice')"
+          type="success"
+          size="mini"
+          icon="el-icon-plus"
+        >
           Добавить сайт
         </el-button>
       </div>
       <draggable
-        :list="rservice"
+        :list="sources.rservice"
         @change="log"
         v-bind="dragOptions"
         @start="drag = true"
@@ -38,7 +43,7 @@
           type="transition"
         >
           <div
-            v-for="element in rservice"
+            v-for="element in sources.rservice"
             :key="element.name"
             @dblclick="editSite(element._id)"
             class="col-6 mb-15"
@@ -50,12 +55,17 @@
     </div>
     <div class="col-6">
       <div class="text-center mb-15">
-        <el-button type="success" size="mini" icon="el-icon-plus">
+        <el-button
+          @click="createSiteSource('impuls')"
+          type="success"
+          size="mini"
+          icon="el-icon-plus"
+        >
           Добавить сайт
         </el-button>
       </div>
       <draggable
-        :list="impuls"
+        :list="sources.impuls"
         @change="log"
         v-bind="dragOptions"
         @start="drag = true"
@@ -69,7 +79,7 @@
           type="transition"
         >
           <div
-            v-for="element in impuls"
+            v-for="element in sources.impuls"
             :key="element.name"
             @dblclick="editSite(element._id)"
             class="col-6 mb-15"
@@ -79,25 +89,35 @@
         </transition-group>
       </draggable>
     </div>
+    <!--  -->
+    <app-window-source-create :company="company" />
   </div>
 </template>
 
 <script>
+import AppWindowSourceCreate from '~/components/sourceSite/window/Create'
+
 export default {
+  components: {
+    AppWindowSourceCreate
+  },
   data() {
     return {
+      company: '',
       drag: true,
-      rservice: [
-        { name: 'Apple 1', _id: 1 },
-        { name: 'Acer 2', _id: 2 },
-        { name: 'Nokia 3', _id: 3 },
-        { name: 'Canon 4', _id: 4 }
-      ],
-      impuls: [
-        { name: 'MSI 5', _id: 5 },
-        { name: 'Sony 6', _id: 6 },
-        { name: 'Apple 7', _id: 7 }
-      ]
+      sources: {
+        rservice: [
+          { name: 'Apple 1', _id: 1 },
+          { name: 'Acer 2', _id: 2 },
+          { name: 'Nokia 3', _id: 3 },
+          { name: 'Canon 4', _id: 4 }
+        ],
+        impuls: [
+          { name: 'MSI 5', _id: 5 },
+          { name: 'Sony 6', _id: 6 },
+          { name: 'Apple 7', _id: 7 }
+        ]
+      }
     }
   },
   computed: {
@@ -127,6 +147,13 @@ export default {
     },
     editSite(id) {
       console.log('id', id)
+    },
+    createSiteSource(company) {
+      this.company = company || ''
+      this.$store.commit('settings/SWITCH_DRAWNER', {
+        dranwer: 'drawerCreateSource',
+        status: true
+      })
     }
   }
 }
