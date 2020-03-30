@@ -4,8 +4,14 @@ const SSite = require('../models/sourceSite.model')
 module.exports.create = async (req, res) => {
   try {
     const formData = req.body
-    formData.menuindex = await getNextSequence()
-    await new SSite(formData).save()
+    delete formData.image
+    // formData.menuindex = await getNextSequence()
+    formData.menuindex = 0
+    const sourceSite = await new SSite(formData)
+    sourceSite.save()
+    if (req.body.image) {
+      console.log('save image')
+    }
     res.status(201).json({ message: 'Источник создан!' })
   } catch (error) {
     let msg = ''
