@@ -1,10 +1,19 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div>
+      <div class="">
         <app-sidebar />
       </div>
-      <div class="col prl-0" style="width:50%">
+      <!-- TODO не корректная работа в мозиле при открытии и закрытии сайдбара -->
+      <!-- проблема в таблицах -->
+      <!-- 
+        :style="
+          `max-width:calc(100% - ${
+            $store.state.settings.isCollapse ? '70px' : '200px'
+          })`
+        "
+       -->
+      <div class="col prl-0">
         <el-header class="main-header">
           <div class="row prl-0">
             <div class="col-1">
