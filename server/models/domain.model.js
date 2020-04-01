@@ -3,7 +3,7 @@
  */
 
 const { model, Schema } = require('mongoose')
-
+// TODO добавить статус бана у гугла и яндекса
 const domainSchema = new Schema({
   name: {
     type: String,
