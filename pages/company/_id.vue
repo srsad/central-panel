@@ -24,22 +24,36 @@
     <div class="col-12">
       <h3>{{ $store.state.source.page.categoryName }}</h3>
     </div>
-    <!-- deviceList -->
-    <div
-      v-if="$store.getters['source/page/deviceList'].length > 0"
-      class="col-12"
-    >
-      <app-device-grid />
+
+    <div class="col-12">
+      <div class="row">
+        <div class="col-11">
+          <div class="row">
+            <!-- deviceList -->
+            <div
+              v-if="$store.getters['source/page/deviceList'].length > 0"
+              class="col-12"
+            >
+              <app-device-grid />
+            </div>
+            <!-- end deviceList -->
+            <!-- fastPrice -->
+            <div
+              v-if="$store.getters['source/page/fastPrice'].length > 0"
+              class="col-12"
+            >
+              <app-fast-price />
+            </div>
+            <!-- end fastPrice -->
+          </div>
+        </div>
+        <div class="col-1">
+          <div class="sticky-top">
+            panel
+          </div>
+        </div>
+      </div>
     </div>
-    <!-- end deviceList -->
-    <!-- fastPrice -->
-    <div
-      v-if="$store.getters['source/page/fastPrice'].length > 0"
-      class="col-12"
-    >
-      <app-fast-price />
-    </div>
-    <!-- end fastPrice -->
   </div>
 </template>
 
@@ -61,6 +75,12 @@ export default {
     try {
       await store.dispatch('source/page/getPage', params.id)
       const page = await store.getters['source/page/params']
+      store.dispatch('settings/setBreadcrumbs', [
+        {
+          uri: '/company/' + page._id,
+          label: page.brand + ' - ' + page.company
+        }
+      ])
       if (page) res = true
     } catch (e) {
       //
