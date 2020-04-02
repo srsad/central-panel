@@ -1,15 +1,22 @@
 <template>
   <el-breadcrumb separator="/">
-    <el-breadcrumb-item :to="{ path: '/' }">Главная</el-breadcrumb-item>
-    <el-breadcrumb-item to="/report">Вложенность 2</el-breadcrumb-item>
-    <el-breadcrumb-item>Вложенность 3</el-breadcrumb-item>
+    <el-breadcrumb-item to="/">Главная</el-breadcrumb-item>
+    <el-breadcrumb-item
+      v-for="(item, idx) in breadcrumbs"
+      :key="idx"
+      :to="{ path: item.uri }"
+    >
+      {{ item.label }}
+    </el-breadcrumb-item>
   </el-breadcrumb>
 </template>
 
 <script>
 export default {
-  mounted() {
-    // console.log('this.$route.matched', this.$route.matched)
+  computed: {
+    breadcrumbs() {
+      return this.$store.getters['settings/breadcrumbs']
+    }
   }
 }
 </script>
