@@ -5,5 +5,14 @@
 </template>
 
 <script>
-export default {}
+export default {
+  fetch({ store }) {
+    store.dispatch('settings/setBreadcrumbs', [
+      {
+        uri: '/map',
+        label: 'Тепловые карты'
+      }
+    ])
+  }
+}
 </script>

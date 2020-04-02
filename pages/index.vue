@@ -128,6 +128,7 @@ export default {
   },
   /** суем данные источников в стор */
   async fetch({ store, error }) {
+    store.dispatch('settings/setBreadcrumbs', [])
     try {
       if (store.getters['source/control/sources'].length === 0) {
         await store.dispatch('source/control/fetchItems')

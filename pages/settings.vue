@@ -22,6 +22,14 @@ export default {
   components: {
     AppApiKey,
     AppCityes
+  },
+  fetch({ store }) {
+    store.dispatch('settings/setBreadcrumbs', [
+      {
+        uri: '/settings',
+        label: 'Настройки'
+      }
+    ])
   }
 }
 </script>

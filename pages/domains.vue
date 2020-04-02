@@ -14,6 +14,12 @@ export default {
     AppDomainsPanel
   },
   async fetch({ store, error }) {
+    store.dispatch('settings/setBreadcrumbs', [
+      {
+        uri: '/domains',
+        label: 'Управление доменными именами'
+      }
+    ])
     try {
       // загрузка списка доменных имен
       if (store.getters['domains/domains'].length === 0) {

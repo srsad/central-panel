@@ -21,6 +21,13 @@ export default {
     AppUsersPanel
   },
   async fetch({ store, error }) {
+    store.dispatch('settings/setBreadcrumbs', [
+      {
+        uri: '/users',
+        label: 'Управление пользователями и ролями'
+      }
+    ])
+
     try {
       // загрузка ролей
       if (store.getters['users/roles'].length === 0) {
