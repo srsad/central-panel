@@ -1,5 +1,10 @@
 <template>
-  <div class="category">
+  <div
+    :class="[
+      'category',
+      $store.state.source.page.categoryName === item.pagetitle ? 'active' : ''
+    ]"
+  >
     <div
       v-if="item.tv_imgCategiry !== ''"
       :style="
