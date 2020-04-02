@@ -107,7 +107,3 @@ module.exports.getAll = async (req, res) => {
     res.status(500).json({ message: 'Не удалось получить список источников!' })
   }
 }
-
-async function getNextSequence() {
-  return (await SSite.find().count()) + 1 || 0
-}
