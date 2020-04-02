@@ -172,7 +172,7 @@ export default {
   },
   computed: {
     brands() {
-      return this.$store.getters['source/sourcesName']
+      return this.$store.getters['source/control/sourcesName']
     }
   },
   watch: {
@@ -215,7 +215,7 @@ export default {
           formData.append('image', this.form.image.raw)
         }
         await this.$axios.$post('/api/v1/source-site/update/' + this.form._id, formData)
-        this.$store.dispatch('source/fetchItems')
+        this.$store.dispatch('source/control/fetchItems')
         this.clearForm()
         this.$notify({
           message: 'Источник успушно обновлен!',
@@ -229,7 +229,7 @@ export default {
       }
     },
     onOpen() {
-      const source = this.$store.getters['source/source']
+      const source = this.$store.getters['source/control/source']
       this.form._id = source._id
       this.form.name = source.name
       this.form.source = source.source
@@ -241,7 +241,7 @@ export default {
       this.loadContent = true
     },
     onClose() {
-      this.$store.commit('source/SET_SOURCE', null)
+      this.$store.commit('source/control/SET_SOURCE', null)
       this.$store.commit('settings/SWITCH_DRAWNER', {
         dranwer: 'drawerUpdateSource',
         status: false

@@ -160,7 +160,7 @@ export default {
   },
   computed: {
     brands() {
-      return this.$store.getters['source/sourcesName']
+      return this.$store.getters['source/control/sourcesName']
     }
   },
   watch: {
@@ -203,7 +203,7 @@ export default {
           formData.append('image', this.form.image.raw)
         }
         await this.$axios.$post('/api/v1/source-site/create', formData)
-        this.$store.dispatch('source/fetchItems')
+        this.$store.dispatch('source/control/fetchItems')
         this.clearForm()
         this.$notify({
           message: 'Источник успушно добавлен!',

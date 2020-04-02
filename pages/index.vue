@@ -115,7 +115,7 @@ export default {
   },
   computed: {
     sources() {
-      return this.$store.getters['source/sortSources']
+      return this.$store.getters['source/control/sortSources']
     },
     dragOptions() {
       return {
@@ -129,8 +129,8 @@ export default {
   /** суем данные источников в стор */
   async fetch({ store, error }) {
     try {
-      if (store.getters['source/sources'].length === 0) {
-        await store.dispatch('source/fetchItems')
+      if (store.getters['source/control/sources'].length === 0) {
+        await store.dispatch('source/control/fetchItems')
       }
     } catch (e) {
       error(e)
@@ -155,7 +155,7 @@ export default {
             fd.append('company', company)
 
             await this.$axios.$post(`/api/v1/source-site/update/${_id}`, fd)
-            this.$store.dispatch('source/fetchItems')
+            this.$store.dispatch('source/control/fetchItems')
             this.$notify({
               message: 'Источник успушно перемещен!',
               customClass: 'success-notyfy'
@@ -169,7 +169,7 @@ export default {
     },
     /** Открываем окно редактиирования источника */
     openEditWindow(item) {
-      this.$store.commit('source/SET_SOURCE', item)
+      this.$store.commit('source/control/SET_SOURCE', item)
       this.$store.commit('settings/SWITCH_DRAWNER', {
         dranwer: 'drawerUpdateSource',
         status: true
@@ -179,7 +179,7 @@ export default {
     async onRemove(item) {
       try {
         await this.$axios.$delete('/api/v1/source-site/remove/' + item._id)
-        this.$store.dispatch('source/fetchItems')
+        this.$store.dispatch('source/control/fetchItems')
         this.$notify({
           message: 'Источник успушно удален!',
           customClass: 'success-notyfy'
