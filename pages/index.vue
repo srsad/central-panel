@@ -34,7 +34,8 @@
         v-bind="dragOptions"
         @start="drag = true"
         @end="drag = false"
-        group="people"
+        :disabled="dragDisabled"
+        group="company"
         style="padding-right:55px"
       >
         <transition-group
@@ -42,14 +43,13 @@
           class="row"
           type="transition"
         >
-          <div
+          <app-source-item
             v-for="element in sources.rservice"
             :key="element.name"
-            @dblclick="editSite(element._id)"
-            class="col-6 mb-15"
-          >
-            <div class="bg-fff">{{ element.name }}</div>
-          </div>
+            :item="element"
+            @edit="openEditWindow"
+            @remove="onRemove"
+          />
         </transition-group>
       </draggable>
     </div>
@@ -70,7 +70,8 @@
         v-bind="dragOptions"
         @start="drag = true"
         @end="drag = false"
-        group="people"
+        :disabled="dragDisabled"
+        group="company"
         style="padding-left:55px"
       >
         <transition-group
@@ -78,49 +79,44 @@
           class="row"
           type="transition"
         >
-          <div
+          <app-source-item
             v-for="element in sources.impuls"
             :key="element.name"
-            @dblclick="editSite(element._id)"
-            class="col-6 mb-15"
-          >
-            <div class="bg-fff">{{ element.name }}</div>
-          </div>
+            :item="element"
+            @edit="openEditWindow"
+            @remove="onRemove"
+          />
         </transition-group>
       </draggable>
     </div>
     <!--  -->
     <app-window-source-create :company="company" />
+    <app-window-source-update />
   </div>
 </template>
 
 <script>
 import AppWindowSourceCreate from '~/components/sourceSite/window/Create'
+import AppWindowSourceUpdate from '~/components/sourceSite/window/Update'
+import AppSourceItem from '~/components/sourceSite/SourceItem'
 
 export default {
   components: {
-    AppWindowSourceCreate
+    AppWindowSourceCreate,
+    AppWindowSourceUpdate,
+    AppSourceItem
   },
   data() {
     return {
       company: '',
       drag: true,
-      sources: {
-        rservice: [
-          { name: 'Apple 1', _id: 1 },
-          { name: 'Acer 2', _id: 2 },
-          { name: 'Nokia 3', _id: 3 },
-          { name: 'Canon 4', _id: 4 }
-        ],
-        impuls: [
-          { name: 'MSI 5', _id: 5 },
-          { name: 'Sony 6', _id: 6 },
-          { name: 'Apple 7', _id: 7 }
-        ]
-      }
+      dragDisabled: false // блокировка перетаскивания
     }
   },
   computed: {
+    sources() {
+      return this.$store.getters['sourceSite/sortSources']
+    },
     dragOptions() {
       return {
         animation: 200,
@@ -130,24 +126,69 @@ export default {
       }
     }
   },
+  /** суем данные источников в стор */
+  async fetch({ store, error }) {
+    try {
+      if (store.getters['sourceSite/sources'].length === 0) {
+        await store.dispatch('sourceSite/fetchItems')
+      }
+    } catch (e) {
+      error(e)
+    }
+  },
   methods: {
-    add() {
-      this.list.push({ name: 'Juan' })
-    },
-    replace() {
-      this.list = [{ name: 'Edgard' }]
-    },
-    clone(el) {
-      return {
-        name: el.name + ' cloned'
+    /** Лог перемещений и перемещение между командами */
+    async log(evt) {
+      // console.log('evt', evt)
+      if (evt.added) {
+        const sources = await JSON.parse(JSON.stringify(this.sources))
+        const _id = evt.added.element._id
+        let company = ''
+        for (const item in sources) {
+          const _company = sources[item].find((el) => el._id === _id)
+          if (_company) company = item
+        }
+
+        if (company) {
+          try {
+            const fd = new FormData()
+            fd.append('company', company)
+
+            await this.$axios.$post(`/api/v1/source-site/update/${_id}`, fd)
+            this.$store.dispatch('sourceSite/fetchItems')
+            this.$notify({
+              message: 'Источник успушно перемещен!',
+              customClass: 'success-notyfy'
+            })
+          } catch (e) {
+            console.log(e)
+            this.$store.commit('SET_ERROR', e.response.data.message)
+          }
+        }
       }
     },
-    log(evt) {
-      window.console.log(evt)
+    /** Открываем окно редактиирования источника */
+    openEditWindow(item) {
+      this.$store.commit('sourceSite/SET_SOURCE', item)
+      this.$store.commit('settings/SWITCH_DRAWNER', {
+        dranwer: 'drawerUpdateSource',
+        status: true
+      })
     },
-    editSite(id) {
-      console.log('id', id)
+    /** Удаление источника */
+    async onRemove(item) {
+      try {
+        await this.$axios.$delete('/api/v1/source-site/remove/' + item._id)
+        this.$store.dispatch('sourceSite/fetchItems')
+        this.$notify({
+          message: 'Источник успушно удален!',
+          customClass: 'success-notyfy'
+        })
+      } catch (e) {
+        this.$store.commit('SET_ERROR', e.response.data.message)
+      }
     },
+    /** Открытие окна создания + проверка выбора источника */
     createSiteSource(company) {
       this.company = company || ''
       this.$store.commit('settings/SWITCH_DRAWNER', {
