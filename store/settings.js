@@ -53,3 +53,7 @@ export const mutations = {
     state.breadcrumbs = breadcrumbs
   }
 }
+
+export const getters = {
+  breadcrumbs: (state) => state.breadcrumbs
+}
