@@ -143,6 +143,28 @@ export default [
             label: 'Удаление'
           }
         ]
+      },
+      {
+        _id: 'settings-city_panel',
+        label: 'Города',
+        children: [
+          {
+            _id: 'settings-city_panel-read',
+            label: 'Чтение'
+          },
+          {
+            _id: 'settings-city_panel-create',
+            label: 'Создание'
+          },
+          {
+            _id: 'settings-city_panel-update',
+            label: 'Редактирование'
+          },
+          {
+            _id: 'settings-city_panel-remove',
+            label: 'Удаление'
+          }
+        ]
       }
     ]
   }
