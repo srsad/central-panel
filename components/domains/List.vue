@@ -4,7 +4,6 @@
     @row-dblclick="edit"
     :row-style="tableRowStyle"
     empty-text="Нет данных"
-    class="w100"
   >
     <el-table-column label="" width="10">
       <template slot-scope="scope">
@@ -16,11 +15,6 @@
       </template>
     </el-table-column>
     <el-table-column prop="sitestatus" label="" width="30" />
-    <!-- <el-table-column label="Доступ" width="80">
-      <template slot-scope="scope">
-        <div>{{ scope.row.status }}</div>
-      </template>
-    </el-table-column> -->
     <el-table-column prop="brand" label="Бренд" width="100" />
     <el-table-column
       :filters="cities_"

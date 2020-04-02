@@ -14,7 +14,9 @@
       Добаивть пользователя
     </el-button>
     <!--  -->
-    <app-list :items="$store.getters['users/users']" />
+    <div class="w97">
+      <app-list :items="$store.getters['users/users']" />
+    </div>
     <!--  -->
     <app-drawer-create />
     <app-drawer-update />

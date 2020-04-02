@@ -1,11 +1,5 @@
 <template>
-  <el-table
-    :data="items"
-    @row-dblclick="edit"
-    empty-text="Нет данных"
-    stripe
-    class="w100"
-  >
+  <el-table :data="items" @row-dblclick="edit" empty-text="Нет данных" stripe>
     <el-table-column prop="login" label="Логин" />
     <el-table-column prop="fullname" label="ФИО" />
     <el-table-column prop="email" label="Email" />

@@ -14,7 +14,9 @@
       Добаивть роль
     </el-button>
     <!--  -->
-    <app-list :items="$store.getters['users/roles']" />
+    <div class="w97">
+      <app-list :items="$store.getters['users/roles']" />
+    </div>
     <!--  -->
     <app-drawer-create />
     <app-drawer-update />
