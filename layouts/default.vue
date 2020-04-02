@@ -4,29 +4,18 @@
       <div class="">
         <app-sidebar />
       </div>
-      <!-- TODO не корректная работа в мозиле при открытии и закрытии сайдбара -->
-      <!-- проблема в таблицах -->
-      <!-- 
-        :style="
-          `max-width:calc(100% - ${
-            $store.state.settings.isCollapse ? '70px' : '200px'
-          })`
-        "
-       -->
       <div class="col prl-0">
         <el-header class="main-header">
-          <div class="row prl-0">
-            <div class="col-1">
-              <n-link to="/">
-                logo
-              </n-link>
-            </div>
-            <div class="col-lg-7 align-items-center"><app-breadcrumb /></div>
-            <div class="col-lg-2 text-right"><app-main-search /></div>
-            <div class="col-lg-2 text-right"><app-navbar /></div>
+          <div class="col-1">
+            <n-link to="/">
+              logo
+            </n-link>
           </div>
+          <div class="col-lg-7 align-items-center"><app-breadcrumb /></div>
+          <div class="col-lg-2 text-right"><app-main-search /></div>
+          <div class="col-lg-2 text-right"><app-navbar /></div>
         </el-header>
-        <div class="m-15">
+        <div class="m-15 mt-70">
           <nuxt />
         </div>
       </div>
