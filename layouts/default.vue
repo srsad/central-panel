@@ -20,6 +20,8 @@
         </div>
       </div>
     </div>
+    <!--  -->
+    <app-back-to-top />
   </div>
 </template>
 
@@ -28,6 +30,7 @@ import AppSidebar from '~/components/common/Sidebar'
 import AppNavbar from '~/components/common/Navbar'
 import AppBreadcrumb from '~/components/common/Breadcrumb'
 import AppMainSearch from '~/components/common/MainSearch'
+import AppBackToTop from '~/components/common/BackToTop'
 
 export default {
   // midleware: ['auth']
@@ -35,7 +38,8 @@ export default {
     AppSidebar,
     AppNavbar,
     AppBreadcrumb,
-    AppMainSearch
+    AppMainSearch,
+    AppBackToTop
   },
   computed: {
     error() {
