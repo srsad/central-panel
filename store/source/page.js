@@ -15,6 +15,7 @@ export const state = () => ({
 export const actions = {
   /** Параметры источника и список категорий */
   async getPage({ commit }, id) {
+    commit('SET_PARAMS', {})
     try {
       // данные источника
       const source = await this.$axios.$get('/api/v1/source-site/get/' + id)
@@ -49,6 +50,14 @@ export const actions = {
       throw e
     }
   },
+  /** Установка списка категорий */
+  setCategories({ commit }, categories) {
+    commit('SET_CATEGORIES', categories)
+  },
+  /** Установка параметров источника */
+  setParams({ commit }, patams) {
+    commit('SET_PARAMS', patams)
+  },
   /** Установка названия категории */
   setCategoryName({ commit }, categoryName) {
     commit('SET_CATEGORY_NAME', categoryName)
@@ -60,6 +69,9 @@ export const actions = {
   /** Усановка быстрого прайса */
   setFastPrice({ commit }, fastPrice) {
     commit('SET_FAST_PRICE', fastPrice)
+  },
+  clearAllParams({ commit }) {
+    commit('CLEAR_ALL_PARAMS')
   }
 }
 
@@ -78,10 +90,19 @@ export const mutations = {
   },
   SET_FAST_PRICE(state, fastPrice) {
     state.fastPrice = fastPrice
+  },
+  CLEAR_ALL_PARAMS(state) {
+    state.params = {}
+    state.categories = []
+    state.categoryName = ''
+    state.deviceList = []
+    state.fastPrice = []
   }
 }
 
 export const getters = {
   params: (state) => state.params,
-  categories: (state) => state.categories
+  categories: (state) => state.categories,
+  deviceList: (state) => state.deviceList,
+  fastPrice: (state) => state.fastPrice
 }
