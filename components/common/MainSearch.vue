@@ -15,35 +15,25 @@ export default {
   data() {
     return {
       links: [],
-      state: '',
-      timeout: null
+      state: ''
     }
   },
   mounted() {
-    this.links = this.loadAll()
+    this.loadAll()
   },
   methods: {
-    loadAll() {
-      return [
-        { value: 'Apple Impuls', link: 'https://github.com/vuejs/vue' },
-        { value: 'Apple Rservice', link: 'https://github.com/ElemeFE/element' },
-        { value: 'Nokia Impuls', link: 'https://github.com/ElemeFE/cooking' },
-        { value: 'Nokia Rservice', link: 'https://github.com/ElemeFE/mint-ui' },
-        { value: 'Nicon Impuls', link: 'https://github.com/vuejs/vuex' },
-        { value: 'Nicon Rservice', link: 'https://github.com/vuejs' },
-        { value: 'Other  Impuls', link: 'https://github.com/babel/babel' }
-      ]
+    async loadAll() {
+      if (this.$store.getters['source/control/sources'].length === 0) {
+        await this.$store.dispatch('source/control/fetchItems')
+      }
+      this.links = this.$store.getters['source/control/sourceSearchList']
     },
     querySearchAsync(queryString, cb) {
       const links = this.links
       const results = queryString
         ? links.filter(this.createFilter(queryString))
         : links
-
-      clearTimeout(this.timeout)
-      this.timeout = setTimeout(() => {
-        cb(results)
-      }, 1000 * Math.random())
+      cb(results)
     },
     createFilter(queryString) {
       return (link) => {
@@ -51,7 +41,8 @@ export default {
       }
     },
     handleSelect(item) {
-      console.log('search handleSelect', item)
+      this.$router.push(item.link)
+      this.state = ''
     }
   }
 }
