@@ -1,16 +1,24 @@
 <template>
   <el-dialog
-    :visible.sync="$store.state.settings.drawerCreateSource"
+    :visible.sync="$store.state.settings.drawerUpdateSource"
     :before-close="onClose"
+    @opened="onOpen"
     width="30%"
-    title="Подключение новго источника"
+    title="Редактировать источник"
   >
+    <div
+      v-loading="!loadContent"
+      v-if="!loadContent"
+      class="mt-100"
+      element-loading-text="Загрузка..."
+      element-loading-spinner="el-icon-loading"
+    />
     <el-form
       ref="form"
       :model="form"
       :rules="rules"
       :disabled="loading"
-      class="row"
+      :class="['row', !loadContent ? 'd-none' : '']"
     >
       <div class="col-6">
         <el-form-item prop="name">
@@ -46,7 +54,7 @@
         </el-form-item>
       </div>
       <div class="col-6">
-        <app-single-image-uploader v-model="form.image" />
+        <app-single-image-uploader v-model="form.image" :preview="preview" />
         <div class="text-center mt-30">
           <el-form-item prop="published">
             <el-checkbox v-model="form.published">Опубликован</el-checkbox>
@@ -54,14 +62,15 @@
         </div>
       </div>
     </el-form>
-    <div slot="footer" class="dialog-footer">
+    <div slot="footer" :class="['dialog-footer', !loadContent ? 'd-none' : '']">
       <el-button @click="onClose">Закрыть</el-button>
-      <el-button @click="validateForm" type="success">Создать</el-button>
+      <el-button @click="validateForm" type="success">Обновить</el-button>
     </div>
   </el-dialog>
 </template>
 
 <script>
+/* eslint-disable prettier/prettier */
 import parseUrl from 'url-parse'
 import AppSingleImageUploader from '~/components/common/uploaders/SingleImageUploader'
 
@@ -78,7 +87,9 @@ export default {
   data() {
     return {
       loading: false,
+      loadContent: false,
       form: {
+        _id: '',
         name: '',
         source: '',
         company: '',
@@ -86,6 +97,7 @@ export default {
         published: true,
         image: ''
       },
+      preview: '',
       companies: [
         {
           value: 'rservice',
@@ -172,13 +184,13 @@ export default {
     validateForm() {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          this.onCreate()
+          this.onUpdate()
         } else {
           return false
         }
       })
     },
-    async onCreate() {
+    async onUpdate() {
       this.loading = true
       let source = this.form.source
       let hostname = ''
@@ -202,11 +214,11 @@ export default {
           this.$axios.setHeader('Content-Type', 'multipart/form-data')
           formData.append('image', this.form.image.raw)
         }
-        await this.$axios.$post('/api/v1/source-site/create', formData)
+        await this.$axios.$post('/api/v1/source-site/update/' + this.form._id, formData)
         this.$store.dispatch('sourceSite/fetchItems')
         this.clearForm()
         this.$notify({
-          message: 'Источник успушно добавлен!',
+          message: 'Источник успушно обновлен!',
           customClass: 'success-notyfy'
         })
         this.onClose()
@@ -216,11 +228,25 @@ export default {
         this.loading = false
       }
     },
+    onOpen() {
+      const source = this.$store.getters['sourceSite/source']
+      this.form._id = source._id
+      this.form.name = source.name
+      this.form.source = source.source
+      this.form.company = source.company
+      this.form.brand = source.brand
+      this.form.published = source.published
+      this.form.image = ''
+      this.preview = source.image ? `/site/images/brand${source.image}` : ''
+      this.loadContent = true
+    },
     onClose() {
+      this.$store.commit('sourceSite/SET_SOURCE', null)
       this.$store.commit('settings/SWITCH_DRAWNER', {
-        dranwer: 'drawerCreateSource',
+        dranwer: 'drawerUpdateSource',
         status: false
       })
+      this.loadContent = false
     },
     clearForm() {
       this.form.name = ''
