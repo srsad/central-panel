@@ -9,6 +9,7 @@ import Cookies from 'js-cookie'
  */
 
 export const state = () => ({
+  breadcrumbs: [], // хлебные крошки
   isCollapse: true, // скрытие/раскрытие бокового меню
   drawerCreateRole: false, // Окно для создания роли
   drawerUpdateRole: false, // Окно для редактироавния роли
@@ -31,6 +32,9 @@ export const actions = {
     const cookies = Cookie.parse(cookieStr || '') || {}
     const sitebarStatus = cookies.sitebarStatus !== 'false'
     commit('SWITCH_ISCOLLAPSE', sitebarStatus)
+  },
+  setBreadcrumbs({ commit }, breadcrumbs) {
+    commit('SET_BREADCRUMBS', breadcrumbs)
   }
 }
 
@@ -43,5 +47,9 @@ export const mutations = {
   /** открыть/закрыть ящик */
   SWITCH_DRAWNER(state, { dranwer, status }) {
     state[dranwer] = status
+  },
+  /** Установка хлебных крошек */
+  SET_BREADCRUMBS(state, breadcrumbs) {
+    state.breadcrumbs = breadcrumbs
   }
 }
