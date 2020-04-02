@@ -32,7 +32,7 @@ export const getters = {
   sources: (state) => state.sources,
   source: (state) => state.source,
   /**
-   * Возвращает отсортированный по компаниям список
+   * Возвращает список отсортированный по компаниям
    * sources: {
    *    rservice: [
    *      { name: 'Apple 1', _id: 1 ...},
@@ -51,7 +51,7 @@ export const getters = {
       if (!res.hasOwnProperty(item.company)) res[item.company] = []
       res[item.company].push(item)
     }
-    // надоо обязательно проверить, существует ли одна из обязательных компаний, если нет, то надо создать
+    // надо обязательно проверить, существует ли одна из обязательных компаний, если нет, то надо создать
     // чтоб не возникало ошибки, когда мы перетащили все бренды в одну и не можем вернуть что-то обратно в пустую компанию
     if (!res.impuls) res.impuls = []
     if (!res.rservice) res.rservice = []
@@ -62,6 +62,18 @@ export const getters = {
     const brands = state.sources.map((el) => el.brand)
     const res = [...new Set(brands)].map((el) => {
       return { value: el }
+    })
+    return res
+  },
+  /** Список источников для поиска */
+  sourceSearchList: (state) => {
+    const res = []
+    state.sources.forEach((el) => {
+      // { value: 'Other  Impuls', link: 'https://github.com/babel/babel' }
+      res.push({
+        value: el.brand + ' ' + el.company,
+        link: '/company/' + el._id
+      })
     })
     return res
   }
