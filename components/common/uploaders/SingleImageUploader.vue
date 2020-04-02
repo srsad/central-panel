@@ -7,6 +7,7 @@
       :limit="1"
       :class="fileName ? 'imgUploaderItem-off' : 'imgUploaderItem'"
       :on-change="handleChange"
+      :file-list="fileList"
       action="#"
       list-type="picture-card"
       style="margin:0 auto;text-align:center"
@@ -21,12 +22,39 @@
 
 <script>
 export default {
+  props: {
+    preview: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
       image: null,
       fileName: '',
       dialogImageUrl: '',
-      dialogVisible: false
+      dialogVisible: false,
+      fileList: []
+    }
+  },
+  watch: {
+    preview(val) {
+      if (val) {
+        const fileName = val.split('/').reverse()[0]
+        this.dialogImageUrl = val
+        if (this.fileList[0]) {
+          this.fileList[0].name = fileName
+          this.fileList[0].url = val
+        } else {
+          this.fileList.push({
+            name: fileName,
+            url: val
+          })
+        }
+        this.fileName = fileName
+      } else {
+        this.handleRemove()
+      }
     }
   },
   methods: {
@@ -38,6 +66,7 @@ export default {
     async handleRemove(file, fileList) {
       this.dialogImageUrl = ''
       this.image = ''
+      this.fileList = []
       this.$emit('input', null)
       // eslint-disable-next-line prettier/prettier
       await setTimeout(() => { this.fileName = '' }, 1000)
