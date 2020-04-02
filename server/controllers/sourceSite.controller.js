@@ -91,8 +91,8 @@ module.exports.remove = async (req, res) => {
 /** Вернуть по id */
 module.exports.getById = async (req, res) => {
   try {
-    const domain = await SSite.findById()
-    res.status(200).json(domain)
+    const page = await SSite.findById(req.params.id)
+    res.status(200).json({ data: page })
   } catch (error) {
     req.status(500).json({ message: 'Не удалось полуичть источник!', error })
   }
@@ -101,8 +101,8 @@ module.exports.getById = async (req, res) => {
 /** Вернуть весь список */
 module.exports.getAll = async (req, res) => {
   try {
-    const domains = await SSite.find().sort({ brand: 1 })
-    res.json({ data: domains })
+    const pages = await SSite.find().sort({ brand: 1 })
+    res.json({ data: pages })
   } catch (error) {
     res.status(500).json({ message: 'Не удалось получить список источников!' })
   }
