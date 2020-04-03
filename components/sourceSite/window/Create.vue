@@ -3,7 +3,7 @@
     :visible.sync="$store.state.settings.drawerCreateSource"
     :before-close="onClose"
     width="30%"
-    title="Подключение новго источника"
+    title="Подключение нового источника"
   >
     <el-form
       ref="form"
