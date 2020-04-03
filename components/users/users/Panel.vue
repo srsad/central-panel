@@ -11,7 +11,7 @@
       class="mb-20"
       icon="el-icon-plus"
     >
-      Добаивть пользователя
+      Добавить пользователя
     </el-button>
     <!--  -->
     <div class="w97">

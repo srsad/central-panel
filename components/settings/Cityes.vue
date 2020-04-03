@@ -26,7 +26,6 @@
     <div v-if="items.length === 0" class="col-12">
       <h4>Пока городов нет</h4>
     </div>
-    <!-- <div v-else v-for="(item, idx) of items" :key="idx" class="col-12"> -->
     <div v-else v-for="(item, idx) of items" :key="idx" class="col-12">
       <div class="row">
         <div class="col-12">
@@ -68,6 +67,7 @@
                 />
               </el-popconfirm>
             </el-form-item>
+            <!--  -->
           </el-form>
         </div>
       </div>
