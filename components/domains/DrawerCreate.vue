@@ -239,7 +239,6 @@ export default {
       this.form.color = '#ffffff'
       this.form.status = false
       this.form.description = ''
-      this.loadContent = false
     },
     onClose() {
       this.$store.commit('settings/SWITCH_DRAWNER', {
