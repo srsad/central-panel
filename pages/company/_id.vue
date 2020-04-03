@@ -54,19 +54,24 @@
         </div>
       </div>
     </div>
+    <!-- окно неисправностей устройства -->
+    <app-device-malfunctions-list />
+    <!-- end окно неисправностей устройства -->
   </div>
 </template>
 
 <script>
-import AppCategoryItem from '~/components/sourceSite/CategoryItem'
-import AppDeviceGrid from '~/components/sourceSite/DeviceGrid'
-import AppFastPrice from '~/components/sourceSite/FastPrice'
+import AppCategoryItem from '~/components/categories/CategoryItem'
+import AppDeviceGrid from '~/components/categories/DeviceGrid'
+import AppFastPrice from '~/components/categories/FastPrice'
+import AppDeviceMalfunctionsList from '~/components/categories/window/DeviceMalfunctionsList'
 
 export default {
   components: {
     AppCategoryItem,
     AppDeviceGrid,
-    AppFastPrice
+    AppFastPrice,
+    AppDeviceMalfunctionsList
   },
   async validate({ params, store }) {
     // отчищаем все категории
