@@ -8,7 +8,9 @@ export const state = () => ({
   categories: [], // категории источника
   categoryName: '', // активная категория
   deviceList: [], // список устройств
-  fastPrice: [] // таблица fastPrice источника
+  fastPrice: [], // таблица fastPrice источника
+  deviceData: null, // данные выбраного устройства - {id: "245", pagetitle: "..."}
+  malfunctionsData: null // список неисправностей выбранного устройства
   // ...
 })
 
@@ -70,6 +72,19 @@ export const actions = {
   setFastPrice({ commit }, fastPrice) {
     commit('SET_FAST_PRICE', fastPrice)
   },
+  /** установка данных устройства и загрузка неисправностей данного устройства */
+  async setDeviceData({ commit, state }, deviceData) {
+    commit('SET_DEVICE_DATA', deviceData)
+    try {
+      const malfunctions = await this.$axios.$get(
+        `https://${state.params.source}/rest/?get=dmlist&device=${deviceData.id}&company=${state.params.company}`
+      )
+      commit('SET_MALFUNCTIONS_DATA', malfunctions)
+    } catch (e) {
+      commit('SET_ERROR', e.response.data.message, { root: true })      
+    }
+  },
+  /** Отчистка всех параметров */
   clearAllParams({ commit }) {
     commit('CLEAR_ALL_PARAMS')
   }
@@ -91,6 +106,12 @@ export const mutations = {
   SET_FAST_PRICE(state, fastPrice) {
     state.fastPrice = fastPrice
   },
+  SET_DEVICE_DATA(state, deviceData) {
+    state.deviceData = deviceData
+  },
+  SET_MALFUNCTIONS_DATA(state, malfunctionsData) {
+    state.malfunctionsData = malfunctionsData
+  },
   CLEAR_ALL_PARAMS(state) {
     state.params = {}
     state.categories = []
@@ -104,5 +125,7 @@ export const getters = {
   params: (state) => state.params,
   categories: (state) => state.categories,
   deviceList: (state) => state.deviceList,
-  fastPrice: (state) => state.fastPrice
+  fastPrice: (state) => state.fastPrice,
+  deviceData: (state) => state.deviceData,
+  malfunctionsData: (state) => state.malfunctionsData
 }
