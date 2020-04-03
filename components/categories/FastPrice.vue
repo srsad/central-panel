@@ -3,7 +3,7 @@
     <el-table :data="fastPrice" stripe style="width: 100%">
       <el-table-column prop="pTitle" label="Наименование">
         <template slot-scope="scope">
-          <b class="color-000">{{ scope.row.pTitle }} мин.</b>
+          <b class="color-000">{{ scope.row.pTitle }}</b>
         </template>
       </el-table-column>
       <el-table-column prop="pTime" label="Врем ремонта">
