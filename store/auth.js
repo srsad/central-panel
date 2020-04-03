@@ -16,13 +16,12 @@ export const state = () => ({
 export const actions = {
   async login({ commit, dispatch }, formData) {
     try {
-      await console.log(formData)
-      // await this.$axios.$post('/api/v1/auth/login', formData)
+      const user = await this.$axios.$post('/api/v1/auth/login', formData)
+      console.log(user)
       // dispatch('setToken', user.token)
       // dispatch('setUserId', user.userId)
       // dispatch('setUserRole', user.role)
     } catch (e) {
-      console.log('asd')
       commit('SET_ERROR', e.response.data.message, { root: true })
       throw e
     }
