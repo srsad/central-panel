@@ -1,6 +1,12 @@
 <template>
   <div :class="['backToTop', active ? 'active' : '']">
-    <el-button @click="toTop" icon="el-icon-arrow-up" title="Вверх" circle />
+    <el-button
+      @click="toTop"
+      type="info"
+      icon="el-icon-arrow-up"
+      title="Вверх"
+      circle
+    />
   </div>
 </template>
 
