@@ -10,6 +10,7 @@ export const state = () => ({
   deviceList: [], // список устройств
   fastPrice: [], // таблица fastPrice источника
   deviceData: null, // данные выбраного устройства - {id: "245", pagetitle: "..."}
+  malfunctionsCategory: [], // список неисправностей выбранной категории
   malfunctionsData: null // список неисправностей выбранного устройства
   // ...
 })
