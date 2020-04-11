@@ -210,6 +210,9 @@ export default {
         formData.append('brand', this.form.brand)
         formData.append('published', this.form.published)
 
+        const categories = await this.$axios.$get(`https://${hostname}/rest/?get=slist`)
+        formData.append('categories', JSON.stringify(categories))
+
         if (this.form.image) {
           this.$axios.setHeader('Content-Type', 'multipart/form-data')
           formData.append('image', this.form.image.raw)
