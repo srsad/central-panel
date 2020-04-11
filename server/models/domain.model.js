@@ -44,6 +44,10 @@ const domainSchema = new Schema({
     type: String,
     maxlength: 16
   },
+  logs: {
+    type: Array,
+    default: []
+  },
   created: {
     type: Date,
     default: Date.now
