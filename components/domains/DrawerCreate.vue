@@ -205,9 +205,19 @@ export default {
     },
     async onCreate() {
       this.loading = true
-      this.form.domain = parseUrl(this.form.domain).hostname
+      let source = this.form.domain
+      let hostname = ''
+      try {
+        // eslint-disable-next-line no-new
+        new URL(source)
+      } catch {
+        source = 'https://' + source
+      }
+      hostname = parseUrl(source).hostname
+
       try {
         const formData = this.form
+        formData.domain = hostname
         await this.$store.dispatch('domains/createDomain', formData)
         this.$store.dispatch('domains/fetchDomains')
         this.clearForm()

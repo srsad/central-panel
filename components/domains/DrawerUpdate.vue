@@ -101,6 +101,7 @@
 </template>
 
 <script>
+import parseUrl from 'url-parse'
 // import access from '../../../utils/access'
 
 export default {
@@ -213,8 +214,19 @@ export default {
     },
     async onUpdate() {
       this.loading = true
+      let source = this.form.domain
+      let hostname = ''
+      try {
+        // eslint-disable-next-line no-new
+        new URL(source)
+      } catch {
+        source = 'https://' + source
+      }
+      hostname = parseUrl(source).hostname
+
       try {
         const formData = this.form
+        formData.domain = hostname
         await this.$store.dispatch('domains/updateDomain', formData)
         this.$store.dispatch('domains/fetchDomains')
         this.clearForm()
