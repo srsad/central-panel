@@ -42,6 +42,10 @@ const sourceSite = new Schema({
     default: 0,
     index: true
   },
+  categories: {
+    type: Array,
+    default: []
+  },
   created: {
     type: Date,
     default: Date.now
