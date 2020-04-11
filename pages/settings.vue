@@ -1,14 +1,16 @@
 <template>
   <div class="row w100" style="margin-top:15px;">
     <div class="col-12">
-      <el-tabs value="apikey">
+      <el-tabs value="serrings">
+        <el-tab-pane label="Общие настройки" name="serrings">
+          <app-other-settings />
+        </el-tab-pane>
         <el-tab-pane label="API ключи" name="apikey">
-          <AppApiKey />
+          <app-api-key />
         </el-tab-pane>
         <el-tab-pane label="Список городов" name="second">
           <app-cityes />
         </el-tab-pane>
-        <el-tab-pane label="Три" name="third">Три</el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -17,11 +19,13 @@
 <script>
 import AppApiKey from '~/components/settings/ApiKeys'
 import AppCityes from '~/components/settings/Cityes'
+import AppOtherSettings from '~/components/settings/OtherSettings'
 
 export default {
   components: {
     AppApiKey,
-    AppCityes
+    AppCityes,
+    AppOtherSettings
   },
   fetch({ store }) {
     store.dispatch('settings/setBreadcrumbs', [
