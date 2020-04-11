@@ -18,7 +18,9 @@ module.exports.update = async (req, res) => {
     await City.findOneAndUpdate({ _id: req.params.id }, { $set }, { new: true })
     res.json({ message: 'Данные обновленны!' })
   } catch (error) {
-    res.status(500).json({ message: 'Не обновить данные города!', error })
+    res
+      .status(500)
+      .json({ message: 'Не удалось обновить данные города!', error })
   }
 }
 
@@ -35,7 +37,7 @@ module.exports.remove = async (req, res) => {
 /** Вернуть по id */
 module.exports.getById = async (req, res) => {
   try {
-    const user = await City.findById()
+    const user = await City.findById(req.params.id)
     res.status(200).json(user)
   } catch (error) {
     req.status(500).json({ message: 'Не удалось полуичть город!', error })

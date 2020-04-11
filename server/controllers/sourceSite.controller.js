@@ -10,6 +10,9 @@ module.exports.create = async (req, res) => {
     delete formData.image
     // formData.menuindex = await getNextSequence()
     formData.menuindex = 0
+    if (formData.categories) {
+      formData.categories = JSON.parse(formData.categories)
+    }
     const sourceSite = new SSite(formData)
     await sourceSite.save()
     // если еcть картинка
@@ -63,6 +66,7 @@ module.exports.update = async (req, res) => {
         bufferImage: req.files.image.data
       })
     }
+    if ($set.categories) $set.categories = JSON.parse($set.categories)
     if (logoPath !== '') $set.image = logoPath
     await SSite.updateOne({ _id: req.params.id }, { $set }, { new: true })
     res.json({ message: 'Данные обновленны!' })

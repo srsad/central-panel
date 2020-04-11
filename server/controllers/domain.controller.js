@@ -26,7 +26,9 @@ module.exports.update = async (req, res) => {
     )
     res.json({ message: 'Данные обновленны!' })
   } catch (error) {
-    res.status(500).json({ message: 'Не обновить данные домена!', error })
+    res
+      .status(500)
+      .json({ message: 'Не удалось обновить данные домена!', error })
   }
 }
 
@@ -43,7 +45,7 @@ module.exports.remove = async (req, res) => {
 /** Вернуть по id */
 module.exports.getById = async (req, res) => {
   try {
-    const domain = await Domain.findById()
+    const domain = await Domain.findById(req.params.id)
     res.status(200).json(domain)
   } catch (error) {
     req.status(500).json({ message: 'Не удалось полуичть домен!', error })
