@@ -19,7 +19,9 @@ export const state = () => ({
   drawerUpdateDomains: false, // Окно для редактироавния доменного имени
   drawerCreateSource: false, // Окно для создания/подключения нового источника (подключем новый сайт)
   drawerUpdateSource: false, // Окно для редактироавния нового источника
-  drawerDeviceMalf: false // Окно со списком неисправностей устройства
+  drawerDeviceMalf: false, // Окно со списком неисправностей устройства
+  drawerCreatePartItem: false, // Окно для создания детали
+  drawerUpdatePartItem: false // Окно для редактироавния детали
 })
 
 export const actions = {
