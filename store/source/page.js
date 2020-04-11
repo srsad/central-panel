@@ -16,16 +16,18 @@ export const state = () => ({
 
 export const actions = {
   /** Параметры источника и список категорий */
-  async getPage({ commit }, id) {
+  async getPage({ store, commit }, id) {
     commit('SET_PARAMS', {})
     try {
       // данные источника
+      // TODO доставать из стора
       const source = await this.$axios.$get('/api/v1/source-site/get/' + id)
       if (source.data) {
-        commit('SET_PARAMS', source.data)
+        const params = JSON.parse(JSON.stringify(source.data))
+        delete params.categories
+        commit('SET_PARAMS', params)
         // категории источника
-        const categories = await this.$axios.$get(`https://${source.data.source}/rest/?get=slist`)
-        commit('SET_CATEGORIES', categories)
+        commit('SET_CATEGORIES', source.data.categories)
       }
     } catch (e) {
       commit('SET_ERROR', e.response.data.message, { root: true })
