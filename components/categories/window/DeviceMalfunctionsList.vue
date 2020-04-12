@@ -40,6 +40,9 @@
 </template>
 
 <script>
+/**
+ * Список неисправностей устройства
+ */
 export default {
   computed: {
     deviceData() {
