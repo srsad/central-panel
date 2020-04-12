@@ -3,8 +3,7 @@ const Part = require('../models/part.model')
 /** Создание */
 module.exports.create = async (req, res) => {
   try {
-    const part = new Part(req.body)
-    await part.save()
+    await Part.create(req.body)
     res.status(201).json({ message: 'Деталь успешно добавленна!' })
   } catch (error) {
     // console.error('error part.controller - create', error)
@@ -41,13 +40,33 @@ module.exports.remove = async (req, res) => {
  * Если не сущетсвует, то создаем
  * */
 module.exports.check = async (req, res) => {
-  try {
-    const part = new Part(req.body)
-    await part.save()
-    res.status(201).json({ message: 'Деталь успешно добавленна!' })
-  } catch (error) {
-    // console.error('error part.controller - create', error)
-    res.status(409).json({ message: 'Не удалось добавить деталь!' })
+  const candidate = await Part.findOne({
+    name: req.body.name,
+    brand: req.body.brand,
+    category: req.body.category
+  })
+
+  if (candidate) {
+    // обновляем
+    const $set = req.body
+    try {
+      await Part.updateOne({ _id: candidate._id }, { $set }, { new: true })
+      res.json({ message: 'Данные обновленны!' })
+    } catch (error) {
+      console.error('error part.controller - check | upd', error)
+      res
+        .status(500)
+        .json({ message: 'Не удалось обновить данные домена!', error })
+    }
+  } else {
+    // создаем
+    try {
+      await Part.create(req.body)
+      res.status(201).json({ message: 'Деталь успешно добавленна!' })
+    } catch (error) {
+      console.error('error part.controller - check | create', error)
+      res.status(409).json({ message: 'Не удалось добавить деталь!' })
+    }
   }
 }
 
@@ -61,10 +80,11 @@ module.exports.getById = async (req, res) => {
   }
 }
 
-/** Вернуть весь список */
+/** Вернуть список деталей */
 module.exports.getAll = async (req, res) => {
-  const where = req.body.brand ? req.body.brand : {}
-  if (req.body.brand) where.brand = req.body.brand.toLowerCase()
+  const where = {}
+  if (req.query.brand) where.brand = req.query.brand.toLowerCase()
+  if (req.query.category) where.category = req.query.category.toLowerCase()
   try {
     const parts = await Part.find(where).sort({ created: -1 })
     res.json({ data: parts })
