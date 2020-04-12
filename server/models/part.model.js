@@ -20,7 +20,7 @@ const part = new Schema({
   },
   // категория к которой привязана деталь (смартфоны/ноутбуки/моноблоки и т.д.)
   category: {
-    type: Array
+    type: String
   },
   // цена детали
   price: {
