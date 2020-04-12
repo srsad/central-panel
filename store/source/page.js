@@ -10,7 +10,8 @@ export const state = () => ({
   deviceList: [], // список устройств
   fastPrice: [], // таблица fastPrice источника
   deviceData: null, // данные выбраного устройства - {id: "245", pagetitle: "..."}
-  malfunctionsCategory: [], // список неисправностей выбранной категории
+  partsCategory: [], // список неисправностей выбранной категории
+  partItem: null, // деталь для редактировать
   malfunctionsData: null // список неисправностей выбранного устройства
   // ...
 })
@@ -55,9 +56,28 @@ export const actions = {
       throw e
     }
   },
+  async getParts({ commit, state }) {
+    try {
+      const parts = await this.$axios.$get('/api/v1/part/getAll', {
+        params: {
+          brand: state.params.brand,
+          category: state.categoryName
+        }
+      })
+      commit('SET_PARTS', parts.data)
+    } catch (e) {
+      console.error('Ошибка, не удалось получить список устройств или быстрый прайс', e)
+      commit('SET_ERROR', e.response.data.message, { root: true })
+      throw e
+    }
+  },
   /** Установка списка категорий */
   setCategories({ commit }, categories) {
     commit('SET_CATEGORIES', categories)
+  },
+  /** Установка детали для редактирования */
+  setPart({ commit }, part) {
+    commit('SET_PART', part)
   },
   /** Установка параметров источника */
   setParams({ commit }, patams) {
@@ -115,12 +135,20 @@ export const mutations = {
   SET_MALFUNCTIONS_DATA(state, malfunctionsData) {
     state.malfunctionsData = malfunctionsData
   },
+  SET_PARTS(state, parts) {
+    state.partsCategory = parts
+  },
+  SET_PART(state, part) {
+    state.partItem = part
+  },
   CLEAR_ALL_PARAMS(state) {
     state.params = {}
     state.categories = []
     state.categoryName = ''
     state.deviceList = []
     state.fastPrice = []
+    state.malfunctionsCategory = []
+    state.malfunctionsData = null
   }
 }
 
@@ -130,5 +158,6 @@ export const getters = {
   deviceList: (state) => state.deviceList,
   fastPrice: (state) => state.fastPrice,
   deviceData: (state) => state.deviceData,
+  partsCategory: (state) => state.partsCategory,
   malfunctionsData: (state) => state.malfunctionsData
 }
