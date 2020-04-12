@@ -21,6 +21,7 @@
       element-loading-text="Загрузка..."
       element-loading-spinner="el-icon-loading"
     />
+
     <div class="col-12">
       <h3>{{ $store.state.source.page.categoryName }}</h3>
     </div>
@@ -49,14 +50,19 @@
         </div>
         <div class="col-1">
           <div class="sticky-top">
-            panel
+            <app-action-panel />
           </div>
         </div>
       </div>
     </div>
     <!-- окно неисправностей устройства -->
     <app-device-malfunctions-list />
-    <!-- end окно неисправностей устройства -->
+    <!-- окно создание детали -->
+    <app-create-part-item />
+    <!-- окно редактирования детали -->
+    <app-update-part-item />
+    <!-- окно списка деталей/неисправностей -->
+    <app-part-list />
   </div>
 </template>
 
@@ -65,19 +71,28 @@ import AppCategoryItem from '~/components/categories/CategoryItem'
 import AppDeviceGrid from '~/components/categories/DeviceGrid'
 import AppFastPrice from '~/components/categories/FastPrice'
 import AppDeviceMalfunctionsList from '~/components/categories/window/DeviceMalfunctionsList'
+import AppActionPanel from '~/components/categories/ActionPanel'
+import AppCreatePartItem from '~/components/categories/window/CreatePartItem'
+import AppUpdatePartItem from '~/components/categories/window/UpdatePartItem'
+import AppPartList from '~/components/categories/window/PartList'
 
 export default {
   components: {
     AppCategoryItem,
     AppDeviceGrid,
     AppFastPrice,
-    AppDeviceMalfunctionsList
+    AppDeviceMalfunctionsList,
+    AppActionPanel,
+    AppCreatePartItem,
+    AppUpdatePartItem,
+    AppPartList
   },
   async validate({ params, store }) {
     // отчищаем все категории
     store.dispatch('source/page/clearAllParams')
     let res = false
     try {
+      // загрузка данных страницы
       await store.dispatch('source/page/getPage', params.id)
       const page = await store.getters['source/page/params']
       store.dispatch('settings/setBreadcrumbs', [
@@ -86,7 +101,7 @@ export default {
           label: page.brand + ' - ' + page.company
         }
       ])
-      if (page) res = true
+      if (page) res = true // false => 404
     } catch (e) {
       //
     }
@@ -108,11 +123,15 @@ export default {
   },
   methods: {
     loadDeviceList(item) {
+      // установка заголовка категории
       this.$store.dispatch('source/page/setCategoryName', item.pagetitle)
+      // загрузка списка устройств
       this.$store.dispatch('source/page/getDeviceList', {
         siteUrl: this.page.source,
         id: item.id
       })
+      // загрузка неисправностей категории
+      this.$store.dispatch('source/page/getParts')
     }
   }
 }
