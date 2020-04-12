@@ -25,22 +25,7 @@
           <b class="color-000">{{ scope.row.pagetitle }}</b>
         </template>
       </el-table-column>
-      <el-table-column prop="tv_filterPhone" label="Серия">
-        <!-- eslint-disable-next-line vue/no-unused-vars -->
-        <template slot="header" slot-scope="scope">
-          <div class="d-flex">
-            <div class="cell">Серия</div>
-            <i class="fa fa-filter" style="padding:5px 10px 0 0" />
-            <el-input
-              v-model="searchSeries"
-              size="mini"
-              style="display:inline;width:150px"
-              placeholder="Поиск по серии"
-              clearable
-            />
-          </div>
-        </template>
-      </el-table-column>
+      <el-table-column prop="tv_filterPhone" label="Серия" />
       <el-table-column prop="address" label="Неисправности" width="180">
         <template slot-scope="scope">
           <div class="text-center">
@@ -58,8 +43,7 @@
 export default {
   data() {
     return {
-      searchModel: '',
-      searchSeries: ''
+      searchModel: ''
     }
   },
   computed: {
@@ -68,18 +52,11 @@ export default {
     },
     searchDevice() {
       const model = this.searchModel.toLowerCase()
-      const series = this.searchSeries.toLowerCase()
       let result = this.deviceList
 
       if (model.length > 0) {
         result = result.filter((device) => {
           return device.pagetitle.toLowerCase().match(model)
-        })
-      }
-
-      if (series.length > 0) {
-        result = result.filter((device) => {
-          return device.tv_filterPhone.toLowerCase().match(series)
         })
       }
 
