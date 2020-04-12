@@ -149,8 +149,8 @@ export default {
     return {
       loading: false,
       form: {
-        name: 'Test name',
-        price: '500',
+        name: '',
+        price: '',
         brand: '',
         category: '',
         impuls: '',
