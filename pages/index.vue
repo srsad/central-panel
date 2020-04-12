@@ -30,7 +30,7 @@
       </div>
       <draggable
         :list="sources.rservice"
-        @change="log"
+        @change="onLog"
         v-bind="dragOptions"
         @start="drag = true"
         @end="drag = false"
@@ -45,7 +45,7 @@
         >
           <app-source-item
             v-for="element in sources.rservice"
-            :key="element.name"
+            :key="element._id"
             :item="element"
             @edit="openEditWindow"
             @remove="onRemove"
@@ -66,7 +66,7 @@
       </div>
       <draggable
         :list="sources.impuls"
-        @change="log"
+        @change="onLog"
         v-bind="dragOptions"
         @start="drag = true"
         @end="drag = false"
@@ -81,7 +81,7 @@
         >
           <app-source-item
             v-for="element in sources.impuls"
-            :key="element.name"
+            :key="element._id"
             :item="element"
             @edit="openEditWindow"
             @remove="onRemove"
@@ -139,7 +139,7 @@ export default {
   },
   methods: {
     /** Лог перемещений и перемещение между командами */
-    async log(evt) {
+    async onLog(evt) {
       // console.log('evt', evt)
       if (evt.added) {
         const sources = await JSON.parse(JSON.stringify(this.sources))
@@ -162,7 +162,7 @@ export default {
               customClass: 'success-notyfy'
             })
           } catch (e) {
-            console.log(e)
+            // console.log(e)
             this.$store.commit('SET_ERROR', e.response.data.message)
           }
         }
