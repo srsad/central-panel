@@ -46,11 +46,12 @@ module.exports.check = async (req, res) => {
     category: req.body.category
   })
 
-  if (candidate) {
+  if (candidate || req.body._id) {
+    const id = req.body._id || candidate._id
     // обновляем
     const $set = req.body
     try {
-      await Part.updateOne({ _id: candidate._id }, { $set }, { new: true })
+      await Part.updateOne({ _id: id }, { $set }, { new: true })
       res.json({ message: 'Данные обновленны!' })
     } catch (error) {
       console.error('error part.controller - check | upd', error)
@@ -83,6 +84,7 @@ module.exports.getById = async (req, res) => {
 /** Вернуть список деталей */
 module.exports.getAll = async (req, res) => {
   const where = {}
+  if (req.query.name) where.name = req.query.name
   if (req.query.brand) where.brand = req.query.brand.toLowerCase()
   if (req.query.category) where.category = req.query.category.toLowerCase()
   try {
