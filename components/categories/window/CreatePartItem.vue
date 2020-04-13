@@ -71,8 +71,7 @@
             placeholder="Другие разделы"
           >
             <div slot="value-label" slot-scope="{ node }">
-              {{ node.raw.brand }} - {{ node.raw.company }} =>
-              {{ node.raw.label }}
+              {{ node.raw.brand }} => {{ node.raw.label }}
             </div>
           </treeselect>
         </div>
