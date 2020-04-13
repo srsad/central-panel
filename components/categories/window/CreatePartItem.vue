@@ -90,6 +90,7 @@
           <div class="col-7 mb-10">
             <el-select
               v-model="form.excepts[idx].model"
+              @change="changeException"
               filterable
               placeholder="Модель"
               class="w100"
@@ -303,6 +304,16 @@ export default {
         dranwer: 'drawerCreatePartItem',
         status: false
       })
+    },
+    /** Проверка выбранного исключения на дубль */
+    changeException(device) {
+      const items = this.form.excepts.filter((el) => el.model === device)
+      if (items.length > 1) {
+        this.$store.commit(
+          'SET_ERROR',
+          'Это устройство уже есть в списке исключений!'
+        )
+      }
     },
     /** Добавить исключение */
     addNewExcept(idx) {
