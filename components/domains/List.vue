@@ -14,11 +14,17 @@
         />
       </template>
     </el-table-column>
-    <el-table-column prop="sitestatus" label="" width="30" />
-    <el-table-column prop="brand" label="Бренд" width="100" />
+    <el-table-column prop="sitestatus" label="" width="10" />
+    <el-table-column
+      :filters="brands_"
+      :filter-method="filterHandlerBrands"
+      prop="brand"
+      label="Бренд"
+      width="150"
+    />
     <el-table-column
       :filters="cities_"
-      :filter-method="filterHandler"
+      :filter-method="filterHandlerCities"
       label="Город"
       width="200"
     >
@@ -95,10 +101,10 @@ export default {
   data() {
     return {
       loading: false,
-      // список для фильтра в таблице
-      cities_: [],
-      // список для фильтрации
-      cities: []
+      cities_: [], // список городов для фильтра в таблице
+      cities: [], // список для фильтрации городов
+      brands_: [], // список брендов для фильтра в таблице
+      brands: [] // список для фильтрации брендов
     }
   },
   mounted() {
@@ -175,8 +181,17 @@ export default {
       }
     },
     /** Фильтр по городам */
-    filterHandler(value, row) {
+    filterHandlerCities(value, row) {
       return row.city === value
+    },
+    /** Получаем уникальный список брендов */
+    getAllBrends(brand) {
+      if (this.brands_.length === 0 || this.brands.length === 0) return ''
+      return this.brands.find((el) => el.value === brand).label
+    },
+    /** Фильтр по брендам */
+    filterHandlerBrands(value, row) {
+      return row.brand === value
     }
   }
 }

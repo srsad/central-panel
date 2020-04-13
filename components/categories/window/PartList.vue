@@ -60,23 +60,36 @@
             </template>
           </el-table-column>
           <!-- end name -->
-          <el-table-column property="price" label="Цена детали">
+          <el-table-column property="price" width="120">
+            <template slot="header">
+              <div class="cell text-center">Цена<br />детали</div>
+            </template>
             <template slot-scope="scope">
-              {{ scope.row.price | toFix }}
+              <div class="text-center">{{ scope.row.price | toFix }}</div>
             </template>
           </el-table-column>
-          <el-table-column property="rservice" label="Цена rservice">
+          <el-table-column
+            property="rservice"
+            label="Цена rservice"
+            width="120"
+          >
+            <template slot="header">
+              <div class="cell text-center">Цена<br />rservice</div>
+            </template>
             <template slot-scope="scope">
-              {{ scope.row.rservice | toFix }}
+              <div class="text-center">{{ scope.row.rservice | toFix }}</div>
             </template>
           </el-table-column>
-          <el-table-column property="impuls" label="Цена impuls">
+          <el-table-column property="impuls" width="120">
+            <template slot="header">
+              <div class="cell text-center">Цена<br />impuls</div>
+            </template>
             <template slot-scope="scope">
-              {{ scope.row.impuls | toFix }}
+              <div class="text-center">{{ scope.row.impuls | toFix }}</div>
             </template>
           </el-table-column>
           <!-- actions -->
-          <el-table-column>
+          <el-table-column width="100">
             <template slot-scope="scope">
               <el-button-group>
                 <el-button
@@ -86,6 +99,7 @@
                   size="mini"
                   icon="el-icon-edit"
                   title="Редактировать"
+                  style="padding: 7px 8px"
                 />
               </el-button-group>
               <!--  -->
@@ -104,6 +118,7 @@
                   type="danger"
                   title="Удалить"
                   icon="el-icon-delete"
+                  style="padding: 7px 8px"
                 />
               </el-popconfirm>
             </template>
