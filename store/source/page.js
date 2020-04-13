@@ -159,5 +159,55 @@ export const getters = {
   fastPrice: (state) => state.fastPrice,
   deviceData: (state) => state.deviceData,
   partsCategory: (state) => state.partsCategory,
-  malfunctionsData: (state) => state.malfunctionsData
+  /** Список деталей и неисправностей */
+  malfunctionsData: (state) => {
+    if (!state.malfunctionsData || !state.partsCategory) return
+    const malfunctions = new Map()
+    // _id - если из списка деталей
+    // name - наименование, проверяем на сходство из списка неисправностей и списка деталей
+    // time - время ремонта
+    // price - цена детали, если есть исключение то цена из исключения
+    // rprice - цена для rprice, если есть исключение то цена из исключения
+    // iprice - цена для iprice, если есть исключение то цена из исключения
+    // проходимся по списку неисправностей
+    for (const item of state.malfunctionsData) {
+      malfunctions.set(item.pagetitle, {
+        _id: '',
+        name: item.pagetitle,
+        time: item.value,
+        price: '',
+        rprice: item.price,
+        iprice: item.price2,
+        excepts: false
+      })
+    }
+    // проходимся по списку деталей
+    for (const item of state.partsCategory) {
+      const malf = {...malfunctions.get(item.name)}
+      let price = item.price
+      let excepts = false
+      // поиск цены детали для исключения
+      if (item.excepts) {
+        for (const el of item.excepts) {
+          if (el.model === state.deviceData.pagetitle) {
+            price = el.price
+            excepts = true
+            break
+          }
+        }
+      }
+
+      malf._id = item._id
+      malf.name = item.name
+      malf.price = price
+      malf.rprice = item.rservice
+      malf.iprice = item.impuls
+      malf.excepts = excepts
+      malfunctions.set(item.name, malf)
+    }
+    // наполняем ответ
+    const res = []
+    malfunctions.forEach((el) => res.push(el))
+    return res
+  }
 }
