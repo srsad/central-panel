@@ -13,6 +13,7 @@ const router = Router()
 router.get('/getall', getAll)
 router.get('/get/:id', getById)
 router.post('/create', create)
+// TODO зменить все update post => put
 router.post('/update/:id', update)
 router.delete('/remove/:id', remove)
 
