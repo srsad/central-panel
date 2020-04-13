@@ -20,7 +20,7 @@ module.exports.update = async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ message: 'Не удалось обновить данные домена!', error })
+      .json({ message: 'Не удалось обновить данные детали!', error })
   }
 }
 
@@ -57,7 +57,7 @@ module.exports.check = async (req, res) => {
       console.error('error part.controller - check | upd', error)
       res
         .status(500)
-        .json({ message: 'Не удалось обновить данные домена!', error })
+        .json({ message: 'Не удалось обновить данные детали!', error })
     }
   } else {
     // создаем
@@ -77,7 +77,7 @@ module.exports.getById = async (req, res) => {
     const part = await Part.findById(req.params.id)
     res.status(200).json(part)
   } catch (error) {
-    req.status(500).json({ message: 'Не удалось полуичть домен!', error })
+    req.status(500).json({ message: 'Не удалось полуичть деталь!', error })
   }
 }
 
@@ -91,6 +91,6 @@ module.exports.getAll = async (req, res) => {
     const parts = await Part.find(where).sort({ created: -1 })
     res.json({ data: parts })
   } catch (error) {
-    res.status(500).json({ message: 'Не удалось получить список доменов!' })
+    res.status(500).json({ message: 'Не удалось получить список деталей!' })
   }
 }
