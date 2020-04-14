@@ -7,19 +7,27 @@ import jwtDecode from 'jwt-decode'
 import Cookies from 'js-cookie'
 
 export const state = () => ({
-  token: null,
-  userId: null,
-  sessionId: null
+  token: null
+  // userId: null,
+  // sessionId: null
 })
 
 export const actions = {
-  async login({ commit, dispatch }, formData) {
+  async login({ commit }, formData) {
     try {
       const user = await this.$axios.$post('/api/v1/auth/login', formData)
       console.log(user)
-      // dispatch('setToken', user.token)
-      // dispatch('setUserId', user.userId)
-      // dispatch('setUserRole', user.role)
+      commit('SET_TOKEN', user.token)
+    } catch (e) {
+      commit('SET_ERROR', e.response.data.message, { root: true })
+      throw e
+    }
+  },
+  async logout({ commit }) {
+    try {
+      await console.log('action logout')
+      // TODO удаление сессии и токена
+      commit('CLEAR_TOKEN')
     } catch (e) {
       commit('SET_ERROR', e.response.data.message, { root: true })
       throw e
@@ -41,7 +49,7 @@ export const mutations = {
 }
 
 export const getters = {
-  isAuthenticated: (state) => ~~state.token
+  isAuthenticated: (state) => Boolean(state.token)
 }
 
 // eslint-disable-next-line no-unused-vars

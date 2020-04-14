@@ -37,12 +37,17 @@ import * as Fingerprint2 from 'fingerprintjs2'
 
 export default {
   layout: 'auth',
+  validate({ store, redirect }) {
+    if (store.getters['auth/isAuthenticated']) {
+      redirect('/')
+    }
+  },
   data() {
     return {
       loading: false,
       form: {
-        login: 'admin',
-        password: '51216261024'
+        login: 'test',
+        password: 'test'
       },
       rules: {
         login: [
