@@ -9,8 +9,7 @@ import Cookies from 'js-cookie'
 export const state = () => ({
   token: null,
   userId: null,
-  sessionId: null,
-  role: null // роль пользователя
+  sessionId: null
 })
 
 export const actions = {
@@ -39,6 +38,10 @@ export const mutations = {
     this.$axios.setToken(false)
     Cookies.remove('jwt-token')
   }
+}
+
+export const getters = {
+  isAuthenticated: (state) => ~~state.token
 }
 
 // eslint-disable-next-line no-unused-vars

@@ -33,7 +33,7 @@ import AppMainSearch from '~/components/common/MainSearch'
 import AppBackToTop from '~/components/common/BackToTop'
 
 export default {
-  // midleware: ['auth']
+  middleware: ['auth'],
   components: {
     AppSidebar,
     AppNavbar,
