@@ -8,6 +8,7 @@
         :disabled="loading"
         class="authBox"
       >
+        <h3 class="text-center mb-20">Вход</h3>
         <el-form-item prop="login">
           <el-input v-model="form.login" placeholder="Логин" />
         </el-form-item>
@@ -42,7 +43,7 @@ export default {
       loading: false,
       form: {
         login: 'test',
-        password: 'test'
+        password: 'testpass'
       },
       rules: {
         login: [
@@ -89,8 +90,9 @@ export default {
         const formData = this.form
         formData.fingerprint = fingerprint
         await this.$store.dispatch('auth/login', formData)
+        this.$router.push('/')
       } catch (e) {
-        // this.$store.commit('SET_ERROR', e.response.data.message)
+        //
       } finally {
         this.loading = false
       }
