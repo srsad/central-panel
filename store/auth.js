@@ -52,7 +52,7 @@ export const mutations = {
   CLEAR_TOKEN(state) {
     state.token = null
     this.$axios.setToken(false)
-    Cookies.remove('jwt-token')
+    Cookies.remove('cp-token')
   }
 }
 
