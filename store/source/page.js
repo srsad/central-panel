@@ -2,6 +2,7 @@
 /**
  * Стор для работы с данными источника
  */
+import Cookie from 'cookie'
 
 export const state = () => ({
   params: {}, // данные источника
@@ -18,7 +19,7 @@ export const state = () => ({
 
 export const actions = {
   /** Параметры источника и список категорий */
-  async getPage({ store, commit }, id) {
+  async getPage({ commit }, id) {
     commit('SET_PARAMS', {})
     try {
       // данные источника
@@ -41,6 +42,7 @@ export const actions = {
     commit('SET_DEVICE_LIST', [])
     commit('SET_FAST_PRICE', [])
     try {
+      this.$axios.setToken(false)
       // список устройств
       const deviceList = await this.$axios.$get(`https://${siteUrl}/rest/?get=dlist&categoryid=${id}`)
       if (deviceList.success !== 'false') {
@@ -54,6 +56,8 @@ export const actions = {
       console.error('Ошибка, не удалось получить список устройств или быстрый прайс', e)
       commit('SET_ERROR', e.response.data.message, { root: true })
       throw e
+    } finally {
+      this.$axios.setToken(getCookiesToken(), 'Bearer')
     }
   },
   async getParts({ commit, state }) {
@@ -99,12 +103,15 @@ export const actions = {
   async setDeviceData({ commit, state }, deviceData) {
     commit('SET_DEVICE_DATA', deviceData)
     try {
+      this.$axios.setToken(false)
       const malfunctions = await this.$axios.$get(
         `https://${state.params.source}/rest/?get=dmlist&device=${deviceData.id}&company=${state.params.company}`
       )
       commit('SET_MALFUNCTIONS_DATA', malfunctions)
     } catch (e) {
       commit('SET_ERROR', e.response.data.message, { root: true })      
+    } finally {
+      this.$axios.setToken(getCookiesToken(), 'Bearer')
     }
   },
   /** Отчистка всех параметров */
@@ -210,4 +217,16 @@ export const getters = {
     malfunctions.forEach((el) => res.push(el))
     return res
   }
+}
+
+/** 
+ * Отдает токен из куки
+ * TODO это костыль, но как делать отдельные ззапросы вне конткста красиво, я пока не придумал
+ */
+function getCookiesToken() {
+  const cookieStr = process.browser
+    ? document.cookie
+    : this.app.context.req.headers.cookie
+  const cookies = Cookie.parse(cookieStr || '') || {}
+  return cookies['jwt-token']
 }
