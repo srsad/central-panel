@@ -20,6 +20,7 @@ $ npm run generate
 
 
 - TODO аутентификация/авторизация
+  - ~~TODO login/logout~~
   - TODO защита страниц
   - TODO защита роутов
 - TODO CASL
