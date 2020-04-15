@@ -4,7 +4,7 @@ export default function({ $axios, redirect, store }) {
       store.getters['auth/isAuthenticated'] &&
       !request.headers.common.Authorization &&
       // TODO чекать это условие
-      // исключаем заголовок аторизации cors
+      // исключаем заголовок аторизации cors для источников
       !request.url.includes('/rest/?')
     ) {
       request.headers.common.Authorization = `Bearer ${store.getters['auth/token']}`
