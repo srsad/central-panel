@@ -13,6 +13,7 @@ export const mutations = {
 
 export const actions = {
   async nuxtServerInit({ dispatch }, { req }) {
+    await dispatch('auth/autoLogin') // автологин
     await dispatch('settings/loadSettings') // загрузка общих настроек
   }
 }
