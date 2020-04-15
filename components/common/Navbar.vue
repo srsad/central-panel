@@ -20,14 +20,12 @@ export default {
   methods: {
     handleCommand(data) {
       if (data === 'logout') {
-        this.logout()
+        // debugger
+        this.$store.dispatch('auth/logout')
+        this.$router.push('/auth')
       } else {
-        // console.log(data)
         this.$router.push(data)
       }
-    },
-    logout() {
-      console.log('logout')
     }
   }
 }
