@@ -1,9 +1,12 @@
 require('dotenv').config()
 const mongoose = require('mongoose')
 const express = require('express')
+const cors = require('cors')
+const passport = require('passport')
 const compression = require('compression')
 const bodyParser = require('body-parser')
 
+const passportStrategy = require('./middleware/passport-strategy')
 const roleRoutes = require('./routes/v1/role.routs')
 const userRoutes = require('./routes/v1/user.routs')
 const authRoutes = require('./routes/v1/auth.routs')
@@ -25,9 +28,10 @@ mongoose
   .then(() => console.log('MongoDB connected...'))
   .catch((e) => console.error('MongoDB connection error', e))
 
+app.use(cors())
 app.use(compression())
-// app.use(passport.initialize())
-// passport.use(passportStrategy)
+app.use(passport.initialize())
+passport.use(passportStrategy)
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
