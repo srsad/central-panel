@@ -4,7 +4,13 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/user.model')
 
 module.exports.login = async (req, res) => {
-  const candidate = await User.findOne({ login: req.body.login })
+  const candidate = await User.findOne(
+    {
+      login: req.body.login
+    },
+    { password: -1 }
+  ).populate('role', { access: 1 })
+  // TODO проверка статуса пользователя
   if (candidate) {
     // проверка пароля
     const isCorrect = bcrypt.compareSync(req.body.password, candidate.password)
@@ -13,7 +19,7 @@ module.exports.login = async (req, res) => {
         {
           userId: candidate._id,
           login: candidate.login,
-          roleId: candidate.role
+          roleId: candidate.role._id
           // fingerprint: req.body.fingerprint
         },
         process.env.JWT,
@@ -22,20 +28,22 @@ module.exports.login = async (req, res) => {
         { expiresIn: 60 * 20 }
       )
 
-      const refreshToken = jwt.sign(
-        {
-          userId: candidate._id,
-          login: candidate.login,
-          roleId: candidate.role
-          // fingerprint: req.body.fingerprint
-        },
-        process.env.JWT,
-        { expiresIn: 60 * 60 }
-      )
+      // в качестве refreshToken будет id записи в таблице сессий
+      // const refreshToken = jwt.sign(
+      //   {
+      //     userId: candidate._id,
+      //     login: candidate.login,
+      //     roleId: candidate.role
+      //     // fingerprint: req.body.fingerprint
+      //   },
+      //   process.env.JWT,
+      //   { expiresIn: 60 * 60 }
+      // )
 
+      const refreshToken = null
       res.status(200).json({ token, refreshToken })
     } else {
-      res.status(401).json({ message: 'Неверный логин или пароль' })
+      res.status(404).json({ message: 'Неверный логин или пароль' })
     }
   } else {
     // Пользователь не найден
