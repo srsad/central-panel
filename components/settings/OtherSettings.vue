@@ -30,6 +30,7 @@ export default {
         await this.$store.dispatch('source/control/fetchItems')
       }
       const sources = this.$store.getters['source/control/sources']
+      this.$axios.setToken(false)
       // проходимся по каждому источнику, достаем его категории и обновляем туществующие
       for (const el of sources) {
         const categories = await this.$axios.$get(`https://${el.source}/rest/?get=slist`)
@@ -37,11 +38,13 @@ export default {
         formData.append('categories', JSON.stringify(categories))
         await this.$axios.$post('/api/v1/source-site/update/' + el._id, formData)
       }
+      this.$axios.setToken(this.$store.getters['auth/token'], 'Bearer')
       await this.$store.dispatch('source/control/fetchItems')
       this.$notify({
         message: 'Список категорий успушно обновлен!',
         customClass: 'success-notyfy'
       })
+      this.loading = false
     }
   }
 }

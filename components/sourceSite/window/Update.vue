@@ -209,7 +209,7 @@ export default {
         formData.append('company', this.form.company)
         formData.append('brand', this.form.brand)
         formData.append('published', this.form.published)
-
+        this.$axios.setToken(false)
         const categories = await this.$axios.$get(`https://${hostname}/rest/?get=slist`)
         formData.append('categories', JSON.stringify(categories))
 
@@ -218,6 +218,7 @@ export default {
           formData.append('image', this.form.image.raw)
         }
         await this.$axios.$post('/api/v1/source-site/update/' + this.form._id, formData)
+        this.$axios.setToken(this.$store.getters['auth/token'], 'Bearer')
         this.$store.dispatch('source/control/fetchItems')
         this.clearForm()
         this.$notify({
