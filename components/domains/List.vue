@@ -3,6 +3,7 @@
     :data="items"
     @row-dblclick="edit"
     :row-style="tableRowStyle"
+    size="mini"
     empty-text="Нет данных"
   >
     <el-table-column label="" width="10">
@@ -20,7 +21,7 @@
       :filter-method="filterHandlerBrands"
       prop="brand"
       label="Бренд"
-      width="150"
+      width="160"
     />
     <el-table-column
       :filters="cities_"
