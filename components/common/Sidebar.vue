@@ -23,12 +23,11 @@
         {{ $store.state.settings.isCollapse ? 'Открыть' : 'Скрыть' }}
       </span>
     </el-menu-item>
-    <el-submenu index="companies">
+    <!-- <el-submenu index="companies">
       <template slot="title">
         <i class="fa fa-database" />
         <span slot="title">Компании</span>
       </template>
-      <!--  -->
       <el-menu-item-group>
         <el-submenu index="rservice">
           <span slot="title">Rservice</span>
@@ -41,9 +40,9 @@
           <el-menu-item index="MSI2">MSI</el-menu-item>
         </el-submenu>
       </el-menu-item-group>
-    </el-submenu>
+    </el-submenu> -->
 
-    <el-submenu index="2-1">
+    <!-- <el-submenu index="2-1">
       <span slot="title">Rservice</span>
       <el-menu-item index="2-1-1">Canon</el-menu-item>
       <el-menu-item index="2-1-2">Nicon</el-menu-item>
@@ -52,7 +51,7 @@
       <span slot="title">Impuls</span>
       <el-menu-item index="2-2-1">Apple</el-menu-item>
       <el-menu-item index="2-2-2">MSI</el-menu-item>
-    </el-submenu>
+    </el-submenu> -->
 
     <el-menu-item index="/report">
       <i class="fa fa-file-excel-o" />
@@ -85,12 +84,23 @@
       <span slot="title">Console</span>
     </el-menu-item>
     <!--  -->
-    <el-menu-item index="">
+    <el-menu-item @click="logout" index="">
       <i class="fa fa-sign-out" />
       <span slot="title">Выход</span>
     </el-menu-item>
   </el-menu>
 </template>
+
+<script>
+export default {
+  methods: {
+    logout() {
+      this.$store.dispatch('auth/logout')
+      this.$router.push('/auth')
+    }
+  }
+}
+</script>
 
 <style>
 .el-menu-vertical {
