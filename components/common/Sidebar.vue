@@ -80,6 +80,10 @@
       <span slot="title">Настройки</span>
     </el-menu-item>
     <!-- TODO в разделе "Настройки" будем кранить логи деталей -->
+    <el-menu-item index="/code">
+      <i class="fa fa-code" />
+      <span slot="title">Console</span>
+    </el-menu-item>
     <!--  -->
     <el-menu-item index="">
       <i class="fa fa-sign-out" />
