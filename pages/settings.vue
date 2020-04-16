@@ -1,5 +1,5 @@
 <template>
-  <div class="row w100" style="margin-top:15px;">
+  <div class="row w100 mt-15">
     <div class="col-12">
       <el-tabs value="serrings">
         <el-tab-pane label="Общие настройки" name="serrings">
