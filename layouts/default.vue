@@ -1,15 +1,13 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="">
+      <div>
         <app-sidebar />
       </div>
       <div class="col prl-0">
         <el-header class="main-header">
           <div class="col-1">
-            <n-link to="/">
-              logo
-            </n-link>
+            <n-link to="/" class="logo">Service</n-link>
           </div>
           <div class="col-lg-7 align-items-center"><app-breadcrumb /></div>
           <div class="col-lg-2 text-right"><app-main-search /></div>
