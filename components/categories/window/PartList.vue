@@ -2,8 +2,24 @@
   <el-dialog
     :visible.sync="$store.state.settings.drawerPartList"
     :before-close="onClose"
-    :title="`Детали - ${$store.state.source.page.categoryName}`"
   >
+    <!--  -->
+    <div class="col-12" style="margin-top:-40px">
+      <h3>Детали - {{ $store.state.source.page.categoryName }}</h3>
+      <!--  -->
+      <div class="partBtnContainer">
+        <el-button
+          @click="onCreatePart"
+          title="Добавить деталь"
+          icon="el-icon-plus"
+          type="success"
+          size="mini"
+          plain
+        />
+      </div>
+      <!--  -->
+    </div>
+
     <!-- :class="['row', !loadContent ? 'd-none' : '']" -->
     <div v-if="$store.getters['source/page/partsCategory']">
       <div class="col-12 mt-20">
@@ -144,6 +160,13 @@ export default {
     }
   },
   methods: {
+    /** Вызываем окно создания детали */
+    onCreatePart() {
+      this.$store.commit('settings/SWITCH_DRAWNER', {
+        dranwer: 'drawerCreatePartItem',
+        status: true
+      })
+    },
     onClose() {
       this.$store.commit('settings/SWITCH_DRAWNER', {
         dranwer: 'drawerPartList',

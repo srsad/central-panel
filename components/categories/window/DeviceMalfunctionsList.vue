@@ -272,14 +272,3 @@ export default {
   }
 }
 </script>
-
-<style lang="sass">
-.partBtnContainer
-  position: absolute
-  top: 0px
-  right: 60px
-  & .el-button--mini
-    width: 25px
-    height: 25px
-    padding: 6px 5px
-</style>
