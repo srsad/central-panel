@@ -58,9 +58,7 @@ module.exports = {
    */
   build: {
     transpile: [/^element-ui/],
-    /*
-     ** You can extend webpack config here
-     */
+    extractCSS: true,
     extend(config, ctx) {}
   }
 }
