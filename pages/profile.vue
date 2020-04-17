@@ -35,22 +35,6 @@
             />
           </el-form-item>
         </div>
-        <div class="col-6">
-          <el-form-item prop="password">
-            <el-input
-              v-model="form.password"
-              placeholder="Пароль"
-              show-password
-            />
-          </el-form-item>
-        </div>
-        <div class="col-6">
-          <el-form-item prop="active">
-            <el-checkbox v-model="form.active">
-              Активный
-            </el-checkbox>
-          </el-form-item>
-        </div>
         <div class="col-12">
           <el-form-item prop="description">
             <el-input
@@ -63,7 +47,16 @@
             />
           </el-form-item>
         </div>
-        <div class="col-12 text-right">
+        <div class="col-6">
+          <el-form-item prop="password">
+            <el-input
+              v-model="form.password"
+              placeholder="Пароль"
+              show-password
+            />
+          </el-form-item>
+        </div>
+        <div class="col-6 text-right">
           <el-button @click="validateForm" :loading="loading" type="success">
             Обновить
           </el-button>
