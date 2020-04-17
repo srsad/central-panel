@@ -7,6 +7,7 @@ const compression = require('compression')
 const bodyParser = require('body-parser')
 
 const passportStrategy = require('./middleware/passport-strategy')
+// const sessionMiddleware = require('./middleware/sessions')
 const roleRoutes = require('./routes/v1/role.routs')
 const userRoutes = require('./routes/v1/user.routs')
 const authRoutes = require('./routes/v1/auth.routs')
@@ -14,6 +15,7 @@ const settingsRoutes = require('./routes/v1/settings')
 const domainRoutes = require('./routes/v1/domain.routs')
 const ssiteRoutes = require('./routes/v1/sourceSite.routs')
 const partRoutes = require('./routes/v1/part.routs')
+const sessionRoutes = require('./routes/v1/session.routs')
 
 const app = express()
 
@@ -30,6 +32,7 @@ mongoose
 
 app.use(cors())
 app.use(compression())
+// app.use(sessionMiddleware)
 app.use(passport.initialize())
 passport.use(passportStrategy)
 
@@ -47,5 +50,6 @@ app.use('/api/v1/settings', settingsRoutes)
 app.use('/api/v1/domain', domainRoutes)
 app.use('/api/v1/source-site', ssiteRoutes)
 app.use('/api/v1/part', partRoutes)
+app.use('/api/v1/session', sessionRoutes)
 
 module.exports = app
