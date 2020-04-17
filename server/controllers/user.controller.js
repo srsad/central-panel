@@ -81,7 +81,7 @@ module.exports.getById = async (req, res) => {
   try {
     const user = await User.findById(req.params.id, {
       password: 0
-    }).populate('role', { name: 1 })
+    }).populate('role', { name: 1, access: 1 })
     if (!user) {
       res.status(404).json({ message: 'Пользователь не найден!' })
     } else {

@@ -30,7 +30,7 @@ const sessionSchema = new Schema({
   expired: {
     type: Date,
     default: Date.now,
-    expires: 3 // секунды
+    expires: 50400 // секунты
   },
   created: {
     type: Date,

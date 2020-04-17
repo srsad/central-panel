@@ -31,16 +31,20 @@ module.exports.login = async (req, res) => {
           process.env.JWT,
           // секунды * минуты * часы * дни
           // { expiresIn: 60 * 60 * 24 * 2 }
-          // { expiresIn: 60 * 20 }
-          { expiresIn: 20 }
+          { expiresIn: 60 * 60 * 14 }
         )
+
+        // если fp существует удаляем
+        try {
+          await Session.remove({ fingerprint: req.body.fingerprint })
+        } catch (e) {}
 
         const session = new Session({
           user_id: candidate._id,
           fingerprint: req.body.fingerprint,
           os: req.body.os,
           browser: req.body.browser,
-          expired: new Date(new Date().getTime() + 60000),
+          expired: new Date(new Date().getTime() + 60 * 60 * 14),
           // expired: new Date(new Date().getTime() + 60000),
           token
         })
