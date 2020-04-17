@@ -1,3 +1,7 @@
+const { Router } = require('express')
+const router = Router()
+const passport = require('passport')
+
 const {
   create,
   update,
@@ -6,15 +10,24 @@ const {
   getById
 } = require('../../controllers/domain.controller')
 
-const { Router } = require('express')
-const router = Router()
-
 // /api/v1/domain
-router.get('/getall', getAll)
-router.get('/get/:id', getById)
+router.get('/getall', passport.authenticate('jwt', { session: false }), getAll)
+router.get(
+  '/get/:id',
+  passport.authenticate('jwt', { session: false }),
+  getById
+)
 router.post('/create', create)
 // TODO зменить все update post => put
-router.post('/update/:id', update)
-router.delete('/remove/:id', remove)
+router.post(
+  '/update/:id',
+  passport.authenticate('jwt', { session: false }),
+  update
+)
+router.delete(
+  '/remove/:id',
+  passport.authenticate('jwt', { session: false }),
+  remove
+)
 
 module.exports = router

@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const router = Router()
-// const passport = require('passport')
+const passport = require('passport')
 
 const {
   create,
@@ -12,12 +12,20 @@ const {
 
 // /api/v1/session
 router.get('/getall', getAll)
-router.get('/get/:id', getById)
-router.get('/getfp/:fp', getByFP)
+router.get(
+  '/get/:id',
+  passport.authenticate('jwt', { session: false }),
+  getById
+)
+router.get(
+  '/getfp/:fp',
+  passport.authenticate('jwt', { session: false }),
+  getByFP
+)
 router.post('/create', create)
 router.delete(
   '/remove/:id',
-
+  passport.authenticate('jwt', { session: false }),
   remove
 )
 

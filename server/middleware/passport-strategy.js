@@ -11,7 +11,7 @@ module.exports = new Strategy(options, async (payload, done) => {
   try {
     const user = await User.findById(payload.userId, { _id: 1 })
     if (user) {
-      console.log('passport-strategy')
+      // console.log('passport-strategy')
       // TODO проверка тухлости токена
       // TODO проверка рефреш токена
       // TODO проверка доступов
