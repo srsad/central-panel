@@ -55,7 +55,7 @@
                       <el-table-column
                         property="price"
                         label="Цена"
-                        width="100"
+                        width="110"
                       >
                         <!-- eslint-disable-next-line vue/no-template-shadow -->
                         <template slot-scope="scope">
