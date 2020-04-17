@@ -27,7 +27,6 @@ export default {
       }
     } catch (e) {
       error(e)
-      // TODO вызывать общий стор ошибок
     }
   }
 }

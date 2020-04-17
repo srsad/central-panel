@@ -45,7 +45,8 @@
                 <div>
                   <el-popover
                     v-if="scope.row.excepts.length > 0"
-                    width="400"
+                    width="420"
+                    popper-class="popMaxHeight"
                     placement="right"
                     trigger="click"
                   >

@@ -1,7 +1,7 @@
 <template>
   <el-dropdown @command="handleCommand" trigger="click">
     <el-button type="primary" size="mini">
-      ФИО Сотрудника
+      <span class="navFullname">{{ $store.state.auth.fullname }}</span>
       <i class="el-icon-arrow-down el-icon--right"></i>
     </el-button>
     <el-dropdown-menu slot="dropdown" router>
@@ -20,7 +20,6 @@ export default {
   methods: {
     handleCommand(data) {
       if (data === 'logout') {
-        // debugger
         this.$store.dispatch('auth/logout')
         this.$router.push('/auth')
       } else {

@@ -207,7 +207,10 @@ export default {
         formData.append('_id', this.form._id)
         formData.append('login', this.form.login)
         formData.append('fullname', this.form.fullname)
-        formData.append('password', this.form.password)
+        // formData.append('password', this.form.password)
+        if (this.form.password) {
+          formData.append('password', this.form.password)
+        }
         formData.append('email', this.form.email)
         formData.append('description', this.form.description)
         formData.append('phone', this.form.phone.replace(/\+|\(|\)|-/gm, ''))
