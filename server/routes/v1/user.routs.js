@@ -17,7 +17,7 @@ router.get('/getall', passport.authenticate('jwt', { session: false }), getAll)
 router.get('/get/:id', getById)
 router.post(
   '/create',
-  passport.authenticate('jwt', { session: false }),
+  // passport.authenticate('jwt', { session: false }),
   busboyBodyParser(),
   create
 )

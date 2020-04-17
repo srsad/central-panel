@@ -14,7 +14,7 @@ const {
 router.get('/getall', passport.authenticate('jwt', { session: false }), getAll)
 router.get(
   '/get/:id',
-  passport.authenticate('jwt', { session: false }),
+  // passport.authenticate('jwt', { session: false }),
   getById
 )
 router.post('/create', passport.authenticate('jwt', { session: false }), create)

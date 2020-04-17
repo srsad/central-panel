@@ -11,17 +11,9 @@ const {
 } = require('../../controllers/session.controller')
 
 // /api/v1/session
-router.get('/getall', getAll)
-router.get(
-  '/get/:id',
-  passport.authenticate('jwt', { session: false }),
-  getById
-)
-router.get(
-  '/getfp/:fp',
-  passport.authenticate('jwt', { session: false }),
-  getByFP
-)
+router.get('/getall', passport.authenticate('jwt', { session: false }), getAll)
+router.get('/get/:id', getById)
+router.get('/getfp/:fp', getByFP)
 router.post('/create', create)
 router.delete(
   '/remove/:id',
