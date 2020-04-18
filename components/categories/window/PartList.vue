@@ -24,7 +24,11 @@
     <!-- :class="['row', !loadContent ? 'd-none' : '']" -->
     <div v-if="$store.getters['source/page/partsCategory']">
       <div class="col-12 mt-20">
-        <el-table :data="$store.getters['source/page/partsCategory']" stripe>
+        <el-table
+          :data="$store.getters['source/page/partsCategory']"
+          stripe
+          size="mini"
+        >
           <!-- name -->
           <el-table-column property="name" label="Деталь">
             <template slot-scope="scope">

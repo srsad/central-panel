@@ -115,9 +115,7 @@ export default {
   },
   computed: {
     dragDisabled() {
-      const res = !this.$abilities('source-update')
-      console.log('dragDisabled', res)
-      return res
+      return !this.$abilities('source-update')
     },
     sources() {
       return this.$store.getters['source/control/sortSources']

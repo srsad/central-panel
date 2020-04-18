@@ -35,7 +35,7 @@
       </div>
       <!--  -->
       <div class="col-12 mt-20">
-        <el-table :data="malfunctionsData" stripe>
+        <el-table :data="malfunctionsData" size="mini" stripe>
           <!-- name -->
           <el-table-column label="Неисправность">
             <template slot-scope="scope">
@@ -159,8 +159,7 @@ export default {
       return this.$store.getters['source/page/malfunctionsData']
     },
     loadContent() {
-      const res = !!(this.deviceData && this.malfunctionsData)
-      return res
+      return !!(this.deviceData && this.malfunctionsData)
     }
   },
   methods: {
@@ -268,8 +267,7 @@ export default {
     /** Получение детали */
     async getPart(data) {
       try {
-        const part = await this.$axios.$get('/api/v1/part/get/' + data._id)
-        return part
+        return await this.$axios.$get('/api/v1/part/get/' + data._id)
       } catch (e) {
         this.$store.commit('SET_ERROR', e.response.data.message)
       }

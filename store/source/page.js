@@ -206,9 +206,9 @@ export const getters = {
 
       malf._id = item._id
       malf.name = item.name
-      malf.price = price
-      malf.rprice = item.rservice
-      malf.iprice = item.impuls
+      if (price) malf.price = price
+      if (item.rservice) malf.rprice = item.rservice
+      if (item.impuls) malf.iprice = item.impuls
       malf.excepts = excepts
       malfunctions.set(item.name, malf)
     }
