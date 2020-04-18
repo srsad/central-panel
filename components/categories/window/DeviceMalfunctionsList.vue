@@ -35,9 +35,23 @@
       </div>
       <!--  -->
       <div class="col-12 mt-20">
-        <el-table :data="malfunctionsData" size="mini" stripe>
+        <el-table :data="searchMalfunction" size="mini" stripe>
           <!-- name -->
-          <el-table-column label="Неисправность">
+          <el-table-column prop="name" label="Неисправность">
+            <!-- eslint-disable-next-line vue/no-unused-vars -->
+            <template slot="header" slot-scope="scope">
+              <div class="d-flex">
+                <div class="cell">Неисправность</div>
+                <i class="fa fa-filter" style="padding:5px 10px 0 0" />
+                <el-input
+                  v-model="searchMalf"
+                  size="mini"
+                  style="display:inline;width:150px"
+                  placeholder="Поиск по неисправности"
+                  clearable
+                />
+              </div>
+            </template>
             <template slot-scope="scope">
               <div class="fw-600">
                 {{ scope.row.name }}
@@ -151,6 +165,7 @@ export default {
   data() {
     return {
       loading: false,
+      searchMalf: '',
       deviceData: null
     }
   },
@@ -160,6 +175,17 @@ export default {
     },
     loadContent() {
       return !!(this.deviceData && this.malfunctionsData)
+    },
+    searchMalfunction() {
+      const malfunction = this.searchMalf.toLowerCase()
+      let result = this.malfunctionsData
+
+      if (malfunction.length > 0) {
+        result = result.filter((val) => {
+          return val.name.toLowerCase().match(malfunction)
+        })
+      }
+      return result
     }
   },
   methods: {
