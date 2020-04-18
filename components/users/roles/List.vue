@@ -9,11 +9,22 @@
     <el-table-column prop="name" label="Роль" />>
     <el-table-column prop="username" label="Кто создал" />
     <el-table-column prop="created" label="Дата создания" />
-    <el-table-column label="Действия" label-class-name="text-center">
+    <el-table-column
+      v-if="
+        $abilities('users-role_panel-update') ||
+          $abilities('users-role_panel-remove')
+      "
+      label="Действия"
+      label-class-name="text-center"
+    >
       <template slot-scope="scope">
         <div class="text-center">
           <el-button-group>
-            <el-tooltip content="Редактировать" placement="left">
+            <el-tooltip
+              v-if="$abilities('users-role_panel-update')"
+              content="Редактировать"
+              placement="left"
+            >
               <el-button
                 @click="edit(scope.row)"
                 :loading="loading"
@@ -23,6 +34,7 @@
               />
             </el-tooltip>
             <el-popconfirm
+              v-if="$abilities('users-role_panel-remove')"
               @onConfirm="remove(scope.$index, scope.row)"
               title="Удалить роль?"
               confirm-button-text="Да"
@@ -77,6 +89,7 @@ export default {
     },
     edit(item) {
       if (this.loading === true) return
+      if (!this.$abilities('users-role_panel-update')) return
       this.$store.commit('users/SET_ROLE', item)
       this.$store.commit('settings/SWITCH_DRAWNER', {
         dranwer: 'drawerUpdateRole',

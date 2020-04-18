@@ -3,6 +3,7 @@
     <div class="col-12">
       <el-form
         ref="CityForm"
+        v-if="$abilities('settings-city_panel-create')"
         :inline="true"
         :disabled="loading"
         :model="form"
@@ -41,6 +42,7 @@
             </el-form-item>
             <el-form-item>
               <el-button
+                v-if="$abilities('settings-city_panel-update')"
                 :loading="loading"
                 @click="updateCity(`CityForm${idx}`, items[idx])"
                 title="Редактировать"
@@ -51,6 +53,7 @@
             <!--  -->
             <el-form-item>
               <el-popconfirm
+                v-if="$abilities('settings-city_panel-remove')"
                 @onConfirm="removeCity(items[idx])"
                 title="Удалить данный город?"
                 confirm-button-text="Да"

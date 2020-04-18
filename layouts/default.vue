@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div>
+      <div v-if="$store.getters['auth/access'].includes('sidebar')">
         <app-sidebar />
       </div>
       <div class="col prl-0">

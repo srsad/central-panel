@@ -7,7 +7,7 @@
     <div class="col-12" style="margin-top:-40px">
       <h3>Детали - {{ $store.state.source.page.categoryName }}</h3>
       <!--  -->
-      <div class="partBtnContainer">
+      <div v-if="$abilities('part-create')" class="partBtnContainer">
         <el-button
           @click="onCreatePart"
           title="Добавить деталь"
@@ -106,10 +106,14 @@
             </template>
           </el-table-column>
           <!-- actions -->
-          <el-table-column width="100">
+          <el-table-column
+            v-if="$abilities('part-update') || $abilities('part-remove')"
+            width="100"
+          >
             <template slot-scope="scope">
               <el-button-group>
                 <el-button
+                  v-if="$abilities('part-update')"
                   @click="edit(scope.row)"
                   :loading="loading"
                   type="primary"
@@ -121,6 +125,7 @@
               </el-button-group>
               <!--  -->
               <el-popconfirm
+                v-if="$abilities('part-remove')"
                 @onConfirm="remove(scope.row)"
                 title="Удалить деталь?"
                 confirm-button-text="Да"

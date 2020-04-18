@@ -3,6 +3,7 @@
     <div class="col-12">
       <el-form
         ref="APIKeyForm"
+        v-if="$abilities('settings-api_key_panel-create')"
         :inline="true"
         :disabled="loading"
         :model="form"
@@ -55,10 +56,11 @@
                   slot="append"
                   @click="copyToBuffer(items[idx].key)"
                   icon="el-icon-document-copy"
+                  title="Копировать в буфер обмена"
                 />
               </el-input>
             </el-form-item>
-            <el-form-item>
+            <el-form-item v-if="$abilities('settings-api_key_panel-update')">
               <el-button
                 :loading="loading"
                 @click="updateAPIKey(`APIKeyForm${idx}`, items[idx])"
@@ -68,7 +70,7 @@
               />
             </el-form-item>
             <!--  -->
-            <el-form-item>
+            <el-form-item v-if="$abilities('settings-api_key_panel-remove')">
               <el-popconfirm
                 @onConfirm="removeAPIKey(items[idx])"
                 title="Удалить данный ключ?"

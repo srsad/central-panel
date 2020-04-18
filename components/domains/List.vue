@@ -44,11 +44,16 @@
     </el-table-column>
     <el-table-column prop="name" label="Наименование" />
     <el-table-column prop="vendor" label="Исполнитель" />
-    <el-table-column label="Действия" label-class-name="text-center">
+    <el-table-column
+      v-if="$abilities('domains-update') || $abilities('domains-remove')"
+      label="Действия"
+      label-class-name="text-center"
+    >
       <template slot-scope="scope">
         <div class="text-center">
           <el-button-group>
             <el-button
+              v-if="$abilities('domains-update')"
               @click="edit(scope.row)"
               :loading="loading"
               type="primary"
@@ -57,6 +62,7 @@
               title="Редактировать"
             />
             <el-button
+              v-if="$abilities('domains-update')"
               @click="switchStatus(scope.row)"
               :loading="loading"
               :icon="`${scope.row.status ? 'el-icon-check' : 'el-icon-close'}`"
@@ -69,6 +75,7 @@
               size="mini"
             />
             <el-popconfirm
+              v-if="$abilities('domains-remove')"
               @onConfirm="remove(scope.$index, scope.row)"
               title="Удалить домен?"
               confirm-button-text="Да"
@@ -130,6 +137,7 @@ export default {
     },
     edit(item) {
       if (this.loading === true) return
+      if (!this.$abilities('domains-update')) return
       this.$store.commit('domains/SET_DOMAIN', item)
       this.$store.commit('settings/SWITCH_DRAWNER', {
         dranwer: 'drawerUpdateDomains',

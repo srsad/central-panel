@@ -8,11 +8,16 @@
         <div class="source__name">{{ item.name }} - {{ item.company }}</div>
       </n-link>
       <!--  -->
-      <div @click="() => $emit('edit', item)" class="source__edit">
+      <div
+        v-if="$abilities('source-update')"
+        @click="() => $emit('edit', item)"
+        class="source__edit"
+      >
         <i class="el-icon-edit" />
       </div>
 
       <el-popconfirm
+        v-if="$abilities('source-remove')"
         @onConfirm="() => $emit('remove', item)"
         title="Удалить источник?"
         confirm-button-text="Да"

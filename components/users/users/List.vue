@@ -5,11 +5,19 @@
     <el-table-column prop="email" label="Email" />
     <el-table-column prop="role.name" label="Роль" />
     <el-table-column prop="created" label="Дата создания" />
-    <el-table-column label="Действия" label-class-name="text-center">
+    <el-table-column
+      v-if="
+        $abilities('users-user_panel-update') ||
+          $abilities('users-user_panel-remove')
+      "
+      label="Действия"
+      label-class-name="text-center"
+    >
       <template slot-scope="scope">
         <div class="text-center">
           <el-button-group>
             <el-button
+              v-if="$abilities('users-user_panel-update')"
               @click="edit(scope.row)"
               :loading="loading"
               size="mini"
@@ -17,6 +25,7 @@
               icon="el-icon-edit"
             />
             <el-button
+              v-if="$abilities('users-user_panel-update')"
               @click="switchActive(scope.row)"
               :icon="`${scope.row.active ? 'el-icon-unlock' : 'el-icon-lock'}`"
               :title="
@@ -27,6 +36,7 @@
               type="info"
             />
             <el-popconfirm
+              v-if="$abilities('users-user_panel-remove')"
               @onConfirm="remove(scope.$index, scope.row)"
               title="Удалить пользователя?"
               confirm-button-text="Да"
@@ -81,6 +91,7 @@ export default {
     },
     edit(item) {
       if (this.loading === true) return
+      if (!this.$abilities('users-role_panel-update')) return
       this.$store.commit('users/SET_USER', item)
       this.$store.commit('settings/SWITCH_DRAWNER', {
         dranwer: 'drawerUpdateUser',

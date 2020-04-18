@@ -1,7 +1,7 @@
 <template>
   <div class="text-center pt-50">
     <template v-if="$store.state.source.page.categoryName">
-      <transition name="slide-fade">
+      <transition v-if="$abilities('part-read')" name="slide-fade">
         <div v-if="$store.state.source.page.partsCategory.length > 0">
           <el-button
             @click="showDetails"
@@ -14,7 +14,7 @@
           />
         </div>
       </transition>
-      <transition name="slide-fade">
+      <transition v-if="$abilities('part-create')" name="slide-fade">
         <div class="mt-10">
           <el-button
             @click="onCreate"

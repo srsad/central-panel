@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div v-if="$abilities('source-read')" class="row">
     <div class="col-6 text-center">
       <button class="mb-20" style="padding:0;cursor:default">
         <img src="/site/images/rserv.jpg" alt="Rservice" style="height:90px" />
@@ -18,7 +18,7 @@
     </div>
     <!--  -->
     <div class="col-6">
-      <div class="text-center mb-15">
+      <div v-if="$abilities('source-create')" class="text-center mb-15">
         <el-button
           @click="createSiteSource('rservice')"
           type="success"
@@ -54,7 +54,7 @@
       </draggable>
     </div>
     <div class="col-6">
-      <div class="text-center mb-15">
+      <div v-if="$abilities('source-create')" class="text-center mb-15">
         <el-button
           @click="createSiteSource('impuls')"
           type="success"
@@ -109,11 +109,16 @@ export default {
   data() {
     return {
       company: '',
-      drag: true,
-      dragDisabled: false // блокировка перетаскивания
+      drag: true
+      // dragDisabled: false // блокировка перетаскивания
     }
   },
   computed: {
+    dragDisabled() {
+      const res = !this.$abilities('source-update')
+      console.log('dragDisabled', res)
+      return res
+    },
     sources() {
       return this.$store.getters['source/control/sortSources']
     },

@@ -20,7 +20,7 @@
       <div class="col-12">
         <h3>{{ deviceData.pagetitle }}</h3>
         <!--  -->
-        <div class="partBtnContainer">
+        <div v-if="$abilities('part-create')" class="partBtnContainer">
           <el-button
             @click="onCreatePart"
             title="Добавить деталь"
@@ -60,7 +60,7 @@
           <el-table-column width="150" label="Деталь">
             <template slot-scope="scope">
               <div>
-                <div v-if="!scope.row.excepts">
+                <div v-if="!scope.row.excepts && $abilities('part-create')">
                   <el-input
                     v-model="scope.row.price"
                     :disabled="loading"
@@ -75,7 +75,9 @@
                     />
                   </el-input>
                 </div>
-                <div v-else>
+                <div
+                  v-if="$abilities('part-update') || $abilities('part-remove')"
+                >
                   <el-input
                     v-model="scope.row.price"
                     :disabled="loading"
@@ -84,11 +86,13 @@
                   >
                     <i
                       slot="suffix"
+                      v-if="$abilities('part-update')"
                       @click="updateExcept(scope.row)"
                       class="el-icon-edit color-primary pt-10 pointer"
                     />
                     <el-popconfirm
                       slot="suffix"
+                      v-if="$abilities('part-remove')"
                       @onConfirm="removeExcept(scope.row)"
                       title="Удалить исключение?"
                       confirm-button-text="Да"
@@ -103,6 +107,9 @@
                       />
                     </el-popconfirm>
                   </el-input>
+                </div>
+                <div v-else>
+                  {{ scope.row.price }}
                 </div>
               </div>
             </template>

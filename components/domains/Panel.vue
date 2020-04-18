@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-button
+      v-if="$abilities('domains-create')"
       @click="
         $store.commit('settings/SWITCH_DRAWNER', {
           dranwer: 'drawerCreateDomains',
@@ -13,13 +14,13 @@
     >
       Добавить домен
     </el-button>
-    <el-button
+    <!-- <el-button
       @click="checkStatus"
       type="primary"
       icon="el-icon-refresh-left"
       circle
       title="Проверить статус сайтов"
-    />
+    /> -->
     <!--  -->
     <app-list :items="$store.getters['domains/domains']" />
     <!--  -->

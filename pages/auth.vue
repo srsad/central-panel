@@ -42,8 +42,8 @@ export default {
     return {
       loading: false,
       form: {
-        login: '',
-        password: ''
+        login: 'test',
+        password: 'testpass'
       },
       rules: {
         login: [

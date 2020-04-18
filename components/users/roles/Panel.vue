@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-button
+      v-if="$abilities('users-role_panel-create')"
       @click="
         $store.commit('settings/SWITCH_DRAWNER', {
           dranwer: 'drawerCreateRole',

@@ -53,33 +53,34 @@
       <el-menu-item index="2-2-2">MSI</el-menu-item>
     </el-submenu> -->
 
-    <el-menu-item index="/report">
+    <el-menu-item v-if="$abilities('report')" index="/report">
       <i class="fa fa-file-excel-o" />
       <span slot="title">
         Отчеты
       </span>
     </el-menu-item>
-    <el-menu-item index="/map">
+    <!--  -->
+    <el-menu-item v-if="$abilities('map')" index="/map">
       <i class="fa fa-map-o" />
       <span slot="title">Тепловые карты</span>
     </el-menu-item>
-    <el-menu-item index="/users">
+    <el-menu-item v-if="$abilities('users')" index="/users">
       <i class="fa fa-users" />
       <span slot="title">Пользователи</span>
     </el-menu-item>
-    <el-menu-item index="/domains">
+    <el-menu-item v-if="$abilities('domains')" index="/domains">
       <i class="fa fa-sitemap" />
       <span slot="title">
         Домены / Сайты
       </span>
     </el-menu-item>
     <!--  -->
-    <el-menu-item index="/settings">
+    <el-menu-item v-if="$abilities('settings')" index="/settings">
       <i class="el-icon-setting" />
       <span slot="title">Настройки</span>
     </el-menu-item>
     <!-- TODO в разделе "Настройки" будем кранить логи деталей -->
-    <el-menu-item index="/code">
+    <el-menu-item v-if="$abilities('code')" index="/code">
       <i class="fa fa-code" />
       <span slot="title">Console</span>
     </el-menu-item>
