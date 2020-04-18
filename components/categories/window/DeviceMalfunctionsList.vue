@@ -36,7 +36,7 @@
       <div class="col-12 mt-20">
         <el-table :data="malfunctionsData" stripe>
           <!-- name -->
-          <el-table-column label="Нисправность">
+          <el-table-column label="Неисправность">
             <template slot-scope="scope">
               <div class="fw-600">
                 {{ scope.row.name }}
@@ -75,10 +75,11 @@
                     />
                   </el-input>
                 </div>
-                <div
-                  v-if="$abilities('part-update') || $abilities('part-remove')"
-                >
+                <div v-else>
                   <el-input
+                    v-if="
+                      $abilities('part-update') || $abilities('part-remove')
+                    "
                     v-model="scope.row.price"
                     :disabled="loading"
                     size="mini"
@@ -107,9 +108,9 @@
                       />
                     </el-popconfirm>
                   </el-input>
-                </div>
-                <div v-else>
-                  {{ scope.row.price }}
+                  <div v-else>
+                    {{ scope.row.price }}
+                  </div>
                 </div>
               </div>
             </template>
