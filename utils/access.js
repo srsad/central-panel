@@ -25,6 +25,50 @@ export default [
     label: 'Привязать Impuls'
   },
   {
+    _id: 'part',
+    label: 'Детали',
+    children: [
+      {
+        _id: 'part-read',
+        label: 'Чтение'
+      },
+      {
+        _id: 'part-create',
+        label: 'Создание'
+      },
+      {
+        _id: 'part-update',
+        label: 'Редактирование'
+      },
+      {
+        _id: 'part-remove',
+        label: 'Удаление'
+      }
+    ]
+  },
+  {
+    _id: 'source',
+    label: 'Источники',
+    children: [
+      {
+        _id: 'source-read',
+        label: 'Чтение'
+      },
+      {
+        _id: 'source-create',
+        label: 'Создание'
+      },
+      {
+        _id: 'source-update',
+        label: 'Редактирование'
+      },
+      {
+        _id: 'source-remove',
+        label: 'Удаление'
+      }
+    ]
+  },
+  {
     _id: 'report',
     label: 'Отчеты',
     children: [
@@ -95,15 +139,15 @@ export default [
         ]
       },
       {
-        _id: 'user-session',
+        _id: 'users-session_panel',
         label: 'Сессии',
         children: [
           {
-            _id: 'user-session-read',
+            _id: 'users-session_panel-read',
             label: 'Чтение'
           },
           {
-            _id: 'user-session-remove',
+            _id: 'users-session_panel-remove',
             label: 'Удаление'
           }
         ]
@@ -136,6 +180,10 @@ export default [
     _id: 'settings',
     label: 'Настройки',
     children: [
+      {
+        _id: 'settings-options_panel',
+        label: 'Общие настройки'
+      },
       {
         _id: 'settings-api_key_panel',
         label: 'API ключи',
@@ -181,5 +229,9 @@ export default [
         ]
       }
     ]
+  },
+  {
+    _id: 'code',
+    label: 'Консоль'
   }
 ]
