@@ -69,6 +69,10 @@ export default [
     ]
   },
   {
+    _id: 'map',
+    label: 'Карты'
+  },
+  {
     _id: 'report',
     label: 'Отчеты',
     children: [
