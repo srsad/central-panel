@@ -2,6 +2,7 @@
   <el-dialog
     :visible.sync="$store.state.settings.drawerPartList"
     :before-close="onClose"
+    width="55%"
   >
     <!--  -->
     <div class="col-12" style="margin-top:-40px">

@@ -3,6 +3,7 @@
     :visible.sync="$store.state.settings.drawerDeviceMalf"
     :before-close="onClose"
     @open="onOpen"
+    width="60%"
   >
     <div
       v-loading="!loadContent"
