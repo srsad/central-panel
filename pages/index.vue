@@ -143,7 +143,6 @@ export default {
   methods: {
     /** Лог перемещений и перемещение между командами */
     async onLog(evt) {
-      // console.log('evt', evt)
       if (evt.added) {
         const sources = await JSON.parse(JSON.stringify(this.sources))
         const _id = evt.added.element._id
@@ -157,19 +156,36 @@ export default {
           try {
             const fd = new FormData()
             fd.append('company', company)
-
             await this.$axios.$post(`/api/v1/source-site/update/${_id}`, fd)
-            this.$store.dispatch('source/control/fetchItems')
-            this.$notify({
-              message: 'Источник успушно перемещен!',
-              customClass: 'success-notyfy'
-            })
+            this.onMoved()
           } catch (e) {
-            // console.log(e)
             this.$store.commit('SET_ERROR', e.response.data.message)
           }
         }
+      } else if (evt.moved) {
+        this.onMoved()
       }
+    },
+    /** Пересчет menuindex о перетаскиваемых элементов */
+    async onMoved() {
+      await setTimeout(() => {}, 3000) // ожидание, мало ли, может еще чего перетаскивать будут
+      const sources = await JSON.parse(JSON.stringify(this.sources))
+      const res = []
+      for (const company in sources) {
+        for (let i = 0; i <= sources[company].length - 1; i++) {
+          await res.push({
+            _id: sources[company][i]._id,
+            menuindex: i
+          })
+        }
+      }
+      await this.$axios.$put(`/api/v1/source-site/update-menuindex`, res)
+      // обновляем список
+      this.$store.dispatch('source/control/fetchItems')
+      this.$notify({
+        message: 'Источник успушно перемещен!',
+        customClass: 'success-notyfy'
+      })
     },
     /** Открываем окно редактиирования источника */
     openEditWindow(item) {

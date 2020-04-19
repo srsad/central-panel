@@ -6,6 +6,7 @@ const busboyBodyParser = require('busboy-body-parser')
 const {
   create,
   update,
+  updateMenuindex,
   remove,
   getAll,
   getById
@@ -29,6 +30,11 @@ router.post(
   passport.authenticate('jwt', { session: false }),
   busboyBodyParser(),
   update
+)
+router.put(
+  '/update-menuindex',
+  passport.authenticate('jwt', { session: false }),
+  updateMenuindex
 )
 router.delete(
   '/remove/:id',

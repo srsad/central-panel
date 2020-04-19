@@ -79,6 +79,22 @@ module.exports.update = async (req, res) => {
   }
 }
 
+/** Обновления menuindex */
+module.exports.updateMenuindex = async (req, res) => {
+  try {
+    for (const item of req.body) {
+      await SSite.updateOne(
+        { _id: item._id },
+        { menuindex: item.menuindex },
+        { new: true }
+      )
+    }
+    res.status(200).json({ message: 'Данные обновленны!' })
+  } catch (error) {
+    res.status(500).json({ message: 'Не удалось упорядочить список!', error })
+  }
+}
+
 /** Удаление */
 module.exports.remove = async (req, res) => {
   try {
@@ -105,7 +121,7 @@ module.exports.getById = async (req, res) => {
 /** Вернуть весь список */
 module.exports.getAll = async (req, res) => {
   try {
-    const pages = await SSite.find().sort({ brand: 1 })
+    const pages = await SSite.find().sort({ menuindex: 1 })
     res.json({ data: pages })
   } catch (error) {
     res.status(500).json({ message: 'Не удалось получить список источников!' })
