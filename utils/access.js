@@ -73,6 +73,10 @@ export default [
     label: 'Карты'
   },
   {
+    _id: 'device-create',
+    label: 'Добавление устройства'
+  },
+  {
     _id: 'report',
     label: 'Отчеты',
     children: [

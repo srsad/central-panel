@@ -63,6 +63,8 @@
     <app-update-part-item />
     <!-- окно списка деталей/неисправностей -->
     <app-part-list />
+    <!-- окно добовления устройства -->
+    <app-add-device />
   </div>
 </template>
 
@@ -75,6 +77,7 @@ import AppActionPanel from '~/components/categories/ActionPanel'
 import AppCreatePartItem from '~/components/categories/window/CreatePartItem'
 import AppUpdatePartItem from '~/components/categories/window/UpdatePartItem'
 import AppPartList from '~/components/categories/window/PartList'
+import AppAddDevice from '~/components/categories/window/AddDevice'
 
 export default {
   components: {
@@ -85,7 +88,8 @@ export default {
     AppActionPanel,
     AppCreatePartItem,
     AppUpdatePartItem,
-    AppPartList
+    AppPartList,
+    AppAddDevice
   },
   async validate({ params, store }) {
     // отчищаем все категории

@@ -44,6 +44,7 @@
     "passport-jwt": "^4.0.0",
     "url-parse": "^1.4.7",
     "v-mask": "^2.0.2",
+    "vue2-editor": "^2.10.2",
     "vuedraggable": "^2.23.2"
   },
   "devDependencies": {

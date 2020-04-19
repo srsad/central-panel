@@ -37,7 +37,11 @@ module.exports = {
     // '@/plugins/ability.js',
     // '@/plugins/casl.js',
     '@plugins/globals.js',
-    '@plugins/axios.js'
+    '@plugins/axios.js',
+    {
+      src: '@plugins/no-ssr.js',
+      ssr: false
+    }
   ],
   /*
    ** Nuxt.js dev-modules
