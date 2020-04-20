@@ -39,8 +39,8 @@ module.exports.remove = async (req, res) => {
 /** Вернуть по id */
 module.exports.getById = async (req, res) => {
   try {
-    const user = await ApiKey.findById()
-    res.status(200).json(user)
+    const apiKey = await ApiKey.findById()
+    res.status(200).json(apiKey)
   } catch (error) {
     req.status(500).json({ message: 'Не удалось полуичть ключ!', error })
   }
