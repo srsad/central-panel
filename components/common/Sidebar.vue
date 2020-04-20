@@ -53,6 +53,12 @@
       <el-menu-item index="2-2-2">MSI</el-menu-item>
     </el-submenu> -->
 
+    <el-menu-item v-if="$abilities('recording')" index="/recording">
+      <i class="el-icon-edit-outline" />
+      <span slot="title">
+        Запись
+      </span>
+    </el-menu-item>
     <el-menu-item v-if="$abilities('report')" index="/report">
       <i class="fa fa-file-excel-o" />
       <span slot="title">

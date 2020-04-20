@@ -16,6 +16,7 @@ const domainRoutes = require('./routes/v1/domain.routs')
 const ssiteRoutes = require('./routes/v1/sourceSite.routs')
 const partRoutes = require('./routes/v1/part.routs')
 const sessionRoutes = require('./routes/v1/session.routs')
+const recordingRoutes = require('./routes/v1/recording')
 
 const app = express()
 
@@ -51,5 +52,6 @@ app.use('/api/v1/domain', domainRoutes)
 app.use('/api/v1/source-site', ssiteRoutes)
 app.use('/api/v1/part', partRoutes)
 app.use('/api/v1/session', sessionRoutes)
+app.use('/api/v1/recording', recordingRoutes)
 
 module.exports = app

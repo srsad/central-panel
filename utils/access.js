@@ -69,6 +69,34 @@ export default [
     ]
   },
   {
+    _id: 'recording',
+    label: 'Записи',
+    children: [
+      {
+        _id: 'recording-not_recording_panel',
+        label: 'Tехника не для записи',
+        children: [
+          {
+            _id: 'recording-not_recording_panel-read',
+            label: 'Чтение'
+          },
+          {
+            _id: 'recording-not_recording_panel-create',
+            label: 'Создание'
+          },
+          {
+            _id: 'recording-not_recording_panel-update',
+            label: 'Редактирование'
+          },
+          {
+            _id: 'recording-not_recording_panel-remove',
+            label: 'Удаление'
+          }
+        ]
+      }
+    ]
+  },
+  {
     _id: 'map',
     label: 'Карты'
   },
