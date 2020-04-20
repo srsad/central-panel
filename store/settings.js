@@ -22,7 +22,8 @@ export const state = () => ({
   drawerDeviceMalf: false, // Окно со списком неисправностей устройства
   drawerCreatePartItem: false, // Окно для создания детали
   drawerUpdatePartItem: false, // Окно для редактироавния детали
-  drawerPartList: false // Окно списка деталей/неисправностей категории
+  drawerPartList: false, // Окно списка деталей/неисправностей категории
+  drawerAddDevice: false // Окно созлания устроиства
 })
 
 export const actions = {
