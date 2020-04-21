@@ -55,7 +55,7 @@
       </div>
       <div class="col-6">
         <el-form-item prop="curser">
-          <el-checkbox v-model="form.curser">Курьер</el-checkbox>
+          <el-checkbox v-model="form.curser">Курьер платный</el-checkbox>
         </el-form-item>
       </div>
     </el-form>
