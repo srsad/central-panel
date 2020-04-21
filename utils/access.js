@@ -73,6 +73,28 @@ export default [
     label: 'Записи',
     children: [
       {
+        _id: 'recording-for_recording_panel',
+        label: 'Tехника для записи',
+        children: [
+          {
+            _id: 'recording-for_recording_panel-read',
+            label: 'Чтение'
+          },
+          {
+            _id: 'recording-for_recording_panel-create',
+            label: 'Создание'
+          },
+          {
+            _id: 'recording-for_recording_panel-update',
+            label: 'Редактирование'
+          },
+          {
+            _id: 'recording-for_recording_panel-remove',
+            label: 'Удаление'
+          }
+        ]
+      },
+      {
         _id: 'recording-not_recording_panel',
         label: 'Tехника не для записи',
         children: [

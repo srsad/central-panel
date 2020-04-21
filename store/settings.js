@@ -23,7 +23,10 @@ export const state = () => ({
   drawerCreatePartItem: false, // Окно для создания детали
   drawerUpdatePartItem: false, // Окно для редактироавния детали
   drawerPartList: false, // Окно списка деталей/неисправностей категории
-  drawerAddDevice: false // Окно созлания устроиства
+  drawerAddDevice: false, // Окно создания устроиства
+  drawerUpdateNotRecording: false, // Окно редактирования "техники не для записи"
+  drawerCreateForRecording: false, // Окно создания "техники для записи"
+  drawerUpdateForRecording: false // Окно редактирования "техники для записи"
 })
 
 export const actions = {
