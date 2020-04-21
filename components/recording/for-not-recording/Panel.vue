@@ -1,96 +1,83 @@
 <template>
   <div class="row">
-    <div class="col-12">
+    <div class="col-6">
       <h3 class="mt-10">Tехника не для записи</h3>
     </div>
-    <!--  -->
-    <div class="col-12">
-      <el-table
-        :data="$store.getters['recording/notRecording']"
-        size="small"
-        stripe
+    <div class="col-6 text-right mt-10 mb-30">
+      <el-form
+        ref="notRecForm"
+        :inline="true"
+        :disabled="loading"
+        :model="form"
+        :rules="rules"
+        @submit.prevent="add"
+        v-if="$abilities('recording-not_recording_panel-create')"
+        class="tableForm"
       >
-        <el-table-column width="45" align="right">
-          <template slot-scope="scope">
-            <b>{{ scope.$index + 1 }}</b>
-          </template>
-        </el-table-column>
-        <el-table-column label="Техника не для записи" prop="name" />
-        <el-table-column
-          v-if="
-            $abilities('recording-not_recording_panel-update') ||
-              $abilities('recording-not_recording_panel-remove')
-          "
-          align="right"
-          width="250"
-        >
-          <!--  -->
-          <!-- eslint-disable-next-line vue/no-unused-vars -->
-          <template slot="header" slot-scope="scope">
-            <el-form
-              ref="notRecForm"
-              :inline="true"
-              :disabled="loading"
-              :model="form"
-              :rules="rules"
-              v-if="$abilities('recording-not_recording_panel-create')"
-              class="tableForm"
-            >
-              <el-form-item prop="name">
-                <el-input
-                  v-model="form.name"
-                  placeholder="Техника не для записи"
-                  class="success-important"
-                  size="mini"
-                >
-                  <template slot="append">
-                    <el-button
-                      :loading="loading"
-                      @click="add"
-                      size="mini"
-                      type="success"
-                      icon="el-icon-plus"
-                      title="Создать новый ключ"
-                    />
-                  </template>
-                </el-input>
-              </el-form-item>
-            </el-form>
-          </template>
-          <!--  -->
-          <template slot-scope="scope">
-            <el-button-group>
+        <el-form-item prop="name">
+          <el-input
+            v-model="form.name"
+            placeholder="Техника не для записи"
+            class="success-important"
+            size="mini"
+          >
+            <template slot="append">
               <el-button
-                v-if="$abilities('recording-not_recording_panel-update')"
-                @click="edit(scope.row)"
                 :loading="loading"
-                type="primary"
+                @click="add"
                 size="mini"
-                icon="el-icon-edit"
-                title="Редактировать"
+                type="success"
+                icon="el-icon-plus"
+                title="Создать новый ключ"
               />
-              <el-popconfirm
-                v-if="$abilities('recording-not_recording_panel-remove')"
-                @onConfirm="remove(scope.row)"
-                title="Удалить запись?"
-                confirm-button-text="Да"
-                confirm-button-type="success"
-                cancel-button-type="default"
-                cancel-button-text="Нет, спасибо"
-              >
-                <el-button
-                  slot="reference"
-                  :loading="loading"
-                  size="mini"
-                  type="danger"
-                  title="Удалить"
-                  icon="el-icon-delete"
-                />
-              </el-popconfirm>
-            </el-button-group>
-          </template>
-        </el-table-column>
-      </el-table>
+            </template>
+          </el-input>
+        </el-form-item>
+      </el-form>
+    </div>
+    <!--  -->
+    <div
+      v-for="(item, idx) in $store.getters['recording/notRecording']"
+      :key="idx"
+      class="col-6 mb-15"
+    >
+      <!--  -->
+      <div class="recording" style="cursor:default">
+        <div class="recording__title">
+          {{ item.name }}
+        </div>
+        <!-- btns -->
+        <div class="recording__btn">
+          <el-button
+            v-if="$abilities('recording-not_recording_panel-update')"
+            @click="edit(item)"
+            :loading="loading"
+            type="primary"
+            size="mini"
+            icon="el-icon-edit"
+            title="Редактировать"
+          />
+          <el-popconfirm
+            v-if="$abilities('recording-not_recording_panel-remove')"
+            @onConfirm="remove(item)"
+            title="Удалить запись?"
+            confirm-button-text="Да"
+            confirm-button-type="success"
+            cancel-button-type="default"
+            cancel-button-text="Нет, спасибо"
+          >
+            <el-button
+              slot="reference"
+              :loading="loading"
+              size="mini"
+              type="danger"
+              title="Удалить"
+              icon="el-icon-delete"
+            />
+          </el-popconfirm>
+        </div>
+        <!-- end btns -->
+      </div>
     </div>
     <app-window-update />
   </div>
