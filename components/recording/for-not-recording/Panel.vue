@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-6">
+    <div class="col-6 mb-30">
       <h3 class="mt-10">Tехника не для записи</h3>
     </div>
     <div class="col-6 text-right mt-10 mb-30">
