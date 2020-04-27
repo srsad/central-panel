@@ -26,15 +26,6 @@
         </template>
       </el-table-column>
       <el-table-column prop="tv_filterPhone" label="Серия" />
-      <el-table-column prop="address" label="Неисправности" width="180">
-        <template slot-scope="scope">
-          <div class="text-center">
-            <el-button @click="showInfo(scope.row)" type="primary" size="small">
-              Неисправности
-            </el-button>
-          </div>
-        </template>
-      </el-table-column>
     </el-table>
   </div>
 </template>
