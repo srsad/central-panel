@@ -47,6 +47,24 @@ export default [
     ]
   },
   {
+    _id: 'malf',
+    label: 'Таблица неисправностей',
+    children: [
+      {
+        _id: 'malf-rservice_panel',
+        label: 'Неисправности Rservice'
+      },
+      {
+        _id: 'malf-impuls_panel',
+        label: 'Неисправности Impuls'
+      },
+      {
+        _id: 'malf-apple_panel',
+        label: 'Неисправности Apple'
+      }
+    ]
+  },
+  {
     _id: 'source',
     label: 'Источники',
     children: [
