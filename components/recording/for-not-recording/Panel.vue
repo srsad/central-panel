@@ -39,7 +39,7 @@
     <div
       v-for="(item, idx) in $store.getters['recording/notRecording']"
       :key="idx"
-      class="col-6 mb-15"
+      class="col-12 mb-10"
     >
       <!--  -->
       <div class="recording" style="cursor:default">
