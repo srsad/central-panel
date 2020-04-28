@@ -56,6 +56,7 @@ export default {
   },
   methods: {
     async showInfo(item) {
+      console.log('showInfo item', item)
       await this.$store.dispatch('source/page/setDeviceData', item)
       await this.$store.commit('settings/SWITCH_DRAWNER', {
         dranwer: 'drawerDeviceMalf',
