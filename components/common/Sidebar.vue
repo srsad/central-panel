@@ -59,6 +59,12 @@
         Запись
       </span>
     </el-menu-item>
+    <el-menu-item v-if="$abilities('malf')" index="/malfunctions">
+      <i class="el-icon-s-order" />
+      <span slot="title">
+        Неисправности
+      </span>
+    </el-menu-item>
     <el-menu-item v-if="$abilities('report')" index="/report">
       <i class="fa fa-file-excel-o" />
       <span slot="title">
