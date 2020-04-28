@@ -43,6 +43,7 @@ export default {
   bottom: 65px
   right: 45px
   transform: scale(0)
+  z-index: 9
   transition: all .2s
   &.active
     transform: scale(1.5)
