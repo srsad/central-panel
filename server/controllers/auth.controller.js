@@ -62,10 +62,6 @@ module.exports.login = async (req, res) => {
       res.status(404).json({ message: 'Неверный логин или пароль' })
     }
   } catch (error) {
-    console.error(
-      'auth.controller - login. Неудачная попытка авторизации.',
-      error
-    )
-    res.status(404).json({ message: 'Неудачная попытка авторизации' })
+    res.status(404).json({ message: 'Неверный логин или пароль.' })
   }
 }
