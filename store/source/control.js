@@ -69,7 +69,6 @@ export const getters = {
   sourceSearchList: (state) => {
     const res = []
     state.sources.forEach((el) => {
-      // { value: 'Other  Impuls', link: 'https://github.com/babel/babel' }
       res.push({
         value: el.brand + ' ' + el.company,
         link: '/company/' + el._id

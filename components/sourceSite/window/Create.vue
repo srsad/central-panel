@@ -236,7 +236,7 @@ export default {
       this.form.image = ''
     },
     handleImageChange(file) {
-      console.log('handleImageChange', file)
+      // console.log('handleImageChange', file)
     },
     /** Фильтрация брендов */
     querySearchBrand(queryString, cb) {

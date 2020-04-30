@@ -49,7 +49,7 @@ module.exports.update = async (req, res) => {
     await User.findOneAndUpdate({ _id: req.params.id }, { $set }, { new: true })
     res.json({ message: 'Данные обновленны!' })
   } catch (error) {
-    console.log('error', error)
+    console.error('error', error)
     const msg = error.errmsg
     let param = ''
     if (msg.includes('$login')) {
