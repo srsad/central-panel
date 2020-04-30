@@ -163,7 +163,35 @@ export const getters = {
   params: (state) => state.params,
   categories: (state) => state.categories,
   deviceList: (state) => state.deviceList,
-  fastPrice: (state) => state.fastPrice,
+  fastPrice: (state) => {
+    if (state.fastPrice.length === 0) return state.fastPrice
+    if (state.partsCategory.length === 0 && state.fastPrice) return state.fastPrice
+
+    let res = JSON.parse(JSON.stringify(state.fastPrice))
+    // проходимся по списку деталей
+    for (const item of state.partsCategory) {
+      const pPrice = state.params.company === 'impuls' ? item.impuls : item.rservice
+      // если есть совподение с fastPrice
+      const where = (el) => el.pTitle === item.name
+      if (res.some(where)) {
+        res = res.map((element) => {
+          if (element.pTitle === item.name) {
+            element.pPrice = pPrice
+            element.isParts = true
+          }
+          return element
+        })
+      } else {
+        res.push({
+          id: '',
+          pTitle: item.name,
+          pPrice,
+          isParts: true // если это из списка деталей
+        })
+      }
+    }
+    return res
+  },
   deviceData: (state) => state.deviceData,
   partsCategory: (state) => state.partsCategory,
   /** Список деталей и неисправностей */
