@@ -91,7 +91,7 @@
       <i class="el-icon-setting" />
       <span slot="title">Настройки</span>
     </el-menu-item>
-    <!-- TODO в разделе "Настройки" будем кранить логи деталей -->
+    <!-- TODO в разделе "Настройки" будем хранить логи деталей -->
     <el-menu-item v-if="$abilities('code')" index="/code">
       <i class="fa fa-code" />
       <span slot="title">Console</span>
@@ -101,11 +101,43 @@
       <i class="fa fa-sign-out" />
       <span slot="title">Выход</span>
     </el-menu-item>
+    <el-menu-item index="" style="position:absolute;bottom:0;width:100%">
+      <!-- <i class="fa fa-sign-out" /> -->
+      <span slot="title">
+        <el-popover
+          placement="top-start"
+          title="Последнее обновление"
+          width="230"
+          trigger="hover"
+        >
+          <div style="word-break:break-word">
+            <p>
+              sha: {{ lastUpdate.sha }} <br />
+              data: {{ lastUpdate.date }} <br />
+              <b>{{ lastUpdate.message }}</b>
+            </p>
+          </div>
+          <span slot="reference">
+            sha: {{ lastUpdate.sha }} - {{ lastUpdate.date }}
+          </span>
+        </el-popover>
+      </span>
+    </el-menu-item>
   </el-menu>
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
+  computed: {
+    lastUpdate() {
+      const lastUpdate = this.$store.getters['settings/lastUpdate']
+      const sha = lastUpdate.sha.substr(-7, 7)
+      const date = moment(lastUpdate.date).format('DD.MM.YYYY')
+      return { sha, date, message: lastUpdate.message }
+    }
+  },
   methods: {
     logout() {
       this.$store.dispatch('auth/logout')
