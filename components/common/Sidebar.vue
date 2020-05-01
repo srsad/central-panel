@@ -117,9 +117,7 @@
               <b>{{ lastUpdate.message }}</b>
             </p>
           </div>
-          <span slot="reference">
-            sha: {{ lastUpdate.sha }} - {{ lastUpdate.date }}
-          </span>
+          <span slot="reference"> last: {{ lastUpdate.date }} </span>
         </el-popover>
       </span>
     </el-menu-item>
@@ -134,7 +132,9 @@ export default {
     lastUpdate() {
       const lastUpdate = this.$store.getters['settings/lastUpdate']
       const sha = lastUpdate.sha.substr(-7, 7)
-      const date = moment(lastUpdate.date).format('DD.MM.YYYY')
+      const date = moment(lastUpdate.date)
+        .utcOffset(420)
+        .format('DD.MM.YYYY - HH:mm')
       return { sha, date, message: lastUpdate.message }
     }
   },
