@@ -110,8 +110,8 @@
           width="230"
           trigger="hover"
         >
-          <div style="word-break:break-word">
-            <p>
+          <div>
+            <p style="word-break:inherit" class="mb-0">
               sha: {{ lastUpdate.sha }} <br />
               data: {{ lastUpdate.date }} <br />
               <b>{{ lastUpdate.message }}</b>
