@@ -133,7 +133,7 @@ export default {
       const lastUpdate = this.$store.getters['settings/lastUpdate']
       const sha = lastUpdate.sha.substr(-7, 7)
       const date = moment(lastUpdate.date)
-        .utcOffset(420)
+        .utcOffset(180)
         .format('DD.MM.YYYY - HH:mm')
       return { sha, date, message: lastUpdate.message }
     }
