@@ -1,19 +1,28 @@
 <template>
   <div>
-    <el-button
-      v-if="$abilities('domains-create')"
-      @click="
-        $store.commit('settings/SWITCH_DRAWNER', {
-          dranwer: 'drawerCreateDomains',
-          status: true
-        })
-      "
-      type="success"
-      class="mb-20"
-      icon="el-icon-plus"
-    >
-      Добавить домен
-    </el-button>
+    <div class="row">
+      <div class="col-8">
+        <el-button
+          v-if="$abilities('domains-create')"
+          @click="
+            $store.commit('settings/SWITCH_DRAWNER', {
+              dranwer: 'drawerCreateDomains',
+              status: true
+            })
+          "
+          type="success"
+          class="mb-20"
+          icon="el-icon-plus"
+        >
+          Добавить домен
+        </el-button>
+      </div>
+      <div class="col-4 text-right">
+        <p class="mt-25" style="margin-right:5px">
+          Всего: <b>{{ $store.getters['domains/domains'].length }}</b>
+        </p>
+      </div>
+    </div>
     <!-- <el-button
       @click="checkStatus"
       type="primary"

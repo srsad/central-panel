@@ -15,19 +15,25 @@
         />
       </template>
     </el-table-column>
-    <el-table-column prop="sitestatus" label="" width="10" />
+    <el-table-column prop="sitestatus" label="" width="1" />
     <el-table-column
       :filters="brands_"
       :filter-method="filterHandlerBrands"
       prop="brand"
       label="Бренд"
-      width="160"
-    />
+      width="150"
+    >
+      <template slot-scope="scope">
+        <div :title="scope.row.brand" class="ws-normal">
+          {{ scope.row.brand }}
+        </div>
+      </template>
+    </el-table-column>
     <el-table-column
       :filters="cities_"
       :filter-method="filterHandlerCities"
       label="Город"
-      width="200"
+      width="180"
     >
       <template slot-scope="scope">
         <el-tag type="primary" disable-transitions>
@@ -35,19 +41,32 @@
         </el-tag>
       </template>
     </el-table-column>
-    <el-table-column label="Домен">
+    <el-table-column label="Домен" width="250">
       <template slot-scope="scope">
-        <a :href="`https://${scope.row.domain}`" target="_blank">
+        <a
+          :href="`https://${scope.row.domain}`"
+          :title="scope.row.domain"
+          target="_blank"
+          class="ws-normal"
+        >
           {{ scope.row.domain }}
         </a>
       </template>
     </el-table-column>
-    <el-table-column prop="name" label="Наименование" />
+    <el-table-column prop="name" label="Наименование" width="180">
+      <template slot-scope="scope">
+        <div :title="scope.row.name" class="ws-normal">
+          {{ scope.row.name }}
+        </div>
+      </template>
+    </el-table-column>
     <el-table-column prop="vendor" label="Исполнитель" />
     <el-table-column
       v-if="$abilities('domains-update') || $abilities('domains-remove')"
       label="Действия"
       label-class-name="text-center"
+      fixed="right"
+      width="200"
     >
       <template slot-scope="scope">
         <div class="text-center">
@@ -116,7 +135,7 @@ export default {
     }
   },
   mounted() {
-    this.getCities()
+    this.getFilterItems() // подготовка данных для фильтрации
   },
   methods: {
     async remove(idx, item) {
@@ -169,8 +188,9 @@ export default {
       if (!row.status) style.opacity = '0.6'
       return style
     },
-    /** Загрузка списка городов */
-    async getCities() {
+    /** Загрузка данных для фильтрации */
+    async getFilterItems() {
+      // Загрузка списка городов
       await this.$store.dispatch('city/fetchItems')
       this.cities = await this.$store.getters['city/сityes'].map((el) => {
         return { value: el._id, label: el.name }
@@ -178,6 +198,20 @@ export default {
       this.cities_ = await this.$store.getters['city/сityes'].map((el) => {
         return { value: el._id, text: el.name }
       })
+      // загрузка списка брендов
+      if (this.items.length > 0) {
+        const brands = []
+        await this.items.forEach((el) => {
+          if (!brands.includes(el.brand)) brands.push(el.brand)
+        })
+        await brands.sort()
+        this.brands = brands.map((el, idx) => {
+          return { value: el, label: el }
+        })
+        this.brands_ = brands.map((el, idx) => {
+          return { value: el, text: el }
+        })
+      }
     },
     /** Возврощает название города */
     getCity(city) {
