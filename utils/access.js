@@ -249,6 +249,10 @@ export default [
       {
         _id: 'domains-remove',
         label: 'Удаление'
+      },
+      {
+        id: 'domains-copy',
+        label: 'Копировать пароль'
       }
     ]
   },
