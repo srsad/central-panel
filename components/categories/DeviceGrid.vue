@@ -1,9 +1,10 @@
 <template>
   <div>
     <el-table
-      @row-dblclick="showInfo"
+      @row-click="showInfo"
       :data="searchDevice"
       empty-text="Нет данных"
+      row-class-name="cursor-pointer"
       stripe
     >
       <el-table-column prop="pagetitle" label="Модель">
