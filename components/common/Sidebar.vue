@@ -111,7 +111,7 @@
           trigger="hover"
         >
           <div>
-            <p style="word-break:inherit" class="mb-0">
+            <p style="word-break:normal" class="mb-0 text-left">
               sha: {{ lastUpdate.sha }} <br />
               data: {{ lastUpdate.date }} <br />
               <b>{{ lastUpdate.message }}</b>
@@ -135,6 +135,7 @@ export default {
       const date = moment(lastUpdate.date)
         .utcOffset(180)
         .format('DD.MM.YYYY - HH:mm')
+
       return { sha, date, message: lastUpdate.message }
     }
   },
