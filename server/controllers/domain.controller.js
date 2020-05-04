@@ -2,9 +2,44 @@ const Domain = require('../models/domain.model')
 
 /** Создание */
 module.exports.create = async (req, res) => {
+  const fd = req.body
+  fd.yametrika = {
+    code: fd.yametrika.replace('{', '{ ').replace(/ {1,}/g, ' ')
+  }
+  const yametrikaId = fd.yametrika.code.match(/(?<=ym\()\d*/)
+  if (yametrikaId) {
+    fd.yametrika.id = yametrikaId[0]
+  }
+
+  fd.analytics = {
+    code: fd.analytics.replace('{', '{ ').replace(/ {1,}/g, ' ')
+  }
+  const analyticsId = fd.analytics.code.match(/\w{2}-\d*-\d{1,2}/)
+  if (analyticsId) {
+    fd.analytics.id = analyticsId[0]
+  }
+
+  fd.envybox = {
+    code: fd.envybox.replace('{', '{ ').replace(/ {1,}/g, ' ')
+  }
+  // eslint-disable-next-line no-useless-escape
+  const envyboxId = fd.envybox.code.match(/(?<=wcb_code\=)\w*/)
+  if (envyboxId) {
+    fd.envybox.id = envyboxId[0]
+  }
+
+  fd.alloka = {
+    code: fd.alloka.replace('{', '{ ').replace(/ {1,}/g, ' ')
+  }
+
+  // eslint-disable-next-line no-useless-escape
+  const allokaId = fd.alloka.code.match(/(?<=(\'|pt\/))\w*/)
+  if (allokaId) {
+    fd.alloka.id = allokaId[0]
+  }
+
   try {
-    const domain = new Domain(req.body)
-    await domain.save()
+    await Domain.create(fd)
     res.status(201).json({ message: 'Домен успешно создан!' })
   } catch (error) {
     let msg = ''
