@@ -5,21 +5,19 @@
 const { model, Schema } = require('mongoose')
 // TODO добавить статус бана у гугла и яндекса
 const domainSchema = new Schema({
-  name: {
+  // приоритет
+  priority: {
+    type: Number,
+    min: 0,
+    max: 10
+  },
+  // исполнитель
+  vendor: {
     type: String,
     maxlength: 255,
     index: true
   },
-  city: {
-    type: String,
-    maxlength: 32,
-    index: true
-  },
-  brand: {
-    type: String,
-    maxlength: 255,
-    index: true
-  },
+  // домен
   domain: {
     type: String,
     maxlength: 255,
@@ -27,23 +25,138 @@ const domainSchema = new Schema({
     unique: true,
     index: true
   },
-  description: {
+  // номер телефона по умолчанию
+  phone_default: {
     type: String,
-    maxlength: 255
+    default: '',
+    maxlength: 32
   },
-  vendor: {
+  // номер телефона/визитка
+  phone: {
+    type: String,
+    default: '',
+    maxlength: 32
+  },
+  // компании
+  company: {
+    type: String,
+    default: 'R-Service',
+    enum: ['R-Service', 'Impuls']
+  },
+  // наименование
+  name: {
     type: String,
     maxlength: 255,
     index: true
   },
+  // город
+  city: {
+    type: String,
+    maxlength: 32,
+    index: true
+  },
+  // бренд
+  brand: {
+    type: String,
+    maxlength: 255,
+    index: true
+  },
+  // описание
+  description: {
+    type: String,
+    maxlength: 255
+  },
+  // статус доступен/нет
   status: {
     type: Boolean,
     default: true
   },
+  // цвет заливки
   color: {
     type: String,
     maxlength: 16
   },
+  // yandex метрика
+  yametrika: {
+    code: {
+      type: String,
+      default: ''
+    },
+    // id счетчика от yandex метрики
+    id: {
+      type: String,
+      default: ''
+    },
+    // статус активер/не активен
+    status: {
+      type: Boolean,
+      default: true
+    }
+  },
+  // гугл аналитика
+  analytics: {
+    code: {
+      type: String,
+      default: ''
+    },
+    // id гугл аналитики
+    id: {
+      type: String,
+      default: ''
+    },
+    status: {
+      type: Boolean,
+      default: true
+    }
+  },
+  // данные алоки
+  alloka: {
+    code: {
+      type: String,
+      default: ''
+    },
+    id: {
+      type: String,
+      default: ''
+    },
+    status: {
+      type: Boolean,
+      default: true
+    }
+  },
+  // данные Envybox
+  envybox: {
+    code: {
+      type: String,
+      default: ''
+    },
+    id: {
+      type: String,
+      default: ''
+    },
+    status: {
+      type: Boolean,
+      default: true
+    }
+  },
+  // пара логин/пароль от соцсетей
+  accaunts: {
+    login: {
+      type: String,
+      default: ''
+    },
+    password: {
+      type: String,
+      default: ''
+    }
+  },
+  // адрес
+  address: {
+    type: String,
+    maxlength: 255,
+    default: ''
+  },
+  // лог событий
   logs: {
     type: Array,
     default: []
