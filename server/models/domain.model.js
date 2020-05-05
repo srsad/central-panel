@@ -161,6 +161,12 @@ const domainSchema = new Schema({
     type: Array,
     default: []
   },
+  // дополнительное поле для сортировки
+  menuindex: {
+    type: Number,
+    default: 0,
+    index: true
+  },
   created: {
     type: Date,
     default: Date.now
