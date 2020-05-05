@@ -18,8 +18,7 @@ router.get(
   getById
 )
 router.post('/create', create)
-// TODO зменить все update post => put
-router.post(
+router.put(
   '/update/:id',
   passport.authenticate('jwt', { session: false }),
   update
