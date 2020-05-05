@@ -17,9 +17,9 @@
           Добавить домен
         </el-button>
       </div>
-      <div class="col-4 text-right">
+      <div class="col-3 text-right">
         <p class="mt-25" style="margin-right:5px">
-          Всего: <b>{{ $store.getters['domains/domains'].length }}</b>
+          <!-- Всего: <b>{{ $store.getters['domains/domains'].length }}</b> -->
         </p>
       </div>
     </div>
