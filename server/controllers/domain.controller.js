@@ -6,7 +6,9 @@ module.exports.create = async (req, res) => {
   fd.yametrika = {
     code: fd.yametrika.replace('{', '{ ').replace(/ {1,}/g, ' ')
   }
-  const yametrikaId = fd.yametrika.code.match(/(?<=ym\()\d*/)
+  const yametrikaId = fd.yametrika.code.match(
+    /((?<=ym\()\d*|(?<=id:)\d*|(?<=watch\/)\d*)/
+  )
   if (yametrikaId) {
     fd.yametrika.id = yametrikaId[0]
   }
@@ -53,6 +55,33 @@ module.exports.create = async (req, res) => {
 /** Обновление */
 module.exports.update = async (req, res) => {
   const $set = req.body
+  // const fd = req.body
+  $set.yametrika.code = $set.yametrika.code
+    .replace('{', '{ ')
+    .replace(/ {1,}/g, ' ')
+  const yametrikaId = $set.yametrika.code.match(
+    /((?<=ym\()\d*|(?<=id:)\d*|(?<=watch\/)\d*)/
+  )
+  $set.yametrika.id = yametrikaId ? yametrikaId[0] : ''
+
+  $set.analytics.code = $set.analytics.code
+    .replace('{', '{ ')
+    .replace(/ {1,}/g, ' ')
+  const analyticsId = $set.analytics.code.match(/\w{2}-\d*-\d{1,2}/)
+  $set.analytics.id = analyticsId ? analyticsId[0] : ''
+
+  $set.envybox.code = $set.envybox.code
+    .replace('{', '{ ')
+    .replace(/ {1,}/g, ' ')
+  // eslint-disable-next-line no-useless-escape
+  const envyboxId = $set.envybox.code.match(/(?<=wcb_code\=)\w*/)
+  $set.envybox.id = envyboxId ? envyboxId[0] : ''
+
+  $set.alloka.code = $set.alloka.code.replace('{', '{ ').replace(/ {1,}/g, ' ')
+  // eslint-disable-next-line no-useless-escape
+  const allokaId = $set.alloka.code.match(/(?<=(\'|pt\/))\w*/)
+  $set.alloka.id = allokaId ? allokaId[0] : ''
+
   try {
     await Domain.findOneAndUpdate(
       { _id: req.params.id },
