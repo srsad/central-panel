@@ -4,9 +4,10 @@
     @row-dblclick="edit"
     :row-style="tableRowStyle"
     size="mini"
+    style="max-width: 1500px"
     empty-text="Нет данных"
   >
-    <el-table-column label="" width="10">
+    <el-table-column label="" width="10" fixed="left">
       <template slot-scope="scope">
         <div
           :style="
@@ -15,13 +16,14 @@
         />
       </template>
     </el-table-column>
-    <el-table-column prop="sitestatus" label="" width="1" />
+    <!-- <el-table-column prop="sitestatus" label="" width="1" fixed="left" /> -->
     <el-table-column
       :filters="brands_"
       :filter-method="filterHandlerBrands"
       prop="brand"
       label="Бренд"
       width="150"
+      fixed="left"
     >
       <template slot-scope="scope">
         <div :title="scope.row.brand" class="ws-normal">
@@ -60,7 +62,42 @@
         </div>
       </template>
     </el-table-column>
-    <el-table-column prop="vendor" label="Исполнитель" />
+    <el-table-column prop="vendor" label="Исполнитель" width="180" />
+    <el-table-column prop="yametrika.id" label="Метрика" width="80" />
+    <el-table-column prop="analytics.id" label="Analytics" width="110" />
+    <el-table-column label="Alloka">
+      <template slot-scope="scope">
+        <div :title="scope.row.alloka.id" class="ws-normal">
+          {{ scope.row.alloka.id }}
+        </div>
+      </template>
+    </el-table-column>
+    <el-table-column prop="envybox.id" label="Envybox" width="110">
+      <template slot-scope="scope">
+        <div :title="scope.row.envybox.id" class="ws-normal">
+          {{ scope.row.envybox.id }}
+        </div>
+      </template>
+    </el-table-column>
+    <el-table-column prop="accaunts" label="Аккаунты" width="150">
+      <template slot-scope="scope">
+        <div
+          v-if="scope.row.accaunts.login"
+          :title="scope.row.accaunts.login"
+          class="ws-normal"
+        >
+          <el-button
+            v-if="$abilities('domains-create')"
+            @click="copyToBuffer(scope.row.accaunts)"
+            icon="el-icon-document-copy"
+            title="Копировать в буфер обмена"
+            style="padding:0px"
+            size="mini"
+          />
+          <span>{{ scope.row.accaunts.login }}</span>
+        </div>
+      </template>
+    </el-table-column>
     <el-table-column
       v-if="$abilities('domains-update') || $abilities('domains-remove')"
       label="Действия"
@@ -86,9 +123,8 @@
               :loading="loading"
               :icon="`${scope.row.status ? 'el-icon-check' : 'el-icon-close'}`"
               :title="
-                `${
-                  scope.row.status ? 'Сделать не активным' : 'Сделать активным'
-                }`
+                // eslint-disable-next-line prettier/prettier
+                `${scope.row.status ? 'Сделать не активным' : 'Сделать активным'}`
               "
               type="info"
               size="mini"
@@ -118,6 +154,8 @@
 </template>
 
 <script>
+import { writeText } from 'clipboard-polyfill'
+
 export default {
   props: {
     items: {
@@ -184,8 +222,9 @@ export default {
     },
     /** Подцветка строк и проверка на активность */
     tableRowStyle({ row, rowIndex }) {
-      const style = { background: row.color + '3f' }
-      if (!row.status) style.opacity = '0.6'
+      const style = {}
+      // const style = { background: row.color }
+      // if (!row.status) style.opacity = '0.6'
       return style
     },
     /** Загрузка данных для фильтрации */
@@ -235,6 +274,14 @@ export default {
     /** Фильтр по брендам */
     filterHandlerBrands(value, row) {
       return row.brand === value
+    },
+    /** Скопировать в буффер */
+    copyToBuffer(val) {
+      writeText(`login: ${val.login} \npassword: ${val.password}`)
+      this.$notify({
+        message: 'Логин и пароль скопированы в буфер обмена',
+        customClass: 'success-notyfy'
+      })
     }
   }
 }
