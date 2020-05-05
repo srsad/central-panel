@@ -24,72 +24,186 @@
       <div class="col-12">
         <h3 class="mb-20">Редактировать домен</h3>
       </div>
-      <div class="col-6">
-        <el-form-item prop="name">
-          <el-input v-model="form.name" placeholder="Наименование" />
-        </el-form-item>
-      </div>
-      <div class="col-6">
-        <el-form-item prop="brand">
-          <el-input v-model="form.brand" placeholder="Бренд" />
-        </el-form-item>
-      </div>
-      <div class="col-6">
-        <el-form-item prop="domain">
-          <el-input v-model="form.domain" placeholder="Домен">
-            <template slot="prepend">https://</template>
-          </el-input>
-        </el-form-item>
-      </div>
-      <div class="col-6">
-        <el-form-item prop="city">
-          <el-select v-model="form.city" placeholder="Город">
-            <el-option
-              v-for="item in cities"
-              :key="item._id"
-              :label="item.name"
-              :value="item._id"
-            />
-          </el-select>
-        </el-form-item>
-      </div>
-      <div class="col-6 text-left">
-        <div class="row align-items-center">
-          <div class="col-3">
-            <el-form-item prop="color">
-              <el-color-picker
-                v-model="form.color"
-                :predefine="predefineColors"
-                placeholder="Цвет"
-              />
-            </el-form-item>
-          </div>
-          <div class="col-8" style="margin-bottom:33px">
-            {{ form.color }}
-          </div>
-        </div>
-      </div>
-      <div class="col-6 text-left">
-        <el-form-item prop="status">
-          <el-checkbox v-model="form.status">Статус</el-checkbox>
-        </el-form-item>
-      </div>
       <div class="col-12">
-        <el-form-item prop="vendor">
-          <el-input v-model="form.vendor" placeholder="Исполнитель" />
-        </el-form-item>
-      </div>
-      <div class="col-12">
-        <el-form-item prop="description">
-          <el-input
-            v-model="form.description"
-            type="textarea"
-            placeholder="Описание"
-            maxlength="255"
-            rows="3"
-            show-word-limit
-          />
-        </el-form-item>
+        <el-tabs value="data">
+          <!-- data -->
+          <el-tab-pane label="Общие данные" name="data" class="row">
+            <div class="col-6">
+              <el-form-item prop="name">
+                <el-input v-model="form.name" placeholder="Наименование" />
+              </el-form-item>
+            </div>
+            <div class="col-6">
+              <el-form-item prop="brand">
+                <el-input v-model="form.brand" placeholder="Бренд" />
+              </el-form-item>
+            </div>
+            <div class="col-6">
+              <el-form-item prop="domain">
+                <el-input v-model="form.domain" placeholder="Домен">
+                  <template slot="prepend">https://</template>
+                </el-input>
+              </el-form-item>
+            </div>
+            <div class="col-6">
+              <el-form-item prop="city">
+                <el-select v-model="form.city" placeholder="Город">
+                  <el-option
+                    v-for="item in cities"
+                    :key="item._id"
+                    :label="item.name"
+                    :value="item._id"
+                  />
+                </el-select>
+              </el-form-item>
+            </div>
+            <div class="col-6 text-left">
+              <div class="row align-items-center">
+                <div class="col-3">
+                  <el-form-item prop="color">
+                    <el-color-picker
+                      v-model="form.color"
+                      :predefine="predefineColors"
+                      placeholder="Цвет"
+                    />
+                  </el-form-item>
+                </div>
+                <div class="col-8" style="margin-bottom:33px">
+                  {{ form.color }}
+                </div>
+              </div>
+            </div>
+            <div class="col-6 text-left">
+              <el-form-item prop="status">
+                <el-checkbox v-model="form.status">Статус</el-checkbox>
+              </el-form-item>
+            </div>
+            <div class="col-6">
+              <el-form-item prop="vendor">
+                <el-input v-model="form.vendor" placeholder="Исполнитель" />
+              </el-form-item>
+            </div>
+            <div class="col-6">
+              <el-form-item prop="company">
+                <el-select
+                  v-model="form.company"
+                  placeholder="Компания"
+                  class="w100"
+                >
+                  <el-option
+                    v-for="(item, idx) in companyes"
+                    :key="idx"
+                    :label="item"
+                    :value="item"
+                  />
+                </el-select>
+              </el-form-item>
+            </div>
+            <div class="col-12">
+              <el-form-item prop="description">
+                <el-input
+                  v-model="form.description"
+                  type="textarea"
+                  placeholder="Описание"
+                  maxlength="255"
+                  rows="3"
+                  show-word-limit
+                />
+              </el-form-item>
+            </div>
+          </el-tab-pane>
+          <!-- end data -->
+          <!-- analytics -->
+          <el-tab-pane label="Аналитика" name="analytics" class="row">
+            <div class="col-4">
+              <el-form-item prop="priority" label="Приоритет">
+                <el-input-number
+                  v-model="form.priority"
+                  :min="0"
+                  :max="10"
+                  size="mini"
+                  controls-position="right"
+                />
+              </el-form-item>
+            </div>
+            <div class="col-4">
+              <el-form-item prop="login" label="Логин">
+                <el-input
+                  v-model="form.accaunts.login"
+                  size="mini"
+                  placeholder="Логин"
+                />
+              </el-form-item>
+            </div>
+            <div class="col-4">
+              <el-form-item prop="password" label="Пароль">
+                <el-input
+                  v-model="form.accaunts.password"
+                  placeholder="Пароль"
+                  size="mini"
+                  show-password
+                />
+              </el-form-item>
+            </div>
+            <div class="col-12">
+              <el-form-item prop="yametrika" label="Yandex метрика">
+                <el-input
+                  v-model="form.yametrika.code"
+                  type="textarea"
+                  placeholder="Yandex метрика"
+                  rows="2"
+                  show-word-limit
+                />
+              </el-form-item>
+              <!-- TODO тут выводить в lable - id счетчика -->
+              <!-- TODO выводить статус -->
+            </div>
+            <div class="col-12">
+              <el-form-item prop="analytics" label="Google analytics">
+                <el-input
+                  v-model="form.analytics.code"
+                  type="textarea"
+                  placeholder="Google analytics"
+                  rows="2"
+                  show-word-limit
+                />
+              </el-form-item>
+              <!-- TODO тут выводить в lable - id счетчика  -->
+              <!-- TODO выводить статус -->
+            </div>
+            <!--  -->
+            <div class="col-12">
+              <el-form-item prop="alloka" label="Alloka">
+                <el-input v-model="form.alloka.code" placeholder="Alloka" />
+              </el-form-item>
+            </div>
+            <div class="col-12">
+              <el-form-item prop="envybox" label="Envybox">
+                <el-input v-model="form.envybox.code" placeholder="Envybox" />
+              </el-form-item>
+            </div>
+          </el-tab-pane>
+          <!-- end analytics -->
+          <!-- contacts -->
+          <el-tab-pane label="Контакты" name="contacts" class="row">
+            <div class="col-12">
+              <el-form-item prop="address" label="Адрес">
+                <el-input v-model="form.address" placeholder="Адрес" />
+              </el-form-item>
+            </div>
+            <div class="col-12">
+              <el-form-item prop="phone_default" label="Телефон по умолчанию">
+                <el-input v-model="form.phone_default" placeholder="Телефон" />
+              </el-form-item>
+            </div>
+            <div class="col-12">
+              <el-form-item prop="phone" label="Номер телефона/визитка">
+                <el-input v-model="form.phone" placeholder="Телефон" />
+              </el-form-item>
+            </div>
+          </el-tab-pane>
+          <!-- end contacts -->
+        </el-tabs>
       </div>
       <div class="col-12 text-right">
         <el-button @click="validateForm" :loading="loading" type="success">
@@ -110,6 +224,7 @@ export default {
       loadContent: false,
       loading: false,
       form: {
+        // общие
         name: '',
         brand: '',
         city: '',
@@ -117,15 +232,31 @@ export default {
         vendor: '',
         color: '',
         status: false,
-        description: ''
+        company: '',
+        description: '',
+        // аналитика
+        priority: 0,
+        accaunts: {
+          login: '',
+          password: ''
+        },
+        yametrika: '',
+        analytics: '',
+        alloka: '',
+        envybox: '',
+        // контакты
+        address: '',
+        phone_default: '',
+        phone: ''
       },
+      companyes: ['R-Service', 'Impuls'],
       cities: [
         { value: 'spb', label: 'Санкт-Петербург' },
         { value: 'msk', label: 'Москва' },
         { value: 'krd', label: 'Краснодар' }
       ],
       predefineColors: [
-        '#ffffff',
+        '#000000',
         '#ff4500',
         '#ff8c00',
         '#ffd700',
@@ -191,16 +322,6 @@ export default {
             required: true,
             message: 'Исполнитель',
             trigger: 'blur'
-          },
-          {
-            min: 3,
-            message: 'Минимум 3 символа',
-            trigger: 'blur'
-          },
-          {
-            max: 255,
-            message: 'Максимум 255 символов',
-            trigger: 'blur'
           }
         ]
       }
@@ -263,11 +384,23 @@ export default {
     clearForm() {
       this.form.name = ''
       this.form.brand = ''
+      this.form.city = ''
       this.form.domain = ''
       this.form.vendor = ''
       this.form.color = '#ffffff'
       this.form.status = false
+      this.form.company = ''
       this.form.description = ''
+      this.form.priority = 0
+      this.form.accaunts = { login: '', password: '' }
+      this.form.yametrika = { code: '' }
+      this.form.analytics = { code: '' }
+      this.form.alloka = { code: '' }
+      this.form.envybox = { code: '' }
+      this.form.address = ''
+      this.form.phone_default = ''
+      this.form.phone = ''
+
       this.loading = false
       this.loadContent = false
     },
