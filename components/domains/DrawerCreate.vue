@@ -193,7 +193,7 @@
               </el-form-item>
             </div>
           </el-tab-pane>
-          <!-- end  -->
+          <!-- end contacts -->
         </el-tabs>
       </div>
       <div class="col-12 text-right">
@@ -241,7 +241,7 @@ export default {
       cities: [],
       companyes: ['R-Service', 'Impuls'],
       predefineColors: [
-        '#ffffff',
+        '#000000',
         '#ff4500',
         '#ff8c00',
         '#ffd700',
@@ -307,16 +307,6 @@ export default {
             required: true,
             message: 'Исполнитель',
             trigger: 'blur'
-          },
-          {
-            min: 3,
-            message: 'Минимум 3 символа',
-            trigger: 'blur'
-          },
-          {
-            max: 255,
-            message: 'Максимум 255 символов',
-            trigger: 'blur'
           }
         ]
       }
@@ -373,11 +363,26 @@ export default {
     clearForm() {
       this.form.name = ''
       this.form.brand = ''
+      this.form.city = ''
       this.form.domain = ''
       this.form.vendor = ''
       this.form.color = '#ffffff'
       this.form.status = false
+      this.form.company = ''
       this.form.description = ''
+      this.form.priority = 0
+      this.form.accaunts.login = ''
+      this.form.accaunts.password = ''
+      this.form.yametrika = ''
+      this.form.analytics = ''
+      this.form.alloka = ''
+      this.form.envybox = ''
+      this.form.address = ''
+      this.form.phone_default = ''
+      this.form.phone = ''
+
+      this.loading = false
+      this.loadContent = false
     },
     onClose() {
       this.$store.commit('settings/SWITCH_DRAWNER', {
