@@ -18,7 +18,7 @@ export const actions = {
   },
   async updateDomain({ commit }, formData) {
     try {
-      await this.$axios.$post('/api/v1/domain/update/' + formData._id, formData)
+      await this.$axios.$put('/api/v1/domain/update/' + formData._id, formData)
       // commit('SET_DOMAINS', [])
     } catch (e) {
       commit('SET_ERROR', e.response.data.message, { root: true })
