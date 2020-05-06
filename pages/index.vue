@@ -8,13 +8,15 @@
         Санкт-Петербург, 2-я Красноармейская 11
         <br />
         Краснодар, ул. Пашковская 83
+        <br />
+        Москва, ул. Новослободская 71
       </p>
     </div>
     <div class="col-6 text-center">
       <button class="mb-20" style="padding:0;cursor:default">
         <img src="/site/images/imp.jpg" alt="Rservice" style="height:90px" />
       </button>
-      <p class="text-center">Санкт-Петербург, ул. Кирочная, д.29<br /></p>
+      <p class="text-center">Санкт-Петербург, ул. Кирочная, д.29<br /><br /></p>
     </div>
     <!--  -->
     <div class="col-6">
