@@ -176,7 +176,9 @@ export const getters = {
       if (res.some(where)) {
         res = res.map((element) => {
           if (element.pTitle === item.name) {
-            element.pPrice = pPrice
+            // если не пусто
+            if (pPrice) element.pPrice = pPrice
+            element.partPrice = item.price
             element.isParts = true
           }
           return element
@@ -185,6 +187,7 @@ export const getters = {
         res.push({
           id: '',
           pTitle: item.name,
+          partPrice: '',
           pPrice,
           isParts: true // если это из списка деталей
         })
