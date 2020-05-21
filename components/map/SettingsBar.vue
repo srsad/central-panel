@@ -5,6 +5,7 @@
       <el-date-picker
         v-model="dateRange"
         @change="onChange"
+        first-day-of-week="1"
         type="daterange"
         format="yyyy/MM/dd"
         value-format="yyyyMMdd"
@@ -32,6 +33,10 @@
       >
         Применить
       </el-button>
+
+      <span class="ml-15">
+        Всего: <b>{{ this.$store.getters['map/pointLength'] }}</b>
+      </span>
     </div>
   </div>
 </template>

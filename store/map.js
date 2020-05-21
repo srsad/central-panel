@@ -33,6 +33,7 @@ export const actions = {
   async fetchPonits({ commit, state }) {
     // await console.log('state', state.dateRange)
     try {
+      commit('SET_POINTS', null)
       const points = await this.$axios.$get(
         'https://rloger.herokuapp.com/api/log/getdeterange/',
         {
@@ -79,6 +80,7 @@ export const mutations = {
 export const getters = {
   city: (state) => state.city,
   points: (state) => state.points,
+  pointLength: (state) => (state.points === null ? 0 : state.points.length),
   cityes: (state) => state.cityes,
   dateRange: (state) => state.dateRange
 }
