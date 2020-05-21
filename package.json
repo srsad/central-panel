@@ -30,6 +30,7 @@
     "cors": "^2.8.5",
     "cross-env": "^5.2.0",
     "element-ui": "^2.4.11",
+    "element-ui-el-table-draggable": "^1.2.9",
     "express": "^4.16.4",
     "fingerprintjs2": "^2.1.0",
     "font-awesome": "^4.7.0",
@@ -44,6 +45,7 @@
     "passport-jwt": "^4.0.0",
     "url-parse": "^1.4.7",
     "v-mask": "^2.0.2",
+    "vue-yandex-maps": "^0.10.7",
     "vue2-editor": "^2.10.2",
     "vuedraggable": "^2.23.2"
   },
