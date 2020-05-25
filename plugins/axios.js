@@ -7,7 +7,15 @@ export default function({ $axios, redirect, store }) {
       // исключаем заголовок аторизации cors для источников
       !request.url.includes('/rest/?')
     ) {
+      // TODO проверять слепок
+      // TODO проверять время жизни токена
+      // TODO если он протух проверять наличие рефреш токена
+      //  TODO проверять статус пользователя.
+      //  TODO + продление сессии.
+      //    TODO удаление старого токена, создание нового
+      //    TODO обновление данных пользователя
       request.headers.common.Authorization = `Bearer ${store.getters['auth/token']}`
+      // TODO в ином случае logout
     }
     return request
   })

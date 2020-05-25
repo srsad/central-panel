@@ -33,6 +33,9 @@ export const actions = {
       commit('SET_ERROR', e.response.data.message, { root: true })
       throw e
     }
+  },
+  updateMenuindex({ commit }, domains) {
+    commit('SET_DOMAINS', domains)
   }
 }
 

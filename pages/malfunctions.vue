@@ -1,5 +1,4 @@
 <template>
-  <!--  -->
   <div class="row w100 mt-15">
     <div class="col-12">
       <el-tabs :value="activeTab">
