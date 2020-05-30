@@ -5,19 +5,19 @@
 import moment from 'moment'
 
 export const state = () => ({
-  city: 'Санкт-петербург', // выбранный город
+  city: 'Санкт-Петербург', // выбранный город
   // массив с городами и кординатами их центра
-  cityes: [
+  cities: [
     {
-      city: 'Санкт-петербург',
-      coords: [54.82896654088406, 39.831893822753904]
+      city: 'Санкт-Петербург',
+      coords: [59.93526597038887, 30.345803639545135]
     },
     {
       city: 'Москва',
       coords: [55.73948223998903, 37.64850972949218]
     },
     {
-      city: 'Краснодар',
+      city: 'Краснодарский край',
       coords: [45.033938975987894, 39.03155537060541]
     }
   ],
@@ -79,8 +79,17 @@ export const mutations = {
 
 export const getters = {
   city: (state) => state.city,
-  points: (state) => state.points,
+  points: (state) => state.points, // полные данные о точках
+  //  только координаты
+  onlyPoints: (state) => {
+    const res = []
+    for (const item of state.points) {
+      res.push([item.lat, item.long])
+    }
+    return res
+  },
   pointLength: (state) => (state.points === null ? 0 : state.points.length),
-  cityes: (state) => state.cityes,
+  // TODO опечатка cityes => cities
+  cityes: (state) => state.cities,
   dateRange: (state) => state.dateRange
 }

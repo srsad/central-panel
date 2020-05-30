@@ -25,6 +25,7 @@
       </el-select>
       <!-- end select -->
       <el-button
+        id="refreshMap"
         :disabled="disabled"
         :loading="loading"
         @click="getPoints"
@@ -59,7 +60,7 @@ export default {
         version: '2.1'
       },
       coords: [54.82896654088406, 39.831893822753904],
-      city: 'Санкт-петербург'
+      city: 'Санкт-Петербург'
     }
   },
   computed: {
@@ -74,6 +75,7 @@ export default {
     async getPoints() {
       this.loading = true
       try {
+        await this.$store.dispatch('map/setCity', this.city)
         await this.$store.dispatch('map/fetchPonits')
       } catch (e) {
         //

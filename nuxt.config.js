@@ -38,8 +38,8 @@ module.exports = {
     // '@/plugins/casl.js',
     '@plugins/globals.js',
     '@plugins/axios.js',
-    { src: '@plugins/no-ssr.js', ssr: false },
-    { src: '@plugins/yaMaps.js', mode: 'client' }
+    { src: '@plugins/no-ssr.js', ssr: false }
+    // { src: '@plugins/yaMaps.js', mode: 'client' }
   ],
   /*
    ** Nuxt.js dev-modules
