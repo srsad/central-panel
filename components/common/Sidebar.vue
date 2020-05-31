@@ -72,7 +72,7 @@
       </span>
     </el-menu-item>
     <!--  -->
-    <el-menu-item v-if="$abilities('map')" index="/map">
+    <el-menu-item v-if="$abilities('map')" @click="openMap" index="/map">
       <i class="fa fa-map-o" />
       <span slot="title">Тепловые карты</span>
     </el-menu-item>
@@ -143,6 +143,9 @@ export default {
     logout() {
       this.$store.dispatch('auth/logout')
       this.$router.push('/auth')
+    },
+    openMap() {
+      window.location = '/map'
     }
   }
 }

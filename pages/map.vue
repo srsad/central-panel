@@ -35,7 +35,7 @@ export default {
     return {
       script: [
         {
-          src: 'https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=65ee8b15-0d5d-45a9-b270-25a4baf7280f',
+          src: 'https://api-maps.yandex.ru/2.1.oldie.1/?lang=ru_RU&apikey=65ee8b15-0d5d-45a9-b270-25a4baf7280f',
           type: 'text/javascript'
         },
         {
