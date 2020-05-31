@@ -178,11 +178,6 @@
           <!-- contacts -->
           <el-tab-pane label="Контакты" name="contacts" class="row">
             <div class="col-12">
-              <el-form-item prop="address" label="Адрес">
-                <el-input v-model="form.address" placeholder="Адрес" />
-              </el-form-item>
-            </div>
-            <div class="col-12">
               <el-form-item prop="phone_default" label="Телефон по умолчанию">
                 <el-input v-model="form.phone_default" placeholder="Телефон" />
               </el-form-item>
@@ -192,11 +187,36 @@
                 <el-input v-model="form.phone" placeholder="Телефон" />
               </el-form-item>
             </div>
+            <div class="col-12">
+              <el-form-item prop="address" label="Адрес">
+                <el-input v-model="form.address" placeholder="Адрес" />
+              </el-form-item>
+            </div>
+            <div class="col-12">
+              <el-form-item prop="work_time" label="Время работы">
+                <el-input v-model="form.work_time" placeholder="Время работы" />
+              </el-form-item>
+            </div>
+            <div class="col-12">
+              <el-form-item prop="map_script" label="Код карты">
+                <el-input v-model="form.map_script" placeholder="Код карты" />
+              </el-form-item>
+            </div>
           </el-tab-pane>
           <!-- end contacts -->
         </el-tabs>
       </div>
-      <div class="col-12 text-right">
+      <div class="col-6">
+        <el-button
+          @click="getSourceOptions"
+          :loading="loading"
+          :title="'Получить данные из источника'"
+          type="info"
+        >
+          Получить данные
+        </el-button>
+      </div>
+      <div class="col-6 text-right">
         <el-button @click="validateForm" :loading="loading" type="success">
           Создать
         </el-button>
@@ -235,6 +255,8 @@ export default {
         envybox: '',
         // контакты
         address: '',
+        work_time: '',
+        map_script: '',
         phone_default: '',
         phone: ''
       },
@@ -324,19 +346,9 @@ export default {
     },
     async onCreate() {
       this.loading = true
-      let source = this.form.domain
-      let hostname = ''
-      try {
-        // eslint-disable-next-line no-new
-        new URL(source)
-      } catch {
-        source = 'https://' + source
-      }
-      hostname = parseUrl(source).hostname
-
       try {
         const formData = this.form
-        formData.domain = hostname
+        formData.domain = this.getSource()
         await this.$store.dispatch('domains/createDomain', formData)
         this.$store.dispatch('domains/fetchDomains')
         this.clearForm()
@@ -378,6 +390,8 @@ export default {
       this.form.alloka = ''
       this.form.envybox = ''
       this.form.address = ''
+      this.form.map_script = ''
+      this.form.work_time = ''
       this.form.phone_default = ''
       this.form.phone = ''
 
@@ -389,6 +403,46 @@ export default {
         dranwer: 'drawerCreateDomains',
         status: false
       })
+    },
+    /** Возвращает отчищенный источник */
+    getSource() {
+      let source = this.form.domain
+      let hostname = ''
+      try {
+        // eslint-disable-next-line no-new
+        new URL(source)
+      } catch {
+        source = 'https://' + source
+      }
+      hostname = parseUrl(source).hostname
+      return hostname
+    },
+    /** Получаем данные источника */
+    async getSourceOptions() {
+      const source = this.getSource()
+      try {
+        this.$axios.setToken(false)
+        const option = await this.$axios.$get(
+          `https://${source}/rest/?get=options`
+        )
+
+        if (option.address) this.form.address = option.address
+        if (option.alloka) this.form.alloka.code = option.alloka
+        if (option.analytics) this.form.analytics.code = option.analytics
+        if (option.envybox) this.form.envybox.code = option.envybox
+        if (option.map_script) this.form.map_script = option.map_script
+        if (option.phone_default) this.form.phone_default = option.phone_default
+        if (option.work_time) this.form.work_time = option.work_time
+        if (option.yametrika) this.form.yametrika.code = option.yametrika
+      } catch (e) {
+        this.$store.commit(
+          'SET_ERROR',
+          `Не удалось получить данные из источника ${source}`,
+          { root: true }
+        )
+      } finally {
+        this.$store.dispatch('settings/setToken')
+      }
     }
   }
 }

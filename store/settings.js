@@ -67,6 +67,16 @@ export const actions = {
         root: true
       })
     }
+  },
+  /** Установка токена в axios */
+  setToken() {
+    const cookieStr = process.browser
+      ? document.cookie
+      : this.app.context.req.headers.cookie
+    const cookies = Cookie.parse(cookieStr || '') || {}
+    if (cookies['jwt-token']) {
+      this.$axios.setToken(cookies['jwt-token'], 'Bearer')
+    }
   }
 }
 

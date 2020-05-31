@@ -57,6 +57,7 @@ export const actions = {
       commit('SET_ERROR', e.response.data.message, { root: true })
       throw e
     } finally {
+      // TODO ставить токен из стора settings
       this.$axios.setToken(getCookiesToken(), 'Bearer')
     }
   },
@@ -111,6 +112,7 @@ export const actions = {
     } catch (e) {
       commit('SET_ERROR', e.response.data.message, { root: true })      
     } finally {
+      // TODO ставить токен из стора settings
       this.$axios.setToken(getCookiesToken(), 'Bearer')
     }
   },

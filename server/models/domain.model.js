@@ -156,6 +156,17 @@ const domainSchema = new Schema({
     maxlength: 255,
     default: ''
   },
+  // время работы
+  work_time: {
+    type: String,
+    maxlength: 255,
+    default: ''
+  },
+  // скрипт карты
+  map_script: {
+    type: String,
+    default: ''
+  },
   // лог событий
   logs: {
     type: Array,

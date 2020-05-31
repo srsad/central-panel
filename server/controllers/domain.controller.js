@@ -1,3 +1,4 @@
+const axios = require('axios')
 const Domain = require('../models/domain.model')
 
 /** Создание */
@@ -39,6 +40,8 @@ module.exports.create = async (req, res) => {
   if (allokaId) {
     fd.alloka.id = allokaId[0]
   }
+
+  fd.map_script = fd.map_script.replace('{', '{ ').replace(/ {1,}/g, ' ')
 
   try {
     await Domain.create(fd)
@@ -82,13 +85,23 @@ module.exports.update = async (req, res) => {
   const allokaId = $set.alloka.code.match(/(?<=(\'|pt\/))\w*/)
   $set.alloka.id = allokaId ? allokaId[0] : ''
 
+  $set.map_script = $set.map_script.replace('{', '{ ').replace(/ {1,}/g, ' ')
+
+  let message = 'Данные обновленны!'
+  try {
+    await updateSourceOptions($set)
+  } catch (error) {
+    // eslint-disable-next-line prettier/prettier
+    message = 'Данные обновленны! Но не удалось обновить из у источника ' + $set.domain
+  }
+
   try {
     await Domain.findOneAndUpdate(
       { _id: req.params.id },
       { $set },
       { new: true }
     )
-    res.json({ message: 'Данные обновленны!' })
+    res.json({ message })
   } catch (error) {
     res
       .status(500)
@@ -123,5 +136,29 @@ module.exports.getAll = async (req, res) => {
     res.json({ data: domains })
   } catch (error) {
     res.status(500).json({ message: 'Не удалось получить список доменов!' })
+  }
+}
+
+/** Сохраняем данные на источнике */
+async function updateSourceOptions(options) {
+  try {
+    // axios.$setToken(false)
+    await axios.get(`https://${options.domain}/rest/`, {
+      params: {
+        create: 'options',
+        address: options.address || '',
+        // BUG иначе экранируются данные
+        alloka: options.alloka.code.replace('script', '###') || '',
+        analytics: options.analytics.code.replace('script', '###') || '',
+        envybox: options.envybox.code.replace('script', '###') || '',
+        map_script: options.map_script || '',
+        phone_default: options.phone_default || '',
+        work_time: options.work_time || '',
+        yametrika: options.yametrika.code.replace('script', '###') || ''
+      }
+    })
+  } catch (e) {
+    console.log('updateSourceOptions error', e)
+    return false
   }
 }
