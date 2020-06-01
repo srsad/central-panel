@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-autocomplete
+      v-if="$abilities('search')"
       v-model="state"
       :fetch-suggestions="querySearchAsync"
       @select="handleSelect"

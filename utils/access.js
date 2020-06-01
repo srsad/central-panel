@@ -25,6 +25,10 @@ export default [
     label: 'Привязать Impuls'
   },
   {
+    _id: 'search',
+    label: 'Поиск'
+  },
+  {
     _id: 'part',
     label: 'Детали',
     children: [
