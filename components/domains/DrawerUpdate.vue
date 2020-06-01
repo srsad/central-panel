@@ -295,8 +295,8 @@ export default {
             trigger: 'blur'
           },
           {
-            min: 3,
-            message: 'Минимум 3 символа',
+            min: 2,
+            message: 'Минимум 2 символа',
             trigger: 'blur'
           },
           {

@@ -20,10 +20,10 @@
               />
             </template>
           </el-table-column>
-          <el-table-column label="П" width="25" fixed="left">
+          <el-table-column label="П" width="30" fixed="left">
             <template slot-scope="scope">
               <div :style="setColor(scope.row.color)" class="ws-normal">
-                {{ scope.row.priority }}
+                {{ scope.row.priority > 0 ? scope.row.priority : '' }}
               </div>
             </template>
           </el-table-column>

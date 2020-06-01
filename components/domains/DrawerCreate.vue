@@ -280,8 +280,8 @@ export default {
             trigger: 'blur'
           },
           {
-            min: 3,
-            message: 'Минимум 3 символа',
+            min: 2,
+            message: 'Минимум 2 символа',
             trigger: 'blur'
           },
           {
@@ -427,13 +427,13 @@ export default {
         )
 
         if (option.address) this.form.address = option.address
-        if (option.alloka) this.form.alloka.code = option.alloka
-        if (option.analytics) this.form.analytics.code = option.analytics
-        if (option.envybox) this.form.envybox.code = option.envybox
+        if (option.alloka) this.form.alloka = option.alloka
+        if (option.analytics) this.form.analytics = option.analytics
+        if (option.envybox) this.form.envybox = option.envybox
         if (option.map_script) this.form.map_script = option.map_script
         if (option.phone_default) this.form.phone_default = option.phone_default
         if (option.work_time) this.form.work_time = option.work_time
-        if (option.yametrika) this.form.yametrika.code = option.yametrika
+        if (option.yametrika) this.form.yametrika = option.yametrika
       } catch (e) {
         this.$store.commit(
           'SET_ERROR',
