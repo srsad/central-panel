@@ -12,6 +12,8 @@ export default ({ store }, inject) => {
     // пройтись по списку access
     // разбиль каждое значение по "-" и попробовать найти полное совподение
     for (const item of access) {
+      // BUG - пару раз item был равен null
+      if (item === null) return false
       const items = item.split('-')
       if (items.includes(can)) return true
     }
