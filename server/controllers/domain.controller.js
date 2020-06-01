@@ -43,9 +43,18 @@ module.exports.create = async (req, res) => {
 
   fd.map_script = fd.map_script.replace('{', '{ ').replace(/ {1,}/g, ' ')
 
+  let message = 'Домен успешно создан!'
+
+  try {
+    await updateSourceOptions(fd)
+  } catch (error) {
+    // eslint-disable-next-line prettier/prettier
+    message = 'Домен успешно создан! Но не удалось обновить данные у источника ' + fd.domain
+  }
+
   try {
     await Domain.create(fd)
-    res.status(201).json({ message: 'Домен успешно создан!' })
+    res.status(201).json({ message })
   } catch (error) {
     let msg = ''
     if (error.errmsg.includes('$domain_1')) {
@@ -92,7 +101,7 @@ module.exports.update = async (req, res) => {
     await updateSourceOptions($set)
   } catch (error) {
     // eslint-disable-next-line prettier/prettier
-    message = 'Данные обновленны! Но не удалось обновить из у источника ' + $set.domain
+    message = 'Данные обновленны! Но не удалось обновить у источника ' + $set.domain
   }
 
   try {
