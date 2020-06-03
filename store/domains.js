@@ -4,7 +4,8 @@
 
 export const state = () => ({
   damains: [], // список доменных имен
-  damain: null // доменное имя для редактирования
+  damain: null, // доменное имя для редактирования
+  emptyText: 'Нет данных' // при загрузке данных менять текст
 })
 
 export const actions = {
@@ -27,11 +28,30 @@ export const actions = {
   },
   async fetchDomains({ commit }) {
     try {
+      commit('SET_DOMAINS', [])
+      commit('SET_EMPTY_TEXT', 'Загрузка данных')
       const domains = await this.$axios.$get('/api/v1/domain/getall')
       commit('SET_DOMAINS', domains.data)
     } catch (e) {
       commit('SET_ERROR', e.response.data.message, { root: true })
       throw e
+    } finally {
+      commit('SET_EMPTY_TEXT', 'Нет данных')
+    }
+  },
+  async selectByAddress({ commit }, address) {
+    try {
+      commit('SET_DOMAINS', [])
+      commit('SET_EMPTY_TEXT', 'Загрузка данных')
+      const domains = await this.$axios.$get(
+        '/api/v1/domain/byaddress/' + address
+      )
+      commit('SET_DOMAINS', domains.data)
+    } catch (e) {
+      commit('SET_ERROR', e.response.data.message, { root: true })
+      throw e
+    } finally {
+      commit('SET_EMPTY_TEXT', 'Нет данных')
     }
   },
   updateMenuindex({ commit }, domains) {
@@ -45,10 +65,14 @@ export const mutations = {
   },
   SET_DOMAIN(state, damain) {
     state.damain = damain
+  },
+  SET_EMPTY_TEXT(state, text) {
+    state.emptyText = text
   }
 }
 
 export const getters = {
   domains: (state) => state.damains,
-  domain: (state) => state.damain
+  domain: (state) => state.damain,
+  emptyText: (state) => state.emptyText
 }

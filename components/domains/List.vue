@@ -7,9 +7,9 @@
           @row-dblclick="edit"
           :row-style="tableRowStyle"
           :style="`max-width:${tableWidth}px;height:${tableHeight}px`"
+          :empty-text="$store.getters['domains/emptyText']"
           height="500"
           size="mini"
-          empty-text="Нет данных"
         >
           <el-table-column label="" width="10" fixed="left">
             <template slot-scope="scope">
@@ -81,7 +81,12 @@
               </a>
             </template>
           </el-table-column>
-          <el-table-column label="Компания" width="130">
+          <el-table-column
+            :filters="company_"
+            :filter-method="filterHandlerCompany"
+            label="Компания"
+            width="130"
+          >
             <template slot-scope="scope">
               <div :title="scope.row.company" class="ws-normal">
                 {{ scope.row.company }}
@@ -263,7 +268,9 @@ export default {
       cities_: [], // список городов для фильтра в таблице
       cities: [], // список для фильтрации городов
       brands_: [], // список брендов для фильтра в таблице
-      brands: [] // список для фильтрации брендов
+      brands: [], // список для фильтрации брендов
+      company_: [], // список компаний для фильтра в таблице
+      company: [] // список для фильтрации компаний
     }
   },
   computed: {
@@ -340,17 +347,26 @@ export default {
       this.cities_ = await this.$store.getters['city/сityes'].map((el) => {
         return { value: el._id, text: el.name }
       })
-      // загрузка списка брендов
       if (this.items.length > 0) {
         const brands = []
+        const company = []
         await this.items.forEach((el) => {
           if (!brands.includes(el.brand)) brands.push(el.brand)
+          if (!company.includes(el.company)) company.push(el.company)
         })
+        // загрузка списка брендов
         await brands.sort()
         this.brands = brands.map((el, idx) => {
           return { value: el, label: el }
         })
         this.brands_ = brands.map((el, idx) => {
+          return { value: el, text: el }
+        })
+        // загрузка списка компаний
+        this.company = company.map((el, idx) => {
+          return { value: el, label: el }
+        })
+        this.company_ = company.map((el, idx) => {
           return { value: el, text: el }
         })
       }
@@ -377,6 +393,15 @@ export default {
     /** Фильтр по брендам */
     filterHandlerBrands(value, row) {
       return row.brand === value
+    },
+    /** Получаем уникальный список брендов */
+    getAllCompanies(company) {
+      if (this.company_.length === 0 || this.company.length === 0) return ''
+      return this.company.find((el) => el.value === company).label
+    },
+    /** Фильтр по компаниям */
+    filterHandlerCompany(value, row) {
+      return row.company === value
     },
     /** Скопировать в буффер */
     copyToBuffer(val) {

@@ -134,7 +134,24 @@ module.exports.getById = async (req, res) => {
     const domain = await Domain.findById(req.params.id)
     res.status(200).json(domain)
   } catch (error) {
-    req.status(500).json({ message: 'Не удалось полуичть домен!', error })
+    res.status(500).json({ message: 'Не удалось полуичть домен!', error })
+  }
+}
+
+/** Вернуть по адрессу */
+module.exports.getByAddress = async (req, res) => {
+  try {
+    // TODO сделать нормальный полнотектовый поиск
+    // const regex = new RegExp(req.params.address, 'i')
+    const select = await Domain.find().sort({ created: -1 })
+
+    const domains = select.filter((el) => {
+      if (el.address.includes(req.params.address)) return el
+    })
+    // console.log('domains', domains)
+    res.status(200).json({ data: domains })
+  } catch (error) {
+    res.status(500).json({ message: 'Не удалось полуичть домен!', error })
   }
 }
 

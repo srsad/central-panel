@@ -7,11 +7,17 @@ const {
   update,
   remove,
   getAll,
-  getById
+  getById,
+  getByAddress
 } = require('../../controllers/domain.controller')
 
 // /api/v1/domain
 router.get('/getall', passport.authenticate('jwt', { session: false }), getAll)
+router.get(
+  '/byaddress/:address',
+  passport.authenticate('jwt', { session: false }),
+  getByAddress
+)
 router.get(
   '/get/:id',
   passport.authenticate('jwt', { session: false }),

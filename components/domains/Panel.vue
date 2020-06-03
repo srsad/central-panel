@@ -16,10 +16,31 @@
         >
           Добавить домен
         </el-button>
+        <el-button-group>
+          <el-button @click="selectCity('Красноармейская')" type="primary">
+            2-я Красноармейская 11
+          </el-button>
+          <el-button @click="selectCity('Пашковская')" type="primary">
+            ул. Пашковская 83
+          </el-button>
+          <el-button @click="selectCity('Новослободская')" type="primary">
+            ул. Новослободская 71
+          </el-button>
+          <el-button @click="selectCity('Дмитровский')" type="primary">
+            Дмитровский пер., 8
+          </el-button>
+          <el-button
+            @click="() => $store.dispatch('domains/fetchDomains')"
+            type="primary"
+            icon="el-icon-close"
+            title="Сбросить"
+            style="padding: 12px 12px 11px 12px"
+          />
+        </el-button-group>
       </div>
       <div class="col-3 text-right">
-        <p class="mt-25" style="margin-right:5px">
-          <!-- Всего: <b>{{ $store.getters['domains/domains'].length }}</b> -->
+        <p class="mt-25" style="margin-right:25px">
+          Всего: <b>{{ $store.getters['domains/domains'].length }}</b>
         </p>
       </div>
     </div>
@@ -50,6 +71,9 @@ export default {
     AppList
   },
   methods: {
+    selectCity(address) {
+      this.$store.dispatch('domains/selectByAddress', address)
+    },
     checkStatus() {
       console.log('check domain status')
     }
