@@ -769,6 +769,642 @@
         </tbody>
       </table>
     </div>
+    <!--  -->
+    <div class="col-6 col-lg-4 mb-30">
+      <table
+        class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
+      >
+        <tbody>
+          <tr>
+            <td colspan="6">Внутриканальные наушники</td>
+          </tr>
+          <tr>
+            <td>Замена внутренних кабелей наушников</td>
+            <td>Замена дуги или динамиков</td>
+            <td>Подбор аккумулятора и установка</td>
+            <td>Ремонт USB наушников</td>
+            <td>Ремонт беспроводных наушников</td>
+            <td>Ремонт и замена гнезда наушников</td>
+          </tr>
+          <tr>
+            <td>от 1000</td>
+            <td>от 600</td>
+            <td>от 1000</td>
+            <td>от 700</td>
+            <td>от 600</td>
+            <td>от 500</td>
+          </tr>
+          <tr>
+            <td>Ремонт и замена кабеля</td>
+            <td>Ремонт и замена штекера</td>
+            <td>Ремонт микрофона</td>
+            <td>Другая неисправность</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>от 500</td>
+            <td>от 600</td>
+            <td>от 600</td>
+            <td>от 500</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-6 col-lg-4 mb-30">
+      <table
+        class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
+      >
+        <tbody>
+          <tr>
+            <td colspan="6">Полноразмерные наушники</td>
+          </tr>
+          <tr>
+            <td>Замена внутренних кабелей наушников</td>
+            <td>Замена дуги или динамиков</td>
+            <td>Подбор аккумулятора и установка</td>
+            <td>Ремонт USB наушников</td>
+            <td>Ремонт беспроводных наушников</td>
+            <td>Ремонт и замена гнезда наушников</td>
+          </tr>
+          <tr>
+            <td>от 1000</td>
+            <td>от 600</td>
+            <td>от 1000</td>
+            <td>от 700</td>
+            <td>от 600</td>
+            <td>от 500</td>
+          </tr>
+          <tr>
+            <td>Ремонт и замена кабеля</td>
+            <td>Ремонт и замена штекера</td>
+            <td>Ремонт микрофона</td>
+            <td>Другая неисправность</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>от 500</td>
+            <td>от 600</td>
+            <td>от 600</td>
+            <td>от 500</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-6 col-lg-4 mb-30">
+      <table
+        class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
+      >
+        <tbody>
+          <tr>
+            <td colspan="6">Колонки</td>
+          </tr>
+          <tr>
+            <td>Замена аккумулятора</td>
+            <td>Замена разъемов</td>
+            <td>Не включается</td>
+            <td>Не заряжается</td>
+            <td>Не играет звук</td>
+            <td>Не работают кнопки</td>
+          </tr>
+          <tr>
+            <td>от 1000</td>
+            <td>от 1000</td>
+            <td>от 1000</td>
+            <td>от 1300</td>
+            <td>от 800</td>
+            <td>от 300</td>
+          </tr>
+          <tr>
+            <td>Ремонт корпуса</td>
+            <td>Другая неисправность</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>от 500</td>
+            <td>от 300</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-6 col-lg-4 mb-30">
+      <table
+        class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
+      >
+        <tbody>
+          <tr>
+            <td colspan="6">Гарнитура</td>
+          </tr>
+          <tr>
+            <td>Замена внутренних кабелей наушников</td>
+            <td>Замена дуги или динамиков</td>
+            <td>Подбор аккумулятора и установка</td>
+            <td>Ремонт USB наушников</td>
+            <td>Ремонт беспроводных наушников</td>
+            <td>Ремонт и замена гнезда наушников</td>
+          </tr>
+          <tr>
+            <td>от 1000</td>
+            <td>от 600</td>
+            <td>от 1000</td>
+            <td>от 700</td>
+            <td>от 600</td>
+            <td>от 500</td>
+          </tr>
+          <tr>
+            <td>Ремонт и замена кабеля</td>
+            <td>Ремонт и замена штекера</td>
+            <td>Ремонт микрофона</td>
+            <td>Другая неисправность</td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>от 500</td>
+            <td>от 600</td>
+            <td>от 600</td>
+            <td>от 500</td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-6 col-lg-4 mb-30">
+      <table
+        class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
+      >
+        <tbody>
+          <tr>
+            <td colspan="6">Фены</td>
+          </tr>
+          <tr>
+            <td>Гул при работе</td>
+            <td>Ремонт, замена нагревателя</td>
+            <td>Не включается</td>
+            <td>Пахнет гарью</td>
+            <td>Сломаны лопасти</td>
+            <td>Замена деталей корпуса</td>
+          </tr>
+          <tr>
+            <td>от 430</td>
+            <td>от 400</td>
+            <td>от 350</td>
+            <td>от 400</td>
+            <td>от 400</td>
+            <td>от 450</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-6 col-lg-4 mb-30">
+      <table
+        class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
+      >
+        <tbody>
+          <tr>
+            <td colspan="6">Сушилки для рук</td>
+          </tr>
+          <tr>
+            <td>Мелкий ремонт</td>
+            <td>Средний ремонт</td>
+            <td>Сложный ремонт</td>
+            <td>Ремонт нагревателя</td>
+            <td>Ремонт двигателя</td>
+            <td>Другая неисправность</td>
+          </tr>
+          <tr>
+            <td>от 1100</td>
+            <td>от 1500</td>
+            <td>от 2000</td>
+            <td>от 2000</td>
+            <td>от 2000</td>
+            <td>от 800</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-6 col-lg-4 mb-30">
+      <table
+        class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
+      >
+        <tbody>
+          <tr>
+            <td colspan="6">Освещение</td>
+          </tr>
+          <tr>
+            <td>Лампа не включается</td>
+            <td>Лампа сильно нагревается</td>
+            <td>Замена запчастей</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>от 550</td>
+            <td>от 400</td>
+            <td>от 300</td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-6 col-lg-4 mb-30">
+      <table
+        class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
+      >
+        <tbody>
+          <tr>
+            <td colspan="6">Увлажнители</td>
+          </tr>
+          <tr>
+            <td>Чистка, профилактика</td>
+            <td>Ремонт/замена нагревателя</td>
+            <td>Замена датчиков</td>
+            <td>Не включается</td>
+            <td>Гул при работе</td>
+            <td>Не подает пар</td>
+          </tr>
+          <tr>
+            <td>от 800</td>
+            <td>от 800</td>
+            <td>от 800</td>
+            <td>от 600</td>
+            <td>от 500</td>
+            <td>от 700</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-6 col-lg-4 mb-30">
+      <table
+        class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
+      >
+        <tbody>
+          <tr>
+            <td colspan="6">Пылесосы</td>
+          </tr>
+          <tr>
+            <td>Не включается</td>
+            <td>Не заряжается</td>
+            <td>Выключается</td>
+            <td>Громко гудит</td>
+            <td>Пахнет гарью</td>
+            <td>Слабая тяга</td>
+          </tr>
+          <tr>
+            <td>от 450</td>
+            <td>от 850</td>
+            <td>от 800</td>
+            <td>от 750</td>
+            <td>от 750</td>
+            <td>от 690</td>
+          </tr>
+          <tr>
+            <td>Не подает воду</td>
+            <td>Не собирает воду</td>
+            <td>Не сматывается шнур</td>
+            <td>Обрыв проводов</td>
+            <td>Повреждения корпуса</td>
+            <td>Другая неисправность</td>
+          </tr>
+          <tr>
+            <td>от 410</td>
+            <td>от 450</td>
+            <td>от 790</td>
+            <td>от 350</td>
+            <td>от 600</td>
+            <td>от 400</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-6 col-lg-4 mb-30">
+      <table
+        class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
+      >
+        <tbody>
+          <tr>
+            <td colspan="6">Панели</td>
+          </tr>
+          <tr>
+            <td>Не показывает</td>
+            <td>Нет звука</td>
+            <td>Нет сигнала</td>
+            <td>Не включается</td>
+            <td>Не видит устройства</td>
+            <td>Не переключает каналы</td>
+          </tr>
+          <tr>
+            <td>от 650</td>
+            <td>от 495</td>
+            <td>от 750</td>
+            <td>от 750</td>
+            <td>от 690</td>
+            <td>от 500</td>
+          </tr>
+          <tr>
+            <td>Со временем гаснет</td>
+            <td>Замена динамика</td>
+            <td>Замена подсветки</td>
+            <td>Замена экрана</td>
+            <td>Ремонт, замена блока питания</td>
+            <td>Ремонт, замена материнской платы</td>
+          </tr>
+          <tr>
+            <td>от 1000</td>
+            <td>от 495</td>
+            <td>от 500</td>
+            <td>от 1900</td>
+            <td>от 1000</td>
+            <td>от 1100</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-6 col-lg-4 mb-30">
+      <table
+        class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
+      >
+        <tbody>
+          <tr>
+            <td colspan="6">Электрические плиты</td>
+          </tr>
+          <tr>
+            <td>Не включается подсветка</td>
+            <td>Не работает духовка</td>
+            <td>Не работает конфорка</td>
+            <td>Не регулруется</td>
+            <td>Не работает управление</td>
+            <td>Другая неисправность</td>
+          </tr>
+          <tr>
+            <td>от 950</td>
+            <td>от 700</td>
+            <td>от 800</td>
+            <td>от 950</td>
+            <td>от 950</td>
+            <td>от 500</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-6 col-lg-4 mb-30">
+      <table
+        class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
+      >
+        <tbody>
+          <tr>
+            <td colspan="6">Роутеры</td>
+          </tr>
+          <tr>
+            <td>Замена прошивки</td>
+            <td>Ремонт/ замена элементов питания</td>
+            <td>Ремонт платы управления или платы Wi-Fi</td>
+            <td>Не работает Ethernet</td>
+            <td>Не опрелеяется</td>
+            <td>Не включается</td>
+          </tr>
+          <tr>
+            <td>600</td>
+            <td>600</td>
+            <td>1200</td>
+            <td>от 400</td>
+            <td>от 550</td>
+            <td>от 450</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-6 col-lg-4 mb-30">
+      <table
+        class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
+      >
+        <tbody>
+          <tr>
+            <td colspan="6">Духовые шкафы</td>
+          </tr>
+          <tr>
+            <td>Вентилятор гонит холодный воздух</td>
+            <td>Шумит или пищит</td>
+            <td>Духовка слабо греет</td>
+            <td>Духовой шкаф не нагревается</td>
+            <td>Не работает совсем</td>
+            <td>Посторонний запах</td>
+          </tr>
+          <tr>
+            <td>от 1000</td>
+            <td>от 600</td>
+            <td>от 500</td>
+            <td>от 500</td>
+            <td>от 500</td>
+            <td>от 700</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-6 col-lg-4 mb-30">
+      <table
+        class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
+      >
+        <tbody>
+          <tr>
+            <td colspan="6">Варочные панели</td>
+          </tr>
+          <tr>
+            <td>Замена конфорки</td>
+            <td>Замена переключателя</td>
+            <td>Замена ручки</td>
+            <td>Замена электронного модуля</td>
+            <td>Отключается</td>
+            <td>Не включается</td>
+          </tr>
+          <tr>
+            <td>от 1200</td>
+            <td>от 920</td>
+            <td>от 800</td>
+            <td>от 1200</td>
+            <td>от 900</td>
+            <td>от 900</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-6 col-lg-4 mb-30">
+      <table
+        class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
+      >
+        <tbody>
+          <tr>
+            <td colspan="6">Книги электронные</td>
+          </tr>
+          <tr>
+            <td>Разбито стекло (тачскрин)</td>
+            <td>Разбит экран (дисплей)</td>
+            <td>Не работает модуль wi-fi</td>
+            <td>Не видит карту памяти</td>
+            <td>Не работает кнопка включения</td>
+            <td>Чистка от воды</td>
+          </tr>
+          <tr>
+            <td>от 750</td>
+            <td>от 1400</td>
+            <td>от 400</td>
+            <td>от 650</td>
+            <td>от 700</td>
+            <td>от 900</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-6 col-lg-4 mb-30">
+      <table
+        class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
+      >
+        <tbody>
+          <tr>
+            <td colspan="6">Квадрокоптеры</td>
+          </tr>
+          <tr>
+            <td>Замена шестерней</td>
+            <td>Замена лопастей</td>
+            <td>Замена одного мотора</td>
+            <td>Замена материнской платы</td>
+            <td>Замена платы навигации</td>
+            <td>Замена крестовины</td>
+          </tr>
+          <tr>
+            <td>от 1900</td>
+            <td>от 990</td>
+            <td>от 2500</td>
+            <td>от 2500</td>
+            <td>от 990</td>
+            <td>от 1800</td>
+          </tr>
+          <tr>
+            <td>Замена корпуса с камерой</td>
+            <td>Замена контроллера</td>
+            <td>Замена посадочных шасси</td>
+            <td>Замена GPS модуля</td>
+            <td>Замена GPS модуля (б/у)</td>
+            <td>Замена мотора квадрокоптера</td>
+          </tr>
+          <tr>
+            <td>от 1400</td>
+            <td>от 1900</td>
+            <td>от 1400</td>
+            <td>от 1400</td>
+            <td>от 1400</td>
+            <td>от 1400</td>
+          </tr>
+          <tr>
+            <td>Замена шлейфа подвеса</td>
+            <td>Восстановления после попадания воды</td>
+            <td>Прошивка (обновление, откат версии)</td>
+            <td>Замена разъема питания</td>
+            <td>Тянет в сторону</td>
+            <td>Нет тяги</td>
+          </tr>
+          <tr>
+            <td>от 1400</td>
+            <td>от 1400</td>
+            <td>от 1400</td>
+            <td>от 1400</td>
+            <td>от 400</td>
+            <td>от 1400</td>
+          </tr>
+          <tr>
+            <td>Не взлетает</td>
+            <td>Не включается</td>
+            <td>Не крутится винт</td>
+            <td>Не работает один винт</td>
+            <td>Не реагирует на пульт</td>
+            <td>Другая неиспрасность</td>
+          </tr>
+          <tr>
+            <td>от 450</td>
+            <td>от 1100</td>
+            <td>от 1100</td>
+            <td>от 400</td>
+            <td>от 900</td>
+            <td>от 500</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- <div class="col-6 col-lg-4 mb-30">
+      <table
+        class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
+      >
+        <tbody>
+          <tr>
+            <td colspan="6"></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div> -->
   </div>
 </template>
 
