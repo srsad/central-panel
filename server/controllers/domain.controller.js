@@ -174,13 +174,14 @@ async function updateSourceOptions(options) {
         create: 'options',
         address: options.address || '',
         // BUG иначе экранируются данные
-        alloka: options.alloka.code.replace('script', '###') || '',
-        analytics: options.analytics.code.replace('script', '###') || '',
-        envybox: options.envybox.code.replace('script', '###') || '',
-        map_script: options.map_script || '',
+        alloka: options.alloka.code.replace(/script/gi, '###') || '',
+        analytics: options.analytics.code.replace(/script/gi, '###') || '',
+        envybox: options.envybox.code.replace(/script/gi, '###') || '',
+        // BUG НЕ ОТПРАВЛЯЕТСЯ КОД КАРТЫ
+        map_script: options.map_script.replace(/script/gi, '###') || '',
         phone_default: options.phone_default || '',
         work_time: options.work_time || '',
-        yametrika: options.yametrika.code.replace('script', '###') || ''
+        yametrika: options.yametrika.code.replace(/script/gi, '###') || ''
       }
     })
   } catch (e) {
