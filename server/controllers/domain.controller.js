@@ -158,7 +158,7 @@ module.exports.getByAddress = async (req, res) => {
 /** Вернуть весь список */
 module.exports.getAll = async (req, res) => {
   try {
-    const domains = await Domain.find().sort({ created: -1 })
+    const domains = await Domain.find().sort({ color: 1 })
     res.json({ data: domains })
   } catch (error) {
     res.status(500).json({ message: 'Не удалось получить список доменов!' })
@@ -173,11 +173,9 @@ async function updateSourceOptions(options) {
       params: {
         create: 'options',
         address: options.address || '',
-        // BUG иначе экранируются данные
         alloka: options.alloka.code.replace(/script/gi, '###') || '',
         analytics: options.analytics.code.replace(/script/gi, '###') || '',
         envybox: options.envybox.code.replace(/script/gi, '###') || '',
-        // BUG НЕ ОТПРАВЛЯЕТСЯ КОД КАРТЫ
         map_script: options.map_script.replace(/script/gi, '###') || '',
         phone_default: options.phone_default || '',
         work_time: options.work_time || '',
