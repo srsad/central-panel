@@ -200,11 +200,11 @@ export default {
         }
       })
     },
-    onCreate() {
+    async onCreate() {
       // уведомляем челиков в телеге || создаем устроиство
       const url = `https://api.telegram.org/bot1113218700:AAE_XXJyTH4UCWE7_JfZXmVtXVA6Vyns4qE/sendMessage`
       try {
-        this.$axios.$get(url, {
+        await this.$axios.$get(url, {
           params: {
             chat_id: 479029367,
             text: {
