@@ -9,7 +9,6 @@ import Cookies from 'js-cookie'
  */
 
 export const state = () => ({
-  lastUpdate: null, // последние данные по обновлению, sha + дата изменения + комментарий
   breadcrumbs: [], // хлебные крошки
   isCollapse: true, // скрытие/раскрытие бокового меню
   drawerCreateRole: false, // Окно для создания роли
@@ -45,29 +44,6 @@ export const actions = {
   setBreadcrumbs({ commit }, breadcrumbs) {
     commit('SET_BREADCRUMBS', breadcrumbs)
   },
-  async loadGitIngo({ commit }) {
-    try {
-      const git = await this.$axios.$get(
-        // `https://api.github.com/user/repos`,
-        `https://api.github.com/repos/srsad/central-panel/branches/alfa`,
-        {
-          headers: {
-            Authorization: 'token ' + process.env.GITHUB_TOKEN
-          }
-        }
-      )
-      commit('SET_LAST_UPDATE', {
-        sha: git.commit.sha,
-        message: git.commit.commit.message,
-        date: git.commit.commit.committer.date
-      })
-    } catch (e) {
-      console.error('Ошибка при получении данных из github', e.response)
-      commit('SET_ERROR', 'Ошибка при получении данных из github', {
-        root: true
-      })
-    }
-  },
   /** Установка токена в axios */
   setToken() {
     const cookieStr = process.browser
@@ -93,13 +69,9 @@ export const mutations = {
   /** Установка хлебных крошек */
   SET_BREADCRUMBS(state, breadcrumbs) {
     state.breadcrumbs = breadcrumbs
-  },
-  SET_LAST_UPDATE(state, lastUpdate) {
-    state.lastUpdate = lastUpdate
   }
 }
 
 export const getters = {
-  breadcrumbs: (state) => state.breadcrumbs,
-  lastUpdate: (state) => state.lastUpdate
+  breadcrumbs: (state) => state.breadcrumbs
 }

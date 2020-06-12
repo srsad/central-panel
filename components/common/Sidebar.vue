@@ -101,44 +101,11 @@
       <i class="fa fa-sign-out" />
       <span slot="title">Выход</span>
     </el-menu-item>
-    <el-menu-item index="" style="position:absolute;bottom:0;width:100%">
-      <!-- <i class="fa fa-sign-out" /> -->
-      <span slot="title">
-        <el-popover
-          placement="top-start"
-          title="Последнее обновление"
-          width="230"
-          trigger="hover"
-        >
-          <div>
-            <p style="word-break:normal" class="mb-0 text-left">
-              sha: {{ lastUpdate.sha }} <br />
-              data: {{ lastUpdate.date }} <br />
-              <b>{{ lastUpdate.message }}</b>
-            </p>
-          </div>
-          <span slot="reference"> last: {{ lastUpdate.date }} </span>
-        </el-popover>
-      </span>
-    </el-menu-item>
   </el-menu>
 </template>
 
 <script>
-import moment from 'moment'
-
 export default {
-  computed: {
-    lastUpdate() {
-      const lastUpdate = this.$store.getters['settings/lastUpdate']
-      const sha = lastUpdate.sha.substr(-7, 7)
-      const date = moment(lastUpdate.date)
-        .utcOffset(180)
-        .format('DD.MM.YYYY - HH:mm')
-
-      return { sha, date, message: lastUpdate.message }
-    }
-  },
   methods: {
     logout() {
       this.$store.dispatch('auth/logout')
