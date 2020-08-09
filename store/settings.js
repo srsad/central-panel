@@ -26,7 +26,11 @@ export const state = () => ({
   drawerAddDevice: false, // Окно создания устроиства
   drawerUpdateNotRecording: false, // Окно редактирования "техники не для записи"
   drawerCreateForRecording: false, // Окно создания "техники для записи"
-  drawerUpdateForRecording: false // Окно редактирования "техники для записи"
+  drawerUpdateForRecording: false, // Окно редактирования "техники для записи"
+  drawerReportSummarySheetCreateBrand: false, // Окно создания бренда для отчета - вкладка "Сводные листы"
+  drawerReportSummarySheetUpdateBrand: false, // Окно обновления бренда для отчета - вкладка "Сводные листы"
+  drawerReportSummarySheetCreate: false, // Окно создания отчета - вкладка "Сводные листы"
+  drawerReportSummaryUpdateCreate: false // Окно обновления отчета - вкладка "Сводные листы"
 })
 
 export const actions = {
