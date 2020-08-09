@@ -121,6 +121,7 @@ export default {
 <style>
 .el-menu-vertical {
   min-height: 100vh;
+  transition: all 0s;
 }
 .el-menu-vertical:not(.el-menu--collapse) {
   width: 200px;
