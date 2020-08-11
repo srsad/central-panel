@@ -413,6 +413,7 @@ export default {
     },
     /** Проверка и установка цвета текста */
     setColor(val) {
+      if (!val) return 'color:#333'
       const color = val.toLowerCase() === '#ffffff' ? '#333' : val
       return `color:${color}`
     },
