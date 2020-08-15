@@ -16,6 +16,12 @@ module.exports = {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
+  /**
+   * Переменные окружения
+   */
+  env: {
+    REMONLINE_API_KEY: process.env.REMONLINE_API_KEY
+  },
   /*
    ** Customize the progress-bar color
    */
@@ -27,6 +33,11 @@ module.exports = {
     'element-ui/lib/theme-chalk/index.css',
     '@assets/sass/styles.sass',
     'font-awesome/css/font-awesome.min.css'
+  ],
+  buildModules: [
+    // Doc: https://github.com/nuxt-community/eslint-module
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/dotenv',
   ],
   /*
    ** Plugins to load before mounting the App

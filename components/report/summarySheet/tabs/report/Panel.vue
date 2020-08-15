@@ -30,10 +30,9 @@
       >
         Загрузить отчет
       </el-button>
-
-      <!-- <el-button @click="loadRemOnline">
+      <el-button @click="loadRemOnline">
         test
-      </el-button> -->
+      </el-button>
     </div>
     <div class="mt-15" style="margin-bottom:-15px;">
       <app-list />
@@ -43,6 +42,8 @@
 </template>
 
 <script>
+import Rem from '~/utils/remonline.js'
+
 import AppReportWindowCreate from '~/components/report/summarySheet/tabs/report/window/Create'
 import AppList from '~/components/report/summarySheet/tabs/report/List'
 
@@ -70,13 +71,29 @@ export default {
         status: true
       })
     },
+    // async ontest() {
+    //   try {
+    //     const res = await this.$axios.$get('/api/v1/report/sheets/upd')
+    //     console.log('res', res)
+    //   } catch (e) {
+    //     console.log('error', e)
+    //   }
+    // },
     async loadRemOnline() {
+      /*
       const res = await this.$axios.$get(
         'https://cors-anywhere.herokuapp.com/https://api.remonline.ru/order/?token=ec362e14d7a1bafab16acef54d85cbd2c2d571fc&created_at=[1596834000000,1596920399999]&statuses=[151384,162791,198277,198285,241717]'
       )
       // console.log('res', res)
       this.rem = res
       this.remlen = res.data.length
+      */
+      const rem = new Rem(process.env.REMONLINE_API_KEY, true)
+      // const token = await rem.setToken()
+      // const token = await rem.getBranches()
+      // const token = await rem.getStatuses()
+      const token = await rem.getTypes()
+      console.log('token - ', token)
     },
     async loadReport() {
       if (!this.report) {
