@@ -318,7 +318,6 @@ export default {
         const formData = JSON.parse(JSON.stringify(item))
         formData.status = !formData.status
         await this.$store.dispatch('domains/updateDomain', formData)
-        this.$store.dispatch('domains/fetchDomains')
         this.$notify({
           message: 'Данные обновлены!',
           customClass: 'success-notyfy'

@@ -1,5 +1,6 @@
 const axios = require('axios')
 const Cookies = require('js-cookie')
+
 /**
  * API для работы с remonline
  */
@@ -9,14 +10,16 @@ export default class Rem {
     if (!apiKey) return console.error('remonline - не передан apiKey')
     this.apiKey = apiKey
     // eslint-disable-next-line prettier/prettier
-    this.proxy = process.env.REMONLINE_PROXY === 'true'
+    this.proxy =
+      process.env.REMONLINE_PROXY === 'true'
         ? 'https://cors-anywhere.herokuapp.com/'
-        : ''
-    this.limit = 2 // всего три попытки на повторный запрос, при неудачной попытке
+        : // 'https://api.allorigins.win/get?url='
+          ''
   }
 
   /**
    * Список заказов
+   * @param {*} filter сформирванный запрос
    */
   async getOrders(filter = '') {
     // order/?token=...&created_at[]=1597352400000&created_at[]=1597438799999&branches[]=26047
@@ -81,15 +84,14 @@ export default class Rem {
    */
   async setToken() {
     try {
-      const res = await this.remonline(
-        'post',
-        `token/new?api_key=${this.apiKey}`
+      const res = await axios.post(
+        `${this.proxy}https://api.remonline.ru/token/new?api_key=${this.apiKey}`
       )
       // токен на 9 минут, ставлю на минуту меньше реальной жизни
       Cookies.set('rem-token', res.data.token, { expires: 560 })
+      return res.data.token
     } catch (e) {
       console.error('remonline - не удалось получить токен')
-      return false
     }
   }
 
@@ -118,19 +120,20 @@ export default class Rem {
    */
   async remonline(type, url) {
     try {
-      return await axios[type](`${this.proxy}https://api.remonline.ru/${url}`)
-    } catch (e) {
-      console.error(`remonline - не удалось выполнить запрос ${url}`)
-      // пробуем обновить токен и сделать повторный запрос
-      if (this.limit > 0) {
-        setTimeout(async () => {
-          await this.setToken()
-          await this.remonline(type, url)
-          --this.limit
-        }, 5000)
-      } else {
-        this.limit = 3
+      // если некорректный токен
+      if (url.indexOf('token=undefined') > 0) {
+        const token = await this.setToken()
+        url = url.replace('token=undefined', `token=${token}`)
       }
+      // пробуем обновить токен
+      const res = await axios[type](
+        `${this.proxy}https://api.remonline.ru/${url}`
+      )
+      return res
+    } catch (e) {
+      // навсякий случай обновляем токен
+      await this.setToken()
+      throw new Error(`remonline - не удалось выполнить запрос ${url}`)
     }
   }
 }

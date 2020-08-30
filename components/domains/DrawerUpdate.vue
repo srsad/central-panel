@@ -361,7 +361,7 @@ export default {
         const formData = this.form
         formData.domain = this.getSource()
         await this.$store.dispatch('domains/updateDomain', formData)
-        this.$store.dispatch('domains/fetchDomains')
+        // this.$store.dispatch('domains/fetchDomains')
         this.$notify({
           message: 'Данные обновлены!',
           customClass: 'success-notyfy'

@@ -17,10 +17,15 @@ export const actions = {
       throw e
     }
   },
-  async updateDomain({ commit }, formData) {
+  async updateDomain({ state, commit }, formData) {
     try {
       await this.$axios.$put('/api/v1/domain/update/' + formData._id, formData)
-      // commit('SET_DOMAINS', [])
+      for (const idx in state.damains) {
+        if (state.damains[idx]._id === formData._id) {
+          commit('UPDATE_DOMAIN', { idx, data: formData })
+          break
+        }
+      }
     } catch (e) {
       commit('SET_ERROR', e.response.data.message, { root: true })
       throw e
@@ -30,8 +35,8 @@ export const actions = {
     try {
       commit('SET_DOMAINS', [])
       commit('SET_EMPTY_TEXT', 'Загрузка данных')
-      const domains = await this.$axios.$get('/api/v1/domain/getall')
-      commit('SET_DOMAINS', domains.data)
+      const { data } = await this.$axios.$get('/api/v1/domain/getall')
+      commit('SET_DOMAINS', data)
     } catch (e) {
       commit('SET_ERROR', e.response.data.message, { root: true })
       throw e
@@ -65,6 +70,14 @@ export const mutations = {
   },
   SET_DOMAIN(state, damain) {
     state.damain = damain
+  },
+  /**
+   * обновляем локальную, конкретную позицию
+   */
+  UPDATE_DOMAIN(state, { idx, data }) {
+    for (const key in state.damains[idx]) {
+      state.damains[idx][key] = data[key]
+    }
   },
   SET_EMPTY_TEXT(state, text) {
     state.emptyText = text
