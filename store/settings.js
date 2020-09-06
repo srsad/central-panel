@@ -30,7 +30,9 @@ export const state = () => ({
   drawerReportSummarySheetCreateBrand: false, // Окно создания бренда для отчета - вкладка "Сводные листы"
   drawerReportSummarySheetUpdateBrand: false, // Окно обновления бренда для отчета - вкладка "Сводные листы"
   drawerReportSummarySheetCreate: false, // Окно создания отчета - вкладка "Сводные листы"
-  drawerReportSummaryUpdateCreate: false // Окно обновления отчета - вкладка "Сводные листы"
+  drawerReportSummaryUpdateCreate: false, // Окно обновления отчета - вкладка "Сводные листы"
+  drawerCRMCreateStatus: false, // Окно создания статуса в CRM
+  drawerCRMUpdateStatus: false // Окно обновления статуса в CRM
 })
 
 export const actions = {

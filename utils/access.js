@@ -29,6 +29,44 @@ export default [
     label: 'Поиск'
   },
   {
+    _id: 'crm',
+    label: 'CRM',
+    children: [
+      {
+        _id: 'crm-settings',
+        label: 'Настройки CRM',
+        children: [
+          {
+            _id: 'crm-settings-status',
+            label: 'Статусы/этапы сделки',
+            children: [
+              {
+                _id: 'crm-settings-status-read',
+                label: 'Чтение'
+              },
+              {
+                _id: 'crm-settings-status-create',
+                label: 'Создание'
+              },
+              {
+                _id: 'crm-settings-status-update',
+                label: 'Редактирование'
+              },
+              {
+                _id: 'crm-settings-status-remove',
+                label: 'Удаление'
+              },
+              {
+                _id: 'crm-settings-status-change',
+                label: 'Смена статуса'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     _id: 'part',
     label: 'Детали',
     children: [

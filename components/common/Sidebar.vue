@@ -72,6 +72,25 @@
       </span>
     </el-menu-item>
     <!--  -->
+    <!-- crm -->
+    <template v-if="$abilities('crm')">
+      <hr />
+      <el-menu-item v-if="$abilities('crm')" index="/crm">
+        <i class="el-icon-s-grid" />
+        <span slot="title">
+          CRM
+        </span>
+      </el-menu-item>
+      <el-menu-item v-if="$abilities('crm-settings')" index="/crm/settings">
+        <i class="el-icon-setting" />
+        <span slot="title">
+          Настройки CRM
+        </span>
+      </el-menu-item>
+      <hr />
+    </template>
+    <!-- /crm -->
+    <!--  -->
     <el-menu-item v-if="$abilities('map')" @click="openMap" index="/map">
       <i class="fa fa-map-o" />
       <span slot="title">Тепловые карты</span>
