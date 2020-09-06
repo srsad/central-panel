@@ -17,22 +17,22 @@
       </el-button>
 
       <h5>Статусы сделок - новые</h5>
-      <app-update-form :items="statuses | getStatus('new')" />
+      <app-status-item :items="statuses | getStatus('new')" />
       <hr />
       <h5>Статусы сделок - на исполнении</h5>
-      <app-update-form :items="statuses | getStatus('inwork')" />
+      <app-status-item :items="statuses | getStatus('inwork')" />
       <hr />
       <h5>Статусы сделок - готовые</h5>
-      <app-update-form :items="statuses | getStatus('ready')" />
+      <app-status-item :items="statuses | getStatus('ready')" />
       <hr />
       <h5>Статусы сделок - закрытые успешно</h5>
-      <app-update-form :items="statuses | getStatus('successful')" />
+      <app-status-item :items="statuses | getStatus('successful')" />
       <hr />
       <h5>Статусы сделок - отложенные</h5>
-      <app-update-form :items="statuses | getStatus('deferred')" />
+      <app-status-item :items="statuses | getStatus('deferred')" />
       <hr />
       <h5>Статусы сделок - отказные</h5>
-      <app-update-form :items="statuses | getStatus('rejection')" />
+      <app-status-item :items="statuses | getStatus('rejection')" />
       <hr />
     </div>
     <app-drawer-create />
@@ -41,12 +41,12 @@
 
 <script>
 import AppDrawerCreate from '~/components/crm/settings/status/drawer/Create'
-import AppUpdateForm from '~/components/crm/settings/status/drawer/Update'
+import AppStatusItem from '~/components/crm/settings/status/Item'
 
 export default {
   components: {
     AppDrawerCreate,
-    AppUpdateForm
+    AppStatusItem
   },
   filters: {
     getStatus(val, type) {

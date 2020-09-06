@@ -6,65 +6,54 @@
     @start="drag = true"
     @end="drag = false"
     :group="`company${rnd}`"
-    handle=".drag-handle"
+    handle=".statusList__drag"
   >
     <transition-group :name="!drag ? 'flip-list' : null" type="transition">
-      <el-form
-        v-for="(item, idx) of statuses"
-        :key="item._id"
-        :disabled="loading"
-        :rules="rules"
-        :ref="`form${idx}`"
-        :model="statuses[idx]"
-        class="row"
-      >
-        <el-form-item class="col-3" prop="name">
-          <el-input
-            v-model="statuses[idx].name"
-            size="small"
-            placeholder="Статус"
+      <template>
+        <div v-for="(item, idx) in statuses" :key="idx" class="statusList">
+          <el-tooltip
+            effect="dark"
+            content="Переместить позицию"
+            placement="left"
           >
-            <div slot="prepend" class="drag-handle pointer">
+            <div class="statusList__drag">
               <i class="el-icon-sort" />
             </div>
-            <el-color-picker
-              slot="suffix"
-              v-model="statuses[idx].color"
-              :predefine="predefineColors"
-              size="small"
-              style="margin: 0 -5px"
-            />
-          </el-input>
-        </el-form-item>
-        <el-form-item class="col-1">
-          <el-button
-            :loading="loading"
-            @click="onUpdate(item)"
-            size="mini"
-            type="primary"
-            icon="fa fa-floppy-o"
-            title="Создать"
-          />
-          <!--  -->
-          <el-popconfirm
-            @onConfirm="onRemove(statuses[idx])"
-            title="Удалить статус?"
-            confirm-button-text="Да"
-            confirm-button-type="success"
-            cancel-button-type="default"
-            cancel-button-text="Нет"
-          >
+          </el-tooltip>
+          <div :style="`background:${item.color}`" class="statusList__color" />
+          <div class="statusList__name">
+            {{ item.name }}
+          </div>
+          <div class="statusList__action">
             <el-button
-              slot="reference"
               :loading="loading"
               size="mini"
-              type="danger"
-              title="Удалить"
-              icon="el-icon-delete"
+              type="primary"
+              title="Редактировать"
+              icon="el-icon-edit-outline"
+              @click="onEdit(item)"
             />
-          </el-popconfirm>
-        </el-form-item>
-      </el-form>
+
+            <el-popconfirm
+              @onConfirm="onRemove(item)"
+              title="Удалить статус?"
+              confirm-button-text="Да"
+              confirm-button-type="success"
+              cancel-button-type="default"
+              cancel-button-text="Нет"
+            >
+              <el-button
+                slot="reference"
+                :loading="loading"
+                size="mini"
+                type="danger"
+                title="Удалить"
+                icon="el-icon-delete"
+              />
+            </el-popconfirm>
+          </div>
+        </div>
+      </template>
     </transition-group>
   </draggable>
 </template>
@@ -152,6 +141,18 @@ export default {
         this.loading = false
       }
     },
+
+    /**
+     * onEdit
+     */
+    onEdit(item) {
+      this.$notify({
+        message: 'Скоро',
+        customClass: 'success-notyfy'
+      })
+      console.log('onEdit', item)
+    },
+
     /**
      * Пересчет menuindex у перетаскиваемых элементов
      */
@@ -196,3 +197,27 @@ export default {
   }
 }
 </script>
+
+<style lang="sass">
+.statusList
+  display: flex
+  flex-wrap: wrap
+  align-items: center
+  margin-bottom: 5px
+  &__drag
+    width: 30px
+    height: 30px
+    justify-content: center
+    align-items: center
+    display: flex
+    background: #bfcbd9
+    color: #fff
+    cursor: pointer
+  &__color
+    width: 10px
+    height: 30px
+    margin: 0 4px
+  &__name
+    min-width: 300px
+  &__action
+</style>

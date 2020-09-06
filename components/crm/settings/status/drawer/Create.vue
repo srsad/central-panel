@@ -243,7 +243,12 @@ export default {
     async onCreate() {
       this.loading = true
       try {
-        await this.$store.dispatch('crm/settings/create', this.form)
+        const formData = this.form
+        const statuses = this.$store.getters['crm/settings/statuses']
+        const len = statuses.filter((el) => el.type === formData.type).length
+        formData.menuindex = len
+
+        await this.$store.dispatch('crm/settings/create', formData)
         this.clearForm()
         this.$notify({
           message: 'Статус успушно добавлен!',
