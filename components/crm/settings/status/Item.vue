@@ -27,11 +27,11 @@
           <div class="statusList__action">
             <el-button
               :loading="loading"
+              @click="onEdit(item)"
               size="mini"
               type="primary"
               title="Редактировать"
               icon="el-icon-edit-outline"
-              @click="onEdit(item)"
             />
 
             <el-popconfirm
@@ -120,37 +120,14 @@ export default {
   },
   methods: {
     /**
-     * Обновление позиции
-     */
-    async onUpdate(item) {
-      this.loading = true
-      try {
-        await this.$axios.$put(
-          '/api/v1/crm/settings/status/update/' + item._id,
-          item
-        )
-        // обновляем список
-        this.$store.dispatch('crm/settings/fetchItems')
-        this.$notify({
-          message: 'Статус успешно обновлен!',
-          customClass: 'success-notyfy'
-        })
-      } catch (e) {
-        this.$store.commit('SET_ERROR', e.response.data.message)
-      } finally {
-        this.loading = false
-      }
-    },
-
-    /**
-     * onEdit
+     * окно редактирования статуса
      */
     onEdit(item) {
-      this.$notify({
-        message: 'Скоро',
-        customClass: 'success-notyfy'
+      this.$store.dispatch('crm/settings/setStatus', item)
+      this.$store.commit('settings/SWITCH_DRAWNER', {
+        dranwer: 'drawerCRMUpdateStatus',
+        status: true
       })
-      console.log('onEdit', item)
     },
 
     /**

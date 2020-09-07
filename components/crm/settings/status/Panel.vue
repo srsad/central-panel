@@ -9,6 +9,7 @@
             status: true
           })
         "
+        size="mini"
         type="success"
         class="mb-20"
         icon="el-icon-plus"
@@ -36,16 +37,19 @@
       <hr />
     </div>
     <app-drawer-create />
+    <app-drawer-update />
   </div>
 </template>
 
 <script>
 import AppDrawerCreate from '~/components/crm/settings/status/drawer/Create'
+import AppDrawerUpdate from '~/components/crm/settings/status/drawer/Update'
 import AppStatusItem from '~/components/crm/settings/status/Item'
 
 export default {
   components: {
     AppDrawerCreate,
+    AppDrawerUpdate,
     AppStatusItem
   },
   filters: {
