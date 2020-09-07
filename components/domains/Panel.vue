@@ -11,30 +11,48 @@
             })
           "
           type="success"
+          size="mini"
           class="mb-20"
           icon="el-icon-plus"
         >
           Добавить домен
         </el-button>
         <el-button-group>
-          <el-button @click="selectCity('Красноармейская')" type="primary">
+          <el-button
+            @click="selectCity('Красноармейская')"
+            size="mini"
+            type="primary"
+          >
             2-я Красноармейская 11
           </el-button>
-          <el-button @click="selectCity('Пашковская')" type="primary">
+          <el-button
+            @click="selectCity('Пашковская')"
+            size="mini"
+            type="primary"
+          >
             ул. Пашковская 83
           </el-button>
-          <el-button @click="selectCity('Новослободская')" type="primary">
+          <el-button
+            @click="selectCity('Новослободская')"
+            size="mini"
+            type="primary"
+          >
             ул. Новослободская 71
           </el-button>
-          <el-button @click="selectCity('Дмитровский')" type="primary">
+          <el-button
+            @click="selectCity('Дмитровский')"
+            size="mini"
+            type="primary"
+          >
             Дмитровский пер., 8
           </el-button>
           <el-button
             @click="() => $store.dispatch('domains/fetchDomains')"
+            size="mini"
             type="primary"
             icon="el-icon-close"
             title="Сбросить"
-            style="padding: 12px 12px 11px 12px"
+            style="padding: 9px 9px 5px 5px"
           />
         </el-button-group>
       </div>

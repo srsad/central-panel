@@ -58,6 +58,18 @@
             </template>
           </el-table-column>
           <el-table-column
+            :filters="company_"
+            :filter-method="filterHandlerCompany"
+            label="Филиал"
+            width="130"
+          >
+            <template slot-scope="scope">
+              <div :title="scope.row.company" class="ws-normal">
+                {{ scope.row.company }}
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column
             :filters="cities_"
             :filter-method="filterHandlerCities"
             label="Город"
@@ -79,18 +91,6 @@
               >
                 {{ scope.row.domain }}
               </a>
-            </template>
-          </el-table-column>
-          <el-table-column
-            :filters="company_"
-            :filter-method="filterHandlerCompany"
-            label="Компания"
-            width="130"
-          >
-            <template slot-scope="scope">
-              <div :title="scope.row.company" class="ws-normal">
-                {{ scope.row.company }}
-              </div>
             </template>
           </el-table-column>
           <!-- <el-table-column prop="vendor" label="Исполнитель" width="180" /> -->
