@@ -3,7 +3,8 @@
  */
 
 export const state = () => ({
-  statuses: [] // статусы настроек
+  statuses: [], // статусы настроек
+  status: {} // статусы для редактирования
 })
 
 export const actions = {
@@ -30,6 +31,12 @@ export const actions = {
       commit('SET_ERROR', e.response.data.message, { root: true })
       throw e
     }
+  },
+  /**
+   * Установка статуса для обнвовления
+   */
+  setStatus({ commit }, item) {
+    commit('SET_STATUS', item)
   }
 }
 
@@ -40,9 +47,13 @@ export const mutations = {
   PUSH_STATUSES(state, status) {
     state.statuses.push(status)
   },
+  SET_STATUS(state, status) {
+    state.status = status
+  },
   REMOVE_STATUSES(state, status) {}
 }
 
 export const getters = {
-  statuses: (state) => state.statuses
+  statuses: (state) => state.statuses,
+  status: (state) => state.status
 }
