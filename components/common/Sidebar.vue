@@ -81,6 +81,12 @@
           CRM
         </span>
       </el-menu-item>
+      <el-menu-item v-if="$abilities('crm-orders')" index="/crm/orders">
+        <i class="el-icon-receiving" />
+        <span slot="title">
+          Заказы
+        </span>
+      </el-menu-item>
       <el-menu-item v-if="$abilities('crm-settings')" index="/crm/settings">
         <i class="el-icon-setting" />
         <span slot="title">

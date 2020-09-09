@@ -63,6 +63,28 @@ export default [
             ]
           }
         ]
+      },
+      {
+        _id: 'crm-orders',
+        label: 'Заказы',
+        children: [
+          {
+            _id: 'crm-orders-read',
+            label: 'Чтение'
+          },
+          {
+            _id: 'crm-orders-create',
+            label: 'Создание'
+          },
+          {
+            _id: 'crm-orders-update',
+            label: 'Редактирование'
+          },
+          {
+            _id: 'crm-orders-REMOVE',
+            label: 'Удаление'
+          }
+        ]
       }
     ]
   },
