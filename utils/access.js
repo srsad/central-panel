@@ -81,7 +81,29 @@ export default [
             label: 'Редактирование'
           },
           {
-            _id: 'crm-orders-REMOVE',
+            _id: 'crm-orders-remove',
+            label: 'Удаление'
+          }
+        ]
+      },
+      {
+        _id: 'crm-type_request',
+        label: 'Типы заявок',
+        children: [
+          {
+            _id: 'crm-type_request-read',
+            label: 'Чтение'
+          },
+          {
+            _id: 'crm-type_request-create',
+            label: 'Создание'
+          },
+          {
+            _id: 'crm-type_request-update',
+            label: 'Редактирование'
+          },
+          {
+            _id: 'crm-type_request-remove',
             label: 'Удаление'
           }
         ]
