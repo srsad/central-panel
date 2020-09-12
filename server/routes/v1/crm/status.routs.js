@@ -6,10 +6,10 @@ const {
   getById,
   getAll,
   updateMenuindex
-} = require('../../../../controllers/crm/settings/status.controller')
+} = require('../../../controllers/crm/status.controller')
 const router = Router()
 
-// /api/v1/crm/settings/status
+// /api/v1/crm/status
 router.post('/create', create)
 router.put('/update/:id', update)
 router.put('/update-menuindex', updateMenuindex)

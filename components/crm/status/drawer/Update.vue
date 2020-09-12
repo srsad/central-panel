@@ -99,7 +99,7 @@
       >
         <el-table
           ref="multipleTransitionHere"
-          :data="$store.getters['crm/settings/statuses']"
+          :data="$store.getters['crm/status/statuses']"
           @selection-change="handleTransitionHere"
           style="width: 100%"
           size="mini"
@@ -117,7 +117,7 @@
       >
         <el-table
           ref="multipleTransitionThere"
-          :data="$store.getters['crm/settings/statuses']"
+          :data="$store.getters['crm/status/statuses']"
           @selection-change="handleTransitionThere"
           style="width: 100%"
           size="mini"
@@ -247,11 +247,11 @@ export default {
       this.loading = true
       try {
         await this.$axios.$put(
-          '/api/v1/crm/settings/status/update/' + this.form._id,
+          '/api/v1/crm/status/status/update/' + this.form._id,
           this.form
         )
         // обновляем список
-        this.$store.dispatch('crm/settings/fetchItems')
+        this.$store.dispatch('crm/status/fetchItems')
         this.onClose()
         this.$notify({
           message: 'Статус успешно обновлен!',
@@ -266,7 +266,7 @@ export default {
 
     onOpen() {
       this.form = JSON.parse(
-        JSON.stringify(this.$store.getters['crm/settings/status'])
+        JSON.stringify(this.$store.getters['crm/status/status'])
       )
 
       // список ролей
@@ -278,7 +278,7 @@ export default {
 
       // список статусов
       setTimeout(() => {
-        this.$store.getters['crm/settings/statuses'].forEach((row) => {
+        this.$store.getters['crm/status/statuses'].forEach((row) => {
           if (transitionHere.includes(row._id)) {
             this.$refs.multipleTransitionHere.toggleRowSelection(row, true)
           }
@@ -307,7 +307,7 @@ export default {
     },
     onClose() {
       this.clearForm()
-      this.$store.dispatch('crm/settings/setStatus', {})
+      this.$store.dispatch('crm/status/setStatus', {})
       this.$store.commit('settings/SWITCH_DRAWNER', {
         dranwer: 'drawerCRMUpdateStatus',
         status: false

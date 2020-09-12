@@ -42,9 +42,9 @@
 </template>
 
 <script>
-import AppDrawerCreate from '~/components/crm/settings/status/drawer/Create'
-import AppDrawerUpdate from '~/components/crm/settings/status/drawer/Update'
-import AppStatusItem from '~/components/crm/settings/status/Item'
+import AppDrawerCreate from '~/components/crm/status/drawer/Create'
+import AppDrawerUpdate from '~/components/crm/status/drawer/Update'
+import AppStatusItem from '~/components/crm/status/Item'
 
 export default {
   components: {
@@ -65,11 +65,11 @@ export default {
   },
   computed: {
     statuses() {
-      return this.$store.getters['crm/settings/statuses']
+      return this.$store.getters['crm/status/statuses']
     }
   },
   mounted() {
-    this.$store.dispatch('crm/settings/fetchItems')
+    this.$store.dispatch('crm/status/fetchItems')
   }
 }
 </script>

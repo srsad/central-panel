@@ -1,4 +1,4 @@
-const Status = require('../../../models/crm/status.model')
+const Status = require('../../models/crm/status.model')
 
 /** Создание */
 module.exports.create = async (req, res) => {
@@ -69,4 +69,3 @@ module.exports.updateMenuindex = async (req, res) => {
     res.status(500).json({ message: 'Не удалось упорядочить список!', error })
   }
 }
-

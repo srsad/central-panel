@@ -10,9 +10,7 @@ export const state = () => ({
 export const actions = {
   async fetchItems({ commit }) {
     try {
-      const statuses = await this.$axios.$get(
-        '/api/v1/crm/settings/status/getAll'
-      )
+      const statuses = await this.$axios.$get('/api/v1/crm/status/getAll')
       commit('SET_STATUSES', statuses.data)
       return true
     } catch (e) {
@@ -25,7 +23,7 @@ export const actions = {
    */
   async create({ commit }, formData) {
     try {
-      await this.$axios.$post('/api/v1/crm/settings/status/create', formData)
+      await this.$axios.$post('/api/v1/crm/status/create', formData)
       // commit('PUSH_STATUSES', formData)
     } catch (e) {
       commit('SET_ERROR', e.response.data.message, { root: true })

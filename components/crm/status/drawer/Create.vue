@@ -99,7 +99,7 @@
       >
         <el-table
           ref="multipleTransitionHere"
-          :data="$store.getters['crm/settings/statuses']"
+          :data="$store.getters['crm/status/statuses']"
           @selection-change="handleTransitionHere"
           style="width: 100%"
           size="mini"
@@ -117,7 +117,7 @@
       >
         <el-table
           ref="multipleTransitionThere"
-          :data="$store.getters['crm/settings/statuses']"
+          :data="$store.getters['crm/status/statuses']"
           @selection-change="handleTransitionThere"
           style="width: 100%"
           size="mini"
@@ -244,11 +244,11 @@ export default {
       this.loading = true
       try {
         const formData = this.form
-        const statuses = this.$store.getters['crm/settings/statuses']
+        const statuses = this.$store.getters['crm/status/statuses']
         const len = statuses.filter((el) => el.type === formData.type).length
         formData.menuindex = len
 
-        await this.$store.dispatch('crm/settings/create', formData)
+        await this.$store.dispatch('crm/status/create', formData)
         this.clearForm()
         this.$notify({
           message: 'Статус успушно добавлен!',
@@ -258,7 +258,7 @@ export default {
           dranwer: 'drawerCRMCreateStatus',
           status: false
         })
-        this.$store.dispatch('crm/settings/fetchItems')
+        this.$store.dispatch('crm/status/fetchItems')
       } catch (error) {
         //
       } finally {
@@ -272,7 +272,7 @@ export default {
 
       // список статусов
       setTimeout(() => {
-        this.$store.getters['crm/settings/statuses'].forEach((row) => {
+        this.$store.getters['crm/status/statuses'].forEach((row) => {
           this.$refs.multipleTransitionHere.toggleRowSelection(row)
           this.$refs.multipleTransitionThere.toggleRowSelection(row)
         })

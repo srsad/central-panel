@@ -123,7 +123,7 @@ export default {
      * окно редактирования статуса
      */
     onEdit(item) {
-      this.$store.dispatch('crm/settings/setStatus', item)
+      this.$store.dispatch('crm/status/setStatus', item)
       this.$store.commit('settings/SWITCH_DRAWNER', {
         dranwer: 'drawerCRMUpdateStatus',
         status: true
@@ -143,12 +143,9 @@ export default {
         })
       }
 
-      await this.$axios.$put(
-        '/api/v1/crm/settings/status/update-menuindex',
-        res
-      )
+      await this.$axios.$put('/api/v1/crm/status/update-menuindex', res)
       // обновляем список
-      this.$store.dispatch('crm/settings/fetchItems')
+      this.$store.dispatch('crm/status/fetchItems')
     },
     /**
      * Удаление позиции
@@ -156,11 +153,9 @@ export default {
     async onRemove(item) {
       this.loading = true
       try {
-        await this.$axios.$delete(
-          '/api/v1/crm/settings/status/remove/' + item._id
-        )
+        await this.$axios.$delete('/api/v1/crm/status/remove/' + item._id)
         // обновляем список
-        this.$store.dispatch('crm/settings/fetchItems')
+        this.$store.dispatch('crm/status/fetchItems')
         this.$notify({
           message: 'Статус успешно удален!',
           customClass: 'success-notyfy'
