@@ -107,6 +107,28 @@ export default [
             label: 'Удаление'
           }
         ]
+      },
+      {
+        _id: 'crm-type_device',
+        label: 'Типы устройств',
+        children: [
+          {
+            _id: 'crm-type_device-read',
+            label: 'Чтение'
+          },
+          {
+            _id: 'crm-type_device-create',
+            label: 'Создание'
+          },
+          {
+            _id: 'crm-type_device-update',
+            label: 'Редактирование'
+          },
+          {
+            _id: 'crm-type_device-remove',
+            label: 'Удаление'
+          }
+        ]
       }
     ]
   },
