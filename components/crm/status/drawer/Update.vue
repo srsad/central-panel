@@ -218,9 +218,6 @@ export default {
   },
   computed: {
     roles() {
-      if (this.$store.getters['users/roles'].length === 0) {
-        this.$store.dispatch('users/fetchRoles')
-      }
       return this.$store.getters['users/roles']
     }
   },
@@ -264,10 +261,14 @@ export default {
       }
     },
 
-    onOpen() {
+    async onOpen() {
       this.form = JSON.parse(
         JSON.stringify(this.$store.getters['crm/status/status'])
       )
+
+      if (this.$store.state.users.roles.length === 0) {
+        await this.$store.dispatch('users/fetchRoles')
+      }
 
       // список ролей
       const transitionHere = this.form.transition_here

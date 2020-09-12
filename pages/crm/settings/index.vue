@@ -12,10 +12,8 @@
           <app-type-request-panel />
         </el-tab-pane>
         <el-tab-pane label="Типы устроиств" name="typeDevice">
-          <!-- <app-stage-panel /> -->
+          <app-type-device-panel />
         </el-tab-pane>
-        <!-- <el-tab-pane label="" name="stage">
-        </el-tab-pane> -->
       </el-tabs>
     </div>
   </div>
@@ -25,12 +23,14 @@
 import AppStatusPanel from '~/components/crm/status/Panel'
 import AppStagePanel from '~/components/crm/stage/Panel'
 import AppTypeRequestPanel from '~/components/crm/typeRequests/Panel'
+import AppTypeDevicePanel from '~/components/crm/typeDevice/Panel'
 
 export default {
   components: {
     AppStatusPanel,
     AppStagePanel,
-    AppTypeRequestPanel
+    AppTypeRequestPanel,
+    AppTypeDevicePanel
   },
   fetch({ store, error }) {
     store.dispatch('settings/setBreadcrumbs', [

@@ -177,9 +177,7 @@ export default {
         this.items = JSON.parse(
           JSON.stringify(await this.$store.getters['city/сityes'])
         )
-      } catch (e) {
-        //
-      }
+      } catch (e) {}
     },
     clearForm() {
       this.form.name = ''

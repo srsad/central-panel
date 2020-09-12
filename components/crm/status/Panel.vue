@@ -65,11 +65,15 @@ export default {
   },
   computed: {
     statuses() {
-      return this.$store.getters['crm/status/statuses']
+      return this.$store.state.crm.status.statuses
     }
   },
-  mounted() {
-    this.$store.dispatch('crm/status/fetchItems')
+  async mounted() {
+    // console.log(this.$store.state.crm.status.statuses)
+    // if (this.$store.state.crm.status.statuses.length <= 0) {
+    //   console.log(this.$store.state.crm.status.statuses.length)
+    // }
+    await this.$store.dispatch('crm/status/fetchItems')
   }
 }
 </script>

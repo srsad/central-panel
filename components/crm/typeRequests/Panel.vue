@@ -49,7 +49,7 @@
               <el-button
                 v-if="$abilities('crm-type_request-update')"
                 :loading="loading"
-                @click="updateCity(`typeRequest${idx}`, items[idx])"
+                @click="update(`typeRequest${idx}`, items[idx])"
                 size="mini"
                 title="Редактировать"
                 type="primary"
@@ -60,7 +60,7 @@
             <el-form-item>
               <el-popconfirm
                 v-if="$abilities('crm-type_request-remove')"
-                @onConfirm="removeCity(items[idx])"
+                @onConfirm="remove(items[idx])"
                 title="Удалить тип заявки?"
                 confirm-button-text="Да"
                 confirm-button-type="success"
@@ -138,7 +138,7 @@ export default {
         this.loading = false
       }
     },
-    async updateCity(form, data) {
+    async update(form, data) {
       this.loading = true
       await this.$refs[form][0].validate(async (valid) => {
         if (valid) {
@@ -155,7 +155,7 @@ export default {
         }
       })
     },
-    async removeCity(item) {
+    async remove(item) {
       this.loading = true
       try {
         await this.$axios.$delete('/api/v1/crm/type-request/remove/' + item._id)
@@ -172,8 +172,12 @@ export default {
     },
     async fetchItems() {
       try {
-        // загрузка городов
+        // загрузка данных
+        // if (this.$store.state.crm.typeRequest.fetchItems.length === 0) {
+        //   await this.$store.dispatch('crm/typeRequest/fetchItems')
+        // }
         await this.$store.dispatch('crm/typeRequest/fetchItems')
+
         this.items = JSON.parse(
           JSON.stringify(this.$store.getters['crm/typeRequest/typeRequests'])
         )
