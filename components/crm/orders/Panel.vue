@@ -18,15 +18,18 @@
       </el-button>
     </div>
     <app-drawer-create-order />
+    <app-drawer-create-client />
   </div>
 </template>
 
 <script>
 import AppDrawerCreateOrder from '~/components/crm/orders/drawer/Create'
+import AppDrawerCreateClient from '~/components/crm/client/drawer/Create'
 
 export default {
   components: {
-    AppDrawerCreateOrder
+    AppDrawerCreateOrder,
+    AppDrawerCreateClient
   }
 }
 </script>

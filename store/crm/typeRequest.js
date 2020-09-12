@@ -19,7 +19,7 @@ export const actions = {
   async update({ commit }, formData) {
     try {
       // eslint-disable-next-line prettier/prettier
-      await this.$axios.$post('/api/v1/crm/type-request/update/' + formData._id, formData)
+      await this.$axios.$put('/api/v1/crm/type-request/update/' + formData._id, formData)
     } catch (e) {
       commit('SET_ERROR', e.response.data.message, { root: true })
       throw e

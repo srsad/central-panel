@@ -50,6 +50,6 @@ module.exports.getAll = async (req, res) => {
     const apis = await RequestTyp.find().sort({ created: -1 })
     res.json({ data: apis })
   } catch (error) {
-    res.status(500).json({ message: 'Не удалось получить список городов!' })
+    res.status(500).json({ message: 'Не удалось получить список типов заявок!' })
   }
 }
