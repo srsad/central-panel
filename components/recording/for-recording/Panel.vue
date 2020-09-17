@@ -36,23 +36,45 @@
             >
               <div class="row">
                 <template v-if="item.rservice">
-                  <div class="col-5"><b>Rservice</b></div>
+                  <div class="col-5">
+                    <b style="font-size:12px">Rservice</b>
+                  </div>
                   <div class="col-7 pl-0">{{ item.rservice }}</div>
                   <div class="col-12 pb-5 border-bottom"></div>
                 </template>
                 <template v-if="item.impuls">
-                  <div class="col-5"><b>Impuls</b></div>
+                  <div class="col-5">
+                    <b style="font-size:12px">Impuls</b>
+                  </div>
                   <div class="col-7 pl-0">{{ item.impuls }}</div>
                   <div class="col-12 pb-5 border-bottom"></div>
                 </template>
                 <template v-if="item.krd">
-                  <div class="col-5"><b>Краснодар</b></div>
+                  <div class="col-5">
+                    <b style="font-size:12px">Краснодар</b>
+                  </div>
                   <div class="col-7 pl-0">{{ item.krd }}</div>
                   <div class="col-12 pb-5 border-bottom"></div>
                 </template>
                 <template v-if="item.elservice">
-                  <div class="col-5"><b>Выездной сервис</b></div>
+                  <div class="col-5">
+                    <b style="font-size:12px">Выездной сервис</b>
+                  </div>
                   <div class="col-7 pl-0">{{ item.elservice }}</div>
+                  <div class="col-12 pb-5 border-bottom"></div>
+                </template>
+                <template v-if="item.msk1">
+                  <div class="col-5">
+                    <b style="font-size:12px">МСК Новослободская</b>
+                  </div>
+                  <div class="col-7 pl-0">{{ item.msk1 }}</div>
+                  <div class="col-12 pb-5 border-bottom"></div>
+                </template>
+                <template v-if="item.msk2">
+                  <div class="col-5">
+                    <b style="font-size:12px">МСК Армянский</b>
+                  </div>
+                  <div class="col-7 pl-0">{{ item.msk2 }}</div>
                   <div class="col-12 pb-5 border-bottom"></div>
                 </template>
                 <div v-if="item.curser" class="col-12">

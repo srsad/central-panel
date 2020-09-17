@@ -45,14 +45,24 @@
           <el-input v-model="form.impuls" placeholder="Impuls" />
         </el-form-item>
       </div>
+      <!-- <div class="col-6">
+        <el-form-item prop="elservice" label="Выездной сервис">
+          <el-input v-model="form.elservice" placeholder="Выездной сервис" />
+        </el-form-item>
+      </div> -->
       <div class="col-6">
-        <el-form-item prop="krd" label="Краснодар">
-          <el-input v-model="form.krd" placeholder="Краснодар" />
+        <el-form-item prop="msk1" label="МСК Новослободская">
+          <el-input v-model="form.msk1" placeholder="МСК Новослободская" />
         </el-form-item>
       </div>
       <div class="col-6">
-        <el-form-item prop="elservice" label="Выездной сервис">
-          <el-input v-model="form.elservice" placeholder="Выездной сервис" />
+        <el-form-item prop="msk2" label="МСК Армянский">
+          <el-input v-model="form.msk2" placeholder="МСК Армянский" />
+        </el-form-item>
+      </div>
+      <div class="col-6">
+        <el-form-item prop="krd" label="Краснодар">
+          <el-input v-model="form.krd" placeholder="Краснодар" />
         </el-form-item>
       </div>
       <div class="col-6">
@@ -82,6 +92,8 @@ export default {
         rservice: '',
         impuls: '',
         krd: '',
+        msk1: '',
+        msk2: '',
         elservice: '',
         curser: true
       },
@@ -156,6 +168,8 @@ export default {
       this.form.rservice = ''
       this.form.impuls = ''
       this.form.krd = ''
+      this.form.msk1 = ''
+      this.form.msk2 = ''
       this.form.elservice = ''
       this.form.curser = true
       this.loading = false
