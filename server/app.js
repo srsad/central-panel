@@ -17,6 +17,7 @@ const ssiteRoutes = require('./routes/v1/sourceSite.routs')
 const partRoutes = require('./routes/v1/part.routs')
 const sessionRoutes = require('./routes/v1/session.routs')
 const recordingRoutes = require('./routes/v1/recording')
+const exceptionsRoutes = require('./routes/v1/exceptions.routs')
 const reportRoutes = require('./routes/v1/report')
 const CRMRoutes = require('./routes/v1/crm')
 
@@ -57,5 +58,6 @@ app.use('/api/v1/session', sessionRoutes)
 app.use('/api/v1/recording', recordingRoutes)
 app.use('/api/v1/report', reportRoutes)
 app.use('/api/v1/crm', CRMRoutes)
+app.use('/api/v1/exceptions', exceptionsRoutes)
 
 module.exports = app

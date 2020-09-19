@@ -29,6 +29,10 @@ export default [
     label: 'Поиск'
   },
   {
+    _id: 'export_exceptions',
+    label: 'Экспорт неисправностей'
+  },
+  {
     _id: 'crm',
     label: 'CRM',
     children: [
