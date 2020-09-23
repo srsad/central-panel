@@ -117,6 +117,7 @@
                 />
               </el-form-item>
             </div>
+            <!-- 
             <div class="col-4">
               <el-form-item prop="login" label="Логин">
                 <el-input
@@ -136,6 +137,7 @@
                 />
               </el-form-item>
             </div>
+             -->
             <div class="col-12">
               <el-form-item prop="yametrika" label="Yandex метрика">
                 <el-input
@@ -182,11 +184,11 @@
                 <el-input v-model="form.phone_default" placeholder="Телефон" />
               </el-form-item>
             </div>
-            <div class="col-12">
+            <!-- <div class="col-12">
               <el-form-item prop="phone" label="Номер телефона/визитка">
                 <el-input v-model="form.phone" placeholder="Телефон" />
               </el-form-item>
-            </div>
+            </div> -->
             <div class="col-12">
               <el-form-item prop="address" label="Адрес">
                 <el-input v-model="form.address" placeholder="Адрес" />
@@ -261,7 +263,14 @@ export default {
         phone: ''
       },
       cities: [],
-      companyes: ['R-Service', 'Impuls'],
+      companyes: [
+        'R-service СПб',
+        'R-service МСК',
+        'Impuls СПб',
+        'Impuls МСК',
+        'R-Service',
+        'Impuls'
+      ],
       predefineColors: [
         '#000000',
         '#ff4500',

@@ -41,7 +41,14 @@ const domainSchema = new Schema({
   company: {
     type: String,
     default: 'R-Service',
-    enum: ['R-Service', 'Impuls']
+    enum: [
+      // 'R-service СПб',
+      // 'R-service МСК',
+      // 'Impuls СПб',
+      // 'Impuls МСК',
+      'R-Service',
+      'Impuls'
+    ]
   },
   // наименование
   name: {
@@ -50,6 +57,12 @@ const domainSchema = new Schema({
     index: true
   },
   // город
+  // city: {
+  // TODO привязать таблицу
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'roles',
+  //   index: true
+  // },
   city: {
     type: String,
     maxlength: 32,

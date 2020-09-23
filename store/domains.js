@@ -85,7 +85,37 @@ export const mutations = {
 }
 
 export const getters = {
-  domains: (state) => state.damains,
+  domains: (state) => {
+    // TODO вынести это на сторону бд
+    const rserviceSPB = []
+    const impulsSPB = []
+    const rserviceMSK = []
+    const impulsMSK = []
+    const rserviceKRD = []
+    const impulsKRD = []
+    // // общее
+    // R-service СПб→Impuls СПб→R-service МСК→Impuls МСК
+    state.damains.forEach((el) => {
+      if (el.company === 'R-Service') {
+        if (el.city === '5e75d63153464012dc0e5fe2') rserviceSPB.push(el)
+        if (el.city === '5e75d63653464012dc0e5fe3') rserviceMSK.push(el)
+        if (el.city === '5e75d62a53464012dc0e5fe1') rserviceKRD.push(el)
+      }
+      if (el.company === 'Impuls') {
+        if (el.city === '5e75d63153464012dc0e5fe2') impulsSPB.push(el)
+        if (el.city === '5e75d63653464012dc0e5fe3') impulsMSK.push(el)
+        if (el.city === '5e75d62a53464012dc0e5fe1') impulsKRD.push(el)
+      }
+    })
+    return [
+      ...rserviceSPB,
+      ...impulsSPB,
+      ...rserviceMSK,
+      ...impulsMSK,
+      ...rserviceKRD,
+      ...impulsKRD
+    ]
+  },
   domain: (state) => state.damain,
   emptyText: (state) => state.emptyText
 }

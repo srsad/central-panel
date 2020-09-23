@@ -159,6 +159,7 @@ module.exports.getByAddress = async (req, res) => {
 module.exports.getAll = async (req, res) => {
   try {
     const domains = await Domain.find().sort({ color: 1 })
+    // .populate('cities', { name: 1 })
     res.json({ data: domains })
   } catch (error) {
     res.status(500).json({ message: 'Не удалось получить список доменов!' })
