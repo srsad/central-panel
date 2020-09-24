@@ -42,10 +42,12 @@ const domainSchema = new Schema({
     type: String,
     default: 'R-Service',
     enum: [
-      // 'R-service СПб',
-      // 'R-service МСК',
-      // 'Impuls СПб',
-      // 'Impuls МСК',
+      'R-service СПб',
+      'R-service МСК',
+      'R-service КРД',
+      'Impuls СПб',
+      'Impuls МСК',
+      'Impuls КРД',
       'R-Service',
       'Impuls'
     ]

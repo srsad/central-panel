@@ -25,19 +25,26 @@
           >
             2-я Красноармейская 11
           </el-button>
-          <el-button
+          <!-- <el-button
             @click="selectCity('Пашковская')"
             size="mini"
             type="primary"
           >
             ул. Пашковская 83
-          </el-button>
+          </el-button> -->
           <el-button
             @click="selectCity('Новослободская')"
             size="mini"
             type="primary"
           >
             ул. Новослободская 71
+          </el-button>
+          <el-button
+            @click="selectCity('Армянский')"
+            size="mini"
+            type="primary"
+          >
+            Армянский пер.
           </el-button>
           <el-button
             @click="selectCity('Дмитровский')"

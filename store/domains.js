@@ -93,19 +93,15 @@ export const getters = {
     const impulsMSK = []
     const rserviceKRD = []
     const impulsKRD = []
-    // // общее
+    // общее
     // R-service СПб→Impuls СПб→R-service МСК→Impuls МСК
     state.damains.forEach((el) => {
-      if (el.company === 'R-Service') {
-        if (el.city === '5e75d63153464012dc0e5fe2') rserviceSPB.push(el)
-        if (el.city === '5e75d63653464012dc0e5fe3') rserviceMSK.push(el)
-        if (el.city === '5e75d62a53464012dc0e5fe1') rserviceKRD.push(el)
-      }
-      if (el.company === 'Impuls') {
-        if (el.city === '5e75d63153464012dc0e5fe2') impulsSPB.push(el)
-        if (el.city === '5e75d63653464012dc0e5fe3') impulsMSK.push(el)
-        if (el.city === '5e75d62a53464012dc0e5fe1') impulsKRD.push(el)
-      }
+      if (el.company === 'R-service СПб') rserviceSPB.push(el)
+      if (el.company === 'R-service МСК') rserviceMSK.push(el)
+      if (el.company === 'R-service КРД') rserviceKRD.push(el)
+      if (el.company === 'Impuls СПб') impulsSPB.push(el)
+      if (el.company === 'Impuls МСК') impulsMSK.push(el)
+      if (el.company === 'Impuls КРД') impulsKRD.push(el)
     })
     return [
       ...rserviceSPB,
