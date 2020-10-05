@@ -20,7 +20,9 @@ module.exports = {
    * Переменные окружения
    */
   env: {
-    REMONLINE_API_KEY: process.env.REMONLINE_API_KEY
+    REMONLINE_API_KEY: process.env.REMONLINE_API_KEY,
+    DADATA_API_KEY: process.env.DADATA_API_KEY,
+    DADATA_SECRET_KEY: process.env.DADATA_SECRET_KEY
   },
   /*
    ** Customize the progress-bar color

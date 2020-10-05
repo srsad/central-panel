@@ -23,7 +23,7 @@
           type="primary"
           icon="fa fa-file-excel-o"
         >
-          Выгрузить списо кисключений
+          Выгрузить список исключений
         </el-button>
       </div>
     </div>

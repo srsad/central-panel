@@ -93,7 +93,7 @@ export const getters = {
     const impulsMSK = []
     const rserviceKRD = []
     const impulsKRD = []
-    // общее
+    // разбиваем по филиалам
     // R-service СПб→Impuls СПб→R-service МСК→Impuls МСК
     state.damains.forEach((el) => {
       if (el.company === 'R-service СПб') rserviceSPB.push(el)
@@ -103,6 +103,21 @@ export const getters = {
       if (el.company === 'Impuls МСК') impulsMSK.push(el)
       if (el.company === 'Impuls КРД') impulsKRD.push(el)
     })
+
+    // сортируем по приоритету
+    // eslint-disable-next-line
+    rserviceSPB.sort((a, b) => (a.priority2 - b.priority || a.priority2 - b.priority2 || a.priority3 - b.priority3))
+    // eslint-disable-next-line
+    impulsSPB.sort((a, b) => (a.priority2 - b.priority || a.priority2 - b.priority2 || a.priority3 - b.priority3))
+    // eslint-disable-next-line
+    rserviceMSK.sort((a, b) => (a.priority2 - b.priority || a.priority2 - b.priority2 || a.priority3 - b.priority3))
+    // eslint-disable-next-line
+    impulsMSK.sort((a, b) => (a.priority2 - b.priority || a.priority2 - b.priority2 || a.priority3 - b.priority3))
+    // eslint-disable-next-line
+    rserviceKRD.sort((a, b) => (a.priority2 - b.priority || a.priority2 - b.priority2 || a.priority3 - b.priority3))
+    // eslint-disable-next-line
+    impulsKRD.sort((a, b) => (a.priority2 - b.priority || a.priority2 - b.priority2 || a.priority3 - b.priority3))
+
     return [
       ...rserviceSPB,
       ...impulsSPB,

@@ -13,7 +13,7 @@
       class="row"
     >
       <el-form-item class="col-md-6" label="Тип заказа" prop="type_request">
-        <el-select v-model="form.type_request" class="w100">
+        <el-select v-model="form.type_request" class="w100" size="mini">
           <el-option
             v-for="(item, idx) in typeRequests"
             :key="idx"
@@ -25,7 +25,6 @@
         </el-select>
       </el-form-item>
       <el-form-item class="col-md-6" label="Клиент" prop="client">
-        <!-- <el-input v-model="form.client" /> -->
         <el-autocomplete
           v-model="form.client"
           :fetch-suggestions="queryClients"
@@ -33,6 +32,7 @@
           popper-class="my-autocomplete"
           placeholder="ФИО/название организации"
           class="w100"
+          size="mini"
         >
           <i
             slot="suffix"
@@ -85,8 +85,15 @@ export default {
         manager: '',
         performer_in_charge: '',
         files: []
-      },
-      rules: {
+      }
+    }
+  },
+  computed: {
+    typeRequests() {
+      return this.$store.getters['crm/typeRequest/typeRequests']
+    },
+    rules() {
+      const rules = {
         type_request: [
           {
             required: true,
@@ -102,11 +109,8 @@ export default {
           }
         ]
       }
-    }
-  },
-  computed: {
-    typeRequests() {
-      return this.$store.getters['crm/typeRequest/typeRequests']
+
+      return rules
     }
   },
   methods: {

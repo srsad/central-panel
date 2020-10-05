@@ -7,9 +7,23 @@ const { model, Schema } = require('mongoose')
 const domainSchema = new Schema({
   // приоритет
   priority: {
+    type: String,
+    default: '',
+    index: true
+  },
+  // подприоритет2
+  priority2: {
     type: Number,
     min: 0,
-    max: 10
+    max: 15,
+    index: true
+  },
+  // подприоритет3
+  priority3: {
+    type: Number,
+    min: 0,
+    max: 15,
+    index: true
   },
   // исполнитель
   vendor: {

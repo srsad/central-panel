@@ -22,7 +22,7 @@
       <!-- /ceditor -->
       <!-- supplier -->
       <el-form-item class="col-lg-3" prop="supplier">
-        <el-checkbox v-model="form.checked">
+        <el-checkbox v-model="form.supplier">
           <i class="fa fa-car" />
           Поставщик
         </el-checkbox>
@@ -44,7 +44,16 @@
         prop="name"
         class="col-md-7"
       >
-        <el-input v-model="form.name" size="mini" />
+        <el-autocomplete
+          v-model="form.name"
+          :fetch-suggestions="dadataName"
+          size="mini"
+          class="w100"
+        >
+          <template slot-scope="{ item }">
+            <div class="value">{{ item.value }}</div>
+          </template>
+        </el-autocomplete>
       </el-form-item>
       <!-- /name -->
       <!-- email -->
@@ -112,6 +121,83 @@
         </div>
         <!--  -->
       </el-form-item>
+      <!--  -->
+      <el-form-item
+        v-for="(item, idx) in form.address"
+        :key="idx"
+        class="col-12"
+      >
+        <el-autocomplete
+          v-model="form.address[idx].address"
+          :fetch-suggestions="dadataAddress"
+          placeholder="Адрес"
+          size="mini"
+          class="w100"
+        >
+          <template slot-scope="{ item }">
+            <div class="value">{{ item.value }}</div>
+          </template>
+          <div slot="append">
+            <el-button
+              @click="addAddress(idx)"
+              size="mini"
+              icon="el-icon-plus"
+              title="Добавить адрес"
+            />
+            <el-button
+              v-if="idx > 0"
+              @click="removeAddress(idx)"
+              size="mini"
+              icon="el-icon-delete"
+              title="Удалить адрес"
+            />
+          </div>
+        </el-autocomplete>
+      </el-form-item>
+      <!--  -->
+      <el-form-item class="col-12" prop="notes" label="Примечание">
+        <el-input
+          v-model="form.notes"
+          :autosize="{ minRows: 2 }"
+          type="textarea"
+          size="mini"
+        />
+      </el-form-item>
+      <!--  -->
+      <el-form-item class="col-12" prop="tags">
+        <div slot="label">
+          <i class="el-icon-price-tag" />
+          Теги
+        </div>
+        <div>
+          <el-tag
+            v-for="tag in form.tags"
+            :key="tag"
+            :disable-transitions="false"
+            @close="removeTag(tag)"
+            closable
+          >
+            {{ tag }}
+          </el-tag>
+          <el-input
+            ref="saveTagInput"
+            v-if="tagVisible"
+            v-model="tagValue"
+            @blur="addTag"
+            @keyup.enter.native="addTag"
+            size="mini"
+            class="input-new-tag"
+          />
+          <el-button
+            v-else
+            @click="showInput"
+            size="small"
+            class="button-new-tag"
+          >
+            + Тег
+          </el-button>
+        </div>
+      </el-form-item>
       <!-- / -->
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -122,14 +208,19 @@
 </template>
 
 <script>
+import Dadata from 'dadata-suggestions'
+const dadata = new Dadata(process.env.DADATA_API_KEY)
+
 export default {
   data() {
     return {
       loading: false,
+      tagVisible: false,
+      tagValue: '',
       form: {
         ceditor: 'individual',
-        checked: '',
-        conflicted: '',
+        supplier: false,
+        conflicted: false,
         name: '',
         phone: [
           {
@@ -141,9 +232,22 @@ export default {
         email: {
           email: '',
           send_email: false
-        }
-      },
-      rules: {
+        },
+        address: [
+          {
+            address: '',
+            lat: '',
+            long: ''
+          }
+        ],
+        notes: '',
+        tags: []
+      }
+    }
+  },
+  computed: {
+    rules() {
+      const rules = {
         name: [
           {
             required: true,
@@ -164,6 +268,11 @@ export default {
           }
         ]
       }
+
+      // eslint-disable-next-line
+      rules.name[0].message = this.form.ceditor === 'individual' ? 'Введите имя' : 'Введите название организации'
+
+      return rules
     }
   },
   methods: {
@@ -173,7 +282,31 @@ export default {
         this.onCreate()
       })
     },
-    onCreate() {},
+    /**
+     * Создание нового клиента
+     */
+    async onCreate() {
+      this.loading = true
+      try {
+        await this.$axios.$post('/api/v1/crm/clients/create', this.form)
+        await this.$notify({
+          message: 'Клиент добавлен!',
+          customClass: 'success-notyfy'
+        })
+        this.$store.commit('settings/SWITCH_DRAWNER', {
+          dranwer: 'drawerCreateClient',
+          status: false
+        })
+        this.clearForm()
+      } catch (e) {
+        this.$store.commit('SET_ERROR', e.response.data.message)
+      } finally {
+        this.loading = false
+      }
+    },
+    /**
+     * Отменить создание нового клиента
+     */
     onClose() {
       this.$confirm('Отменить создание нового клиента?')
         .then((_) => {
@@ -188,11 +321,29 @@ export default {
     },
     clearForm() {
       this.form.name = ''
-      this.form.source = ''
-      this.form.company = ''
-      this.form.brand = ''
-      this.form.published = true
-      this.form.image = ''
+      this.form.ceditor = 'individual'
+      this.form.supplier = false
+      this.form.conflicted = false
+      this.form.phone = [
+        {
+          contact_type: 'mobile',
+          phone: '',
+          send_sms: false
+        }
+      ]
+      this.form.email = {
+        email: '',
+        send_email: false
+      }
+      this.form.address = [
+        {
+          address: '',
+          lat: '',
+          long: ''
+        }
+      ]
+      this.form.notes = ''
+      this.form.tags = []
     },
     /**
      * Добавить еще один номер
@@ -210,6 +361,65 @@ export default {
     removeNumber(idx) {
       if (this.form.phone.length <= 1) return false
       this.form.phone.splice(idx, 1)
+    },
+    /**
+     * Добавить адрес
+     */
+    addAddress(idx) {
+      this.form.address.push({
+        address: '',
+        lat: '',
+        long: ''
+      })
+    },
+    /**
+     * Удалить адрес
+     */
+    removeAddress(idx) {
+      if (this.form.address.length <= 1) return false
+      this.form.address.splice(idx, 1)
+    },
+    /**
+     * Добавить тег
+     */
+    addTag(tag) {
+      if (this.tagValue) this.form.tags.push(this.tagValue)
+      this.tagVisible = false
+      this.tagValue = ''
+    },
+    /**
+     * Открыть инпут нового тега
+     */
+    showInput() {
+      this.tagVisible = true
+      this.$nextTick((_) => {
+        this.$refs.saveTagInput.$refs.input.focus()
+      })
+    },
+    /**
+     * Удалить тег
+     */
+    removeTag(tag) {
+      this.form.tags.splice(this.form.tags.indexOf(tag), 1)
+    },
+    /**
+     * dadata по ФИО
+     */
+    async dadataName(val, cb) {
+      try {
+        const params = this.form.ceditor === 'individual' ? 'fio' : 'party'
+        const { suggestions } = await dadata[params]({ query: val })
+        cb(suggestions)
+      } catch (e) {}
+    },
+    /**
+     * dadata по адресу
+     */
+    async dadataAddress(val, cb) {
+      try {
+        const { suggestions } = await dadata.address({ query: val })
+        cb(suggestions)
+      } catch (e) {}
     },
     /**
      * Валидация email
