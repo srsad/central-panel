@@ -76,8 +76,8 @@
             <template slot="header" cell-class-name="center-checkbox">
               <span @click="toggleAllChange">
                 <span style="font-size:12px;text-align:left;">
-                  Видеть заказ<br />
-                  в статусе
+                  Устанавливать<br />
+                  статус
                 </span>
               </span>
             </template>
