@@ -36,13 +36,13 @@
         </el-form-item>
       </div>
       <div class="col-6">
-        <el-form-item prop="rservice" label="Rservice">
-          <el-input v-model="form.rservice" placeholder="Rservice" />
+        <el-form-item prop="rservice" label="СПб Красноармейская">
+          <el-input v-model="form.rservice" placeholder="СПб Красноармейская" />
         </el-form-item>
       </div>
       <div class="col-6">
-        <el-form-item prop="impuls" label="Impuls">
-          <el-input v-model="form.impuls" placeholder="Impuls" />
+        <el-form-item prop="impuls" label="СПб Дмитровский">
+          <el-input v-model="form.impuls" placeholder="СПб Дмитровский" />
         </el-form-item>
       </div>
       <!-- <div class="col-6">

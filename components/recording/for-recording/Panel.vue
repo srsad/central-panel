@@ -37,14 +37,14 @@
               <div class="row">
                 <template v-if="item.rservice">
                   <div class="col-5">
-                    <b style="font-size:12px">Rservice</b>
+                    <b style="font-size:12px">СПб Красноармейская</b>
                   </div>
                   <div class="col-7 pl-0">{{ item.rservice }}</div>
                   <div class="col-12 pb-5 border-bottom"></div>
                 </template>
                 <template v-if="item.impuls">
                   <div class="col-5">
-                    <b style="font-size:12px">Impuls</b>
+                    <b style="font-size:12px">СПб Дмитровский</b>
                   </div>
                   <div class="col-7 pl-0">{{ item.impuls }}</div>
                   <div class="col-12 pb-5 border-bottom"></div>
@@ -56,13 +56,13 @@
                   <div class="col-7 pl-0">{{ item.krd }}</div>
                   <div class="col-12 pb-5 border-bottom"></div>
                 </template>
-                <template v-if="item.elservice">
+                <!-- <template v-if="item.elservice">
                   <div class="col-5">
                     <b style="font-size:12px">Выездной сервис</b>
                   </div>
                   <div class="col-7 pl-0">{{ item.elservice }}</div>
                   <div class="col-12 pb-5 border-bottom"></div>
-                </template>
+                </template> -->
                 <template v-if="item.msk1">
                   <div class="col-5">
                     <b style="font-size:12px">МСК Новослободская</b>
