@@ -80,6 +80,10 @@
                 <div v-if="item.curser" class="col-12">
                   <b>Курьер платный</b>
                 </div>
+                <div class="col-12 pb-5 border-bottom"></div>
+                <div v-if="item.not_curser" class="col-12">
+                  <b>Не записывать курьера</b>
+                </div>
               </div>
               <div slot="reference">
                 {{ item.name }}

@@ -64,8 +64,12 @@
         </el-form-item>
       </div>
       <div class="col-6">
-        <el-form-item prop="curser">
+        <el-form-item>
           <el-checkbox v-model="form.curser">Курьер платный</el-checkbox>
+          <br />
+          <el-checkbox v-model="form.not_curser">
+            Не записывать курьера
+          </el-checkbox>
         </el-form-item>
       </div>
     </el-form>
@@ -92,7 +96,8 @@ export default {
         msk1: '',
         msk2: '',
         elservice: '',
-        curser: true
+        curser: true,
+        not_curser: false
       },
       categories: [
         { value: 'Крупная Бытовая Техника' },
@@ -167,6 +172,7 @@ export default {
       this.form.msk2 = ''
       this.form.elservice = ''
       this.form.curser = true
+      this.form.not_curser = false
       this.loading = false
     },
     onClose() {

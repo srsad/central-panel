@@ -56,6 +56,10 @@ const forRecordingSchema = new Schema({
     type: Boolean,
     default: true
   },
+  not_curser: {
+    type: Boolean,
+    default: false
+  },
   created: {
     type: Date,
     default: Date.now
