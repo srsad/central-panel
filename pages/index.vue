@@ -5,19 +5,19 @@
         <img src="/site/images/rserv.jpg" alt="Rservice" style="height:90px" />
       </button>
       <p class="text-center">
-        Санкт-Петербург, 2-я Красноармейская 11
+        СПб, 2-я Красноармейская 11 | 8 (812) 614–64–06
         <br />
-        Краснодар, ул. Пашковская 83
-        <br />
-        Москва, ул. Новослободская 71
+        МСК, ул. Новослободская 71 | 8 (499) 653–75–58
       </p>
     </div>
     <div class="col-6 text-center">
       <button class="mb-20" style="padding:0;cursor:default">
-        <img src="/site/images/imp.jpg" alt="Rservice" style="height:90px" />
+        <img src="/site/images/imp.jpg" alt="Impuls" style="height:90px" />
       </button>
       <p class="text-center">
-        Санкт-Петербург, Дмитровский пер., 8<br /><br />
+        СПб, Дмитровский пер., 8 | 8 (812) 317-74–35
+        <br />
+        МСК, Армянский переулок 7 | 8 (499) 444–24-31
       </p>
     </div>
     <!--  -->

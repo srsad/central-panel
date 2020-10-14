@@ -245,6 +245,28 @@ export default [
             label: 'Удаление'
           }
         ]
+      },
+      {
+        _id: 'recording-devace_list',
+        label: 'Устройства не для записи (выводится в общемсписке устройств)',
+        children: [
+          {
+            _id: 'recording-devace_list-read',
+            label: 'Чтение'
+          },
+          {
+            _id: 'recording-devace_list-create',
+            label: 'Создание'
+          },
+          {
+            _id: 'recording-devace_list-update',
+            label: 'Редактирование'
+          },
+          {
+            _id: 'recording-devace_list-remove',
+            label: 'Удаление'
+          }
+        ]
       }
     ]
   },
