@@ -1,5 +1,4 @@
 module.exports = {
-  mode: 'universal',
   telemetry: false,
   /*
    ** Headers of the page
@@ -58,7 +57,7 @@ module.exports = {
   /*
    ** Nuxt.js dev-modules
    */
-  devModules: [
+  buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module'
   ],
