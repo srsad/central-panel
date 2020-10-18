@@ -1,5 +1,6 @@
 module.exports = {
   telemetry: false,
+  mode: 'universal',
   /*
    ** Headers of the page
    */
@@ -39,7 +40,7 @@ module.exports = {
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
-    '@nuxtjs/dotenv',
+    ['@nuxtjs/dotenv'],
   ],
   /*
    ** Plugins to load before mounting the App

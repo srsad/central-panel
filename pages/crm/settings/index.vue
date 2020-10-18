@@ -14,6 +14,12 @@
         <el-tab-pane label="Типы устроиств" name="typeDevice">
           <app-type-device-panel />
         </el-tab-pane>
+        <el-tab-pane label="Бренды" name="brands">
+          <app-brands-panel />
+        </el-tab-pane>
+        <el-tab-pane label="Неисправности" name="malfunctions">
+          <app-malfunctions-panel />
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -24,21 +30,26 @@ import AppStatusPanel from '~/components/crm/status/Panel'
 import AppStagePanel from '~/components/crm/stage/Panel'
 import AppTypeRequestPanel from '~/components/crm/typeRequests/Panel'
 import AppTypeDevicePanel from '~/components/crm/typeDevice/Panel'
+import AppBrandsPanel from '~/components/report/summarySheet/tabs/brand/Panel'
+import AppMalfunctionsPanel from '~/components/crm/malfunctions/Panel'
 
 export default {
   components: {
     AppStatusPanel,
     AppStagePanel,
     AppTypeRequestPanel,
-    AppTypeDevicePanel
+    AppTypeDevicePanel,
+    AppBrandsPanel,
+    AppMalfunctionsPanel
   },
-  fetch({ store, error }) {
+  async fetch({ store, error }) {
     store.dispatch('settings/setBreadcrumbs', [
       {
         uri: '/crm/status',
         label: 'Настройки CRM'
       }
     ])
+    await store.dispatch('report/brand/fetchItems')
   }
 }
 </script>

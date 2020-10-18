@@ -134,6 +134,7 @@
           size="mini"
           class="w100"
         >
+          <!-- eslint-disable-next-line -->
           <template slot-scope="{ item }">
             <div class="value">{{ item.value }}</div>
           </template>
@@ -288,8 +289,14 @@ export default {
     async onCreate() {
       this.loading = true
       try {
-        await this.$axios.$post('/api/v1/crm/clients/create', this.form)
-        await this.$notify({
+        const form = JSON.parse(JSON.stringify(this.form))
+        for (const item of form.phone) {
+          item.phone = item.phone.match(/\d/gi).join('')
+        }
+
+        await this.$axios.$post('/api/v1/crm/clients/create', form)
+
+        this.$notify({
           message: 'Клиент добавлен!',
           customClass: 'success-notyfy'
         })
@@ -299,7 +306,7 @@ export default {
         })
         this.clearForm()
       } catch (e) {
-        this.$store.commit('SET_ERROR', e.response.data.message)
+        // this.$store.commit('SET_ERROR', e.response.data.message)
       } finally {
         this.loading = false
       }
@@ -418,6 +425,7 @@ export default {
     async dadataAddress(val, cb) {
       try {
         const { suggestions } = await dadata.address({ query: val })
+        console.log('dadataAddress', suggestions)
         cb(suggestions)
       } catch (e) {}
     },

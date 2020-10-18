@@ -2,30 +2,29 @@
   <div class="row">
     <div class="col-12">
       <el-form
-        ref="typeDevice"
-        v-if="$abilities('crm-type_device-create')"
+        ref="malfunction"
         :inline="true"
         :disabled="loading"
         :model="form"
         :rules="rules"
-        @submit.prevent.native="addValidate('typeDevice')"
+        @submit.prevent.native="addValidate('malfunction')"
       >
         <el-form-item prop="name">
           <el-input
             v-model="form.name"
             size="mini"
-            placeholder="Тип устройста"
-            @keyup.enter.native="addValidate('typeDevice')"
+            placeholder="Неисправность"
+            @keyup.enter.native="addValidate('malfunction')"
           />
         </el-form-item>
         <el-form-item>
           <el-button
             :loading="loading"
-            @click="addValidate('typeDevice')"
+            @click="addValidate('malfunction')"
             size="mini"
             type="success"
             icon="el-icon-plus"
-            title="Создать новый тип устройста"
+            title="Создать неисправность"
           />
         </el-form-item>
       </el-form>
@@ -38,7 +37,7 @@
       <div class="row">
         <div class="col-12">
           <el-form
-            :ref="`typeDevice${idx}`"
+            :ref="`malfunction${idx}`"
             :inline="true"
             :model="items[idx]"
             :disabled="loading"
@@ -48,14 +47,13 @@
               <el-input
                 v-model="items[idx].name"
                 size="mini"
-                placeholder="Тип устройста"
+                placeholder="Неисправность"
               />
             </el-form-item>
             <el-form-item>
               <el-button
-                v-if="$abilities('crm-type_device-update')"
                 :loading="loading"
-                @click="update(`typeDevice${idx}`, items[idx])"
+                @click="update(`malfunction${idx}`, items[idx])"
                 size="mini"
                 title="Редактировать"
                 type="primary"
@@ -65,9 +63,8 @@
             <!--  -->
             <el-form-item>
               <el-popconfirm
-                v-if="$abilities('crm-type_device-remove')"
                 @onConfirm="remove(items[idx])"
-                title="Удалить тип устройста?"
+                title="Удалить неисправность?"
                 confirm-button-text="Да"
                 confirm-button-type="success"
                 cancel-button-type="default"
@@ -104,7 +101,7 @@ export default {
         name: [
           {
             required: true,
-            message: 'Введите тип',
+            message: 'Введите неисправность',
             trigger: 'blur'
           },
           {
@@ -130,10 +127,10 @@ export default {
       this.loading = true
       try {
         const formData = this.form
-        await this.$store.dispatch('crm/typeDevice/create', formData)
+        await this.$store.dispatch('crm/malfunction/create', formData)
         this.fetchItems()
         this.$notify({
-          message: 'Тип устройста успешно создан!',
+          message: 'Неисправность созданна!',
           customClass: 'success-notyfy'
         })
         this.clearForm()
@@ -149,10 +146,10 @@ export default {
         if (!valid) return false
         this.loading = true
         try {
-          await this.$store.dispatch('crm/typeDevice/update', data)
+          await this.$store.dispatch('crm/malfunction/update', data)
           this.fetchItems()
           this.$notify({
-            message: 'Тип устройста успешно обновлен!',
+            message: 'Неисправность обновленна!',
             customClass: 'success-notyfy'
           })
         } catch (e) {
@@ -165,10 +162,10 @@ export default {
     async remove(item) {
       this.loading = true
       try {
-        await this.$axios.$delete('/api/v1/crm/type-device/remove/' + item._id)
+        await this.$axios.$delete('/api/v1/crm/malfunction/remove/' + item._id)
         this.fetchItems()
         this.$notify({
-          message: 'Тип устройста успешно удален!',
+          message: 'Неисправность удаленна!',
           customClass: 'success-notyfy'
         })
       } catch (e) {
@@ -179,10 +176,9 @@ export default {
     },
     async fetchItems() {
       try {
-        // загрузка данных
-        await this.$store.dispatch('crm/typeDevice/fetchItems')
+        await this.$store.dispatch('crm/malfunction/fetchItems')
         this.items = JSON.parse(
-          JSON.stringify(this.$store.getters['crm/typeDevice/typeDevices'])
+          JSON.stringify(this.$store.getters['crm/malfunction/malfunctions'])
         )
       } catch (e) {}
     },

@@ -8,6 +8,7 @@
         :disabled="loading"
         :model="form"
         :rules="rules"
+        @submit.prevent.native="addValidate('typeRequest')"
       >
         <el-form-item prop="name">
           <el-input v-model="form.name" size="mini" placeholder="Тип заявки" />

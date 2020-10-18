@@ -57,3 +57,16 @@ module.exports.getAll = async (req, res) => {
       .json({ message: 'Не удалось получить список брендов!', error })
   }
 }
+
+/**
+ * Поиск по название бренда
+ */
+module.exports.getByName = async (req, res) => {
+  try {
+    const regex = new RegExp(req.params.query, 'ig')
+    const brands = await Brand.find({ name: regex  }).sort({ name: 1 }).limit(5)
+    res.json({ data: brands })
+  } catch (error) {
+    res.status(500).json({ message: 'Не удалось найти бренд!' })
+  }
+}

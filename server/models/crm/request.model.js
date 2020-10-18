@@ -41,12 +41,12 @@ const crmRequest = new Schema({
     index: true,
     require: true
   },
-  // Неисправность, через запятую
-  malfunctions: {
-    type: String,
-    index: true,
+  // Неисправности
+  malfunctions: [{
+    type: Schema.Types.ObjectId,
+    ref: 'crm_malfunctions',
     require: true
-  },
+  }],
   // Пароль
   password: {
     type: String,

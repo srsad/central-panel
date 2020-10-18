@@ -47,8 +47,38 @@ module.exports.getById = async (req, res) => {
 /** Вернуть весь список */
 module.exports.getAll = async (req, res) => {
   try {
-    const apis = await Client.find().sort({ menuindex: 1 })
-    res.json({ data: apis })
+    const clients = await Client.find().sort({ menuindex: 1 })
+    res.json({ data: clients })
+  } catch (error) {
+    res.status(500).json({ message: 'Не удалось получить список клиентов!' })
+  }
+}
+
+/** Вернуть по ФИО */
+module.exports.getByName = async (req, res) => {
+  try {
+    const regex = new RegExp(req.params.query, 'ig')
+    const clients = await Client.find({ 'name': regex  }).sort({ name: 1 }).limit(5)
+    res.json({ data: clients })
+  } catch (error) {
+    res.status(500).json({ message: 'Не удалось получить список клиентов!' })
+  }
+}
+
+/** Вернуть по номеру телефону */
+module.exports.getByPhone = async (req, res) => {
+  try {
+    const regex = new RegExp(req.params.query, 'ig')
+    const clients = await Client.find({
+        phone: {
+            $elemMatch: {
+              phone: regex
+            }
+        }
+      })
+      .sort({ name: 1 })
+      .limit(5)
+    res.json({ data: clients })
   } catch (error) {
     res.status(500).json({ message: 'Не удалось получить список клиентов!' })
   }

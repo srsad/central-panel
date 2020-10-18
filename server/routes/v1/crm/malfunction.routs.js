@@ -4,13 +4,14 @@ const {
   create,
   update,
   remove,
-  getById,
   getAll,
-  getByName
-} = require('../../../controllers/report/brand.controller')
+  getById,
+  getByName,
+  getFirstItems
+} = require('../../../controllers/crm/malfunction.controller')
 const router = Router()
 
-// /api/v1/report/brand
+// /api/v1/crm/malfunction
 router.post(
   '/create',
   passport.authenticate('jwt', { session: false }),
@@ -40,6 +41,11 @@ router.get(
   '/getbyname/:query',
   passport.authenticate('jwt', { session: false }),
   getByName
+)
+router.get(
+  '/getfirstitems/',
+  passport.authenticate('jwt', { session: false }),
+  getFirstItems
 )
 
 module.exports = router

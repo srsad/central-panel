@@ -66,6 +66,7 @@ export default {
   props: {
     name: {
       type: String,
+      default: '',
       require: true
     }
   },

@@ -33,6 +33,17 @@ export const actions = {
       commit('SET_ERROR', e.response.data.message, { root: true })
       throw e
     }
+  },
+  async fetchFirstItems({ commit }) {
+    try {
+      const types = await this.$axios.$get(
+        '/api/v1/crm/type-device/getfirstitems'
+      )
+      commit('SET_TYPE_REQUESTS', types.data)
+    } catch (e) {
+      commit('SET_ERROR', e.response.data.message, { root: true })
+      throw e
+    }
   }
 }
 
