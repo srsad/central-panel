@@ -13,9 +13,9 @@
         <el-form-item prop="name">
           <el-input
             v-model="form.name"
+            @keyup.enter.native="addValidate('typeDevice')"
             size="mini"
             placeholder="Тип устройста"
-            @keyup.enter.native="addValidate('typeDevice')"
           />
         </el-form-item>
         <el-form-item>

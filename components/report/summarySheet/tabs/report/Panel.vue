@@ -54,8 +54,8 @@ export default {
   },
   data() {
     return {
-      report: '',
       rem: '',
+      report: '',
       remlen: 0
     }
   },
@@ -71,29 +71,44 @@ export default {
         status: true
       })
     },
-    // async ontest() {
-    //   try {
-    //     const res = await this.$axios.$get('/api/v1/report/sheets/upd')
-    //     console.log('res', res)
-    //   } catch (e) {
-    //     console.log('error', e)
-    //   }
-    // },
     async loadRemOnline() {
-      /*
-      const res = await this.$axios.$get(
-        'https://cors-anywhere.herokuapp.com/https://api.remonline.ru/order/?token=ec362e14d7a1bafab16acef54d85cbd2c2d571fc&created_at=[1596834000000,1596920399999]&statuses=[151384,162791,198277,198285,241717]'
-      )
-      // console.log('res', res)
-      this.rem = res
-      this.remlen = res.data.length
-      */
-      const rem = new Rem(process.env.REMONLINE_API_KEY, true)
+      // &created_at=[1596834000000,1596920399999]&statuses=[151384,162791,198277,198285,241717]'
+      // console.log('REMONLINE_API_KEY', process.env.REMONLINE_API_KEY)
+      const rem = new Rem('a2cda58eecae417d8a67cbb35bb68e7f', true)
+      // const rem = new Rem(process.env.REMONLINE_API_KEY, true)
       // const token = await rem.setToken()
       // const token = await rem.getBranches()
       // const token = await rem.getStatuses()
-      const token = await rem.getTypes()
-      console.log('token - ', token)
+      // const token = await rem.getTypes()
+      // const filter = ''
+      // const token = await rem.getOrders(filter)
+      // console.log('token - ', token)
+      // дата
+      // const created = this.tableData.period.split(' ')
+      // created[0] = new Date(created[0]).getTime()
+      // created[1] = new Date(created[1]).getTime()
+      // order/?token=...&created_at[]=1597352400000&created_at[]=1597438799999&branches[]=26047
+      const items = []
+      for (let i = 16; i <= 19; i++) {
+        // new Date('2020,7,1,00:01:01').getTime()
+        const created1 = new Date(`2020,10,${i},00:01:01`).getTime()
+        const created2 = new Date(`2020,10,${i},23:59:50`).getTime()
+        // бренды - клиент закрыт
+        const filter = [
+          `created_at[]=${created1}`,
+          `created_at[]=${created2}`,
+          // `branches[]=26047` // rservice
+          // `branches[]=33038` // impuls
+          // `branches[]=63323` // msk
+          `branches[]=72021` // msk арм
+        ]
+        const orders = await rem.getOrders(`${filter.join('&')}`)
+        // item.order_closed.count = orders.count
+        // console.log(i, `2020, 8, ${i} -`, orders.count, filter.join('&'))
+        items.push(orders.count)
+        // бренды - клиент закрыт
+      }
+      console.log('items', items)
     },
     async loadReport() {
       if (!this.report) {

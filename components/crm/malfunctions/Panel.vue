@@ -12,9 +12,9 @@
         <el-form-item prop="name">
           <el-input
             v-model="form.name"
+            @keyup.enter.native="addValidate('malfunction')"
             size="mini"
             placeholder="Неисправность"
-            @keyup.enter.native="addValidate('malfunction')"
           />
         </el-form-item>
         <el-form-item>

@@ -2,8 +2,8 @@
   <el-dialog
     :visible.sync="$store.state.settings.drawerCreateOrder"
     :before-close="onClose"
-    title="Новый заказ"
     @open="onOpen"
+    title="Новый заказ"
   >
     <el-form
       ref="form"
@@ -73,9 +73,9 @@
           v-model="clientPhone"
           :fetch-suggestions="queryPhone"
           @select="selectClient"
+          v-mask="'8(###)###-##-##'"
           popper-class="input-clientPhone"
           placeholder="Номер телефона"
-          v-mask="'8(###)###-##-##'"
           class="w100"
           size="mini"
         >
@@ -177,23 +177,31 @@
         <el-tag
           v-for="malf in form.malfunctions"
           :key="malf"
-          closable
           :disable-transitions="false"
           @close="removeMalfunction(malf)"
+          closable
         >
           {{ malf }}
         </el-tag>
-        <!-- TODO autocomplet -->
-        <el-input
+        <!-- -->
+        <el-autocomplete
+          ref="saveMalfunctionInput"
           v-if="malfunctionVisible"
           v-model="malfunction"
-          ref="saveMalfunctionInput"
-          size="mini"
-          style="width:200px"
+          :fetch-suggestions="queryMalfunctions"
+          @select="selectMalfunctions"
+          @change="selectMalfunctions"
           @keyup.enter.native="handleMalfunctionConfirm"
           @blur="handleMalfunctionConfirm"
-        />
-        <el-button v-else size="small" @click="showMalfunctionInput">
+          class="w100"
+          size="mini"
+          style="width:200px"
+        >
+          <template slot-scope="{ item }">
+            <div>{{ item.name }}</div>
+          </template>
+        </el-autocomplete>
+        <el-button v-else @click="showMalfunctionInput" size="small">
           + Неисправность
         </el-button>
       </el-form-item>
@@ -255,21 +263,10 @@ export default {
       }
     }
   },
-  watch: {
-    device_type(val, oldVal) {
-      if (!val) this.form.device_type = ''
-    },
-    brand(val, oldVal) {
-      if (!val) this.form.brand = ''
-    }
-  },
   computed: {
     typeRequests() {
       return this.$store.getters['crm/typeRequest/typeRequests']
     },
-    // models() {
-    //   if ()
-    // },
     rules() {
       const rules = {
         type_request: [
@@ -303,6 +300,14 @@ export default {
       }
 
       return rules
+    }
+  },
+  watch: {
+    device_type(val, oldVal) {
+      if (!val) this.form.device_type = ''
+    },
+    brand(val, oldVal) {
+      if (!val) this.form.brand = ''
     }
   },
   methods: {
@@ -430,6 +435,7 @@ export default {
      */
     selectDeviceType(data) {
       // если есть id, то ставлю его
+      console.log('selectDeviceType', data)
       if (data?.name) {
         this.device_type = data.name
         this.form.device_type = data._id
@@ -490,12 +496,28 @@ export default {
       })
     },
     /**
+     * Установка неисправности
+     */
+    selectMalfunctions(data) {
+      if (data?.name) {
+        if (!this.form.malfunctions.includes(data.name.trim())) {
+          this.malfunction = data.name.trim()
+          this.form.malfunctions.push(data.name.trim())
+          const idx = this.form.malfunctions.length - 2
+          this.form.malfunctions.splice(idx, 1)
+          this.malfunction = ''
+          this.malfunctionVisible = false
+        }
+      }
+    },
+    /**
      * Добавить неисправность
      */
     handleMalfunctionConfirm() {
-      if (this.malfunction) this.form.malfunctions.push(this.malfunction)
-      this.malfunctionVisible = false
-      this.malfunction = ''
+      console.log('handleMalfunctionConfirm', this.malfunction)
+      // if (this.malfunction.trim()) this.form.malfunctions.push(this.malfunction)
+      // this.malfunctionVisible = false
+      // this.malfunction = ''
     },
     /**
      * Удалить неисправность
@@ -505,6 +527,22 @@ export default {
         this.form.malfunctions.indexOf(malfunction),
         1
       )
+    },
+    /**
+     * Выборка неисправностей
+     */
+    async queryMalfunctions(query, cb) {
+      const res = []
+      if (query?.length <= 1) return cb(res)
+      try {
+        const { data } = await this.$axios.$get(
+          '/api/v1/crm/malfunction/getbyname/' + query
+        )
+        return cb(data)
+      } catch (e) {
+        //
+      }
+      cb(res)
     },
     /**
      * Создать клиента
