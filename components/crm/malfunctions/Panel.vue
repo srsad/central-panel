@@ -176,7 +176,9 @@ export default {
     },
     async fetchItems() {
       try {
-        await this.$store.dispatch('crm/malfunction/fetchItems')
+        if (this.$store.getters['crm/malfunction/malfunctions'].length === 0) {
+          await this.$store.dispatch('crm/malfunction/fetchItems')
+        }
         this.items = JSON.parse(
           JSON.stringify(this.$store.getters['crm/malfunction/malfunctions'])
         )

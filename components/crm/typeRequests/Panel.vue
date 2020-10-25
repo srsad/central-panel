@@ -173,11 +173,9 @@ export default {
     },
     async fetchItems() {
       try {
-        // загрузка данных
-        // if (this.$store.state.crm.typeRequest.fetchItems.length === 0) {
-        //   await this.$store.dispatch('crm/typeRequest/fetchItems')
-        // }
-        await this.$store.dispatch('crm/typeRequest/fetchItems')
+        if (this.$store.getters['crm/typeRequest/typeRequests'].length === 0) {
+          await this.$store.dispatch('crm/typeRequest/fetchItems')
+        }
 
         this.items = JSON.parse(
           JSON.stringify(this.$store.getters['crm/typeRequest/typeRequests'])

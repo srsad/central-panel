@@ -173,41 +173,142 @@
         />
       </el-form-item>
       <!--  -->
-      <el-form-item class="col-12" prop="phone" label="Неисправность">
-        <el-tag
-          v-for="malf in form.malfunctions"
-          :key="malf"
-          :disable-transitions="false"
-          @close="removeMalfunction(malf)"
-          closable
-        >
-          {{ malf }}
-        </el-tag>
-        <!-- -->
-        <el-autocomplete
-          ref="saveMalfunctionInput"
-          v-if="malfunctionVisible"
-          v-model="malfunction"
-          :fetch-suggestions="queryMalfunctions"
-          @select="selectMalfunctions"
-          @change="selectMalfunctions"
-          @keyup.enter.native="handleMalfunctionConfirm"
-          @blur="handleMalfunctionConfirm"
+      <el-form-item class="col-12" prop="malfunctions" label="Неисправности">
+        <el-select
+          v-model="form.malfunctions"
+          multiple
+          filterable
+          allow-create
+          default-first-option
+          placeholder="Неисправности"
           class="w100"
           size="mini"
-          style="width:200px"
         >
-          <template slot-scope="{ item }">
-            <div>{{ item.name }}</div>
-          </template>
-        </el-autocomplete>
-        <el-button v-else @click="showMalfunctionInput" size="small">
-          + Неисправность
-        </el-button>
+          <el-option
+            v-for="item in malfunctions"
+            :key="item._id"
+            :label="item.name"
+            :value="item.name"
+          />
+        </el-select>
+      </el-form-item>
+      <!--  -->
+      <el-form-item
+        class="col-6"
+        prop="appearance"
+        label="Внешний вид - через зарятую"
+      >
+        <el-input v-model="form.appearance" size="mini" class="w100" />
+      </el-form-item>
+      <!--  -->
+      <el-form-item
+        class="col-6"
+        prop="packagelist"
+        label="Комплектация - через зарятую"
+      >
+        <el-input v-model="form.packagelist" size="mini" class="w100" />
       </el-form-item>
       <!--  -->
       <div class="col-12">
         <h4>Дополнительная информация</h4>
+      </div>
+      <!--  -->
+      <div class="col-6">
+        <el-form-item prop="will_done_at" label="Дата готовности">
+          <vue-ctk-date-time-picker
+            v-model="form.will_done_at"
+            :no-label="true"
+            :no-button-now="true"
+            :format="'DD.MM.YYYY HH:mm'"
+            :formatted="'DD.MM.YYYY HH:mm'"
+            :output-format="'DD.MM.YYYY HH:mm'"
+            :min-date="minDate"
+            input-size="sm"
+            label=""
+          />
+        </el-form-item>
+        <!--  -->
+        <el-form-item prop="manager_notes" label="Заметки приемщика">
+          <el-input
+            v-model="form.manager_notes"
+            size="mini"
+            class="w100"
+            type="textarea"
+            maxlength="255"
+            show-word-limit
+          />
+        </el-form-item>
+      </div>
+      <!--  -->
+      <div class="col-6">
+        <el-form-item prop="free_diagnostics" class="mb-0">
+          <el-checkbox v-model="form.free_diagnostics" class="w100 mb-0">
+            Объявлена бесплатная диагностика
+          </el-checkbox>
+        </el-form-item>
+        <el-form-item prop="replacement_device" class="mb-0">
+          <el-checkbox v-model="form.replacement_device" class="w100 mb-0">
+            Выдано подменное устройство
+          </el-checkbox>
+        </el-form-item>
+        <el-form-item prop="urgently" class="mb-0">
+          <el-checkbox v-model="form.urgently" class="w100 mb-0">
+            Срочно
+          </el-checkbox>
+        </el-form-item>
+      </div>
+      <!--  -->
+      <div class="col-6">
+        <el-form-item prop="manager" label="Менеджер">
+          <el-select v-model="form.manager" size="mini" class="w100">
+            <el-option
+              v-for="(item, idx) in managers"
+              :key="idx"
+              :label="item.fullname"
+              :value="item._id"
+            />
+          </el-select>
+        </el-form-item>
+        <!--  -->
+        <el-form-item
+          prop="performer_in_charge"
+          label="Ответственный исполнитель"
+        >
+          <el-select
+            v-model="form.performer_in_charge"
+            size="mini"
+            class="w100"
+          >
+            <el-option
+              v-for="(item, idx) in managers"
+              :key="idx"
+              :label="item.fullname"
+              :value="item._id"
+            />
+          </el-select>
+        </el-form-item>
+      </div>
+      <!--  -->
+      <div class="col-6">
+        <el-form-item prop="prepayment" label="Предоплата">
+          <el-input-number
+            v-model="form.prepayment"
+            :min="0"
+            controls-position="right"
+            size="mini"
+            class="w100"
+          />
+        </el-form-item>
+        <el-form-item prop="status" label="Статус">
+          <el-select v-model="form.status" size="mini" class="w100">
+            <el-option
+              v-for="(item, idx) in statuses"
+              :key="idx"
+              :label="item.name"
+              :value="item._id"
+            />
+          </el-select>
+        </el-form-item>
       </div>
       <!--  -->
       <div class="col-12 text-right mt-15">
@@ -224,6 +325,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import Dadata from 'dadata-suggestions'
 // const dadata = new Dadata(process.env.DADATA_API_KEY)
 const dadata = new Dadata('05ede21fd19ece0776012846c39201f37d4ead36')
@@ -237,10 +339,12 @@ export default {
       clientPhone: '', // номер клиента для вывода
       device_type: '', // тип устройства для вывода
       brand: '', // бренд для вывода
-      malfunctionVisible: false, // показывать инпут с выбором неисправности
-      malfunction: '', // неисправность
+      malfunctions: [], // список неисправностей
+      managers: [], // список менеджеров
+      performers: [], // список исполнителей
+      statuses: [], // список статусов
       form: {
-        type_request: '',
+        type_request: '5f7b89adda3af4001e9502f6', // СЦ
         client: '', // id клиента
         device_type: '',
         brand: '',
@@ -259,6 +363,7 @@ export default {
         prepayment: '',
         manager: '',
         performer_in_charge: '',
+        status: '5f55357fe6992a001e2735ea', // Предзаказ
         files: []
       }
     }
@@ -266,6 +371,11 @@ export default {
   computed: {
     typeRequests() {
       return this.$store.getters['crm/typeRequest/typeRequests']
+    },
+    minDate() {
+      return moment()
+        .subtract(1, 'days')
+        .format('YYYY-MM-DD')
     },
     rules() {
       const rules = {
@@ -280,17 +390,38 @@ export default {
           {
             required: true,
             message: 'Необходимо заполнить',
-            trigger: 'blur'
+            trigger: 'change'
           }
         ],
         device_type: [
           {
             required: true,
             message: 'Необходимо заполнить',
-            trigger: 'blur'
+            trigger: 'change'
           }
         ],
         brand: [
+          {
+            required: true,
+            message: 'Необходимо заполнить',
+            trigger: 'change'
+          }
+        ],
+        malfunctions: [
+          {
+            required: true,
+            message: 'Необходимо заполнить',
+            trigger: 'blur'
+          }
+        ],
+        will_done_at: [
+          {
+            required: true,
+            message: 'Необходимо заполнить',
+            trigger: 'blur'
+          }
+        ],
+        manager_notes: [
           {
             required: true,
             message: 'Необходимо заполнить',
@@ -309,6 +440,26 @@ export default {
     brand(val, oldVal) {
       if (!val) this.form.brand = ''
     }
+  },
+  async mounted() {
+    // загрузка неисправностей
+    if (this.$store.state.crm.malfunction.malfunctions.length <= 0) {
+      await this.$store.dispatch('crm/malfunction/fetchItems')
+    }
+    this.malfunctions = this.$store.state.crm.malfunction.malfunctions
+
+    // загрузка списка пользователей
+    if (this.$store.getters['users/managers'].length <= 0) {
+      await this.$store.dispatch('users/fetchUsers')
+    }
+    this.managers = this.$store.getters['users/managers']
+    this.performers = this.$store.getters['users/performers']
+
+    // загрузка списка статусов
+    if (this.$store.getters['crm/status/requestStatus'].length <= 0) {
+      await this.$store.dispatch('crm/status/fetchItems')
+    }
+    this.statuses = this.$store.getters['crm/status/requestStatus']
   },
   methods: {
     validateForm() {
@@ -485,64 +636,6 @@ export default {
         this.brand = data
         this.form.brand = data
       }
-    },
-    /**
-     * Открыть форму добавления неисправности
-     */
-    showMalfunctionInput() {
-      this.malfunctionVisible = true
-      this.$nextTick((_) => {
-        this.$refs.saveMalfunctionInput.$refs.input.focus()
-      })
-    },
-    /**
-     * Установка неисправности
-     */
-    selectMalfunctions(data) {
-      if (data?.name) {
-        if (!this.form.malfunctions.includes(data.name.trim())) {
-          this.malfunction = data.name.trim()
-          this.form.malfunctions.push(data.name.trim())
-          const idx = this.form.malfunctions.length - 2
-          this.form.malfunctions.splice(idx, 1)
-          this.malfunction = ''
-          this.malfunctionVisible = false
-        }
-      }
-    },
-    /**
-     * Добавить неисправность
-     */
-    handleMalfunctionConfirm() {
-      console.log('handleMalfunctionConfirm', this.malfunction)
-      // if (this.malfunction.trim()) this.form.malfunctions.push(this.malfunction)
-      // this.malfunctionVisible = false
-      // this.malfunction = ''
-    },
-    /**
-     * Удалить неисправность
-     */
-    removeMalfunction(malfunction) {
-      this.form.malfunctions.splice(
-        this.form.malfunctions.indexOf(malfunction),
-        1
-      )
-    },
-    /**
-     * Выборка неисправностей
-     */
-    async queryMalfunctions(query, cb) {
-      const res = []
-      if (query?.length <= 1) return cb(res)
-      try {
-        const { data } = await this.$axios.$get(
-          '/api/v1/crm/malfunction/getbyname/' + query
-        )
-        return cb(data)
-      } catch (e) {
-        //
-      }
-      cb(res)
     },
     /**
      * Создать клиента

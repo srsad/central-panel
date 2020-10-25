@@ -70,7 +70,7 @@ export default {
     return {
       loading: false,
       drag: true,
-      statuses: [],
+      statuses: JSON.parse(JSON.stringify(this.items)),
       rules: {
         name: [
           {
@@ -111,11 +111,6 @@ export default {
       const min = Math.ceil(1000)
       const max = Math.floor(9999)
       return Math.floor(Math.random() * (max - min)) + min
-    }
-  },
-  watch: {
-    items(val) {
-      this.statuses = JSON.parse(JSON.stringify(val))
     }
   },
   methods: {

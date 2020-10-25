@@ -12,7 +12,7 @@ const crmRequest = new Schema({
     ref: 'crm_type_requests',
     require: true
   },
-  // клиент- фио, номер, адрес
+  // клиент - фио, номер, адрес
   client: {
     type: Schema.Types.ObjectId,
     ref: 'crm_clients'
@@ -55,7 +55,7 @@ const crmRequest = new Schema({
   // Внешний вид
   appearance: {
     type: String,
-    default: 'Царапины, потертости, сколы, трещины'
+    default: ''
   },
   // Комплектация - через зарятую
   packagelist: {
@@ -110,6 +110,10 @@ const crmRequest = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'users'
   },
+  status: {
+    type: Schema.Types.ObjectId,
+    ref: 'crm_deal_statuses'
+  },
   // -----------
   // файлы + комментарии
   files: {
@@ -117,10 +121,17 @@ const crmRequest = new Schema({
     default: []
   },
   // -----------
+  // Лог событий
+  logs: {
+    type: Array,
+    default: []
+  },
+  // когда был создан
   created: {
     type: Date,
     default: Date.now
   },
+  // когда был обновлен
   updated: {
     type: Date
   }

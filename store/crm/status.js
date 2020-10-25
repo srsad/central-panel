@@ -53,5 +53,6 @@ export const mutations = {
 
 export const getters = {
   statuses: (state) => state.statuses,
-  status: (state) => state.status
+  status: (state) => state.status,
+  requestStatus: (state) => state.statuses // статусы для создания заявки
 }

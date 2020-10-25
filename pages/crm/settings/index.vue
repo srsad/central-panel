@@ -49,7 +49,9 @@ export default {
         label: 'Настройки CRM'
       }
     ])
-    await store.dispatch('report/brand/fetchItems')
+    if (store.state.report.brand.brands.length <= 0) {
+      await store.dispatch('report/brand/fetchItems')
+    }
   }
 }
 </script>

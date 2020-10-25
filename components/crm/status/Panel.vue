@@ -55,7 +55,15 @@ export default {
   filters: {
     getStatus(val, type) {
       if (!type) return val
-      return val?.filter((el) => el.type === type)
+      const res = []
+      if (val) {
+        for (const el of val) {
+          if (el.type === type) {
+            res.push(el)
+          }
+        }
+      }
+      return res
     }
   },
   data() {
@@ -65,15 +73,14 @@ export default {
   },
   computed: {
     statuses() {
-      return this.$store.state.crm.status.statuses
+      const statuses = this.$store.state.crm.status.statuses
+      return JSON.parse(JSON.stringify(statuses))
     }
   },
   async mounted() {
-    // console.log(this.$store.state.crm.status.statuses)
-    // if (this.$store.state.crm.status.statuses.length <= 0) {
-    //   console.log(this.$store.state.crm.status.statuses.length)
-    // }
-    await this.$store.dispatch('crm/status/fetchItems')
+    if (this.$store.state.crm.status.statuses.length === 0) {
+      await this.$store.dispatch('crm/status/fetchItems')
+    }
   }
 }
 </script>

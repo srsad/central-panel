@@ -199,6 +199,34 @@ export default [
     ]
   },
   {
+    _id: 'sites',
+    label: 'Настройки сайта',
+    children: [
+      {
+        _id: 'sites-testimonial',
+        label: 'Отзывы',
+        children: [
+          {
+            _id: 'sites-testimonial-read',
+            label: 'Чтение'
+          },
+          {
+            _id: 'sites-testimonial-create',
+            label: 'Создание'
+          },
+          {
+            _id: 'sites-testimonial-update',
+            label: 'Редактирование'
+          },
+          {
+            _id: 'sites-testimonial-remove',
+            label: 'Удаление'
+          }
+        ]
+      }
+    ]
+  },
+  {
     _id: 'recording',
     label: 'Записи',
     children: [

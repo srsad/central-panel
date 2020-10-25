@@ -111,6 +111,15 @@
         Домены / Сайты
       </span>
     </el-menu-item>
+    <el-menu-item
+      v-if="$abilities('sites-testimonial')"
+      index="/sites/testimonials"
+    >
+      <i class="el-icon-chat-dot-round" />
+      <span slot="title">
+        Отзывы
+      </span>
+    </el-menu-item>
     <!--  -->
     <el-menu-item v-if="$abilities('settings')" index="/settings">
       <i class="el-icon-setting" />

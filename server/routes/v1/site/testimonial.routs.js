@@ -6,24 +6,28 @@ const {
   create,
   update,
   remove,
-  getAll,
+  getAllBrandsAndSites,
   getById,
-  getByAddress
-} = require('../../controllers/domain.controller')
+  getBySiteUrl
+} = require('../../../controllers/site/testimonial.controller')
 
-// /api/v1/domain
-router.get('/getall', passport.authenticate('jwt', { session: false }), getAll)
+// /api/v1/site/testimonial
 router.get(
-  '/byaddress/:address',
+  '/get-brands-and-sites',
   passport.authenticate('jwt', { session: false }),
-  getByAddress
+  getAllBrandsAndSites
+)
+router.get(
+  '/bysiteurl/:siteurl',
+  // passport.authenticate('jwt', { session: false }),
+  getBySiteUrl
 )
 router.get(
   '/get/:id',
   passport.authenticate('jwt', { session: false }),
   getById
 )
-router.post('/create', passport.authenticate('jwt', { session: false }), create)
+router.post('/create', create)
 router.put(
   '/update/:id',
   passport.authenticate('jwt', { session: false }),
