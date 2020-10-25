@@ -50,6 +50,7 @@
     "url-parse": "^1.4.7",
     "v-mask": "^2.0.2",
     "vue-chartjs": "^3.5.0",
+    "vue-ctk-date-time-picker": "^2.5.0",
     "vue-yandex-maps": "^0.10.7",
     "vue2-editor": "^2.10.2",
     "vuedraggable": "^2.23.2",
