@@ -5,6 +5,7 @@ module.exports.create = async (req, res) => {
   try {
     const testimonial = new Testimonial(req.body)
     await testimonial.save()
+    await updateSourceOptions(testimonial)
     res.status(201).json({ message: 'Отзыв успешно добавлен!' })
   } catch (error) {
     res.status(500).json({ message: 'Не удалось добавить отзыв!', error })
@@ -16,6 +17,7 @@ module.exports.update = async (req, res) => {
   const $set = req.body
   try {
     await Testimonial.findOneAndUpdate({ _id: req.params.id }, { $set }, { new: true })
+    await updateSourceOptions(testimonial)
     res.json({ message: 'Данные обновленны!' })
   } catch (error) {
     res
@@ -27,7 +29,9 @@ module.exports.update = async (req, res) => {
 /** Удаление */
 module.exports.remove = async (req, res) => {
   try {
+    const testimonial = await Testimonial.findById(req.params.id)
     await Testimonial.deleteOne({ _id: req.params.id })
+    await updateSourceOptions(testimonial)
     res.status(200).json({ message: 'Отзыв удален!' })
   } catch (error) {
     res.status(500).json({ message: 'Не удалось удалить отзыв!', error })
@@ -75,5 +79,26 @@ module.exports.getBySiteUrl = async (req, res) => {
     res.json({ data: testimonials })
   } catch (error) {
     res.status(500).json({ message: 'Не удалось получить список отзывов!' })
+  }
+}
+
+/**
+ * Сохраняем данные на источнике
+ */
+async function updateSourceOptions(testimonial) {
+  try {
+    const testimonials = await Testimonial
+      .find({ 'site_url': testimonial.site_url })
+      .sort({ sort_index: 1 })
+
+    await axios.get(`https://${testimonial.site_url}/rest/`, {
+      params: {
+        create: 'testimonials',
+        testimonials: JSON.stringify(testimonials)
+      }
+    })
+  } catch (e) {
+    console.log('updateSourceOptions error', e)
+    return false
   }
 }
