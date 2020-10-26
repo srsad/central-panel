@@ -108,8 +108,13 @@
         />
       </el-form-item>
       <!-- /reply -->
+      <!-- sort_index -->
+      <el-form-item class="col-4" prop="sort_index" label="Порядковый номер">
+        <el-input-number v-model="form.sort_index" :min="0" size="mini" />
+      </el-form-item>
+      <!-- /sort_index -->
       <!-- status -->
-      <el-form-item class="col-6" prop="status">
+      <el-form-item class="col-6 mt-25" prop="status">
         <el-checkbox v-model="form.status">
           Активен
         </el-checkbox>
@@ -138,6 +143,7 @@ export default {
         status: true,
         fullname: '',
         order: '',
+        sort_index: 0,
         date: '',
         device: '',
         testemonial: '',
@@ -226,6 +232,7 @@ export default {
       this.form.status = true
       this.form.fullname = ''
       this.form.order = ''
+      this.form.sort_index = 0
       this.form.date = ''
       this.form.device = ''
       this.form.testemonial = ''
@@ -249,7 +256,9 @@ export default {
       try {
         // eslint-disable-next-line no-new
         source = new URL(source)
-      } catch {}
+      } catch {
+        source = 'https://' + source
+      }
       hostname = parseUrl(source).hostname
       return hostname
     }

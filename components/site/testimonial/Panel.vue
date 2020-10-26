@@ -4,17 +4,13 @@
       <div v-if="$abilities('sites-testimonial-read')" class="col-6">
         <el-select
           v-model="siteUrl"
+          :disabled="loading"
           filterable
           size="mini"
-          :disabled="loading"
           placeholder="Сайт"
         >
-          <el-option
-            v-for="item in sites"
-            :key="item._id"
-            :value="item.site_url"
-          >
-            {{ item.brand.name }} - {{ item.site_url }}
+          <el-option v-for="item in sites" :key="item._id" :value="item._id">
+            {{ item._id }}
           </el-option>
         </el-select>
         <el-button
@@ -53,18 +49,19 @@
       <!--  -->
     </div>
     <app-drawer-create v-if="$abilities('sites-testimonial-create')" />
-    <!-- <app-drawer-update v-if="$abilities('sites-testimonial-update')" /> -->
+    <app-drawer-update v-if="$abilities('sites-testimonial-update')" />
   </div>
 </template>
 
 <script>
 import AppDrawerCreate from '~/components/site/testimonial/drawer/Create'
-// import AppDrawerUpdate from '~/components/site/testimonial/drawer/Update'
+import AppDrawerUpdate from '~/components/site/testimonial/drawer/Update'
 import AppList from '~/components/site/testimonial/List'
 
 export default {
   components: {
     AppDrawerCreate,
+    AppDrawerUpdate,
     AppList
   },
   data() {

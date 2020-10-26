@@ -6,6 +6,7 @@
     :empty-text="$store.getters['domains/emptyText']"
     size="mini"
   >
+    <el-table-column prop="sort_index" label="№" width="50" />
     <el-table-column prop="site_url" label="Сайт" width="150" />
     <el-table-column prop="brand" label="Бренд" width="100">
       <template slot-scope="scope">
@@ -22,7 +23,7 @@
         <el-rate v-model="scope.row.rating" :disabled="true" />
       </template>
     </el-table-column>
-    <el-table-column prop="reply" label="Ответ" width="250" />
+    <el-table-column prop="reply" label="Ответ" />
     <!--  -->
     <el-table-column
       v-if="
@@ -97,12 +98,21 @@ export default {
     }
   },
   methods: {
-    edit() {},
-    async remove(idx, row) {
+    edit(data) {
+      this.$store.commit('site/testimonial/SET_TESTIMONIAL', data)
+      this.$store.commit('settings/SWITCH_DRAWNER', {
+        dranwer: 'drawerSiteTestimonialUpdate',
+        status: true
+      })
+    },
+    async remove(idx, data) {
       this.loading = true
       try {
-        await this.$axios.$delete('/api/v1/site/testimonial/remove/' + row._id)
-        this.$store.dispatch('site/testimonial/fetchTestimonials', row.site_url)
+        await this.$axios.$delete('/api/v1/site/testimonial/remove/' + data._id)
+        this.$store.dispatch(
+          'site/testimonial/fetchTestimonials',
+          data.site_url
+        )
         this.$notify({
           message: 'Отзыв удален!',
           customClass: 'success-notyfy'
@@ -116,16 +126,18 @@ export default {
         this.loading = false
       }
     },
-    async switchStatus(row) {
+    async switchStatus(data) {
       this.loading = true
       try {
         const formData = {
-          _id: row._id,
-          status: !row.status
+          _id: data._id,
+          status: !data.status
         }
         await this.$store.dispatch('site/testimonial/update', formData)
-        console.log('asd', row)
-        this.$store.dispatch('site/testimonial/fetchTestimonials', row.site_url)
+        this.$store.dispatch(
+          'site/testimonial/fetchTestimonials',
+          data.site_url
+        )
         this.$notify({
           message: 'Отзыв Обновлен!',
           customClass: 'success-notyfy'

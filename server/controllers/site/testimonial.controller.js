@@ -48,7 +48,8 @@ module.exports.getById = async (req, res) => {
 module.exports.getAllBrandsAndSites = async (req, res) => {
   try {
     const testimonials = await Testimonial
-      .find({})
+      // .find({})
+      .aggregate([{$group: {_id: "$site_url"}}])
       .sort({ brand: 1 })
       // .aggregate([
       //   {
@@ -57,7 +58,7 @@ module.exports.getAllBrandsAndSites = async (req, res) => {
       //     }
       //   }
       // ])
-      .populate('brand', { name: 1 })
+      // .populate('brand', { name: 1 })
     res.json({ data: testimonials })
   } catch (error) {
     res.status(500).json({ message: 'Не удалось получить список отзывов!' })
@@ -67,11 +68,10 @@ module.exports.getAllBrandsAndSites = async (req, res) => {
 /** Вернуть по адресу сайта */
 module.exports.getBySiteUrl = async (req, res) => {
   try {
-    console.log('siteurl', req.params.siteurl)
     const testimonials = await Testimonial
       .find({ 'site_url': req.params.siteurl })
       .populate('brand', { name: 1 })
-      .sort({ created: 1 })
+      .sort({ sort_index: 1 })
     res.json({ data: testimonials })
   } catch (error) {
     res.status(500).json({ message: 'Не удалось получить список отзывов!' })

@@ -18,6 +18,12 @@ const testimonialSchema = new Schema({
     ref: 'report_brands',
     require: true
   },
+  // Порядок
+  sort_index: {
+    type: Number,
+    index: true,
+    default: 0
+  },
   // статус доступности, показывать/не показывать отзыв
   status: {
     type: Boolean,
