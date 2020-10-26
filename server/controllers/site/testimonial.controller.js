@@ -5,8 +5,8 @@ module.exports.create = async (req, res) => {
   try {
     const testimonial = new Testimonial(req.body)
     await testimonial.save()
-    await updateSourceOptions(testimonial)
     res.status(201).json({ message: 'Отзыв успешно добавлен!' })
+    await updateSourceOptions(testimonial)
   } catch (error) {
     res.status(500).json({ message: 'Не удалось добавить отзыв!', error })
   }
@@ -17,8 +17,8 @@ module.exports.update = async (req, res) => {
   const $set = req.body
   try {
     await Testimonial.findOneAndUpdate({ _id: req.params.id }, { $set }, { new: true })
-    await updateSourceOptions(testimonial)
     res.json({ message: 'Данные обновленны!' })
+    await updateSourceOptions(testimonial)
   } catch (error) {
     res
       .status(500)
@@ -31,8 +31,8 @@ module.exports.remove = async (req, res) => {
   try {
     const testimonial = await Testimonial.findById(req.params.id)
     await Testimonial.deleteOne({ _id: req.params.id })
-    await updateSourceOptions(testimonial)
     res.status(200).json({ message: 'Отзыв удален!' })
+    await updateSourceOptions(testimonial)
   } catch (error) {
     res.status(500).json({ message: 'Не удалось удалить отзыв!', error })
   }
