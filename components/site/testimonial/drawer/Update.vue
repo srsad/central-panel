@@ -226,8 +226,8 @@ export default {
       }
     },
     clearForm() {
-      // this.form.site_url = '' // оставляем таким какой он был, типо запоминаем =)
-      // this.form.brand = '' // оставляем таким какой он был, типо запоминаем =)
+      this.form.site_url = '' // оставляем таким какой он был, типо запоминаем =)
+      this.form.brand = '' // оставляем таким какой он был, типо запоминаем =)
       this.form.status = true
       this.form.fullname = ''
       this.form.order = ''
@@ -245,6 +245,7 @@ export default {
       this.form = JSON.parse(
         JSON.stringify(this.$store.getters['site/testimonial/testimonial'])
       )
+      this.form.brand = this.form.brand._id
     },
     onClose() {
       this.$store.commit('settings/SWITCH_DRAWNER', {
