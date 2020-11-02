@@ -23,6 +23,7 @@ const crmRoutes = require('./routes/v1/crm')
 const siteRoutes = require('./routes/v1/site')
 // TODO перенести в аналитику
 const webhookRoutes = require('./routes/v1/analytics/webhook.routs')
+const analyticsRoutes = require('./routes/v1/analytics')
 
 const app = express()
 
@@ -64,6 +65,6 @@ app.use('/api/v1/crm', crmRoutes)
 app.use('/api/v1/site', siteRoutes)
 app.use('/api/v1/exceptions', exceptionsRoutes)
 // TODO перенести в аналитику
-app.use('/api/v1/webhook', webhookRoutes)
+app.use('/api/v1/analytics', analyticsRoutes)
 
 module.exports = app
