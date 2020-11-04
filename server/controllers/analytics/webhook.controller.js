@@ -4,13 +4,11 @@ const Webhook = require('../../models/analytics/webhook.model')
  * Создание
  */
 module.exports.create = async (req, res) => {
-  console.log('Webhook -', req.body, req.params.source)
   try {
     const fd = {
       hook_name: req.params.source,
       params: [req.body]
     }
-    console.log('fd', fd)
     await Webhook.create(fd)
     res.status(201).json({ message: 'Bебхук обработан!' })
   } catch (e) {
