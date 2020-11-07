@@ -469,6 +469,28 @@ export default [
             label: 'Удаление'
           }
         ]
+      },
+      {
+        _id: 'settings-yandex_profiles_panel',
+        label: 'Яндекс аккаунты',
+        children: [
+          {
+            _id: 'settings-yandex_profiles_panel-read',
+            label: 'Чтение'
+          },
+          {
+            _id: 'settings-yandex_profiles_panel-create',
+            label: 'Создание'
+          },
+          {
+            _id: 'settings-yandex_profiles_panel-update',
+            label: 'Редактирование'
+          },
+          {
+            _id: 'settings-yandex_profiles_panel-remove',
+            label: 'Удаление'
+          }
+        ]
       }
     ]
   },

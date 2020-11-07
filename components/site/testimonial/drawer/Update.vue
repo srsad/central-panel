@@ -202,7 +202,6 @@ export default {
         formData.site_url = this.getSource()
 
         await this.$store.dispatch('site/testimonial/update', formData)
-        this.clearForm()
         this.$notify({
           message: 'Отзыв обновлен!',
           customClass: 'success-notyfy'
@@ -219,6 +218,7 @@ export default {
         // Обновляем список бренды + домены
         // TODO тут нужна проверка наличия в списке выбранного брнда и сайта
         this.$store.dispatch('site/testimonial/fetchSites')
+        this.clearForm()
       } catch (error) {
         //
       } finally {

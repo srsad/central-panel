@@ -1,8 +1,10 @@
 const { Router } = require('express')
-const webhookStatus = require('./webhook.routs')
+const webhookRouts = require('./webhook.routs')
+const yandexRouts = require('./yandex.routs')
 const router = Router()
 
 // /api/v1/analytics/
-router.use('/webhook', webhookStatus)
+router.use('/webhook', webhookRouts)
+router.use('/yandex', yandexRouts)
 
 module.exports = router

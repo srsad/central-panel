@@ -22,6 +22,8 @@ module.exports = {
    */
   env: {
     REMONLINE_API_KEY: process.env.REMONLINE_API_KEY,
+    YANDEX_MASTER_KEY: process.env.YANDEX_MASTER_KEY,
+    YANDEX_CLIENT_ID: process.env.YANDEX_CLIENT_ID,
     DADATA_API_KEY: process.env.DADATA_API_KEY,
     DADATA_SECRET_KEY: process.env.DADATA_SECRET_KEY
   },
