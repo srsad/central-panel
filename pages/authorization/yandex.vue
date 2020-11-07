@@ -24,9 +24,9 @@ export default {
     const token = regex.exec(hash)
     if (token) {
       try {
-        // Данные пользователя https://cors-anywhere.herokuapp.com/
+        // Данные пользователя
         const profile = await this.$axios.$get(
-          'https://login.yandex.ru/info?format=json&with_openid_identity=1',
+          'https://cors-anywhere.herokuapp.com/https://login.yandex.ru/info?format=json&with_openid_identity=1',
           {
             headers: {
               common: {
