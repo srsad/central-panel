@@ -6,7 +6,9 @@
         <el-tab-pane label="Аккаунты" name="accaunts">
           <div>
             <a
-              :href="`https://oauth.yandex.ru/authorize?response_type=token&client_id=${clientId}`"
+              :href="
+                `https://oauth.yandex.ru/authorize?response_type=token&client_id=${clientId}`
+              "
               class="el-button el-button--success el-button--small"
             >
               Добавить аккаунт
