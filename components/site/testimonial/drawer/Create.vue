@@ -90,7 +90,7 @@
           v-model="form.testemonial"
           type="textarea"
           size="small"
-          maxlength="255"
+          maxlength="500"
           placeholder="Отзыв"
           show-word-limit
         />
@@ -102,7 +102,7 @@
           v-model="form.reply"
           type="textarea"
           size="small"
-          maxlength="255"
+          maxlength="500"
           placeholder="Ответ администрации"
           show-word-limit
         />

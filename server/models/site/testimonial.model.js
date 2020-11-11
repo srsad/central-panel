@@ -66,7 +66,7 @@ const testimonialSchema = new Schema({
   // Ответ администрации
   reply: {
     type: String,
-    maxlength: 255,
+    maxlength: 500,
     default: ''
   },
   // когда был создан
