@@ -90,7 +90,7 @@ module.exports.getBySiteUrl = async (req, res) => {
 async function updateSourceOptions(testimonial) {
   try {
     const testimonials = await Testimonial
-      .find({ 'site_url': testimonial.site_url })
+      .find({ 'site_url': testimonial.site_url, status: true })
       .sort({ sort_index: 1 })
 
     await axios.get(`https://${testimonial.site_url}/rest/`, {
