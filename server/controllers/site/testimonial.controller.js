@@ -93,7 +93,7 @@ async function updateSourceOptions(testimonial) {
       .find({ 'site_url': testimonial.site_url, status: true })
       .sort({ sort_index: 1 })
 
-    await axios.get(`https://${testimonial.site_url}/rest/`, {
+    await axios.post(`https://${testimonial.site_url}/rest/`, {
       params: {
         create: 'testimonials',
         testimonials: JSON.stringify(testimonials)
