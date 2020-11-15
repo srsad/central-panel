@@ -25,14 +25,14 @@
         @click="loadReport"
         size="mini"
         type="primary"
-        icon="el-icon-download"
-        title="Загрузить отчет"
+        icon="el-icon-position"
+        title="Выбрать отчет"
       >
-        Загрузить отчет
+        Выбрать отчет
       </el-button>
-      <el-button @click="loadRemOnline">
+      <!-- <el-button @click="loadRemOnline">
         test
-      </el-button>
+      </el-button> -->
     </div>
     <div class="mt-15" style="margin-bottom:-15px;">
       <app-list @updateReport="loadReport" />
@@ -72,21 +72,7 @@ export default {
       })
     },
     async loadRemOnline() {
-      // &created_at=[1596834000000,1596920399999]&statuses=[151384,162791,198277,198285,241717]'
-      // console.log('REMONLINE_API_KEY', process.env.REMONLINE_API_KEY)
-      // const rem = new Rem('a2cda58eecae417d8a67cbb35bb68e7f', true)
       const rem = new Rem(process.env.REMONLINE_API_KEY, true)
-      // const token = await rem.setToken()
-      // const token = await rem.getBranches()
-      // const token = await rem.getStatuses()
-      // const token = await rem.getTypes()
-      // const filter = ''
-      // const token = await rem.getOrders(filter)
-      // console.log('token - ', token)
-      // дата
-      // const created = this.tableData.period.split(' ')
-      // created[0] = new Date(created[0]).getTime()
-      // created[1] = new Date(created[1]).getTime()
       // order/?token=...&created_at[]=1597352400000&created_at[]=1597438799999&branches[]=26047
       const items = []
       for (let i = 1; i <= 6; i++) {
@@ -103,8 +89,6 @@ export default {
           `branches[]=72021` // msk арм
         ]
         const orders = await rem.getOrders(`${filter.join('&')}`)
-        // item.order_closed.count = orders.count
-        // console.log(i, `2020, 8, ${i} -`, orders.count, filter.join('&'))
         items.push(orders.count)
         // бренды - клиент закрыт
       }
@@ -121,7 +105,6 @@ export default {
 
       try {
         reportId = !reportId || this.report
-        console.log('reportId', reportId)
         const report = await this.$axios.$get(
           '/api/v1/report/summory/get/' + this.report
         )

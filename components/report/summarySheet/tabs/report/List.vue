@@ -2,12 +2,26 @@
   <div>
     <div v-if="tableData" style="display: inline-grid;">
       <el-button
+        @click="saveTable"
+        :loading="loading"
+        class="saveTable"
+        type="success"
+        size="mini"
+        icon="el-icon-receiving"
+        title="Сохранить данные"
+      />
+      <el-checkbox
+        v-model="onlyRefresh"
+        :disabled="loading"
+        class="updateTable"
+      />
+      <el-button
         @click="updateTable"
         :loading="loading"
-        class="updateTable"
+        class="updateTable2"
         type="primary"
         size="mini"
-        icon="el-icon-refresh"
+        icon="el-icon-refresh-left"
         title="Обновить данные"
       />
       <!--  -->
@@ -42,6 +56,7 @@
             <!-- Обновление бренда отчета -->
             <el-button
               @click="updateRowTable(scope.row)"
+              :disabled="true"
               :loading="loading"
               class="updateTableRow"
               type="primary"
@@ -189,7 +204,7 @@
         </el-table-column>
         <!--  -->
         <el-table-column label="Расходы">
-          <el-table-column label="Баланс">
+          <el-table-column label="Баланс" width="100px">
             <template slot-scope="scope">
               <el-input
                 v-model="scope.row.common_expenses.balance"
@@ -281,7 +296,8 @@ const rem = new Rem(process.env.REMONLINE_API_KEY, true)
 export default {
   data() {
     return {
-      loading: false
+      loading: false,
+      onlyRefresh: true // без получения новых данных из ремонлайн
     }
   },
   computed: {
@@ -317,43 +333,190 @@ export default {
     },
 
     /**
-     * Загрузка двнных из ремонлайн
+     * Загрузка двнных из ремонлайн - все записи
      */
-    async updataRemData() {
+    // TODO возможно передавать связку бренд + филиал/branches
+    async getAllOrders(brandName) {
       this.loading = true
       try {
         // дата
         const created = this.tableData.period.split(' ')
-        created[0] = new Date(created[0]).getTime()
-        created[1] = new Date(created[1]).getTime()
+        created[0] = new Date(created[0] + ' 00:00:00').getTime()
+        created[1] = new Date(created[1] + ' 00:00:00').getTime()
         // order/?token=...&created_at[]=1597352400000&created_at[]=1597438799999&branches[]=26047
-
-        for await (const item of this.tableData.brands) {
-          // бренды - клиент закрыт
-          const filter = [
-            `created_at[]=${created[0]}`,
-            `created_at[]=${created[1]}`,
-            `branches[]=26047`,
-            `brands[]=${item.brand.name}`,
-            'statuses[]=151384',
-            'statuses[]=162791',
-            'statuses[]=198277',
-            'statuses[]=198285',
-            'statuses[]=241717',
-          ]
-          const orders = await rem.getOrders(`&${filter.join('&')}`)
-          item.order_closed.count = orders.count
-          // бренды - клиент закрыт
-        }
-        // console.log('tableData 1', brands)
-        // await console.log('tableData', this.tableData)
+        const filter = [
+          `created_at[]=${created[0]}`,
+          `created_at[]=${created[1]}`,
+          `branches[]=26047`, //
+          `brands[]=${brandName}`,
+          'statuses[]=133616', // Доставлен в СЦ
+          'statuses[]=134374', // Предзаказ
+          'statuses[]=137224', // На заборе
+          'statuses[]=137777', // Предзаказ (Забор)
+          'statuses[]=138350', // Предзаказ (Выезд)
+          'statuses[]=239339', // Предзаказ (Покупка)
+          'statuses[]=287386', // Передан исполнителю
+          'statuses[]=133722', // Продиагностирован
+          'statuses[]=134372', // Согласован
+          'statuses[]=152119', // Принят на диагностику
+          'statuses[]=158628', // На аутсорсе
+          'statuses[]=219345', // В работе
+          'statuses[]=133619', // На согласовании
+          'statuses[]=133620', // Отремонтирован
+          'statuses[]=134373', // Отказ СХ
+          'statuses[]=151377', // Отказ Менеджер
+          'statuses[]=154405', // Отвозим клиенту
+          'statuses[]=151384', // Закрыт
+          'statuses[]=162791', // Выкупил СЦ
+          'statuses[]=198277', // Закрыт (Отказ СХ)
+          'statuses[]=198285', // Закрыт (Отказ Менеджер)
+          'statuses[]=241717', // Для открытия
+          'statuses[]=192751', // Не пришел
+        ]
+        const orders = await rem.getOrders(`&${filter.join('&')}`)
+        // console.log('tableData.period', this.tableData.period, brandName, '-', orders.count)
+        return orders.count
       } catch (e) {
         this.$store.commit('SET_ERROR', 'Не удалось получить данные от remonline. Попробуйте по позже повторить данное действие.')
       } finally {
         this.loading = false
       }
-      // 1596240000000, 1598832000000
-      // 1593550800000, 1596229199999
+    },
+
+    /**
+     * Загрузка двнных из ремонлайн - Пришел в сц
+     */
+    async cameToService(brandName) {
+      this.loading = true
+      try {
+        // дата
+        const created = this.tableData.period.split(' ')
+        created[0] = new Date(created[0] + ' 00:00:00').getTime()
+        created[1] = new Date(created[1] + ' 00:00:00').getTime()
+        // order/?token=...&created_at[]=1597352400000&created_at[]=1597438799999&branches[]=26047
+        const filter = [
+          `created_at[]=${created[0]}`,
+          `created_at[]=${created[1]}`,
+          `branches[]=26047`, //
+          `brands[]=${brandName}`,
+          'statuses[]=133616', // Доставлен в СЦ
+          // 'statuses[]=134374', // Предзаказ
+          'statuses[]=137224', // На заборе
+          // 'statuses[]=137777', // Предзаказ (Забор)
+          // 'statuses[]=138350', // Предзаказ (Выезд)
+          // 'statuses[]=239339', // Предзаказ (Покупка)
+          'statuses[]=287386', // Передан исполнителю
+          'statuses[]=133722', // Продиагностирован
+          'statuses[]=134372', // Согласован
+          'statuses[]=152119', // Принят на диагностику
+          'statuses[]=158628', // На аутсорсе
+          'statuses[]=219345', // В работе
+          'statuses[]=133619', // На согласовании
+          'statuses[]=133620', // Отремонтирован
+          'statuses[]=134373', // Отказ СХ
+          'statuses[]=151377', // Отказ Менеджер
+          'statuses[]=154405', // Отвозим клиенту
+          'statuses[]=151384', // Закрыт
+          'statuses[]=162791', // Выкупил СЦ
+          'statuses[]=198277', // Закрыт (Отказ СХ)
+          'statuses[]=198285', // Закрыт (Отказ Менеджер)
+          'statuses[]=241717', // Для открытия
+          // 'statuses[]=192751', // Не пришел
+          // 'page=1',
+        ]
+        // 1598907600000, 1601499599999
+        // 1598918400000, 1601424000000
+        const orders = await rem.getOrders(`&${filter.join('&')}`)
+
+        return orders.count
+      } catch (e) {
+        this.$store.commit('SET_ERROR', 'Не удалось получить данные от remonline. Попробуйте по позже повторить данное действие.')
+      } finally {
+        this.loading = false
+      }
+    },
+    /**
+     * Загрузка двнных из ремонлайн - Клиент закрыт
+     */
+    async closeOrders(brandName) {
+      this.loading = true
+      try {
+        // дата
+        const created = this.tableData.period.split(' ')
+        created[0] = new Date(created[0] + ' 00:00:00').getTime()
+        created[1] = new Date(created[1] + ' 00:00:00').getTime()
+        // order/?token=...&created_at[]=1597352400000&created_at[]=1597438799999&branches[]=26047
+        const filter = [
+          `created_at[]=${created[0]}`,
+          `created_at[]=${created[1]}`,
+          `branches[]=26047`, //
+          `brands[]=${brandName}`,
+          'statuses[]=151384', // Закрыт
+          // 'page=1',
+        ]
+        const orders = await rem.getOrders(`&${filter.join('&')}`)
+        // for (const order of orders.data) {
+        //   console.log('order brand', order.brand)
+        // }
+        // console.log('orders', orders)
+        // console.log('tableData.period', this.tableData.period, brandName, '-', orders.count)
+        return orders.count
+      } catch (e) {
+        this.$store.commit('SET_ERROR', 'Не удалось получить данные от remonline. Попробуйте по позже повторить данное действие.')
+      } finally {
+        this.loading = false
+      }
+    },
+
+    /**
+     * Получение выручки расходов и заказов
+     */
+    async getProceedsExpensesAndExpenses(brandName) {
+      this.loading = true
+      try {
+        let page = 1 // изначально делаем только один проод
+        let revenue = 0 // выручка / сколько заплатили
+        let expenses = 0 // расходы
+        let orders = 0 // заказы
+
+        for (let i = 1; i <= page; i++) {
+          const created = this.tableData.period.split(' ')
+          created[0] = new Date(created[0] + ' 00:00:00').getTime()
+          created[1] = new Date(created[1] + ' 00:00:00').getTime()
+
+          const filter = [
+            `created_at[]=${created[0]}`,
+            `created_at[]=${created[1]}`,
+            `branches[]=26047`, //
+            `brands[]=${brandName}`,
+            'statuses[]=151384', // Закрыт
+            'statuses[]=162791', // Выкупил СЦ
+            'statuses[]=198277', // Закрыт (Отказ СХ)
+            'statuses[]=198285', // Закрыт (Отказ Менеджер)
+            'statuses[]=241717', // Для открытия
+            `page=${i}`,
+          ]
+          const allOrders = await rem.getOrders(`&${filter.join('&')}`)
+
+          revenue += allOrders.data.reduce((acc, { payed }) => acc + payed, 0)
+          allOrders.data.forEach((el) => {
+            expenses += el.parts.reduce((acc, { price }) => acc + price, 0)
+          })
+
+          orders = allOrders.count
+
+          // если это первая итерация
+          if (i === 1 && allOrders.count > 50) {
+            page = Math.ceil(allOrders.count / 50)
+          }
+        }
+        // console.log({ brandName, revenue, expenses, orders })
+        return { revenue, expenses, orders }
+      } catch (e) {
+        this.$store.commit('SET_ERROR', 'Не удалось получить данные от remonline, чтоб посчитать выручку расходы и заказы')
+      } finally {
+        this.loading = false
+      }
     },
 
     /**
@@ -362,33 +525,59 @@ export default {
     async updateTable() {
       this.loading = true
 
-      // TODO проверять дату и время
-      await this.updataRemData()
-
       for await (const item of this.tableData.brands) {
+        // если надо подтягивать данные из ремонлайн
+        if (!this.onlyRefresh) {
+          const allOrders = await this.getAllOrders(item.brand.name) // все заявки бренда
+          const cameToService = await this.cameToService(item.brand.name) // те кто пришли в СЦ
+          const closeOrders = await this.closeOrders(item.brand.name) // те кто пришли в СЦ
+
+          item.order.count = allOrders
+          item.came_to_sc.count = cameToService
+          item.order_closed.count = closeOrders
+
+          const  { revenue, expenses, orders } = await this.getProceedsExpensesAndExpenses(item.brand.name)
+          item.revenue = revenue // выручка / сколько заплатили
+          item.expenses = expenses // расходы
+          item.orders = orders // заказы
+        }
+
         // (c4+c5) | requests.chanel.pk+requests.chanel.seo
         const orderRang = +item.requests.chanel.pk + item.requests.chanel.seo
         // (R4+S4+T4+U4) | common_expenses.balance+common_expenses.pk+common_expenses.seo+common_expenses.common
+        // Расходы->Баланс + Расходы->РК + Расходы->SEO + Расходы->Алока и т.д
         const commonExpenses =
           +item.common_expenses.balance +
-          item.common_expenses.pk +
-          item.common_expenses.seo +
-          item.common_expenses.common
+          +item.common_expenses.pk +
+          +item.common_expenses.seo +
+          +item.common_expenses.common
+
         // заявки
-        item.requests.traffik_price = Math.round((+item.common_expenses.balance + item.common_expenses.seo) / orderRang) || 0
-        item.requests.common_price = Math.round(commonExpenses / orderRang) || 0
+        const requestsTraffikPrice = Math.round((+item.common_expenses.balance + item.common_expenses.seo) / orderRang)
+        const requestsCommonPrice = Math.round(commonExpenses / orderRang)
+        item.requests.traffik_price = isFinite(requestsTraffikPrice) ? requestsTraffikPrice : 0
+        item.requests.common_price = isFinite(requestsCommonPrice) ? requestsCommonPrice : 0
         // запись
-        item.order.traffik_price = Math.round(+item.common_expenses.balance / item.order.count) || 0
-        item.order.common_price = Math.round(commonExpenses / item.order.count) || 0
-        item.order.conversion = Math.round((+item.order.count / orderRang) * 100) || 0
+        const orderTraffikPrice = Math.round(+item.common_expenses.balance / item.order.count)
+        const orderCommonPrice = Math.round(commonExpenses / item.order.count)
+        const orderConversion = Math.round((+item.order.count / orderRang) * 100)
+        item.order.traffik_price = isFinite(orderTraffikPrice) ? orderTraffikPrice : 0
+        item.order.common_price = isFinite(orderCommonPrice) ? orderCommonPrice : 0
+        item.order.conversion = isFinite(orderConversion) ? orderConversion : 0
         // Пришёл в СЦ
-        item.came_to_sc.traffik_price = Math.round(+item.common_expenses.balance / item.came_to_sc.count) || 0
-        item.came_to_sc.common_price = Math.round(commonExpenses / item.came_to_sc.count) || 0
-        item.came_to_sc.conversion = Math.round((+item.came_to_sc.count / orderRang) * 100) || 0
+        const cameToSCTraffikPrice = Math.round(+item.common_expenses.balance / item.came_to_sc.count)
+        const cameToSCCommonPrice = Math.round(commonExpenses / item.came_to_sc.count)
+        const cameToSCConversion = Math.round((+item.came_to_sc.count / orderRang) * 100)
+        item.came_to_sc.traffik_price = isFinite(cameToSCTraffikPrice) ? cameToSCTraffikPrice : 0
+        item.came_to_sc.common_price = isFinite(cameToSCCommonPrice) ? cameToSCCommonPrice : 0
+        item.came_to_sc.conversion = isFinite(cameToSCConversion) ? cameToSCConversion : 0
         // Клиент закрыт
-        item.order_closed.traffik_price = Math.round(+item.common_expenses.balance / item.order_closed.count) || 0
-        item.order_closed.common_price = Math.round(commonExpenses / item.order_closed.count) || 0
-        item.order_closed.conversion = Math.round((+item.order_closed.count / orderRang) * 100) || 0
+        const orderClosedTraffikPrice = Math.round(+item.common_expenses.balance / item.order_closed.count)
+        const orderClosedCommonPrice = Math.round(commonExpenses / item.order_closed.count)
+        const orderClosedConversion = Math.round((+item.order_closed.count / orderRang) * 100)
+        item.order_closed.traffik_price = isFinite(orderClosedTraffikPrice) ? orderClosedTraffikPrice : 0
+        item.order_closed.common_price = isFinite(orderClosedCommonPrice) ? orderClosedCommonPrice : 0
+        item.order_closed.conversion = isFinite(orderClosedConversion) ? orderClosedConversion : 0
         // вал
         item.val = Math.round(+item.revenue - item.expenses) || 0
         // средний чек
@@ -396,10 +585,11 @@ export default {
         // дельта
         item.delta = Math.round(+item.wed_check - item.came_to_sc.common_price) || 0
         // прибыль
-        item.profit = Math.round(+item.val * 0.65 - +item.came_to_sc.count * 70 - commonExpenses) || 0
-        item.spz = Math.round(+item.profit / item.orders) || 0
-      }
 
+        item.profit = Math.round(+item.val * 0.65 - +item.came_to_sc.count * 70 - commonExpenses) || 0
+        const spz = Math.round(+item.profit / item.orders)
+        item.spz = isFinite(spz) ? spz : 0
+      }
       try {
         await this.$axios.$put(
           '/api/v1/report/summory/update/' + this.tableData._id,
@@ -633,6 +823,22 @@ export default {
       console.log('updateRowTable', row)
     },
     /**
+     * Сохранить текущее состояние таблицы
+     */
+    async saveTable() {
+      this.loading = true
+      try {
+        await this.$axios.$put(
+          '/api/v1/report/summory/update/' + this.tableData._id,
+          this.tableData
+        )
+      } catch (e) {
+        this.$store.commit('SET_ERROR', e.response.data.message)
+      } finally {
+        this.loading = false
+      }
+    },
+    /**
      * Удалить бренд из отчета
      */
     async removeTableRow(row) {
@@ -660,15 +866,29 @@ export default {
 
 <style>
 .updateTable,
+.updateTable2,
+.saveTable,
 .removeTable {
   position: absolute !important;
   z-index: 9;
   top: 90px;
   left: 100px;
 }
+.updateTable {
+  left: 40px;
+  padding: 5px 8px;
+}
+.updateTable2 {
+  left: 80px;
+  padding: 7px 8px;
+}
+.saveTable {
+  left: 3px;
+  padding: 7px 8px;
+}
 .removeTable {
-  left: 50px;
-  padding: 4px 15px;
+  left: 115px;
+  padding: 7px 8px !important;
 }
 .input-transparent input {
   padding-right: 7px !important;
