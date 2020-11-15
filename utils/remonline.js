@@ -8,7 +8,6 @@ const Cookies = require('js-cookie')
 export default class Rem {
   constructor(apiKey) {
     if (!apiKey) return console.error('remonline - не передан apiKey')
-    this.apiKey = apiKey
     // eslint-disable-next-line prettier/prettier
     this.proxy =
       process.env.REMONLINE_PROXY === 'true'
@@ -25,6 +24,7 @@ export default class Rem {
     // order/?token=...&created_at[]=1597352400000&created_at[]=1597438799999&branches[]=26047
     try {
       const token = Cookies.get('rem-token')
+
       const res = await this.remonline('get', `order/?token=${token}&${filter}`)
       return { data: res.data.data, count: res.data.count }
     } catch (e) {
