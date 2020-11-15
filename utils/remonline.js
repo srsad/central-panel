@@ -8,6 +8,7 @@ const Cookies = require('js-cookie')
 export default class Rem {
   constructor(apiKey) {
     if (!apiKey) return console.error('remonline - не передан apiKey')
+    this.apiKey = apiKey
     // eslint-disable-next-line prettier/prettier
     this.proxy =
       process.env.REMONLINE_PROXY === 'true'
@@ -124,7 +125,9 @@ export default class Rem {
       if (url.indexOf('token=undefined') > 0) {
         const token = await this.setToken()
         url = url.replace('token=undefined', `token=${token}`)
+        await this.remonline(type, url)
       }
+      // console.log('remonline.js - url', url)
       // пробуем обновить токен
       const res = await axios[type](
         `${this.proxy}https://api.remonline.ru/${url}`
