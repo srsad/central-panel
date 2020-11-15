@@ -34,7 +34,7 @@ module.exports.update = async (req, res) => {
 module.exports.remove = async (req, res) => {
   try {
     await Report.deleteOne({ _id: req.params.id })
-    res.status(200).json({ message: 'Бред удален!' })
+    res.status(200).json({ message: 'Отчет удален!' })
   } catch (error) {
     res.status(500).json({ message: 'Не удалось удалить отчет!', error })
   }
@@ -43,11 +43,11 @@ module.exports.remove = async (req, res) => {
 /** Вернуть по id */
 module.exports.getById = async (req, res) => {
   try {
-    const recording = await Report.findById(
+    const report = await Report.findById(
       req.params.id
     ).populate('brands.brand', { name: 1 })
 
-    res.status(200).json(recording)
+    res.status(200).json(report)
   } catch (error) {
     req.status(500).json({ message: 'Не удалось полуичть отчет!', error })
   }
@@ -56,8 +56,8 @@ module.exports.getById = async (req, res) => {
 /** Вернуть весь список */
 module.exports.getAll = async (req, res) => {
   try {
-    const recordings = await Report.find().sort({ created: -1 })
-    res.json(recordings)
+    const reports = await Report.find().sort({ created: -1 })
+    res.json(reports)
   } catch (error) {
     res
       .status(500)

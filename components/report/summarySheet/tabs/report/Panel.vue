@@ -35,7 +35,7 @@
       </el-button>
     </div>
     <div class="mt-15" style="margin-bottom:-15px;">
-      <app-list />
+      <app-list @updateReport="loadReport" />
     </div>
     <app-report-window-create />
   </div>
@@ -74,8 +74,8 @@ export default {
     async loadRemOnline() {
       // &created_at=[1596834000000,1596920399999]&statuses=[151384,162791,198277,198285,241717]'
       // console.log('REMONLINE_API_KEY', process.env.REMONLINE_API_KEY)
-      const rem = new Rem('a2cda58eecae417d8a67cbb35bb68e7f', true)
-      // const rem = new Rem(process.env.REMONLINE_API_KEY, true)
+      // const rem = new Rem('a2cda58eecae417d8a67cbb35bb68e7f', true)
+      const rem = new Rem(process.env.REMONLINE_API_KEY, true)
       // const token = await rem.setToken()
       // const token = await rem.getBranches()
       // const token = await rem.getStatuses()
@@ -89,10 +89,10 @@ export default {
       // created[1] = new Date(created[1]).getTime()
       // order/?token=...&created_at[]=1597352400000&created_at[]=1597438799999&branches[]=26047
       const items = []
-      for (let i = 16; i <= 19; i++) {
+      for (let i = 1; i <= 6; i++) {
         // new Date('2020,7,1,00:01:01').getTime()
-        const created1 = new Date(`2020,10,${i},00:01:01`).getTime()
-        const created2 = new Date(`2020,10,${i},23:59:50`).getTime()
+        const created1 = new Date(`2020,11,${i},00:01:01`).getTime()
+        const created2 = new Date(`2020,11,${i},23:59:50`).getTime()
         // бренды - клиент закрыт
         const filter = [
           `created_at[]=${created1}`,
@@ -110,7 +110,7 @@ export default {
       }
       console.log('items', items)
     },
-    async loadReport() {
+    async loadReport(reportId) {
       if (!this.report) {
         this.$notify({
           message: 'Выберите отчет!',
@@ -120,6 +120,8 @@ export default {
       }
 
       try {
+        reportId = !reportId || this.report
+        console.log('reportId', reportId)
         const report = await this.$axios.$get(
           '/api/v1/report/summory/get/' + this.report
         )

@@ -13,7 +13,7 @@
       <!--  -->
       <el-popconfirm
         @onConfirm="removeTable"
-        title="Удалить исключение?"
+        title="Удалить отчет?"
         confirm-button-text="Да"
         confirm-button-type="success"
         cancel-button-type="default"
@@ -26,7 +26,7 @@
           type="danger"
           size="mini"
           icon="el-icon-delete"
-          title="Обновить данные"
+          title="Удалить отчет"
         />
       </el-popconfirm>
       <!--  -->
@@ -36,7 +36,42 @@
           label="Сайт"
           width="150"
           fixed="left"
-        />
+        >
+          <template slot-scope="scope">
+            {{ scope.row.brand.name }}
+            <!-- Обновление бренда отчета -->
+            <el-button
+              @click="updateRowTable(scope.row)"
+              :loading="loading"
+              class="updateTableRow"
+              type="primary"
+              size="mini"
+              icon="el-icon-refresh"
+              title="Обновить данные этого бренда"
+            />
+            <!-- /Обновление бренда отчета -->
+            <!-- Удаление бренда в данном отчете -->
+            <el-popconfirm
+              @onConfirm="removeTableRow(scope.row)"
+              title="Удалить бренд из отчета?"
+              confirm-button-text="Да"
+              confirm-button-type="success"
+              cancel-button-type="default"
+              cancel-button-text="Нет, спасибо"
+            >
+              <el-button
+                slot="reference"
+                :loading="loading"
+                class="removeTableRow pt-10 pointer"
+                type="danger"
+                size="mini"
+                icon="el-icon-delete"
+                title="Удалить бренд"
+              />
+            </el-popconfirm>
+            <!-- /Удаление бренда в данном отчете -->
+          </template>
+        </el-table-column>
         <el-table-column label="Канал" width="70">
           <template>
             PK <br />
@@ -92,7 +127,7 @@
               {{ priceMask(scope.row.order.common_price) }}
             </template>
           </el-table-column>
-          <el-table-column label="конверсия %">
+          <el-table-column label="конверсия %" width="100px">
             <template slot-scope="scope">
               {{ scope.row.order.conversion }} %
             </template>
@@ -119,7 +154,7 @@
               {{ priceMask(scope.row.came_to_sc.common_price) }}
             </template>
           </el-table-column>
-          <el-table-column label="конверсия %">
+          <el-table-column label="конверсия %" width="100px">
             <template slot-scope="scope">
               {{ scope.row.came_to_sc.conversion }} %
             </template>
@@ -146,7 +181,7 @@
               {{ priceMask(scope.row.order_closed.common_price) }}
             </template>
           </el-table-column>
-          <el-table-column label="конверсия %">
+          <el-table-column label="конверсия %" width="100px">
             <template slot-scope="scope">
               {{ scope.row.order_closed.conversion }} %
             </template>
@@ -280,6 +315,7 @@ export default {
         this.loading = false
       }
     },
+
     /**
      * Загрузка двнных из ремонлайн
      */
@@ -319,6 +355,7 @@ export default {
       // 1596240000000, 1598832000000
       // 1593550800000, 1596229199999
     },
+
     /**
      * Обновление отчета
      */
@@ -387,7 +424,7 @@ export default {
           "period": "2020-07-01 2020-07-31",
           "brands": [
             {
-              // заявки 
+              // заявки
               "requests": {
                 "chanel": {
                   "pk": 0,
@@ -586,15 +623,45 @@ export default {
           "__v": 0
         }
       */
+    },
+
+    /**
+     * TODO Обновление данных одного бренда
+     */
+    // TODO Обновление данных одного бренда
+    updateRowTable(row) {
+      console.log('updateRowTable', row)
+    },
+    /**
+     * Удалить бренд из отчета
+     */
+    async removeTableRow(row) {
+      this.loading = true
+      try {
+        const report = JSON.parse(JSON.stringify(this.tableData))
+        // удаляем бренд
+        report.brands_id = report.brands_id.filter((el) => el !== row.brand._id)
+        report.brands = report.brands.filter((el) => el.brand._id !== row.brand._id)
+        // обновляем отчет
+        await this.$axios.$put('/api/v1/report/summory/update/' + report._id, report)
+        // обновляем отчет в таблице
+        this.$emit('updateReport', {
+          reportId: report._id
+        })
+      } catch (e) {
+        this.$store.commit('SET_ERROR', e.response.data.message)
+      } finally {
+        this.loading = false
+      }
     }
   }
 }
 </script>
 
-<style scoped>
+<style>
 .updateTable,
 .removeTable {
-  position: absolute;
+  position: absolute !important;
   z-index: 9;
   top: 90px;
   left: 100px;
@@ -607,4 +674,22 @@ export default {
   padding-right: 7px !important;
 }
 .el-input__inner{}
+.el-table th>.cell{
+  font-weight: 400;
+  font-size: 13px;
+  color: black;
+}
+.removeTableRow,
+.updateTableRow{
+  position: absolute !important;
+  z-index: 9;
+  bottom: 7px;
+  left: 8px;
+  padding: 3px;
+}
+.removeTableRow {
+  padding: 4px !important;
+  height: 20px;
+  left: 32px;
+}
 </style>
