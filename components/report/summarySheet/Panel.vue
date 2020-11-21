@@ -5,6 +5,9 @@
         <el-tab-pane label="Статистика" name="statistiks">
           <app-statistiks-panel />
         </el-tab-pane>
+        <el-tab-pane label="Филиалы" name="branches">
+          <app-branches-panel />
+        </el-tab-pane>
         <el-tab-pane label="Бренды" name="brands">
           <app-brands-panel />
         </el-tab-pane>
@@ -16,11 +19,13 @@
 <script>
 import AppBrandsPanel from '~/components/report/summarySheet/tabs/brand/Panel'
 import AppStatistiksPanel from '~/components/report/summarySheet/tabs/report/Panel'
+import AppBranchesPanel from '~/components/report/summarySheet/tabs/branches/Panel'
 
 export default {
   components: {
     AppBrandsPanel,
-    AppStatistiksPanel
+    AppStatistiksPanel,
+    AppBranchesPanel
   },
   methods: {
     addNewBrand() {
