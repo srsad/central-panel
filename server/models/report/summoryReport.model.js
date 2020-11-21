@@ -4,6 +4,32 @@
 
 const { model, Schema } = require('mongoose')
 
+/**
+ * @typedef SummoryReport - Объект с данными по бренду
+ * @property {string} name.required - Наименование отчета
+ * @property {string} brands_id.required - id бренда, ссылка из модели брендов
+ * @property {string} period.required - период в формате (YYYY-MM-DD YYYY-MM-DD)
+ * @property {Brands.model} brands.required - массив со списком брендов и его сводными данными
+ */
+
+/**
+ * @typedef Brands - Объект с данными по бренду
+ * @property {string} brand.required - id бренда из коллекции report_brands
+ * @property {Requests.model} requests - Заявки
+ * @property {CommonOrder.model} order - Запись
+ * @property {CommonOrder.model} came_to_sc - пришел в СЦ
+ * @property {CommonOrder.model} order_closed - клиент закрыт
+ * @property {CommonExpenses.model} common_expenses - Расходы
+ * @property {integer} revenue - выводы - выручка
+ * @property {integer} expenses - выводы - расходы
+ * @property {integer} val - выводы - вал
+ * @property {integer} orders - выводы - заказы
+ * @property {integer} wed_check - выводы - ср. чек
+ * @property {integer} delta - выводы - дельта
+ * @property {integer} profit - выводы - прибыль
+ * @property {integer} spz - выводы - СПЗ
+ */
+
 const summoryReportSchema = new Schema({
   name: {
     type: String,
@@ -13,6 +39,7 @@ const summoryReportSchema = new Schema({
   brands_id: [
     {
       type: Schema.Types.ObjectId,
+      ref: 'roles',
       require: true
     }
   ],
@@ -196,3 +223,32 @@ const summoryReportSchema = new Schema({
 })
 
 module.exports = model('summory_reports', summoryReportSchema)
+
+/**
+ * @typedef Requests - Заявки
+ * @property {Chanel.model} chanel - канал трафика
+ * @property {integer} traffik_price - цена за трафик
+ * @property {integer} common_price - цена общая
+ */
+
+/**
+ * @typedef Chanel - канал трафика
+ * @property {integer} pk - количество людей пришедших по рекламе
+ * @property {integer} seo - количество людей пришедших по seo
+ */
+
+/**
+ * @typedef CommonOrder - Сводные данные по пол-ву людей и конверсии
+ * @property {integer} count - количество людей
+ * @property {integer} traffik_price - цена за трафик
+ * @property {integer} common_price - цена общая
+ * @property {integer} conversion - конверсия %
+ */
+
+/**
+ * @typedef CommonExpenses - Расходы
+ * @property {integer} balance - баланс
+ * @property {integer} pk - реклама
+ * @property {integer} seo - сео
+ * @property {integer} common - общие
+ */

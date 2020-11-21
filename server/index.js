@@ -2,6 +2,7 @@ const config = require('../nuxt.config.js')
 const app = require('./app')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
+require('./docs/swagger')
 
 config.dev = process.env.NODE_ENV !== 'production'
 
