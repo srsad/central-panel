@@ -25,6 +25,18 @@
           />
         </el-form-item>
       </div>
+      <div class="mb-20">
+        <el-form-item prop="branch_id" label="Филиал">
+          <el-select v-model="form.branch_id" class="w100">
+            <el-option
+              v-for="(item, idx) in $store.getters['report/branch/branches']"
+              :key="idx"
+              :label="item.name"
+              :value="item._id"
+            />
+          </el-select>
+        </el-form-item>
+      </div>
       <div class="mb-25">
         <el-form-item prop="brands_id" class="mb-20" label="Бренды">
           <el-select
@@ -67,6 +79,7 @@ export default {
       form: {
         name: 'Отчет за - ' + moment().format('MM/YYYY'),
         brands_id: [],
+        branch_id: '',
         period: []
       },
       rules: {
@@ -91,6 +104,13 @@ export default {
           {
             required: true,
             message: 'Выберите хотя бы один бренд',
+            trigger: 'blur'
+          }
+        ],
+        branch_id: [
+          {
+            required: true,
+            message: 'Выберите филиал',
             trigger: 'blur'
           }
         ],

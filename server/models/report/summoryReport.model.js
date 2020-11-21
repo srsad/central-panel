@@ -1,34 +1,15 @@
 /**
  * Отчеты - сводная таблица
- */
-
-const { model, Schema } = require('mongoose')
-
-/**
- * @typedef SummoryReport - Объект с данными по бренду
+ * @typedef ReportSummory - Объект с данными по бренду
  * @property {string} name.required - Наименование отчета
- * @property {string} brands_id.required - id бренда, ссылка из модели брендов
+ * @property {string} brands_id.required - id бренда, ссылка на коллекцию report_brands
+ * @property {string} branch_id.required - id филиала, ссылка на коллекцию report_branches
  * @property {string} period.required - период в формате (YYYY-MM-DD YYYY-MM-DD)
  * @property {Brands.model} brands.required - массив со списком брендов и его сводными данными
  */
 
-/**
- * @typedef Brands - Объект с данными по бренду
- * @property {string} brand.required - id бренда из коллекции report_brands
- * @property {Requests.model} requests - Заявки
- * @property {CommonOrder.model} order - Запись
- * @property {CommonOrder.model} came_to_sc - пришел в СЦ
- * @property {CommonOrder.model} order_closed - клиент закрыт
- * @property {CommonExpenses.model} common_expenses - Расходы
- * @property {integer} revenue - выводы - выручка
- * @property {integer} expenses - выводы - расходы
- * @property {integer} val - выводы - вал
- * @property {integer} orders - выводы - заказы
- * @property {integer} wed_check - выводы - ср. чек
- * @property {integer} delta - выводы - дельта
- * @property {integer} profit - выводы - прибыль
- * @property {integer} spz - выводы - СПЗ
- */
+const { model, Schema } = require('mongoose')
+
 
 const summoryReportSchema = new Schema({
   name: {
@@ -39,10 +20,15 @@ const summoryReportSchema = new Schema({
   brands_id: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'roles',
+      ref: 'report_brands',
       require: true
     }
   ],
+  branch_id: {
+    type: Schema.Types.ObjectId,
+    ref: 'report_branches',
+    require: true
+  },
   period: {
     type: String,
     require: true
@@ -223,6 +209,24 @@ const summoryReportSchema = new Schema({
 })
 
 module.exports = model('summory_reports', summoryReportSchema)
+
+/**
+ * @typedef Brands - Объект с данными по бренду
+ * @property {string} brand.required - id бренда из коллекции report_brands
+ * @property {Requests.model} requests - Заявки
+ * @property {CommonOrder.model} order - Запись
+ * @property {CommonOrder.model} came_to_sc - пришел в СЦ
+ * @property {CommonOrder.model} order_closed - клиент закрыт
+ * @property {CommonExpenses.model} common_expenses - Расходы
+ * @property {integer} revenue - выводы - выручка
+ * @property {integer} expenses - выводы - расходы
+ * @property {integer} val - выводы - вал
+ * @property {integer} orders - выводы - заказы
+ * @property {integer} wed_check - выводы - ср. чек
+ * @property {integer} delta - выводы - дельта
+ * @property {integer} profit - выводы - прибыль
+ * @property {integer} spz - выводы - СПЗ
+ */
 
 /**
  * @typedef Requests - Заявки
