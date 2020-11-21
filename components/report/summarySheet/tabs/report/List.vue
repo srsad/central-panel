@@ -1,48 +1,103 @@
 <template>
   <div>
     <div v-if="tableData" style="display: inline-grid;">
-      <el-button
-        @click="saveTable"
-        :loading="loading"
-        class="saveTable"
-        type="success"
-        size="mini"
-        icon="el-icon-receiving"
-        title="Сохранить данные"
-      />
-      <el-checkbox
-        v-model="onlyRefresh"
-        :disabled="loading"
-        class="updateTable"
-      />
-      <el-button
-        @click="updateTable"
-        :loading="loading"
-        class="updateTable2"
-        type="primary"
-        size="mini"
-        icon="el-icon-refresh-left"
-        title="Обновить данные"
-      />
-      <!--  -->
-      <el-popconfirm
-        @onConfirm="removeTable"
-        title="Удалить отчет?"
-        confirm-button-text="Да"
-        confirm-button-type="success"
-        cancel-button-type="default"
-        cancel-button-text="Нет, спасибо"
-      >
+      <div class="col-12">
+        <h3>Филиал: {{ tableData.branch_id.name }}</h3>
+        <!--  -->
         <el-button
-          slot="reference"
+          @click="saveTable"
           :loading="loading"
-          class="removeTable pt-10 pointer"
-          type="danger"
+          class="saveTable"
+          type="success"
           size="mini"
-          icon="el-icon-delete"
-          title="Удалить отчет"
+          icon="el-icon-receiving"
+          title="Сохранить данные"
         />
-      </el-popconfirm>
+        <el-popover
+          placement="top-start"
+          width="300"
+          trigger="hover"
+          content="Если галочка установлена, то будет происходит пересчет данных без запросов к API в ремонлайн"
+        >
+          <el-checkbox
+            slot="reference"
+            v-model="onlyRefresh"
+            :disabled="loading"
+            class="updateTable"
+          />
+        </el-popover>
+        <el-button
+          @click="updateTable"
+          :loading="loading"
+          class="updateTable2"
+          type="primary"
+          size="mini"
+          icon="el-icon-refresh-left"
+          title="Обновить данные"
+        />
+        <!--  -->
+        <el-popconfirm
+          @onConfirm="removeTable"
+          title="Удалить отчет?"
+          confirm-button-text="Да"
+          confirm-button-type="success"
+          cancel-button-type="default"
+          cancel-button-text="Нет, спасибо"
+        >
+          <el-button
+            slot="reference"
+            :loading="loading"
+            class="removeTable pt-10 pointer"
+            type="danger"
+            size="mini"
+            icon="el-icon-delete"
+            title="Удалить отчет"
+          />
+        </el-popconfirm>
+        <!--  -->
+        <el-popover
+          placement="top-start"
+          trigger="hover"
+          content="Загрузить данные из excel. Созданные заказы."
+        >
+          <label
+            slot="reference"
+            @click="() => (excelListType = 'excelSetOpenParams')"
+          >
+            <span class="el-button el-button--default el-button--mini">
+              <i class="el-icon-download"></i>
+            </span>
+            <input
+              @change="uploadFromExcel"
+              :disabled="loading"
+              style="display:none"
+              type="file"
+            />
+          </label>
+        </el-popover>
+        <!--  -->
+        <el-popover
+          placement="top-start"
+          trigger="hover"
+          content="Загрузить данные из excel. Закрытые заказы."
+        >
+          <label
+            slot="reference"
+            @click="() => (excelListType = 'excelSetCloseParams')"
+          >
+            <span class="el-button el-button--info el-button--mini">
+              <i class="el-icon-download"></i>
+            </span>
+            <input
+              @change="uploadFromExcel"
+              :disabled="loading"
+              type="file"
+              style="display:none"
+            />
+          </label>
+        </el-popover>
+        <!--  -->
+      </div>
       <!--  -->
       <el-table :data="tableData.brands">
         <el-table-column
@@ -272,10 +327,10 @@
             />
           </template>
         </el-table-column>
-        <el-table-column prop="wed_check" label="Ср. чек" />
-        <el-table-column prop="delta" label="Дельта" />
-        <el-table-column prop="profit" label="Прибыль" />
-        <el-table-column prop="spz" label="СПЗ" />
+        <el-table-column prop="wed_check" fixed="right" label="Ср. чек" />
+        <el-table-column prop="delta" fixed="right" label="Дельта" />
+        <el-table-column prop="profit" fixed="right" label="Прибыль" />
+        <el-table-column prop="spz" fixed="right" label="СПЗ" />
         <!--  -->
       </el-table>
       <!--  -->
@@ -289,6 +344,8 @@
 </template>
 
 <script>
+// eslint-disable-next-line
+import XLSX from 'xlsx'
 /* eslint-disable prettier/prettier */
 import Rem from '~/utils/remonline.js'
 const rem = new Rem(process.env.REMONLINE_API_KEY, true)
@@ -297,6 +354,13 @@ export default {
   data() {
     return {
       loading: false,
+      /**
+       * тип загружаемого дакумента, для открытых или закрытых заказов
+       * excelSetOpenParams - открытые
+       * excelSetCloseParams - закрытые
+       */
+      excelListType: 'excelSetOpenParams',
+      excelList: [], // загружаемоя екселька
       onlyRefresh: true // без получения новых данных из ремонлайн
     }
   },
@@ -335,7 +399,6 @@ export default {
     /**
      * Загрузка двнных из ремонлайн - все записи
      */
-    // TODO возможно передавать связку бренд + филиал/branches
     async getAllOrders(brandName) {
       this.loading = true
       try {
@@ -347,7 +410,7 @@ export default {
         const filter = [
           `created_at[]=${created[0]}`,
           `created_at[]=${created[1]}`,
-          `branches[]=26047`, //
+          `branches[]=${this.tableData.branch_id.branch_id}`,
           `brands[]=${brandName}`,
           'statuses[]=133616', // Доставлен в СЦ
           'statuses[]=134374', // Предзаказ
@@ -397,7 +460,7 @@ export default {
         const filter = [
           `created_at[]=${created[0]}`,
           `created_at[]=${created[1]}`,
-          `branches[]=26047`, //
+          `branches[]=${this.tableData.branch_id.branch_id}`,
           `brands[]=${brandName}`,
           'statuses[]=133616', // Доставлен в СЦ
           // 'statuses[]=134374', // Предзаказ
@@ -449,7 +512,7 @@ export default {
         const filter = [
           `created_at[]=${created[0]}`,
           `created_at[]=${created[1]}`,
-          `branches[]=26047`, //
+          `branches[]=${this.tableData.branch_id.branch_id}`,
           `brands[]=${brandName}`,
           'statuses[]=151384', // Закрыт
           // 'page=1',
@@ -487,7 +550,7 @@ export default {
           const filter = [
             `created_at[]=${created[0]}`,
             `created_at[]=${created[1]}`,
-            `branches[]=26047`, //
+            `branches[]=${this.tableData.branch_id.branch_id}`,
             `brands[]=${brandName}`,
             'statuses[]=151384', // Закрыт
             'statuses[]=162791', // Выкупил СЦ
@@ -523,6 +586,7 @@ export default {
      * Обновление отчета
      */
     async updateTable() {
+      console.log('updateTable')
       this.loading = true
 
       for await (const item of this.tableData.brands) {
@@ -530,7 +594,7 @@ export default {
         if (!this.onlyRefresh) {
           const allOrders = await this.getAllOrders(item.brand.name) // все заявки бренда
           const cameToService = await this.cameToService(item.brand.name) // те кто пришли в СЦ
-          const closeOrders = await this.closeOrders(item.brand.name) // те кто пришли в СЦ
+          const closeOrders = await this.closeOrders(item.brand.name) // закрытые заказы
 
           item.order.count = allOrders
           item.came_to_sc.count = cameToService
@@ -859,35 +923,128 @@ export default {
       } finally {
         this.loading = false
       }
+    },
+    /**
+     * Загрузть данные из excel
+     */
+    uploadFromExcel(e) {
+      try {
+        const files = e.target.files
+        const file = files[0];
+
+        const reader = new FileReader();
+        const rABS = !!reader.readAsBinaryString
+
+        reader.onload = (e) => {
+          let data = e.target.result
+          if(!rABS) data = new Uint8Array(data)
+          const wb = XLSX.read(data, {type: rABS ? 'binary' : 'array'})
+
+          let result = {};
+          wb.SheetNames.forEach((sheetName) => {
+            const roa = XLSX.utils.sheet_to_json(wb.Sheets[sheetName], { header: 1 })
+            if(roa.length) result = roa
+          })
+          result.shift() // удаляем первую строку
+          this.excelList = result // устанавливаем получившийся результат
+          this[this.excelListType]() // устанавливаем данные из ексельки
+        }
+
+        if(rABS) {
+          reader.readAsBinaryString(file)
+        } else {
+          reader.readAsArrayBuffer(file)
+        }
+      } catch (e) {
+        console.error(
+          'Ошибка при попытке закгрузки ексель, файла.',
+          'Используемый метод', this.excelListType,
+          'ошибка', e
+        )
+      }
+    },
+    /**
+     * Установка данных из excel
+     * Первый блок - открытые заявки
+     */
+    async excelSetOpenParams () {
+      this.loading = true
+      this.onlyRefresh = true // на всякий случай блокируем загрузку данных из ремонлайн
+      for await (const item of this.tableData.brands) {
+        const brandName = item.brand.name.toLowerCase().trim()
+
+        let allOrders = 0
+        let cameToService = 0
+        let closeOrders = 0
+
+        for await (const row of this.excelList) {
+          // console.log('row', row)
+          let brand = row[33].split(',')
+          brand = brand[0].toLowerCase().trim()
+          // все заказы
+          if (brand === brandName) {
+            allOrders++
+            // кто пришли в СЦ
+            if (row[4].trim() !== 'Не пришел') cameToService++
+            // закрытые заказы
+            if (row[4].trim() !== 'Закрыт') closeOrders++
+          }
+        }
+        // все заявки бренда
+        item.order.count = allOrders
+        // кто пришли в СЦ
+        item.came_to_sc.count = cameToService
+        // закрытые заказы
+        item.order_closed.count = closeOrders
+      }
+      this.excelList = []
+      this.updateTable() // обновляем расчеты
+    },
+    /**
+     * Установка данных из excel
+     * Второй блок - закрытые заявки
+     */
+    async excelSetCloseParams () {
+      this.loading = true
+      this.onlyRefresh = true // на всякий случай блокируем загрузку данных из ремонлайн
+      for await (const item of this.tableData.brands) {
+        const brandName = item.brand.name.toLowerCase().trim()
+        let revenue = 0 // выручка / сколько заплатили
+        let expenses = 0 // расходы
+        let orders = 0 // заказы
+
+        for await (const row of this.excelList) {
+          let brand = row[33].split(',')
+          brand = brand[0].toLowerCase().trim()
+          // все заказы
+          if (brand === brandName) {
+            orders++
+            revenue += row[10]
+            expenses += row[16]
+          }
+        }
+        item.revenue = revenue
+        item.expenses = expenses
+        item.orders = orders
+      }
+      this.excelList = []
+      this.updateTable() // обновляем расчеты
     }
   }
 }
 </script>
 
 <style>
-.updateTable,
-.updateTable2,
-.saveTable,
-.removeTable {
-  position: absolute !important;
-  z-index: 9;
-  top: 90px;
-  left: 100px;
-}
 .updateTable {
-  left: 40px;
   padding: 5px 8px;
 }
 .updateTable2 {
-  left: 80px;
   padding: 7px 8px;
 }
 .saveTable {
-  left: 3px;
   padding: 7px 8px;
 }
 .removeTable {
-  left: 115px;
   padding: 7px 8px !important;
 }
 .input-transparent input {
@@ -901,7 +1058,7 @@ export default {
 }
 .removeTableRow,
 .updateTableRow{
-  position: absolute !important;
+  position: absolute;
   z-index: 9;
   bottom: 7px;
   left: 8px;
