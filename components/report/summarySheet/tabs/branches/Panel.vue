@@ -5,7 +5,7 @@
         @click="fetchBranches"
         size="mini"
         type="success"
-        icon="el-icon-plus"
+        icon="el-icon-refresh"
         title="Добавить бренд"
       >
         Загрузить/обновить список филлиалов
