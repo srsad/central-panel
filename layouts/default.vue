@@ -1,10 +1,12 @@
 <template>
   <div class="container-fluid">
-    <div class="row">
+    <div
+      :class="['main-container', !$store.state.settings.isCollapse || 'close']"
+    >
       <div v-if="$store.getters['auth/access'].includes('sidebar')">
         <app-sidebar />
       </div>
-      <div class="col prl-0">
+      <div class="" style="position: relative">
         <el-header class="main-header">
           <div class="col-1">
             <n-link to="/" class="logo">Service</n-link>
@@ -57,3 +59,19 @@ export default {
   }
 }
 </script>
+
+<style>
+.main-container {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  margin: 0 -15px;
+  transition: all 0.2s;
+}
+.main-container.close {
+  grid-template-columns: 64px 1fr;
+  transition: all 0.2s;
+}
+.main-container:not(.close) {
+  grid-template-columns: 200px 1fr;
+}
+</style>

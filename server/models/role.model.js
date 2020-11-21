@@ -12,6 +12,10 @@ const roleSchema = new Schema({
     required: true,
     index: true
   },
+  description: {
+    type: String,
+    default: '',
+  },
   access: {
     type: Array,
     default: [] // нет доступов ни к одному из защищенных разделов

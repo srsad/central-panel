@@ -88,5 +88,7 @@ export const getters = {
   users: (state) => state.users,
   roles: (state) => state.roles,
   user: (state) => state.user,
-  role: (state) => state.role
+  role: (state) => state.role,
+  managers: (state) => state.users,
+  performers: (state) => state.users
 }

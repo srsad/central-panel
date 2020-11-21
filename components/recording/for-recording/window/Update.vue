@@ -36,13 +36,28 @@
         </el-form-item>
       </div>
       <div class="col-6">
-        <el-form-item prop="rservice" label="Rservice">
-          <el-input v-model="form.rservice" placeholder="Rservice" />
+        <el-form-item prop="rservice" label="СПб Красноармейская">
+          <el-input v-model="form.rservice" placeholder="СПб Красноармейская" />
         </el-form-item>
       </div>
       <div class="col-6">
-        <el-form-item prop="impuls" label="Impuls">
-          <el-input v-model="form.impuls" placeholder="Impuls" />
+        <el-form-item prop="impuls" label="СПб Дмитровский">
+          <el-input v-model="form.impuls" placeholder="СПб Дмитровский" />
+        </el-form-item>
+      </div>
+      <!-- <div class="col-6">
+        <el-form-item prop="elservice" label="Выездной сервис">
+          <el-input v-model="form.elservice" placeholder="Выездной сервис" />
+        </el-form-item>
+      </div> -->
+      <div class="col-6">
+        <el-form-item prop="msk1" label="МСК Новослободская">
+          <el-input v-model="form.msk1" placeholder="МСК Новослободская" />
+        </el-form-item>
+      </div>
+      <div class="col-6">
+        <el-form-item prop="msk2" label="МСК Армянский">
+          <el-input v-model="form.msk2" placeholder="МСК Армянский" />
         </el-form-item>
       </div>
       <div class="col-6">
@@ -51,13 +66,12 @@
         </el-form-item>
       </div>
       <div class="col-6">
-        <el-form-item prop="elservice" label="Выездной сервис">
-          <el-input v-model="form.elservice" placeholder="Выездной сервис" />
-        </el-form-item>
-      </div>
-      <div class="col-6">
-        <el-form-item prop="curser">
+        <el-form-item>
           <el-checkbox v-model="form.curser">Курьер платный</el-checkbox>
+          <br />
+          <el-checkbox v-model="form.not_curser">
+            Не записывать курьера
+          </el-checkbox>
         </el-form-item>
       </div>
     </el-form>
@@ -82,8 +96,11 @@ export default {
         rservice: '',
         impuls: '',
         krd: '',
+        msk1: '',
+        msk2: '',
         elservice: '',
-        curser: true
+        curser: true,
+        not_curser: false
       },
       categories: [
         { value: 'Крупная Бытовая Техника' },
@@ -156,8 +173,11 @@ export default {
       this.form.rservice = ''
       this.form.impuls = ''
       this.form.krd = ''
+      this.form.msk1 = ''
+      this.form.msk2 = ''
       this.form.elservice = ''
       this.form.curser = true
+      this.form.not_curser = false
       this.loading = false
       this.loadContent = false
     },

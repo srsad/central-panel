@@ -3,6 +3,7 @@
  */
 
 export const state = () => ({
+  recordingDeviceList: [], // список устроиств не для записи, при выборе категории
   recording: [], // список для записи
   notRecording: [], // список не для записи
   editForRecording: null, // редактировать елемент "для записи"
@@ -21,6 +22,9 @@ export const actions = {
       throw e
     }
   },
+  setNotRecording({ commit }, notRecording) {
+    commit('SET_NOT_RECORDINGS', notRecording)
+  },
   async fetchForRecording({ commit, axios }) {
     try {
       const forRecording = await this.$axios.$get(
@@ -35,8 +39,19 @@ export const actions = {
   setForRecording({ commit }, recording) {
     commit('SET_FOR_RECORDINGS', recording)
   },
-  setNotRecording({ commit }, notRecording) {
-    commit('SET_NOT_RECORDINGS', notRecording)
+  /**
+   * Список устроист не для записи
+   */
+  async fetchNotRecordingDevice({ rootGetters, commit }) {
+    try {
+      const items = await this.$axios.$get(
+        `/api/v1/recording/not-device/get-by-brand/${rootGetters['source/page/params'].brand}`
+      )
+      commit('SET_NOT_RECORDING_DEVICE', items)
+    } catch (e) {
+      commit('SET_ERROR', e.response.data.message, { root: true })
+      throw e
+    }
   }
 }
 
@@ -52,6 +67,9 @@ export const mutations = {
   },
   SET_NOT_RECORDING(state, notRecording) {
     state.editNotRecording = notRecording
+  },
+  SET_NOT_RECORDING_DEVICE(state, recordingDeviceList) {
+    state.recordingDeviceList = recordingDeviceList
   }
 }
 

@@ -37,6 +37,16 @@ const forRecordingSchema = new Schema({
     maxlength: 255,
     index: true
   },
+  msk1: {
+    type: String,
+    maxlength: 255,
+    index: true
+  },
+  msk2: {
+    type: String,
+    maxlength: 255,
+    index: true
+  },
   elservice: {
     type: String,
     maxlength: 255,
@@ -45,6 +55,10 @@ const forRecordingSchema = new Schema({
   curser: {
     type: Boolean,
     default: true
+  },
+  not_curser: {
+    type: Boolean,
+    default: false
   },
   created: {
     type: Date,

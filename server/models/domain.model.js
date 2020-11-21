@@ -7,9 +7,23 @@ const { model, Schema } = require('mongoose')
 const domainSchema = new Schema({
   // приоритет
   priority: {
+    type: String,
+    default: '',
+    index: true
+  },
+  // подприоритет2
+  priority2: {
     type: Number,
     min: 0,
-    max: 10
+    max: 15,
+    index: true
+  },
+  // подприоритет3
+  priority3: {
+    type: Number,
+    min: 0,
+    max: 15,
+    index: true
   },
   // исполнитель
   vendor: {
@@ -41,7 +55,16 @@ const domainSchema = new Schema({
   company: {
     type: String,
     default: 'R-Service',
-    enum: ['R-Service', 'Impuls']
+    enum: [
+      'R-service СПб',
+      'R-service МСК',
+      'R-service КРД',
+      'Impuls СПб',
+      'Impuls МСК',
+      'Impuls КРД',
+      'R-Service',
+      'Impuls'
+    ]
   },
   // наименование
   name: {
@@ -50,6 +73,12 @@ const domainSchema = new Schema({
     index: true
   },
   // город
+  // city: {
+  // TODO привязать таблицу
+  //   type: Schema.Types.ObjectId,
+  //   ref: 'roles',
+  //   index: true
+  // },
   city: {
     type: String,
     maxlength: 32,

@@ -23,7 +23,7 @@ router.get(
   passport.authenticate('jwt', { session: false }),
   getById
 )
-router.post('/create', create)
+router.post('/create', passport.authenticate('jwt', { session: false }), create)
 router.put(
   '/update/:id',
   passport.authenticate('jwt', { session: false }),

@@ -29,6 +29,114 @@ export default [
     label: 'Поиск'
   },
   {
+    _id: 'export_exceptions',
+    label: 'Экспорт неисправностей'
+  },
+  {
+    _id: 'crm',
+    label: 'CRM',
+    children: [
+      {
+        _id: 'crm-settings',
+        label: 'Настройки CRM',
+        children: [
+          {
+            _id: 'crm-settings-status',
+            label: 'Статусы/этапы сделки',
+            children: [
+              {
+                _id: 'crm-settings-status-read',
+                label: 'Чтение'
+              },
+              {
+                _id: 'crm-settings-status-create',
+                label: 'Создание'
+              },
+              {
+                _id: 'crm-settings-status-update',
+                label: 'Редактирование'
+              },
+              {
+                _id: 'crm-settings-status-remove',
+                label: 'Удаление'
+              },
+              {
+                _id: 'crm-settings-status-change',
+                label: 'Смена статуса'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        _id: 'crm-orders',
+        label: 'Заказы',
+        children: [
+          {
+            _id: 'crm-orders-read',
+            label: 'Чтение'
+          },
+          {
+            _id: 'crm-orders-create',
+            label: 'Создание'
+          },
+          {
+            _id: 'crm-orders-update',
+            label: 'Редактирование'
+          },
+          {
+            _id: 'crm-orders-remove',
+            label: 'Удаление'
+          }
+        ]
+      },
+      {
+        _id: 'crm-type_request',
+        label: 'Типы заявок',
+        children: [
+          {
+            _id: 'crm-type_request-read',
+            label: 'Чтение'
+          },
+          {
+            _id: 'crm-type_request-create',
+            label: 'Создание'
+          },
+          {
+            _id: 'crm-type_request-update',
+            label: 'Редактирование'
+          },
+          {
+            _id: 'crm-type_request-remove',
+            label: 'Удаление'
+          }
+        ]
+      },
+      {
+        _id: 'crm-type_device',
+        label: 'Типы устройств',
+        children: [
+          {
+            _id: 'crm-type_device-read',
+            label: 'Чтение'
+          },
+          {
+            _id: 'crm-type_device-create',
+            label: 'Создание'
+          },
+          {
+            _id: 'crm-type_device-update',
+            label: 'Редактирование'
+          },
+          {
+            _id: 'crm-type_device-remove',
+            label: 'Удаление'
+          }
+        ]
+      }
+    ]
+  },
+  {
     _id: 'part',
     label: 'Детали',
     children: [
@@ -91,6 +199,34 @@ export default [
     ]
   },
   {
+    _id: 'sites',
+    label: 'Настройки сайта',
+    children: [
+      {
+        _id: 'sites-testimonial',
+        label: 'Отзывы',
+        children: [
+          {
+            _id: 'sites-testimonial-read',
+            label: 'Чтение'
+          },
+          {
+            _id: 'sites-testimonial-create',
+            label: 'Создание'
+          },
+          {
+            _id: 'sites-testimonial-update',
+            label: 'Редактирование'
+          },
+          {
+            _id: 'sites-testimonial-remove',
+            label: 'Удаление'
+          }
+        ]
+      }
+    ]
+  },
+  {
     _id: 'recording',
     label: 'Записи',
     children: [
@@ -134,6 +270,28 @@ export default [
           },
           {
             _id: 'recording-not_recording_panel-remove',
+            label: 'Удаление'
+          }
+        ]
+      },
+      {
+        _id: 'recording-devace_list',
+        label: 'Устройства не для записи (выводится в общемсписке устройств)',
+        children: [
+          {
+            _id: 'recording-devace_list-read',
+            label: 'Чтение'
+          },
+          {
+            _id: 'recording-devace_list-create',
+            label: 'Создание'
+          },
+          {
+            _id: 'recording-devace_list-update',
+            label: 'Редактирование'
+          },
+          {
+            _id: 'recording-devace_list-remove',
             label: 'Удаление'
           }
         ]
@@ -308,6 +466,28 @@ export default [
           },
           {
             _id: 'settings-city_panel-remove',
+            label: 'Удаление'
+          }
+        ]
+      },
+      {
+        _id: 'settings-yandex_profiles_panel',
+        label: 'Яндекс аккаунты',
+        children: [
+          {
+            _id: 'settings-yandex_profiles_panel-read',
+            label: 'Чтение'
+          },
+          {
+            _id: 'settings-yandex_profiles_panel-create',
+            label: 'Создание'
+          },
+          {
+            _id: 'settings-yandex_profiles_panel-update',
+            label: 'Редактирование'
+          },
+          {
+            _id: 'settings-yandex_profiles_panel-remove',
             label: 'Удаление'
           }
         ]

@@ -72,6 +72,31 @@
       </span>
     </el-menu-item>
     <!--  -->
+    <!-- crm -->
+    <template v-if="$abilities('crm')">
+      <hr />
+      <el-menu-item v-if="$abilities('crm')" index="/crm">
+        <i class="el-icon-s-grid" />
+        <span slot="title">
+          CRM
+        </span>
+      </el-menu-item>
+      <el-menu-item v-if="$abilities('crm-orders')" index="/crm/orders">
+        <i class="el-icon-receiving" />
+        <span slot="title">
+          Заказы
+        </span>
+      </el-menu-item>
+      <el-menu-item v-if="$abilities('crm-settings')" index="/crm/settings">
+        <i class="el-icon-setting" />
+        <span slot="title">
+          Настройки CRM
+        </span>
+      </el-menu-item>
+      <hr />
+    </template>
+    <!-- /crm -->
+    <!--  -->
     <el-menu-item v-if="$abilities('map')" @click="openMap" index="/map">
       <i class="fa fa-map-o" />
       <span slot="title">Тепловые карты</span>
@@ -84,6 +109,15 @@
       <i class="fa fa-sitemap" />
       <span slot="title">
         Домены / Сайты
+      </span>
+    </el-menu-item>
+    <el-menu-item
+      v-if="$abilities('sites-testimonial')"
+      index="/sites/testimonials"
+    >
+      <i class="el-icon-chat-dot-round" />
+      <span slot="title">
+        Отзывы
       </span>
     </el-menu-item>
     <!--  -->
@@ -101,44 +135,11 @@
       <i class="fa fa-sign-out" />
       <span slot="title">Выход</span>
     </el-menu-item>
-    <el-menu-item index="" style="position:absolute;bottom:0;width:100%">
-      <!-- <i class="fa fa-sign-out" /> -->
-      <span slot="title">
-        <el-popover
-          placement="top-start"
-          title="Последнее обновление"
-          width="230"
-          trigger="hover"
-        >
-          <div>
-            <p style="word-break:normal" class="mb-0 text-left">
-              sha: {{ lastUpdate.sha }} <br />
-              data: {{ lastUpdate.date }} <br />
-              <b>{{ lastUpdate.message }}</b>
-            </p>
-          </div>
-          <span slot="reference"> last: {{ lastUpdate.date }} </span>
-        </el-popover>
-      </span>
-    </el-menu-item>
   </el-menu>
 </template>
 
 <script>
-import moment from 'moment'
-
 export default {
-  computed: {
-    lastUpdate() {
-      const lastUpdate = this.$store.getters['settings/lastUpdate']
-      const sha = lastUpdate.sha.substr(-7, 7)
-      const date = moment(lastUpdate.date)
-        .utcOffset(180)
-        .format('DD.MM.YYYY - HH:mm')
-
-      return { sha, date, message: lastUpdate.message }
-    }
-  },
   methods: {
     logout() {
       this.$store.dispatch('auth/logout')
@@ -154,6 +155,7 @@ export default {
 <style>
 .el-menu-vertical {
   min-height: 100vh;
+  transition: all 0s;
 }
 .el-menu-vertical:not(.el-menu--collapse) {
   width: 200px;

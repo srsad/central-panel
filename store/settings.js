@@ -9,7 +9,6 @@ import Cookies from 'js-cookie'
  */
 
 export const state = () => ({
-  lastUpdate: null, // последние данные по обновлению, sha + дата изменения + комментарий
   breadcrumbs: [], // хлебные крошки
   isCollapse: true, // скрытие/раскрытие бокового меню
   drawerCreateRole: false, // Окно для создания роли
@@ -27,7 +26,19 @@ export const state = () => ({
   drawerAddDevice: false, // Окно создания устроиства
   drawerUpdateNotRecording: false, // Окно редактирования "техники не для записи"
   drawerCreateForRecording: false, // Окно создания "техники для записи"
-  drawerUpdateForRecording: false // Окно редактирования "техники для записи"
+  drawerUpdateForRecording: false, // Окно редактирования "техники для записи"
+  drawerReportSummarySheetCreateBrand: false, // Окно создания бренда для отчета - вкладка "Сводные листы"
+  drawerReportSummarySheetUpdateBrand: false, // Окно обновления бренда для отчета - вкладка "Сводные листы"
+  drawerReportSummarySheetCreate: false, // Окно создания отчета - вкладка "Сводные листы"
+  drawerReportSummaryUpdateCreate: false, // Окно обновления отчета - вкладка "Сводные листы"
+  drawerCRMCreateStatus: false, // Окно создания статуса в CRM
+  drawerCRMUpdateStatus: false, // Окно обновления статуса в CRM
+  drawerCreateOrder: false, // Окно создания заявки в CRM
+  drawerUpdateOrder: false, // Окно обновления заявки в CRM
+  drawerCreateClient: false, // Окно создания клиента в CRM
+  drawerUpdateClient: false, // Окно обновления клиента в CRM
+  drawerSiteTestimonialCreate: false, // Окно создания отзыва
+  drawerSiteTestimonialUpdate: false // Окно редактирования отзыва
 })
 
 export const actions = {
@@ -44,29 +55,6 @@ export const actions = {
   },
   setBreadcrumbs({ commit }, breadcrumbs) {
     commit('SET_BREADCRUMBS', breadcrumbs)
-  },
-  async loadGitIngo({ commit }) {
-    try {
-      const git = await this.$axios.$get(
-        // `https://api.github.com/user/repos`,
-        `https://api.github.com/repos/srsad/central-panel/branches/alfa`,
-        {
-          headers: {
-            Authorization: 'token ' + process.env.GITHUB_TOKEN
-          }
-        }
-      )
-      commit('SET_LAST_UPDATE', {
-        sha: git.commit.sha,
-        message: git.commit.commit.message,
-        date: git.commit.commit.committer.date
-      })
-    } catch (e) {
-      console.error('Ошибка при получении данных из github', e.response)
-      commit('SET_ERROR', 'Ошибка при получении данных из github', {
-        root: true
-      })
-    }
   },
   /** Установка токена в axios */
   setToken() {
@@ -93,13 +81,9 @@ export const mutations = {
   /** Установка хлебных крошек */
   SET_BREADCRUMBS(state, breadcrumbs) {
     state.breadcrumbs = breadcrumbs
-  },
-  SET_LAST_UPDATE(state, lastUpdate) {
-    state.lastUpdate = lastUpdate
   }
 }
 
 export const getters = {
-  breadcrumbs: (state) => state.breadcrumbs,
-  lastUpdate: (state) => state.lastUpdate
+  breadcrumbs: (state) => state.breadcrumbs
 }

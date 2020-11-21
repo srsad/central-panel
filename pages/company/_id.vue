@@ -136,6 +136,8 @@ export default {
       })
       // загрузка неисправностей категории
       this.$store.dispatch('source/page/getParts')
+      // загрузка списка устроиств не для записи
+      this.$store.dispatch('recording/fetchNotRecordingDevice')
     }
   }
 }

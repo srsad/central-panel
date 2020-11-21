@@ -23,6 +23,7 @@
           </div>
         </template>
         <template slot-scope="scope">
+          <app-recording-device :name="scope.row.pagetitle" />
           <b class="color-000">{{ scope.row.pagetitle }}</b>
         </template>
       </el-table-column>
@@ -32,7 +33,12 @@
 </template>
 
 <script>
+import AppRecordingDevice from '~/components/categories/DeviceRecording'
+
 export default {
+  components: {
+    AppRecordingDevice
+  },
   data() {
     return {
       searchModel: ''

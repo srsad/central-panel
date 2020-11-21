@@ -37,28 +37,32 @@ export const actions = {
     commit('LOGOUT')
   },
   async autoLogin({ commit, dispatch }) {
-    const cookieStr = process.browser
-      ? document.cookie
-      : this.app.context.req.headers.cookie
+    try {
+      const cookieStr = process.browser
+        ? document.cookie
+        : this.app.context.req.headers.cookie
 
-    const cookies = Cookie.parse(cookieStr || '') || {}
-    const token = cookies['cp-token']
-    if (!token) return
-    const jwt = jwtDecode(token)
-    const user = await this.$axios.$get('/api/v1/user/get/' + jwt.userId)
-    // eslint-disable-next-line prettier/prettier
-    const rt = await this.$axios.$get('/api/v1/session/getfp/' + jwt.fingerprint)
-    if (!rt[0]) {
-      dispatch('logout')
-      return
-    }
+      const cookies = Cookie.parse(cookieStr || '') || {}
+      const token = cookies['cp-token']
+      if (!token) return
+      const jwt = jwtDecode(token)
+      const user = await this.$axios.$get('/api/v1/user/get/' + jwt.userId)
+      // eslint-disable-next-line prettier/prettier
+      const rt = await this.$axios.$get('/api/v1/session/getfp/' + jwt.fingerprint)
+      if (!rt[0]) {
+        dispatch('logout')
+        return
+      }
 
-    commit('SET_REFRESH_TOKEN', rt[0]._id)
-    commit('SET_USER_DATA', user)
-    if (isJWTValid(token)) {
-      commit('SET_TOKEN', token)
-    } else {
-      dispatch('logout')
+      commit('SET_REFRESH_TOKEN', rt[0]._id)
+      commit('SET_USER_DATA', user)
+      if (isJWTValid(token)) {
+        commit('SET_TOKEN', token)
+      } else {
+        dispatch('logout')
+      }
+    } catch (e) {
+      console.error('Не удалось авторизоваться -', e.message)
     }
   }
 }

@@ -117,8 +117,17 @@
           <el-tab-pane label="Аналитика" name="analytics" class="row">
             <div class="col-4">
               <el-form-item prop="priority" label="Приоритет">
-                <el-input-number
+                <el-input
                   v-model="form.priority"
+                  size="mini"
+                  controls-position="right"
+                />
+              </el-form-item>
+            </div>
+            <div class="col-4">
+              <el-form-item prop="priority2" label="Приоритет 2">
+                <el-input-number
+                  v-model="form.priority2"
                   :min="0"
                   :max="10"
                   size="mini"
@@ -126,6 +135,18 @@
                 />
               </el-form-item>
             </div>
+            <div class="col-4">
+              <el-form-item prop="priority3" label="Приоритет 3">
+                <el-input-number
+                  v-model="form.priority3"
+                  :min="0"
+                  :max="10"
+                  size="mini"
+                  controls-position="right"
+                />
+              </el-form-item>
+            </div>
+            <!-- 
             <div class="col-4">
               <el-form-item prop="login" label="Логин">
                 <el-input
@@ -145,6 +166,7 @@
                 />
               </el-form-item>
             </div>
+             -->
             <div class="col-12">
               <el-form-item prop="yametrika" label="Yandex метрика">
                 <el-input
@@ -191,11 +213,11 @@
                 <el-input v-model="form.phone_default" placeholder="Телефон" />
               </el-form-item>
             </div>
-            <div class="col-12">
+            <!-- <div class="col-12">
               <el-form-item prop="phone" label="Номер телефона/визитка">
                 <el-input v-model="form.phone" placeholder="Телефон" />
               </el-form-item>
-            </div>
+            </div> -->
             <div class="col-12">
               <el-form-item prop="address" label="Адрес">
                 <el-input v-model="form.address" placeholder="Адрес" />
@@ -256,6 +278,8 @@ export default {
         description: '',
         // аналитика
         priority: 0,
+        priority2: 0,
+        priority3: 0,
         accaunts: {
           login: '',
           password: ''
@@ -271,7 +295,14 @@ export default {
         phone_default: '',
         phone: ''
       },
-      companyes: ['R-Service', 'Impuls'],
+      companyes: [
+        'R-service СПб',
+        'R-service МСК',
+        'Impuls СПб',
+        'Impuls МСК',
+        'R-Service',
+        'Impuls'
+      ],
       cities: [
         { value: 'spb', label: 'Санкт-Петербург' },
         { value: 'msk', label: 'Москва' },
@@ -361,7 +392,7 @@ export default {
         const formData = this.form
         formData.domain = this.getSource()
         await this.$store.dispatch('domains/updateDomain', formData)
-        this.$store.dispatch('domains/fetchDomains')
+        // this.$store.dispatch('domains/fetchDomains')
         this.$notify({
           message: 'Данные обновлены!',
           customClass: 'success-notyfy'
@@ -406,6 +437,8 @@ export default {
       this.form.company = ''
       this.form.description = ''
       this.form.priority = 0
+      this.form.priority2 = 0
+      this.form.priority3 = 0
       this.form.accaunts = { login: '', password: '' }
       this.form.yametrika = { code: '' }
       this.form.analytics = { code: '' }

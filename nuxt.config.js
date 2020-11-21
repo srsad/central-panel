@@ -1,4 +1,7 @@
+require('dotenv').config()
+
 module.exports = {
+  telemetry: false,
   mode: 'universal',
   /*
    ** Headers of the page
@@ -16,6 +19,17 @@ module.exports = {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
+  /**
+   * Переменные окружения
+   */
+  env: {
+    REMONLINE_API_KEY: process.env.REMONLINE_API_KEY,
+    REMONLINE_PROXY: process.env.REMONLINE_PROXY,
+    YANDEX_MASTER_KEY: process.env.YANDEX_MASTER_KEY,
+    YANDEX_CLIENT_ID: process.env.YANDEX_CLIENT_ID,
+    DADATA_API_KEY: process.env.DADATA_API_KEY,
+    DADATA_SECRET_KEY: process.env.DADATA_SECRET_KEY
+  },
   /*
    ** Customize the progress-bar color
    */
@@ -27,6 +41,11 @@ module.exports = {
     'element-ui/lib/theme-chalk/index.css',
     '@assets/sass/styles.sass',
     'font-awesome/css/font-awesome.min.css'
+  ],
+  buildModules: [
+    // Doc: https://github.com/nuxt-community/eslint-module
+    '@nuxtjs/eslint-module',
+    ['@nuxtjs/dotenv'],
   ],
   /*
    ** Plugins to load before mounting the App
@@ -44,7 +63,7 @@ module.exports = {
   /*
    ** Nuxt.js dev-modules
    */
-  devModules: [
+  buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module'
   ],

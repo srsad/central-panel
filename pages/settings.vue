@@ -23,6 +23,13 @@
         >
           <app-cityes />
         </el-tab-pane>
+        <el-tab-pane
+          v-if="$abilities('settings-yandex_profiles_panel-read')"
+          label="Яндекс аккаунты"
+          name="yandex"
+        >
+          <app-yandex-profiles />
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -31,20 +38,19 @@
 <script>
 import AppApiKey from '~/components/settings/ApiKeys'
 import AppCityes from '~/components/settings/Cityes'
+import AppYandexProfiles from '~/components/settings/YandexProfiles'
 import AppOtherSettings from '~/components/settings/OtherSettings'
 
 export default {
   components: {
     AppApiKey,
     AppCityes,
+    AppYandexProfiles,
     AppOtherSettings
   },
-  computed: {
-    activeTab() {
-      if (this.$abilities('settings-options_panel')) return 'settings'
-      if (this.$abilities('settings-api_key_panel-read')) return 'apikey'
-      if (this.$abilities('settings-city_panel-read')) return 'city'
-      return 'settings'
+  data() {
+    return {
+      activeTab: 'settings'
     }
   },
   fetch({ store }) {
@@ -54,6 +60,9 @@ export default {
         label: 'Настройки'
       }
     ])
+  },
+  mounted() {
+    if (window.location.hash === '#yandex') this.activeTab = 'yandex'
   }
 }
 </script>
