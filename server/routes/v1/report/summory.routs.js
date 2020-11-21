@@ -16,7 +16,7 @@ const router = Router()
  * @group summoryReport - Отчеты (защищенные роуты)
  * @route POST /api/v1/report/summory/create
  * @summary Создания отчета
- * @param {SummoryReport.model} body.body.required - Сводная таблица с отчетами
+ * @param {ReportSummory.model} body.body.required - Сводная таблица с отчетами
  * @returns {object} 201 - При успешном создании
  * @returns {Error} default - При возникновении ошибки
  * @security JWT
@@ -33,7 +33,7 @@ router.post(
  * @route PUT /api/v1/report/summory/update/:id
  * @summary Обновление отчета
  * @param {string} id.query.required - id обнвляемого отчета
- * @param {SummoryReport.model} body.body.required - новые данные
+ * @param {ReportSummory.model} body.body.required - новые данные
  * @returns {object} 200 - При успешном обновлении
  * @returns {Error} default - При возникновении ошибки
  * @security JWT
@@ -50,7 +50,7 @@ router.put(
  * @route DELETE /api/v1/report/summory/remove/:id
  * @summary Удаление отчета
  * @param {string} id.query.required - id удаляемого отчета
- * @returns {object} 200 - При успешном обновлении
+ * @returns {object} 200 - При успешном удалении
  * @returns {Error} default - При возникновении ошибки
  * @security JWT
  */
@@ -66,7 +66,7 @@ router.delete(
  * @route GET /api/v1/report/summory/get/:id
  * @summary Вывод отчета по id
  * @param {string} id.query.required - id возвращаемого отчета
- * @returns {object} 200 - При успешном обновлении
+ * @returns {object} 200 - При успешном выводе
  * @returns {Error} default - При возникновении ошибки
  * @security JWT
  */
@@ -81,7 +81,7 @@ router.get(
  * @group summoryReport - Отчеты (защищенные роуты)
  * @route GET /api/v1/report/summory/getall/
  * @summary Вывод всех отчетов
- * @returns {object} 200 - При успешном обновлении
+ * @returns {object} 200 - При успешном выводе
  * @returns {Error} default - При возникновении ошибки
  * @security JWT
  */
