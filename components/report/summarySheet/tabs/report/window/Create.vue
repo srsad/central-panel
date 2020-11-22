@@ -76,6 +76,7 @@
               @change="uploadFromExcel"
               :disabled="loading"
               type="file"
+              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
               style="display:none"
             />
           </label>
@@ -233,9 +234,10 @@ export default {
           reader.readAsArrayBuffer(file)
         }
       } catch (e) {
-        console.error('Ошибка при попытке загрузки ексель, файла.', e)
+        console.error('Ошибка при попытке загрузки ексель файла.', e)
       } finally {
         this.loading = false
+        e.path[0].value = '' // отчищаем input file для повторной загрузки файла
       }
     },
     /**
@@ -243,13 +245,13 @@ export default {
      */
     async excelParse() {
       this.loading = true
-      // const brandList = []
       for await (const row of this.excelList) {
         let brand = row[33].split(',')
         brand = brand[0].trim()
 
         // eslint-disable-next-line
         let brandId = this.brandList.find((el) => el.name.toLowerCase() === brand.toLowerCase())
+
         // если бренд не найден, то создаем и созвращаем его id
         if (typeof brandId === 'undefined') {
           await this.createBrand(brand)
@@ -262,7 +264,6 @@ export default {
         }
       }
       this.loading = false
-      // this.form.brands_id = brandList
     },
     /**
      * Создание новго бренда

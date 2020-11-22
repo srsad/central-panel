@@ -70,8 +70,9 @@
             <input
               @change="uploadFromExcel"
               :disabled="loading"
-              style="display:none"
               type="file"
+              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+              style="display:none"
             />
           </label>
         </el-popover>
@@ -92,6 +93,7 @@
               @change="uploadFromExcel"
               :disabled="loading"
               type="file"
+              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
               style="display:none"
             />
           </label>
