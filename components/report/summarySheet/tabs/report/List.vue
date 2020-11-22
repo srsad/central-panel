@@ -70,8 +70,9 @@
             <input
               @change="uploadFromExcel"
               :disabled="loading"
-              style="display:none"
               type="file"
+              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+              style="display:none"
             />
           </label>
         </el-popover>
@@ -92,6 +93,7 @@
               @change="uploadFromExcel"
               :disabled="loading"
               type="file"
+              accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
               style="display:none"
             />
           </label>
@@ -344,7 +346,6 @@
 </template>
 
 <script>
-// eslint-disable-next-line
 import XLSX from 'xlsx'
 /* eslint-disable prettier/prettier */
 import Rem from '~/utils/remonline.js'
@@ -586,7 +587,6 @@ export default {
      * Обновление отчета
      */
     async updateTable() {
-      console.log('updateTable')
       this.loading = true
 
       for await (const item of this.tableData.brands) {
@@ -930,34 +930,34 @@ export default {
     uploadFromExcel(e) {
       try {
         const files = e.target.files
-        const file = files[0];
+        const file = files[0]
 
-        const reader = new FileReader();
+        const reader = new FileReader()
         const rABS = !!reader.readAsBinaryString
 
         reader.onload = (e) => {
           let data = e.target.result
-          if(!rABS) data = new Uint8Array(data)
+          if (!rABS) data = new Uint8Array(data)
           const wb = XLSX.read(data, {type: rABS ? 'binary' : 'array'})
 
-          let result = {};
+          let result = {}
           wb.SheetNames.forEach((sheetName) => {
             const roa = XLSX.utils.sheet_to_json(wb.Sheets[sheetName], { header: 1 })
-            if(roa.length) result = roa
+            if (roa.length) result = roa
           })
           result.shift() // удаляем первую строку
           this.excelList = result // устанавливаем получившийся результат
           this[this.excelListType]() // устанавливаем данные из ексельки
         }
 
-        if(rABS) {
+        if (rABS) {
           reader.readAsBinaryString(file)
         } else {
           reader.readAsArrayBuffer(file)
         }
       } catch (e) {
         console.error(
-          'Ошибка при попытке закгрузки ексель, файла.',
+          'Ошибка при попытке загрузки ексель, файла.',
           'Используемый метод', this.excelListType,
           'ошибка', e
         )
