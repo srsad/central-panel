@@ -607,7 +607,7 @@ export default {
         }
 
         // (c4+c5) | requests.chanel.pk+requests.chanel.seo
-        const orderRang = +item.requests.chanel.pk + item.requests.chanel.seo
+        const orderRang = +item.requests.chanel.pk + +item.requests.chanel.seo
         // (R4+S4+T4+U4) | common_expenses.balance+common_expenses.pk+common_expenses.seo+common_expenses.common
         // Расходы->Баланс + Расходы->РК + Расходы->SEO + Расходы->Алока и т.д
         const commonExpenses =
@@ -617,7 +617,7 @@ export default {
           +item.common_expenses.common
 
         // заявки
-        const requestsTraffikPrice = Math.round((+item.common_expenses.balance + item.common_expenses.seo) / orderRang)
+        const requestsTraffikPrice = Math.round((+item.common_expenses.balance + +item.common_expenses.seo) / +orderRang)
         const requestsCommonPrice = Math.round(commonExpenses / orderRang)
         item.requests.traffik_price = isFinite(requestsTraffikPrice) ? requestsTraffikPrice : 0
         item.requests.common_price = isFinite(requestsCommonPrice) ? requestsCommonPrice : 0
