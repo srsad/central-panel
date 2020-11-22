@@ -13,7 +13,7 @@ const router = Router()
 
 /**
  * Создания отчета
- * @group summoryReport - Отчеты (защищенные роуты)
+ * @group summoryReport - Отчеты, сводная таблица (защищенные роуты)
  * @route POST /api/v1/report/summory/create
  * @summary Создания отчета
  * @param {ReportSummory.model} body.body.required - Сводная таблица с отчетами
@@ -29,7 +29,7 @@ router.post(
 
 /**
  * Обновление отчета
- * @group summoryReport - Отчеты (защищенные роуты)
+ * @group summoryReport - Отчеты, сводная таблица (защищенные роуты)
  * @route PUT /api/v1/report/summory/update/:id
  * @summary Обновление отчета
  * @param {string} id.query.required - id обнвляемого отчета
@@ -46,7 +46,7 @@ router.put(
 
 /**
  * Удаление отчета
- * @group summoryReport - Отчеты (защищенные роуты)
+ * @group summoryReport - Отчеты, сводная таблица (защищенные роуты)
  * @route DELETE /api/v1/report/summory/remove/:id
  * @summary Удаление отчета
  * @param {string} id.query.required - id удаляемого отчета
