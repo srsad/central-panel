@@ -1,5 +1,8 @@
 /**
  * Модель для вебхуков
+ * @typedef AnalyticsWebhook - Модель вебхуков
+ * @property {string} hook_name.required - сервиса откуда лети вебхук
+ * @property {Array.<string>} params - массив данных вебхука
  */
 const { model, Schema } = require('mongoose')
 
