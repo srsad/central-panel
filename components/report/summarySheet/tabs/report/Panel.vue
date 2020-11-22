@@ -21,9 +21,9 @@
       </el-button>
       <el-select v-model="report" size="mini" placeholder="Выберите период">
         <el-option
-          v-for="item in options"
+          v-for="item in reports"
           :key="item._id"
-          :label="item.name"
+          :label="`${item.name} - ${item.branch}`"
           :value="item._id"
         >
         </el-option>
@@ -68,7 +68,7 @@ export default {
     }
   },
   computed: {
-    options() {
+    reports() {
       return this.$store.getters['report/summary/reports']
     }
   },
