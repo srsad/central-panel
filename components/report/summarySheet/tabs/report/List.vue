@@ -10,7 +10,7 @@
           class="saveTable"
           type="success"
           size="mini"
-          icon="el-icon-receiving"
+          icon="fa fa-floppy-o"
           title="Сохранить данные"
         />
         <el-popover
