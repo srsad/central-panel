@@ -354,12 +354,12 @@
 import XLSX from 'xlsx'
 /* eslint-disable prettier/prettier */
 import Rem from '~/utils/remonline.js'
-import AppTotalRow from '~/components/report/summarySheet/tabs/report/TotalRow'
+// import AppTotalRow from '~/components/report/summarySheet/tabs/report/TotalRow'
 const rem = new Rem(process.env.REMONLINE_API_KEY, true)
 
 export default {
   components: {
-    AppTotalRow
+    // AppTotalRow
   },
   data() {
     return {
