@@ -11,11 +11,7 @@ export const actions = {
   async fetchItems({ commit }) {
     try {
       const reportList = await this.$axios.$get('/api/v1/report/summory/getall')
-      // eslint-disable-next-line
-      const reports = reportList.map(({ _id, name, branch_id }) => {
-        return { _id, name, branch: branch_id.name }
-      })
-      commit('SET_REPORTS', reports)
+      commit('SET_REPORTS', reportList)
     } catch (e) {
       commit('SET_ERROR', e.response.data.message, { root: true })
       throw e

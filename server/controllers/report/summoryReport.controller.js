@@ -19,11 +19,7 @@ module.exports.create = async (req, res) => {
 module.exports.update = async (req, res) => {
   const $set = req.body
   try {
-    await Report.findOneAndUpdate(
-      { _id: req.params.id },
-      { $set },
-      { new: true }
-    )
+    await Report.findOneAndUpdate({ _id: req.params.id }, { $set }, { new: true })
     res.json({ message: 'Данные обновленны!' })
   } catch (error) {
     res.status(500).json({ message: 'Не удалось обновить данные!', error })
@@ -43,11 +39,9 @@ module.exports.remove = async (req, res) => {
 /** Вернуть по id */
 module.exports.getById = async (req, res) => {
   try {
-    const report = await Report.findById(
-      req.params.id
-    )
-    .populate('brands.brand', { name: 1 })
-    .populate('branch_id', { name: 1, branch_id: 1 })
+    const report = await Report.findById(req.params.id)
+      .populate('brands.brand', { name: 1 })
+      .populate('branch_id', { name: 1, branch_id: 1 })
 
     res.status(200).json(report)
   } catch (error) {
@@ -58,13 +52,9 @@ module.exports.getById = async (req, res) => {
 /** Вернуть весь список */
 module.exports.getAll = async (req, res) => {
   try {
-    const reports = await Report.find()
-    .populate('branch_id', { name: 1, branch_id: 1 })
-    .sort({ created: -1 })
+    const reports = await Report.find({}, { name: 1 }).sort({ created: -1 })
     res.json(reports)
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: 'Не удалось получить список отчетов!', error })
+    res.status(500).json({ message: 'Не удалось получить список отчетов!', error })
   }
 }
