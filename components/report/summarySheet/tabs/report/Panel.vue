@@ -23,10 +23,9 @@
         <el-option
           v-for="item in reports"
           :key="item._id"
-          :label="`${item.name} - ${item.branch}`"
+          :label="item.name"
           :value="item._id"
-        >
-        </el-option>
+        />
       </el-select>
       <el-button
         @click="loadReport"

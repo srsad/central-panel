@@ -33,7 +33,7 @@
       </div>
       <div class="mb-20">
         <el-form-item prop="branch_id" label="Филиал">
-          <el-select v-model="form.branch_id" class="w100">
+          <el-select v-model="form.branch_id" multiple class="w100">
             <el-option
               v-for="(item, idx) in $store.getters['report/branch/branches']"
               :key="idx"
@@ -45,6 +45,15 @@
       </div>
       <div class="mb-25">
         <el-form-item prop="brands_id" class="mb-20" label="Бренды">
+          <div
+            v-if="form.brands_id.length > 0"
+            class="text-right"
+            style="margin-top:-36px"
+          >
+            <el-button type="danger" size="mini" @click="clearBrends">
+              Удалить все бренды
+            </el-button>
+          </div>
           <el-select
             v-model="form.brands_id"
             class="w100"
@@ -106,8 +115,9 @@ export default {
       form: {
         name: 'Отчет за - ' + moment().format('MM/YYYY'),
         brands_id: [],
-        branch_id: '',
-        period: []
+        branch_id: [],
+        period: [],
+        brands: [] // сюда загружается связка brand + branch
       },
       rules: {
         name: [
@@ -245,12 +255,23 @@ export default {
      */
     async excelParse() {
       this.loading = true
+      // временная таблица для хранения бренд_филиал
+      const brandAndBranch = new Map()
+      // временная таблица для хранения наименование филиала + id филиала
+      const branchMap = new Map()
+
+      // наполняю branchMap актуальными данными
+      for (const item of this.$store.getters['report/branch/branches']) {
+        branchMap.set(item.name, item._id)
+      }
+
       for await (const row of this.excelList) {
         let brand = row[33].split(',')
         brand = brand[0].trim()
-
+        const branch = row[23].trim()
         // eslint-disable-next-line
         let brandId = this.brandList.find((el) => el.name.toLowerCase() === brand.toLowerCase())
+        const branchId = branchMap.get(branch)
 
         // если бренд не найден, то создаем и созвращаем его id
         if (typeof brandId === 'undefined') {
@@ -259,11 +280,28 @@ export default {
           brandId = this.brandList.find((el) => el.name.toLowerCase() === brand.toLowerCase())
         }
 
+        // загружаем id бренда
         if (!this.form.brands_id.includes(brandId._id)) {
           this.form.brands_id.push(brandId._id)
         }
+
+        // загружаем id филиала
+        if (!this.form.branch_id.includes(branchId)) {
+          this.form.branch_id.push(branchId)
+        }
+
+        // проверяем наличие пары бренд + филиал
+        if (!brandAndBranch.get(`${brandId._id}_${branchId}`)) {
+          this.form.brands.push({
+            brand: brandId._id,
+            branch: branchId
+          })
+          brandAndBranch.set(`${brandId._id}_${branchId}`, '+')
+        }
       }
+      brandAndBranch.clear()
       this.loading = false
+      this.excelList = []
     },
     /**
      * Создание новго бренда
@@ -281,16 +319,32 @@ export default {
         )
       }
     },
+    /**
+     * Закрыть окно
+     */
     onClose() {
       this.$store.commit('settings/SWITCH_DRAWNER', {
         dranwer: 'drawerReportSummarySheetCreate',
         status: false
       })
     },
+    /**
+     * Отчистить бренды
+     */
+    clearBrends() {
+      this.form.brands_id = []
+      this.form.brands_id = []
+    },
+    /**
+     * Отчистить форму
+     */
     clearForm() {
       this.form.name = 'Отчет за - ' + moment().format('MM/YYYY')
       this.form.brands_id = []
+      this.form.branch_id = []
       this.form.period = []
+      this.form.brands = []
+      this.excelList = []
     }
   }
 }

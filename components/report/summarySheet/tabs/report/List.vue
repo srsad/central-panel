@@ -333,8 +333,13 @@
         <el-table-column prop="delta" fixed="right" label="Дельта" />
         <el-table-column prop="profit" fixed="right" label="Прибыль" />
         <el-table-column prop="spz" fixed="right" label="СПЗ" />
-        <!--  -->
+        <!-- total -->
+        <!-- <el-table-column slot="append">
+          <app-total-row :total="tableData.total" />
+        </el-table-column> -->
+        <!-- / total -->
       </el-table>
+
       <!--  -->
       <div class="text-center mt-20 mb-10 d-none">
         <el-button :loading="loading" type="info" icon="el-icon-edit">
@@ -349,9 +354,13 @@
 import XLSX from 'xlsx'
 /* eslint-disable prettier/prettier */
 import Rem from '~/utils/remonline.js'
+import AppTotalRow from '~/components/report/summarySheet/tabs/report/TotalRow'
 const rem = new Rem(process.env.REMONLINE_API_KEY, true)
 
 export default {
+  components: {
+    AppTotalRow
+  },
   data() {
     return {
       loading: false,
@@ -371,9 +380,11 @@ export default {
     }
   },
   methods: {
+    // TODO перевести в фильтры
     priceMask(val) {
       return val ? `${val} ₽` : '-'
     },
+
     /**
      * Удаление отчета
      */
@@ -499,6 +510,7 @@ export default {
         this.loading = false
       }
     },
+
     /**
      * Загрузка двнных из ремонлайн - Клиент закрыт
      */
@@ -654,6 +666,7 @@ export default {
         const spz = Math.round(+item.profit / item.orders)
         item.spz = isFinite(spz) ? spz : 0
       }
+      await this.countingTheTotal()
       try {
         await this.$axios.$put(
           '/api/v1/report/summory/update/' + this.tableData._id,
@@ -664,219 +677,79 @@ export default {
       } finally {
         this.loading = false
       }
+    },
 
-      /*
-        {
-          "brands_id": [
-            "5f0b0169969ad75f902e7a3e",
-            "5f0b06a2969ad75f902e7a3f",
-            "5f0b09ca969ad75f902e7a41",
-            "5f0b0aec969ad75f902e7a42"
-          ],
-          "_id": "5f14499affeea60c3cac06db",
-          "name": "Отчет за - 07/2020",
-          "period": "2020-07-01 2020-07-31",
-          "brands": [
-            {
-              // заявки
-              "requests": {
-                "chanel": {
-                  "pk": 0,
-                  "seo": 0
-                },
-                // цена за трафик
-                "traffik_price": 0, (common_expenses.balance+common_expenses.seo)/(requests.chanel.pk+requests.chanel.seo)
-                // цена общая
-                "common_price": 0 (common_expenses.balance+common_expenses.pk+common_expenses.seo+common_expenses.common)/(requests.chanel.pk+requests.chanel.seo)
-              },
-              // Запись
-              "order": {
-                "count": null, // + запись_кол-во
-                "traffik_price": null, // common_expenses.balance/order.count
-                "common_price": null, // (common_expenses.balance+common_expenses.pk+common_expenses.seo+common_expenses.common)/order.count
-                "conversion": 0 // order.count/(requests.chanel.pk+requests.chanel.seo)
-              },
-              // Пришёл в СЦ
-              "came_to_sc": {
-                "count": null, // + пришёл_в_СЦ_кол-во
-                "traffik_price": null, // common_expenses.balance/came_to_sc.count
-                "common_price": null, // (common_expenses.balance+common_expenses.pk+common_expenses.seo+common_expenses.common)/came_to_sc.count
-                "conversion": 0 // came_to_sc.count/(requests.chanel.pk+requests.chanel.seo)
-              },
-              // Клиент закрыт
-              "order_closed": {
-                "count": null, // клиент_закрыт_кол-во
-                "traffik_price": null, // common_expenses.balance/order_closed.count
-                "common_price": null, // (common_expenses.balance+common_expenses.pk+common_expenses.seo+common_expenses.common)/order_closed.count
-                "conversion": 0 // order_closed.count/(requests.chanel.pk+requests.chanel.seo)
-              },
-              // Расходы
-              "common_expenses": {
-                "balance": 0, // common_expenses.balance
-                "pk": 0, // common_expenses.pk
-                "seo": 0, // common_expenses.seo
-                "common": 0 // common_expenses.common
-              },
-              "revenue": null, // выручка
-              "expenses": null, // расходы
-              "val": 0, // выручка-расходы
-              "orders": null, // заказы
-              "wed_check": null, // (val/orders)
-              "delta": null, // wed_check - came_to_sc.common_price
-              "profit": 0, // (val*0,65)-(came_to_sc.count*70)-(common_expenses.balance+common_expenses.pk+common_expenses.seo+common_expenses.common)
-              "spz": null, // profit/orders
-              "_id": "5f14499affeea60c3cac06dc",
-              "brand": {
-                "_id": "5f0b0169969ad75f902e7a3e",
-                "name": "Sony"
-              }
-            },
-            {
-              "requests": {
-                "chanel": {
-                  "pk": 0,
-                  "seo": 0
-                },
-                "traffik_price": 0,
-                "common_price": 0
-              },
-              "order": {
-                "count": null,
-                "traffik_price": null,
-                "common_price": null,
-                "conversion": 0
-              },
-              "came_to_sc": {
-                "count": null,
-                "traffik_price": null,
-                "common_price": null,
-                "conversion": 0
-              },
-              "order_closed": {
-                "count": null,
-                "traffik_price": null,
-                "common_price": null,
-                "conversion": 0
-              },
-              "common_expenses": {
-                "balance": 0,
-                "pk": 0,
-                "seo": 0,
-                "common": 0
-              },
-              "revenue": null,
-              "expenses": null,
-              "val": 0,
-              "orders": null,
-              "wed_check": null,
-              "delta": null,
-              "profit": 0,
-              "spz": null,
-              "_id": "5f14499affeea60c3cac06dd",
-              "brand": {
-                "_id": "5f0b06a2969ad75f902e7a3f",
-                "name": "Samsung"
-              }
-            },
-            {
-              "requests": {
-                "chanel": {
-                  "pk": 0,
-                  "seo": 0
-                },
-                "traffik_price": 0,
-                "common_price": 0
-              },
-              "order": {
-                "count": null,
-                "traffik_price": null,
-                "common_price": null,
-                "conversion": 0
-              },
-              "came_to_sc": {
-                "count": null,
-                "traffik_price": null,
-                "common_price": null,
-                "conversion": 0
-              },
-              "order_closed": {
-                "count": null,
-                "traffik_price": null,
-                "common_price": null,
-                "conversion": 0
-              },
-              "common_expenses": {
-                "balance": 0,
-                "pk": 0,
-                "seo": 0,
-                "common": 0
-              },
-              "revenue": null,
-              "expenses": null,
-              "val": 0,
-              "orders": null,
-              "wed_check": null,
-              "delta": null,
-              "profit": 0,
-              "spz": null,
-              "_id": "5f14499affeea60c3cac06de",
-              "brand": {
-                "_id": "5f0b09ca969ad75f902e7a41",
-                "name": "Asus"
-              }
-            },
-            {
-              "requests": {
-                "chanel": {
-                  "pk": 0,
-                  "seo": 0
-                },
-                "traffik_price": 0,
-                "common_price": 0
-              },
-              "order": {
-                "count": null,
-                "traffik_price": null,
-                "common_price": null,
-                "conversion": 0
-              },
-              "came_to_sc": {
-                "count": null,
-                "traffik_price": null,
-                "common_price": null,
-                "conversion": 0
-              },
-              "order_closed": {
-                "count": null,
-                "traffik_price": null,
-                "common_price": null,
-                "conversion": 0
-              },
-              "common_expenses": {
-                "balance": 0,
-                "pk": 0,
-                "seo": 0,
-                "common": 0
-              },
-              "revenue": null,
-              "expenses": null,
-              "val": 0,
-              "orders": null,
-              "wed_check": null,
-              "delta": null,
-              "profit": 0,
-              "spz": null,
-              "_id": "5f14499affeea60c3cac06df",
-              "brand": {
-                "_id": "5f0b0aec969ad75f902e7a42",
-                "name": "Apple"
-              }
-            }
-          ],
-          "created": "2020-07-19T13:24:42.057Z",
-          "__v": 0
+    /**
+     * Подсчет итогов
+     */
+    async countingTheTotal() {
+      try {
+        // обнуляем базовые данные
+        this.tableData.total.requests.pkSeo = 0
+        this.tableData.total.order.count = 0
+        this.tableData.total.came_to_sc.count = 0
+        this.tableData.total.order_closed.count = 0
+
+        this.tableData.total.common_expenses.balance = 0
+        this.tableData.total.common_expenses.pk = 0
+        this.tableData.total.common_expenses.seo = 0
+        this.tableData.total.common_expenses.common = 0
+
+        this.tableData.total.revenue = 0
+        this.tableData.total.expenses = 0
+        this.tableData.total.orders = 0
+
+        for await (const item of this.tableData.brands) {
+          // заявки - реклама + сео
+          this.tableData.total.requests.pkSeo += +item.requests.chanel.pk + +item.requests.chanel.seo
+          this.tableData.total.order.count += +item.order.count // запись кол-во
+          this.tableData.total.came_to_sc.count += +item.came_to_sc.count // пришел в СЦ
+          this.tableData.total.order_closed.count += +item.order_closed.count // клиент закрыт
+          // общие расходы
+          this.tableData.total.common_expenses.balance += +item.common_expenses.balance // Баланс
+          this.tableData.total.common_expenses.pk += +item.common_expenses.pk // РК
+          this.tableData.total.common_expenses.seo += +item.common_expenses.seo // СЕО
+          this.tableData.total.common_expenses.common += +item.common_expenses.common // Общие, алока и т.д
+
+          this.tableData.total.revenue += +item.revenue // основная выручка
+          this.tableData.total.expenses += +item.expenses // основные расходы
+          this.tableData.total.orders += +item.orders // заказы
         }
-      */
+        // блок расходы
+        // баланс + сео
+        const commonExpensesBalansAndSeo = +this.tableData.total.common_expenses.balance + +this.tableData.total.common_expenses.seo
+        // все расхоты (баланс + рк + сео + общее)
+        const allCommonExpenses = commonExpensesBalansAndSeo + this.tableData.total.common_expenses.pk + +this.tableData.total.common_expenses.common
+
+        // заявки
+        this.tableData.total.requests.traffik_price = Math.round(commonExpensesBalansAndSeo / +this.tableData.total.requests.pkSeo) // цена за трафик - (расходы_баланс_и_сео / заявки_реклама_и_сео)
+        this.tableData.total.requests.common_price = Math.round(allCommonExpenses / +this.tableData.total.requests.pkSeo) // цена общая - (все_расходы / заявки_реклама_и_сео)
+        // Запись
+        this.tableData.total.order.traffik_price = Math.round(commonExpensesBalansAndSeo / +this.tableData.total.order.count) // цена за трафик - (расходы_рк_сео / кол-во_записанных)
+        this.tableData.total.order.common_price = Math.round(allCommonExpenses / +this.tableData.total.order.count) // цена общая - (все_расходы / кол-во_записанных)
+        this.tableData.total.order.conversion = Math.round(+this.tableData.total.order.count / +this.tableData.total.requests.pkSeo * 100) // коверсия - (кол-во_записанных / заявки_реклама_и_сео)
+        // пришел в СЦ
+        this.tableData.total.came_to_sc.traffik_price = Math.round(commonExpensesBalansAndSeo / +this.tableData.total.came_to_sc.count) // цена за трафик - (расходы_рк_сео / кол-во_записанных)
+        this.tableData.total.came_to_sc.common_price = Math.round(allCommonExpenses / +this.tableData.total.came_to_sc.count) // цена общая - (все_расходы / кол-во_записанных)
+        this.tableData.total.came_to_sc.conversion = Math.round(+this.tableData.total.came_to_sc.count / +this.tableData.total.requests.pkSeo * 100) // коверсия - (кол-во_записанных / заявки_реклама_и_сео)
+        // клиент закрыт
+        this.tableData.total.order_closed.traffik_price = Math.round(commonExpensesBalansAndSeo / +this.tableData.total.order_closed.count) // цена за трафик - (расходы_рк_сео / кол-во_записанных)
+        this.tableData.total.order_closed.common_price = Math.round(allCommonExpenses / +this.tableData.total.order_closed.count) // цена общая - (все_расходы / кол-во_записанных)
+        this.tableData.total.order_closed.conversion = Math.round(+this.tableData.total.order_closed.count / +this.tableData.total.requests.pkSeo * 100) // коверсия - (кол-во_записанных / заявки_реклама_и_сео)
+
+        // Вал - (выручка - расхооды)
+        this.tableData.total.val = +this.tableData.total.revenue - +this.tableData.total.expenses
+        // Ср. чек - (вал / заказы)
+        this.tableData.total.wed_check = Math.round(+this.tableData.total.val / +this.tableData.total.orders)
+        // Дельта - (Ср. чек - пришел_сц_ср._цена)
+        this.tableData.total.delta = Math.round(+this.tableData.total.wed_check / +this.tableData.total.came_to_sc.common_price)
+        // прибыль - (вал * 0,65) - (пришел_сц_кол-вл * 70) - все_расходы
+        this.tableData.total.profit = Math.round((+this.tableData.total.val * 0.65) - (+this.tableData.total.came_to_sc.count * 70)) - +allCommonExpenses
+        // спз - (прибыль / заказы)
+        this.tableData.total.spz = Math.round(+this.tableData.total.profit / +this.tableData.total.orders)
+      } catch (e) {
+        console.error('Не удалось посчитать итог сводном отчете')
+      }
     },
 
     /**
@@ -886,6 +759,7 @@ export default {
     updateRowTable(row) {
       console.log('updateRowTable', row)
     },
+
     /**
      * Сохранить текущее состояние таблицы
      */
@@ -902,6 +776,7 @@ export default {
         this.loading = false
       }
     },
+
     /**
      * Удалить бренд из отчета
      */
@@ -924,6 +799,7 @@ export default {
         this.loading = false
       }
     },
+
     /**
      * Загрузть данные из excel
      */
@@ -947,6 +823,7 @@ export default {
           })
           result.shift() // удаляем первую строку
           this.excelList = result // устанавливаем получившийся результат
+          console.log('отправляемданные на сервер', this.excelList)
           this[this.excelListType]() // устанавливаем данные из ексельки
         }
 
@@ -963,6 +840,7 @@ export default {
         )
       }
     },
+
     /**
      * Установка данных из excel
      * Первый блок - открытые заявки
@@ -1000,6 +878,7 @@ export default {
       this.excelList = []
       this.updateTable() // обновляем расчеты
     },
+
     /**
      * Установка данных из excel
      * Второй блок - закрытые заявки
