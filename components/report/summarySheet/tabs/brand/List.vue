@@ -6,7 +6,7 @@
       :empty-text="$store.getters['domains/emptyText']"
       size="mini"
     >
-      <el-table-column prop="idx" width="40" label="#" />
+      <el-table-column prop="idx" width="50" label="#" />
       <el-table-column prop="name" label="Бренд" />
       <el-table-column label="Действия" label-class-name="text-center">
         <template slot-scope="scope">
