@@ -77,17 +77,17 @@ const summoryReportSchema = new Schema({
         // кол-во
         count: {
           type: Number,
-          default: ''
+          default: 0
         },
         // цена за трафик
         traffik_price: {
           type: Number,
-          default: ''
+          default: 0
         },
         // цена общая
         common_price: {
           type: Number,
-          default: ''
+          default: 0
         },
         // конверсия %
         conversion: {
@@ -100,17 +100,17 @@ const summoryReportSchema = new Schema({
         // кол-во
         count: {
           type: Number,
-          default: ''
+          default: 0
         },
         // цена за трафик
         traffik_price: {
           type: Number,
-          default: ''
+          default: 0
         },
         // цена общая
         common_price: {
           type: Number,
-          default: ''
+          default: 0
         },
         // конверсия %
         conversion: {
@@ -123,17 +123,17 @@ const summoryReportSchema = new Schema({
         // кол-во
         count: {
           type: Number,
-          default: ''
+          default: 0
         },
         // цена за трафик
         traffik_price: {
           type: Number,
-          default: ''
+          default: 0
         },
         // цена общая
         common_price: {
           type: Number,
-          default: ''
+          default: 0
         },
         // конверсия %
         conversion: {
@@ -167,12 +167,12 @@ const summoryReportSchema = new Schema({
       // Выручка
       revenue: {
         type: Number,
-        default: ''
+        default: 0
       },
       // Расходы
       expenses: {
         type: Number,
-        default: ''
+        default: 0
       },
       // Вал
       val: {
@@ -182,17 +182,17 @@ const summoryReportSchema = new Schema({
       // Заказы
       orders: {
         type: Number,
-        default: ''
+        default: 0
       },
       // Ср. чек
       wed_check: {
         type: Number,
-        default: ''
+        default: 0
       },
       // Дельта
       delta: {
         type: Number,
-        default: ''
+        default: 0
       },
       // Прибыль
       profit: {
@@ -202,7 +202,7 @@ const summoryReportSchema = new Schema({
       // СПЗ
       spz: {
         type: Number,
-        default: ''
+        default: 0
       }
     }
   ],
@@ -371,7 +371,7 @@ const summoryReportSchema = new Schema({
   }
 })
 
-module.exports = model('summory_reports', summoryReportSchema)
+module.exports = model('reports_summory', summoryReportSchema)
 
 /**
  * @typedef Brands - Объект с данными по бренду
