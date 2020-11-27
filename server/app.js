@@ -36,6 +36,9 @@ mongoose
   .then(() => console.log('MongoDB connected...'))
   .catch((e) => console.error('MongoDB connection error', e))
 
+app.use(express.json({ limit: '100mb' }))
+app.use(express.urlencoded({ limit: '100mb' }))
+
 app.use(cors())
 app.use(compression())
 // app.use(sessionMiddleware)
