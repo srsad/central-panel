@@ -5,9 +5,6 @@ const Report = require('../../models/report/summoryReport.model')
 module.exports.create = async (req, res) => {
   try {
     const fd = req.body
-    fd.brands = fd.brands_id.map((el) => {
-      return { brand: el }
-    })
     await Report.create(fd)
     res.status(201).json({ message: 'Отчет добавлен!' })
   } catch (error) {
@@ -41,6 +38,7 @@ module.exports.getById = async (req, res) => {
   try {
     const report = await Report.findById(req.params.id)
       .populate('brands.brand', { name: 1 })
+      .populate('brands.branch', { name: 1 })
       .populate('branch_id', { name: 1, branch_id: 1 })
 
     res.status(200).json(report)
