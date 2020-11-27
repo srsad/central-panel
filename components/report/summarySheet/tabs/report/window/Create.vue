@@ -50,7 +50,7 @@
             class="text-right"
             style="margin-top:-36px"
           >
-            <el-button type="danger" size="mini" @click="clearBrends">
+            <el-button @click="clearBrends" type="danger" size="mini">
               Удалить все бренды
             </el-button>
           </div>
@@ -303,6 +303,7 @@ export default {
       this.loading = false
       this.excelList = []
     },
+
     /**
      * Создание новго бренда
      */

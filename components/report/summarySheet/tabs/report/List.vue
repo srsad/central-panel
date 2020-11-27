@@ -1,8 +1,7 @@
 <template>
   <div>
-    <div v-if="tableData" style="display: inline-grid;">
+    <div v-if="tableData">
       <div class="col-12">
-        <h3>Филиал: {{ tableData.branch_id.name }}</h3>
         <!--  -->
         <el-button
           @click="saveTable"
@@ -27,7 +26,7 @@
           />
         </el-popover>
         <el-button
-          @click="updateTable"
+          @click="runWorkerUpdateTable"
           :loading="loading"
           class="updateTable2"
           type="primary"
@@ -62,7 +61,7 @@
         >
           <label
             slot="reference"
-            @click="() => (excelListType = 'excelSetOpenParams')"
+            @click="() => (excelListType = 'runWorkerOpenParams')"
           >
             <span class="el-button el-button--default el-button--mini">
               <i class="el-icon-download"></i>
@@ -84,7 +83,7 @@
         >
           <label
             slot="reference"
-            @click="() => (excelListType = 'excelSetCloseParams')"
+            @click="() => (excelListType = 'runWorkerCloseParams')"
           >
             <span class="el-button el-button--info el-button--mini">
               <i class="el-icon-download"></i>
@@ -101,251 +100,22 @@
         <!--  -->
       </div>
       <!--  -->
-      <el-table :data="tableData.brands">
-        <el-table-column
-          prop="brand.name"
-          label="Сайт"
-          width="150"
-          fixed="left"
-        >
-          <template slot-scope="scope">
-            {{ scope.row.brand.name }}
-            <!-- Обновление бренда отчета -->
-            <el-button
-              @click="updateRowTable(scope.row)"
-              :disabled="true"
-              :loading="loading"
-              class="updateTableRow"
-              type="primary"
-              size="mini"
-              icon="el-icon-refresh"
-              title="Обновить данные этого бренда"
-            />
-            <!-- /Обновление бренда отчета -->
-            <!-- Удаление бренда в данном отчете -->
-            <el-popconfirm
-              @onConfirm="removeTableRow(scope.row)"
-              title="Удалить бренд из отчета?"
-              confirm-button-text="Да"
-              confirm-button-type="success"
-              cancel-button-type="default"
-              cancel-button-text="Нет, спасибо"
-            >
-              <el-button
-                slot="reference"
-                :loading="loading"
-                class="removeTableRow pt-10 pointer"
-                type="danger"
-                size="mini"
-                icon="el-icon-delete"
-                title="Удалить бренд"
-              />
-            </el-popconfirm>
-            <!-- /Удаление бренда в данном отчете -->
-          </template>
-        </el-table-column>
-        <el-table-column label="Канал" width="70">
-          <template>
-            PK <br />
-            SEO
-          </template>
-        </el-table-column>
-        <!--  -->
-        <el-table-column label="Заявки">
-          <el-table-column label="кол-во">
-            <template slot-scope="scope">
-              <el-input
-                v-model="scope.row.requests.chanel.pk"
-                :disabled="loading"
-                size="mini"
-              />
-              <br />
-              <el-input
-                v-model="scope.row.requests.chanel.seo"
-                :disabled="loading"
-                size="mini"
-              />
-            </template>
-          </el-table-column>
-          <el-table-column label="цена за трафик">
-            <template slot-scope="scope">
-              {{ scope.row.requests.traffik_price }} ₽
-            </template>
-          </el-table-column>
-          <el-table-column label="цена общая">
-            <template slot-scope="scope">
-              {{ scope.row.requests.common_price }} ₽
-            </template>
-          </el-table-column>
-        </el-table-column>
-        <!--  -->
-        <el-table-column label="Запись">
-          <el-table-column label="кол-во">
-            <template slot-scope="scope">
-              <el-input
-                v-model="scope.row.order.count"
-                :disabled="loading"
-                size="mini"
-              />
-            </template>
-          </el-table-column>
-          <el-table-column label="цена за трафик">
-            <template slot-scope="scope">
-              {{ priceMask(scope.row.order.traffik_price) }}
-            </template>
-          </el-table-column>
-          <el-table-column label="цена общая">
-            <template slot-scope="scope">
-              {{ priceMask(scope.row.order.common_price) }}
-            </template>
-          </el-table-column>
-          <el-table-column label="конверсия %" width="100px">
-            <template slot-scope="scope">
-              {{ scope.row.order.conversion }} %
-            </template>
-          </el-table-column>
-        </el-table-column>
-        <!--  -->
-        <el-table-column label="Пришёл в СЦ">
-          <el-table-column label="кол-во">
-            <template slot-scope="scope">
-              <el-input
-                v-model="scope.row.came_to_sc.count"
-                :disabled="loading"
-                size="mini"
-              />
-            </template>
-          </el-table-column>
-          <el-table-column label="цена за трафик">
-            <template slot-scope="scope">
-              {{ priceMask(scope.row.came_to_sc.traffik_price) }}
-            </template>
-          </el-table-column>
-          <el-table-column label="цена общая">
-            <template slot-scope="scope">
-              {{ priceMask(scope.row.came_to_sc.common_price) }}
-            </template>
-          </el-table-column>
-          <el-table-column label="конверсия %" width="100px">
-            <template slot-scope="scope">
-              {{ scope.row.came_to_sc.conversion }} %
-            </template>
-          </el-table-column>
-        </el-table-column>
-        <!--  -->
-        <el-table-column label="Клиент закрыт">
-          <el-table-column label="кол-во">
-            <template slot-scope="scope">
-              <el-input
-                v-model="scope.row.order_closed.count"
-                :disabled="loading"
-                size="mini"
-              />
-            </template>
-          </el-table-column>
-          <el-table-column label="цена за трафик">
-            <template slot-scope="scope">
-              {{ priceMask(scope.row.order_closed.traffik_price) }}
-            </template>
-          </el-table-column>
-          <el-table-column label="цена общая">
-            <template slot-scope="scope">
-              {{ priceMask(scope.row.order_closed.common_price) }}
-            </template>
-          </el-table-column>
-          <el-table-column label="конверсия %" width="100px">
-            <template slot-scope="scope">
-              {{ scope.row.order_closed.conversion }} %
-            </template>
-          </el-table-column>
-        </el-table-column>
-        <!--  -->
-        <el-table-column label="Расходы">
-          <el-table-column label="Баланс" width="100px">
-            <template slot-scope="scope">
-              <el-input
-                v-model="scope.row.common_expenses.balance"
-                :disabled="loading"
-                size="mini"
-              />
-            </template>
-          </el-table-column>
-          <el-table-column label="РК">
-            <template slot-scope="scope">
-              <el-input
-                v-model="scope.row.common_expenses.pk"
-                :disabled="loading"
-                size="mini"
-              />
-            </template>
-          </el-table-column>
-          <el-table-column label="SEO">
-            <template slot-scope="scope">
-              <el-input
-                v-model="scope.row.common_expenses.seo"
-                :disabled="loading"
-                size="mini"
-              />
-              <!-- {{ priceMask(scope.row.common_expenses.seo) }} -->
-            </template>
-          </el-table-column>
-          <el-table-column label="Алока и т.д">
-            <template slot-scope="scope">
-              <el-input
-                v-model="scope.row.common_expenses.common"
-                :disabled="loading"
-                size="mini"
-              />
-              <!-- {{ scope.row.common_expenses.common }} % -->
-            </template>
-          </el-table-column>
-        </el-table-column>
-        <!--  -->
-        <el-table-column prop="revenue" label="Выручка">
-          <template slot-scope="scope">
-            <el-input
-              v-model="scope.row.revenue"
-              :disabled="loading"
-              size="mini"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column prop="expenses" label="Расходы">
-          <template slot-scope="scope">
-            <el-input
-              v-model="scope.row.expenses"
-              :disabled="loading"
-              size="mini"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column prop="val" label="Вал" />
-        <el-table-column prop="orders" label="Заказы">
-          <template slot-scope="scope">
-            <el-input
-              v-model="scope.row.orders"
-              :disabled="loading"
-              size="mini"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column prop="wed_check" fixed="right" label="Ср. чек" />
-        <el-table-column prop="delta" fixed="right" label="Дельта" />
-        <el-table-column prop="profit" fixed="right" label="Прибыль" />
-        <el-table-column prop="spz" fixed="right" label="СПЗ" />
-        <!-- total -->
-        <!-- <el-table-column slot="append">
-          <app-total-row :total="tableData.total" />
-        </el-table-column> -->
-        <!-- / total -->
-      </el-table>
-
-      <!--  -->
-      <div class="text-center mt-20 mb-10 d-none">
-        <el-button :loading="loading" type="info" icon="el-icon-edit">
-          Изменить список брендов
-        </el-button>
-      </div>
+      <no-ssr>
+        <div :class="['grid', loading ? 'disabled' : '']">
+          <v-grid
+            @beforeEdit="onCellEdit"
+            :source="pageData.brands"
+            :columns="columns"
+            :resize="true"
+            :pinnedTopRows="pinnedTopRows"
+            :columnTypes="columnTypes"
+            :style="`height: 69vh; max-width: ${windowWidth}px`"
+            class="global-grid-small"
+            theme="compact"
+          />
+        </div>
+        <!-- :row-headers="true" -->
+      </no-ssr>
     </div>
   </div>
 </template>
@@ -354,24 +124,344 @@
 import XLSX from 'xlsx'
 /* eslint-disable prettier/prettier */
 import Rem from '~/utils/remonline.js'
-// import AppTotalRow from '~/components/report/summarySheet/tabs/report/TotalRow'
 const rem = new Rem(process.env.REMONLINE_API_KEY, true)
 
 export default {
-  components: {
-    // AppTotalRow
-  },
   data() {
     return {
       loading: false,
+      pinnedTopRows: [
+        // { brand: 'Bnjuj' }
+      ],
+      columnTypes: [], // тыпы колонок таблицы
+      columns: [
+        {
+          name: 'Сайт',
+          prop: 'brand',
+          size: 100,
+          pin: 'colPinStart',
+          readonly: true,
+          sortable: true,
+          cellTemplate: (createElement, props) => {
+            return createElement('span', {}, props.model.brand.name)
+          }
+        },
+        {
+          name: 'Филиал',
+          prop: 'branch',
+          size: 80,
+          pin: 'colPinStart',
+          readonly: true,
+          sortable: true,
+          cellTemplate: (createElement, props) => {
+            return createElement('span', {}, props.model.branch.name)
+          }
+        },
+        // Заявки
+        {
+          name: 'Заявки',
+          children: [
+            {
+              name: 'PK',
+              prop: 'requests.chanel.pk',
+              size: 60,
+              columnType: 'numeric',
+              cellTemplate: (createElement, props) => {
+                return createElement('span', {}, props.model.requests.chanel.pk)
+              }
+            },
+            {
+              name: 'SEO',
+              prop: 'requests.chanel.seo',
+              size: 60, // BUG меняет размер предыдущей ячейки
+              cellTemplate: (createElement, props) => {
+                return createElement('span', {}, props.model.requests.chanel.seo)
+              }
+            },
+            {
+              name: 'цена за трафик',
+              prop: 'requests.traffik_price',
+              readonly: true,
+              size: 65,
+              cellTemplate: (createElement, props) => {
+                return createElement('span', {}, props.model.requests.traffik_price)
+              }
+            },
+            {
+              name: 'цена общая',
+              prop: 'requests.common_price',
+              readonly: true,
+              size: 65,
+              cellTemplate: (createElement, props) => {
+                return createElement('span', {}, props.model.requests.common_price)
+              }
+            },
+          ]
+        },
+        // Запись
+        {
+          name: 'Запись',
+          children: [
+            {
+              name: 'кол-во',
+              prop: 'order.count',
+              sortable: true,
+              cellTemplate: (createElement, props) => {
+                return createElement('span', {
+                  style: { width: '30px' }
+                }, props.model.order.count)
+              },
+              columnTemplate: (createElement, column) => {
+                return createElement('span', {
+                  style: { width: '30px' }
+                }, column.name)
+              }
+            },
+            {
+              name: 'цена за трафик',
+              prop: 'order.traffik_price',
+              readonly: true,
+              cellTemplate: (createElement, props) => {
+                return createElement('span', {}, props.model.order.traffik_price)
+              }
+            },
+            {
+              name: 'цена общая',
+              prop: 'order.common_price',
+              readonly: true,
+              cellTemplate: (createElement, props) => {
+                return createElement('span', {}, props.model.order.common_price)
+              }
+            },
+            {
+              name: 'конверсия %',
+              prop: 'order.conversion',
+              readonly: true,
+              cellTemplate: (createElement, props) => {
+                return createElement('span', {}, props.model.order.conversion)
+              }
+            },
+          ]
+        },
+        // Пришёл в СЦ
+        {
+          name: 'Пришёл в СЦ',
+          children: [
+            {
+              name: 'кол-во',
+              prop: 'came_to_sc.count',
+              sortable: true,
+              cellTemplate: (createElement, props) => {
+                return createElement('span', {}, props.model.came_to_sc.count)
+              }
+            },
+            {
+              name: 'цена за трафик',
+              prop: 'came_to_sc.traffik_price',
+              readonly: true,
+              cellTemplate: (createElement, props) => {
+                return createElement('span', {}, props.model.came_to_sc.traffik_price)
+              }
+            },
+            {
+              name: 'цена общая',
+              prop: 'came_to_sc.common_price',
+              readonly: true,
+              cellTemplate: (createElement, props) => {
+                return createElement('span', {
+                  style: { color: 'red' }
+                }, props.model.came_to_sc.common_price)
+              },
+              columnTemplate: (createElement, column) => {
+                return createElement('span', {
+                  style: { color: 'red' }
+                }, column.name)
+              }
+            },
+            {
+              name: 'конверсия %',
+              prop: 'came_to_sc.conversion',
+              readonly: true,
+              cellTemplate: (createElement, props) => {
+                return createElement('span', {}, props.model.came_to_sc.conversion)
+              }
+            },
+
+          ]
+        },
+        // Клиент закрыт
+        {
+          name: 'Клиент закрыт',
+          children: [
+            {
+              name: 'кол-во',
+              prop: 'order_closed.count',
+              sortable: true,
+              cellTemplate: (createElement, props) => {
+                return createElement('span', {}, props.model.order_closed.count)
+              }
+            },
+            {
+              name: 'цена за трафик',
+              prop: 'order_closed.traffik_price',
+              readonly: true,
+              cellTemplate: (createElement, props) => {
+                return createElement('span', {}, props.model.order_closed.traffik_price)
+              }
+            },
+            {
+              name: 'цена общая',
+              prop: 'order_closed.common_price',
+              readonly: true,
+              cellTemplate: (createElement, props) => {
+                return createElement('span', {}, props.model.order_closed.common_price)
+              }
+            },
+            {
+              name: 'конверсия %',
+              prop: 'order_closed.conversion',
+              readonly: true,
+              cellTemplate: (createElement, props) => {
+                return createElement('span', {}, props.model.order_closed.conversion)
+              }
+            },
+          ]
+        },
+        // Расходы
+        {
+          name: 'Расходы',
+          children: [
+            {
+              name: 'Баланс',
+              prop: 'common_expenses.balance',
+              size: 80,
+              sortable: true,
+              cellTemplate: (createElement, props) => {
+                return createElement('span', {
+                  style: { color: 'green' }
+                }, props.model.common_expenses.balance)
+              },
+              columnTemplate: (createElement, column) => {
+                return createElement('span', {
+                  style: { color: 'green' }
+                }, column.name)
+              }
+            },
+            {
+              name: 'РК',
+              prop: 'common_expenses.pk',
+              size: 80,
+              sortable: true,
+              cellTemplate: (createElement, props) => {
+                return createElement('span', {}, props.model.common_expenses.pk)
+              }
+            },
+            {
+              name: 'SEO',
+              prop: 'common_expenses.seo',
+              size: 80,
+              sortable: true,
+              cellTemplate: (createElement, props) => {
+                return createElement('span', {}, props.model.common_expenses.seo)
+              }
+            },
+            {
+              name: 'Алока и т.д',
+              prop: 'common_expenses.common',
+              size: 80,
+              sortable: true,
+              cellTemplate: (createElement, props) => {
+                return createElement('span', {}, props.model.common_expenses.common)
+              }
+            },
+          ]
+        },
+        //
+        {
+          name: 'Выручка',
+          sortable: true,
+          prop: 'revenue'
+        },
+        {
+          name: 'Расходы',
+          sortable: true,
+          prop: 'expenses'
+        },
+        {
+          name: 'Вал',
+          prop: 'val',
+          sortable: true,
+          readonly: true
+        },
+        {
+          name: 'Заказы',
+          sortable: true,
+          prop: 'orders'
+        },
+        {
+          name: 'Ср. чек',
+          prop: 'wed_check',
+          pin: 'colPinEnd',
+          sortable: true,
+          readonly: true,
+          cellTemplate: (createElement, props) => {
+            return createElement('span', { style: { color: 'red' } }, props.model.wed_check)
+          },
+          columnTemplate: (createElement, column) => {
+            return createElement('span', { style: { color: 'red' } }, column.name)
+          }
+        },
+        {
+          name: 'Дельта',
+          prop: 'delta',
+          pin: 'colPinEnd',
+          sortable: true,
+          readonly: true,
+          cellTemplate: (createElement, props) => {
+            return createElement('span', { style: { color: 'orange' } }, props.model.delta)
+          },
+          columnTemplate: (createElement, column) => {
+            return createElement('span', { style: { color: 'orange' } }, column.name)
+          }
+        },
+        {
+          name: 'Прибыль',
+          prop: 'profit',
+          pin: 'colPinEnd',
+          sortable: true,
+          readonly: true,
+          cellTemplate: (createElement, props) => {
+            return createElement('span', { style: { color: '#f0f' } }, props.model.profit)
+          },
+          columnTemplate: (createElement, column) => {
+            return createElement('span', { style: { color: '#f0f' } }, column.name)
+          }
+        },
+        {
+          name: 'СПЗ',
+          prop: 'spz',
+          pin: 'colPinEnd',
+          sortable: true,
+          readonly: true,
+          cellTemplate: (createElement, props) => {
+            return createElement('span', { style: { color: '#00f' } }, props.model.spz)
+          },
+          columnTemplate: (createElement, column) => {
+            return createElement('span', { style: { color: '#00f' } }, column.name)
+          }
+        }
+      ],
       /**
        * тип загружаемого дакумента, для открытых или закрытых заказов
-       * excelSetOpenParams - открытые
-       * excelSetCloseParams - закрытые
+       * runWorkerOpenParams - открытые
+       * runWorkerCloseParams - закрытые
        */
-      excelListType: 'excelSetOpenParams',
+      pageData: [], // реальные данные
+      excelListType: 'runWorkerOpenParams',
       excelList: [], // загружаемоя екселька
-      onlyRefresh: true // без получения новых данных из ремонлайн
+      onlyRefresh: true, // без получения новых данных из ремонлайн
+      turnWorkers: [], // очередь выполнения воркеров
+      windowWidth: 1000 // ширина окна
     }
   },
   computed: {
@@ -379,10 +469,78 @@ export default {
       return this.$store.getters['report/summary/report']
     }
   },
+  watch: {
+    tableData(val) {
+      this.pageData = val
+      this.windowUpdate()
+    }
+  },
+  mounted() {
+    import('@revolist/vue-datagrid').then((m) => {
+      const types = {}
+      Promise.all([
+        // eslint-disable-next-line
+        import('@revolist/revogrid-column-numeral').then((p) => (types.number = new p.default('0,0')))
+      ]).then(() => {
+        this.columnTypes = types
+      })
+    })
+    // считаем ширину таблицы
+    window.addEventListener('resize', (e) => {
+      this.windowUpdate()
+    })
+  },
   methods: {
+    /**
+     * Обновляем ширину окна
+     */
+    windowUpdate() {
+      const item = document.querySelector('#pane-statistiks')
+      if (item.clientWidth) this.windowWidth = item.clientWidth - 50
+    },
     // TODO перевести в фильтры
     priceMask(val) {
       return val ? `${val} ₽` : '-'
+    },
+
+    /**
+     * Редактирование ячейки
+     */
+    onCellEdit(row) {
+      // console.log('row', row.detail.rowIndex, row.detail.prop)
+      // ужасно, но я не придумал как сделать красиво
+      const idx = row.detail.rowIndex
+      switch (row.detail.prop) {
+        case 'requests.chanel.pk':
+          this.pageData.brands[idx].requests.chanel.pk = row.detail.val
+          break
+        case 'requests.chanel.seo':
+          this.pageData.brands[idx].requests.chanel.seo = row.detail.val
+          break
+        case 'order.count':
+          this.pageData.brands[idx].order.count = row.detail.val
+          break
+        case 'order_closed.count':
+          this.pageData.brands[idx].order_closed.count = row.detail.val
+          break
+        case 'came_to_sc.count':
+          this.pageData.brands[idx].came_to_sc.count = row.detail.val
+          break
+        case 'common_expenses.balance':
+          this.pageData.brands[idx].common_expenses.balance = row.detail.val
+          break
+        case 'common_expenses.pk':
+          this.pageData.brands[idx].common_expenses.pk = row.detail.val
+          break
+        case 'common_expenses.seo':
+          this.pageData.brands[idx].common_expenses.seo = row.detail.val
+          break
+        case 'common_expenses.common':
+          this.pageData.brands[idx].common_expenses.common = row.detail.val
+          break
+      }
+      // this.pageData.brands[row.detail.rowIndex].requests.chanel.pk = row.detail.val
+      // this.pageData.brands[row.detail.rowIndex][row.detail.prop] = row.detail.val
     },
 
     /**
@@ -392,7 +550,7 @@ export default {
       this.loading = true
       try {
         await this.$axios.$delete(
-          '/api/v1/report/summory/remove/' + this.tableData._id
+          '/api/v1/report/summory/remove/' + this.pageData._id
         )
         this.$notify({
           message: 'Отчет успушно удален!',
@@ -409,20 +567,20 @@ export default {
     },
 
     /**
-     * Загрузка двнных из ремонлайн - все записи
+     * Загрузка данных из ремонлайн - все записи
      */
     async getAllOrders(brandName) {
       this.loading = true
       try {
         // дата
-        const created = this.tableData.period.split(' ')
+        const created = this.pageData.period.split(' ')
         created[0] = new Date(created[0] + ' 00:00:00').getTime()
         created[1] = new Date(created[1] + ' 00:00:00').getTime()
         // order/?token=...&created_at[]=1597352400000&created_at[]=1597438799999&branches[]=26047
         const filter = [
           `created_at[]=${created[0]}`,
           `created_at[]=${created[1]}`,
-          `branches[]=${this.tableData.branch_id.branch_id}`,
+          `branches[]=${this.pageData.branch_id.branch_id}`,
           `brands[]=${brandName}`,
           'statuses[]=133616', // Доставлен в СЦ
           'statuses[]=134374', // Предзаказ
@@ -449,7 +607,7 @@ export default {
           'statuses[]=192751', // Не пришел
         ]
         const orders = await rem.getOrders(`&${filter.join('&')}`)
-        // console.log('tableData.period', this.tableData.period, brandName, '-', orders.count)
+        // console.log('tableData.period', this.pageData.period, brandName, '-', orders.count)
         return orders.count
       } catch (e) {
         this.$store.commit('SET_ERROR', 'Не удалось получить данные от remonline. Попробуйте по позже повторить данное действие.')
@@ -459,20 +617,20 @@ export default {
     },
 
     /**
-     * Загрузка двнных из ремонлайн - Пришел в сц
+     * Загрузка данных из ремонлайн - пришел в сц
      */
     async cameToService(brandName) {
       this.loading = true
       try {
         // дата
-        const created = this.tableData.period.split(' ')
+        const created = this.pageData.period.split(' ')
         created[0] = new Date(created[0] + ' 00:00:00').getTime()
         created[1] = new Date(created[1] + ' 00:00:00').getTime()
         // order/?token=...&created_at[]=1597352400000&created_at[]=1597438799999&branches[]=26047
         const filter = [
           `created_at[]=${created[0]}`,
           `created_at[]=${created[1]}`,
-          `branches[]=${this.tableData.branch_id.branch_id}`,
+          `branches[]=${this.pageData.branch_id.branch_id}`,
           `brands[]=${brandName}`,
           'statuses[]=133616', // Доставлен в СЦ
           // 'statuses[]=134374', // Предзаказ
@@ -512,20 +670,20 @@ export default {
     },
 
     /**
-     * Загрузка двнных из ремонлайн - Клиент закрыт
+     * Загрузка данных из ремонлайн - клиент закрыт
      */
     async closeOrders(brandName) {
       this.loading = true
       try {
         // дата
-        const created = this.tableData.period.split(' ')
+        const created = this.pageData.period.split(' ')
         created[0] = new Date(created[0] + ' 00:00:00').getTime()
         created[1] = new Date(created[1] + ' 00:00:00').getTime()
         // order/?token=...&created_at[]=1597352400000&created_at[]=1597438799999&branches[]=26047
         const filter = [
           `created_at[]=${created[0]}`,
           `created_at[]=${created[1]}`,
-          `branches[]=${this.tableData.branch_id.branch_id}`,
+          `branches[]=${this.pageData.branch_id.branch_id}`,
           `brands[]=${brandName}`,
           'statuses[]=151384', // Закрыт
           // 'page=1',
@@ -535,7 +693,7 @@ export default {
         //   console.log('order brand', order.brand)
         // }
         // console.log('orders', orders)
-        // console.log('tableData.period', this.tableData.period, brandName, '-', orders.count)
+        // console.log('tableData.period', this.pageData.period, brandName, '-', orders.count)
         return orders.count
       } catch (e) {
         this.$store.commit('SET_ERROR', 'Не удалось получить данные от remonline. Попробуйте по позже повторить данное действие.')
@@ -556,14 +714,14 @@ export default {
         let orders = 0 // заказы
 
         for (let i = 1; i <= page; i++) {
-          const created = this.tableData.period.split(' ')
+          const created = this.pageData.period.split(' ')
           created[0] = new Date(created[0] + ' 00:00:00').getTime()
           created[1] = new Date(created[1] + ' 00:00:00').getTime()
 
           const filter = [
             `created_at[]=${created[0]}`,
             `created_at[]=${created[1]}`,
-            `branches[]=${this.tableData.branch_id.branch_id}`,
+            `branches[]=${this.pageData.branch_id.branch_id}`,
             `brands[]=${brandName}`,
             'statuses[]=151384', // Закрыт
             'statuses[]=162791', // Выкупил СЦ
@@ -598,84 +756,20 @@ export default {
     /**
      * Обновление отчета
      */
-    async updateTable() {
+    runWorkerUpdateTable() {
       this.loading = true
-
-      for await (const item of this.tableData.brands) {
-        // если надо подтягивать данные из ремонлайн
-        if (!this.onlyRefresh) {
-          const allOrders = await this.getAllOrders(item.brand.name) // все заявки бренда
-          const cameToService = await this.cameToService(item.brand.name) // те кто пришли в СЦ
-          const closeOrders = await this.closeOrders(item.brand.name) // закрытые заказы
-
-          item.order.count = allOrders
-          item.came_to_sc.count = cameToService
-          item.order_closed.count = closeOrders
-
-          const  { revenue, expenses, orders } = await this.getProceedsExpensesAndExpenses(item.brand.name)
-          item.revenue = revenue // выручка / сколько заплатили
-          item.expenses = expenses // расходы
-          item.orders = orders // заказы
-        }
-
-        // (c4+c5) | requests.chanel.pk+requests.chanel.seo
-        const orderRang = +item.requests.chanel.pk + +item.requests.chanel.seo
-        // (R4+S4+T4+U4) | common_expenses.balance+common_expenses.pk+common_expenses.seo+common_expenses.common
-        // Расходы->Баланс + Расходы->РК + Расходы->SEO + Расходы->Алока и т.д
-        const commonExpenses =
-          +item.common_expenses.balance +
-          +item.common_expenses.pk +
-          +item.common_expenses.seo +
-          +item.common_expenses.common
-
-        // заявки
-        const requestsTraffikPrice = Math.round((+item.common_expenses.balance + +item.common_expenses.seo) / +orderRang)
-        const requestsCommonPrice = Math.round(commonExpenses / orderRang)
-        item.requests.traffik_price = isFinite(requestsTraffikPrice) ? requestsTraffikPrice : 0
-        item.requests.common_price = isFinite(requestsCommonPrice) ? requestsCommonPrice : 0
-        // запись
-        const orderTraffikPrice = Math.round(+item.common_expenses.balance / item.order.count)
-        const orderCommonPrice = Math.round(commonExpenses / item.order.count)
-        const orderConversion = Math.round((+item.order.count / orderRang) * 100)
-        item.order.traffik_price = isFinite(orderTraffikPrice) ? orderTraffikPrice : 0
-        item.order.common_price = isFinite(orderCommonPrice) ? orderCommonPrice : 0
-        item.order.conversion = isFinite(orderConversion) ? orderConversion : 0
-        // Пришёл в СЦ
-        const cameToSCTraffikPrice = Math.round(+item.common_expenses.balance / item.came_to_sc.count)
-        const cameToSCCommonPrice = Math.round(commonExpenses / item.came_to_sc.count)
-        const cameToSCConversion = Math.round((+item.came_to_sc.count / orderRang) * 100)
-        item.came_to_sc.traffik_price = isFinite(cameToSCTraffikPrice) ? cameToSCTraffikPrice : 0
-        item.came_to_sc.common_price = isFinite(cameToSCCommonPrice) ? cameToSCCommonPrice : 0
-        item.came_to_sc.conversion = isFinite(cameToSCConversion) ? cameToSCConversion : 0
-        // Клиент закрыт
-        const orderClosedTraffikPrice = Math.round(+item.common_expenses.balance / item.order_closed.count)
-        const orderClosedCommonPrice = Math.round(commonExpenses / item.order_closed.count)
-        const orderClosedConversion = Math.round((+item.order_closed.count / orderRang) * 100)
-        item.order_closed.traffik_price = isFinite(orderClosedTraffikPrice) ? orderClosedTraffikPrice : 0
-        item.order_closed.common_price = isFinite(orderClosedCommonPrice) ? orderClosedCommonPrice : 0
-        item.order_closed.conversion = isFinite(orderClosedConversion) ? orderClosedConversion : 0
-        // вал
-        item.val = Math.round(+item.revenue - item.expenses) || 0
-        // средний чек
-        item.wed_check = Math.round(+item.val / item.orders) || 0
-        // дельта
-        item.delta = Math.round(+item.wed_check - item.came_to_sc.common_price) || 0
-        // прибыль
-
-        item.profit = Math.round(+item.val * 0.65 - +item.came_to_sc.count * 70 - commonExpenses) || 0
-        const spz = Math.round(+item.profit / item.orders)
-        item.spz = isFinite(spz) ? spz : 0
-      }
-      await this.countingTheTotal()
-      try {
-        await this.$axios.$put(
-          '/api/v1/report/summory/update/' + this.tableData._id,
-          this.tableData
-        )
-      } catch (e) {
-        this.$store.commit('SET_ERROR', e.response.data.message, { root: true })
-      } finally {
-        this.loading = false
+      this.onlyRefresh = true
+      // запуск воркера
+      const worker = new Worker(
+        '/js/workers/report/summary/updateTable.worker.js'
+      )
+      worker.postMessage({
+        table: this.pageData.brands
+      })
+      this.excelList = []
+      worker.onmessage = (event) => {
+        this.setDataTableAndSave(event.data)
+        // worker.terminate() // убиваем
       }
     },
 
@@ -685,68 +779,68 @@ export default {
     async countingTheTotal() {
       try {
         // обнуляем базовые данные
-        this.tableData.total.requests.pkSeo = 0
-        this.tableData.total.order.count = 0
-        this.tableData.total.came_to_sc.count = 0
-        this.tableData.total.order_closed.count = 0
+        this.pageData.total.requests.pkSeo = 0
+        this.pageData.total.order.count = 0
+        this.pageData.total.came_to_sc.count = 0
+        this.pageData.total.order_closed.count = 0
 
-        this.tableData.total.common_expenses.balance = 0
-        this.tableData.total.common_expenses.pk = 0
-        this.tableData.total.common_expenses.seo = 0
-        this.tableData.total.common_expenses.common = 0
+        this.pageData.total.common_expenses.balance = 0
+        this.pageData.total.common_expenses.pk = 0
+        this.pageData.total.common_expenses.seo = 0
+        this.pageData.total.common_expenses.common = 0
 
-        this.tableData.total.revenue = 0
-        this.tableData.total.expenses = 0
-        this.tableData.total.orders = 0
+        this.pageData.total.revenue = 0
+        this.pageData.total.expenses = 0
+        this.pageData.total.orders = 0
 
-        for await (const item of this.tableData.brands) {
+        for await (const item of this.pageData.brands) {
           // заявки - реклама + сео
-          this.tableData.total.requests.pkSeo += +item.requests.chanel.pk + +item.requests.chanel.seo
-          this.tableData.total.order.count += +item.order.count // запись кол-во
-          this.tableData.total.came_to_sc.count += +item.came_to_sc.count // пришел в СЦ
-          this.tableData.total.order_closed.count += +item.order_closed.count // клиент закрыт
+          this.pageData.total.requests.pkSeo += +item.requests.chanel.pk + +item.requests.chanel.seo
+          this.pageData.total.order.count += +item.order.count // запись кол-во
+          this.pageData.total.came_to_sc.count += +item.came_to_sc.count // пришел в СЦ
+          this.pageData.total.order_closed.count += +item.order_closed.count // клиент закрыт
           // общие расходы
-          this.tableData.total.common_expenses.balance += +item.common_expenses.balance // Баланс
-          this.tableData.total.common_expenses.pk += +item.common_expenses.pk // РК
-          this.tableData.total.common_expenses.seo += +item.common_expenses.seo // СЕО
-          this.tableData.total.common_expenses.common += +item.common_expenses.common // Общие, алока и т.д
+          this.pageData.total.common_expenses.balance += +item.common_expenses.balance // Баланс
+          this.pageData.total.common_expenses.pk += +item.common_expenses.pk // РК
+          this.pageData.total.common_expenses.seo += +item.common_expenses.seo // СЕО
+          this.pageData.total.common_expenses.common += +item.common_expenses.common // Общие, алока и т.д
 
-          this.tableData.total.revenue += +item.revenue // основная выручка
-          this.tableData.total.expenses += +item.expenses // основные расходы
-          this.tableData.total.orders += +item.orders // заказы
+          this.pageData.total.revenue += +item.revenue // основная выручка
+          this.pageData.total.expenses += +item.expenses // основные расходы
+          this.pageData.total.orders += +item.orders // заказы
         }
         // блок расходы
         // баланс + сео
-        const commonExpensesBalansAndSeo = +this.tableData.total.common_expenses.balance + +this.tableData.total.common_expenses.seo
+        const commonExpensesBalansAndSeo = +this.pageData.total.common_expenses.balance + +this.pageData.total.common_expenses.seo
         // все расхоты (баланс + рк + сео + общее)
-        const allCommonExpenses = commonExpensesBalansAndSeo + this.tableData.total.common_expenses.pk + +this.tableData.total.common_expenses.common
+        const allCommonExpenses = commonExpensesBalansAndSeo + this.pageData.total.common_expenses.pk + +this.pageData.total.common_expenses.common
 
         // заявки
-        this.tableData.total.requests.traffik_price = Math.round(commonExpensesBalansAndSeo / +this.tableData.total.requests.pkSeo) // цена за трафик - (расходы_баланс_и_сео / заявки_реклама_и_сео)
-        this.tableData.total.requests.common_price = Math.round(allCommonExpenses / +this.tableData.total.requests.pkSeo) // цена общая - (все_расходы / заявки_реклама_и_сео)
+        this.pageData.total.requests.traffik_price = Math.round(commonExpensesBalansAndSeo / +this.pageData.total.requests.pkSeo) // цена за трафик - (расходы_баланс_и_сео / заявки_реклама_и_сео)
+        this.pageData.total.requests.common_price = Math.round(allCommonExpenses / +this.pageData.total.requests.pkSeo) // цена общая - (все_расходы / заявки_реклама_и_сео)
         // Запись
-        this.tableData.total.order.traffik_price = Math.round(commonExpensesBalansAndSeo / +this.tableData.total.order.count) // цена за трафик - (расходы_рк_сео / кол-во_записанных)
-        this.tableData.total.order.common_price = Math.round(allCommonExpenses / +this.tableData.total.order.count) // цена общая - (все_расходы / кол-во_записанных)
-        this.tableData.total.order.conversion = Math.round(+this.tableData.total.order.count / +this.tableData.total.requests.pkSeo * 100) // коверсия - (кол-во_записанных / заявки_реклама_и_сео)
+        this.pageData.total.order.traffik_price = Math.round(commonExpensesBalansAndSeo / +this.pageData.total.order.count) // цена за трафик - (расходы_рк_сео / кол-во_записанных)
+        this.pageData.total.order.common_price = Math.round(allCommonExpenses / +this.pageData.total.order.count) // цена общая - (все_расходы / кол-во_записанных)
+        this.pageData.total.order.conversion = Math.round(+this.pageData.total.order.count / +this.pageData.total.requests.pkSeo * 100) // коверсия - (кол-во_записанных / заявки_реклама_и_сео)
         // пришел в СЦ
-        this.tableData.total.came_to_sc.traffik_price = Math.round(commonExpensesBalansAndSeo / +this.tableData.total.came_to_sc.count) // цена за трафик - (расходы_рк_сео / кол-во_записанных)
-        this.tableData.total.came_to_sc.common_price = Math.round(allCommonExpenses / +this.tableData.total.came_to_sc.count) // цена общая - (все_расходы / кол-во_записанных)
-        this.tableData.total.came_to_sc.conversion = Math.round(+this.tableData.total.came_to_sc.count / +this.tableData.total.requests.pkSeo * 100) // коверсия - (кол-во_записанных / заявки_реклама_и_сео)
+        this.pageData.total.came_to_sc.traffik_price = Math.round(commonExpensesBalansAndSeo / +this.pageData.total.came_to_sc.count) // цена за трафик - (расходы_рк_сео / кол-во_записанных)
+        this.pageData.total.came_to_sc.common_price = Math.round(allCommonExpenses / +this.pageData.total.came_to_sc.count) // цена общая - (все_расходы / кол-во_записанных)
+        this.pageData.total.came_to_sc.conversion = Math.round(+this.pageData.total.came_to_sc.count / +this.pageData.total.requests.pkSeo * 100) // коверсия - (кол-во_записанных / заявки_реклама_и_сео)
         // клиент закрыт
-        this.tableData.total.order_closed.traffik_price = Math.round(commonExpensesBalansAndSeo / +this.tableData.total.order_closed.count) // цена за трафик - (расходы_рк_сео / кол-во_записанных)
-        this.tableData.total.order_closed.common_price = Math.round(allCommonExpenses / +this.tableData.total.order_closed.count) // цена общая - (все_расходы / кол-во_записанных)
-        this.tableData.total.order_closed.conversion = Math.round(+this.tableData.total.order_closed.count / +this.tableData.total.requests.pkSeo * 100) // коверсия - (кол-во_записанных / заявки_реклама_и_сео)
+        this.pageData.total.order_closed.traffik_price = Math.round(commonExpensesBalansAndSeo / +this.pageData.total.order_closed.count) // цена за трафик - (расходы_рк_сео / кол-во_записанных)
+        this.pageData.total.order_closed.common_price = Math.round(allCommonExpenses / +this.pageData.total.order_closed.count) // цена общая - (все_расходы / кол-во_записанных)
+        this.pageData.total.order_closed.conversion = Math.round(+this.pageData.total.order_closed.count / +this.pageData.total.requests.pkSeo * 100) // коверсия - (кол-во_записанных / заявки_реклама_и_сео)
 
         // Вал - (выручка - расхооды)
-        this.tableData.total.val = +this.tableData.total.revenue - +this.tableData.total.expenses
+        this.pageData.total.val = +this.pageData.total.revenue - +this.pageData.total.expenses
         // Ср. чек - (вал / заказы)
-        this.tableData.total.wed_check = Math.round(+this.tableData.total.val / +this.tableData.total.orders)
+        this.pageData.total.wed_check = Math.round(+this.pageData.total.val / +this.pageData.total.orders)
         // Дельта - (Ср. чек - пришел_сц_ср._цена)
-        this.tableData.total.delta = Math.round(+this.tableData.total.wed_check / +this.tableData.total.came_to_sc.common_price)
+        this.pageData.total.delta = Math.round(+this.pageData.total.wed_check / +this.pageData.total.came_to_sc.common_price)
         // прибыль - (вал * 0,65) - (пришел_сц_кол-вл * 70) - все_расходы
-        this.tableData.total.profit = Math.round((+this.tableData.total.val * 0.65) - (+this.tableData.total.came_to_sc.count * 70)) - +allCommonExpenses
+        this.pageData.total.profit = Math.round((+this.pageData.total.val * 0.65) - (+this.pageData.total.came_to_sc.count * 70)) - +allCommonExpenses
         // спз - (прибыль / заказы)
-        this.tableData.total.spz = Math.round(+this.tableData.total.profit / +this.tableData.total.orders)
+        this.pageData.total.spz = Math.round(+this.pageData.total.profit / +this.pageData.total.orders)
       } catch (e) {
         console.error('Не удалось посчитать итог сводном отчете')
       }
@@ -767,8 +861,8 @@ export default {
       this.loading = true
       try {
         await this.$axios.$put(
-          '/api/v1/report/summory/update/' + this.tableData._id,
-          this.tableData
+          '/api/v1/report/summory/update/' + this.pageData._id,
+          this.pageData
         )
       } catch (e) {
         this.$store.commit('SET_ERROR', e.response.data.message)
@@ -783,7 +877,7 @@ export default {
     async removeTableRow(row) {
       this.loading = true
       try {
-        const report = JSON.parse(JSON.stringify(this.tableData))
+        const report = JSON.parse(JSON.stringify(this.pageData))
         // удаляем бренд
         report.brands_id = report.brands_id.filter((el) => el !== row.brand._id)
         report.brands = report.brands.filter((el) => el.brand._id !== row.brand._id)
@@ -807,7 +901,7 @@ export default {
       try {
         const files = e.target.files
         const file = files[0]
-
+        // this.excelList
         const reader = new FileReader()
         const rABS = !!reader.readAsBinaryString
 
@@ -823,8 +917,8 @@ export default {
           })
           result.shift() // удаляем первую строку
           this.excelList = result // устанавливаем получившийся результат
-          console.log('отправляемданные на сервер', this.excelList)
-          this[this.excelListType]() // устанавливаем данные из ексельки
+          console.log('отправляем данные считаться на другой поток')
+          this[this.excelListType]() // запускаем нужный метод
         }
 
         if (rABS) {
@@ -838,77 +932,79 @@ export default {
           'Используемый метод', this.excelListType,
           'ошибка', e
         )
+      } finally {
+        e.path[0].value = '' // отчищаем input file для повторной загрузки файла
       }
     },
 
     /**
-     * Установка данных из excel
+     * Запуск воркера для подсчета данных из excel
      * Первый блок - открытые заявки
      */
-    async excelSetOpenParams () {
+    runWorkerOpenParams () {
       this.loading = true
-      this.onlyRefresh = true // на всякий случай блокируем загрузку данных из ремонлайн
-      for await (const item of this.tableData.brands) {
-        const brandName = item.brand.name.toLowerCase().trim()
+      this.onlyRefresh = true
+      // если очередь не пуста, то тогда записываем ее в конец выполнения
+      // this.turnWorkers = ['excelSetOpenParams']
 
-        let allOrders = 0
-        let cameToService = 0
-        let closeOrders = 0
-
-        for await (const row of this.excelList) {
-          // console.log('row', row)
-          let brand = row[33].split(',')
-          brand = brand[0].toLowerCase().trim()
-          // все заказы
-          if (brand === brandName) {
-            allOrders++
-            // кто пришли в СЦ
-            if (row[4].trim() !== 'Не пришел') cameToService++
-            // закрытые заказы
-            if (row[4].trim() !== 'Закрыт') closeOrders++
-          }
-        }
-        // все заявки бренда
-        item.order.count = allOrders
-        // кто пришли в СЦ
-        item.came_to_sc.count = cameToService
-        // закрытые заказы
-        item.order_closed.count = closeOrders
+      // запуск воркера
+      const worker = new Worker(
+        '/js/workers/report/summary/excelSetOpenParams.worker.js'
+      )
+      worker.postMessage({
+        table: this.pageData.brands,
+        arr: this.excelList,
+      })
+      // запускаем его в очередь выполнения
+      // this.turnWorkers.push()
+      worker.onmessage = async (event) => {
+        await this.setDataTable(event.data)
+        this.runWorkerUpdateTable()
+        // worker.terminate()
       }
-      this.excelList = []
-      this.updateTable() // обновляем расчеты
     },
 
     /**
-     * Установка данных из excel
+     * Запуск воркера для подсчета данных из excel
      * Второй блок - закрытые заявки
      */
-    async excelSetCloseParams () {
+    runWorkerCloseParams () {
       this.loading = true
       this.onlyRefresh = true // на всякий случай блокируем загрузку данных из ремонлайн
-      for await (const item of this.tableData.brands) {
-        const brandName = item.brand.name.toLowerCase().trim()
-        let revenue = 0 // выручка / сколько заплатили
-        let expenses = 0 // расходы
-        let orders = 0 // заказы
-
-        for await (const row of this.excelList) {
-          let brand = row[33].split(',')
-          brand = brand[0].toLowerCase().trim()
-          // все заказы
-          if (brand === brandName) {
-            orders++
-            revenue += row[10]
-            expenses += row[16]
-          }
-        }
-        item.revenue = revenue
-        item.expenses = expenses
-        item.orders = orders
-      }
+      const worker = new Worker(
+        '/js/workers/report/summary/excelSetCloseParams.worker.js'
+      )
+      worker.postMessage({
+        table: this.pageData.brands,
+        arr: this.excelList
+      })
       this.excelList = []
-      this.updateTable() // обновляем расчеты
-    }
+
+      worker.onmessage = async (event) => {
+        await this.setDataTable(event.data)
+        this.runWorkerUpdateTable()
+        // worker.terminate()
+      }
+    },
+
+    /**
+     * Установка данных, после пересета данных
+     */
+    setDataTable(data) {
+      this.pageData.brands = []
+      this.pageData.brands = data
+      this.loading = false
+    },
+
+    /**
+     * Установка данных, после пересета и сохранить
+     */
+    setDataTableAndSave(data) {
+      this.loading = false
+      this.pageData.brands = []
+      this.pageData.brands = data
+      this.saveTable()
+    },
   }
 }
 </script>
