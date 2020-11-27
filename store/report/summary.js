@@ -16,6 +16,12 @@ export const actions = {
       commit('SET_ERROR', e.response.data.message, { root: true })
       throw e
     }
+  },
+  /**
+   * Обновляем расчетные данные выбранного отчета
+   */
+  updateTableBrands({ commit }, brands) {
+    commit('UPDATE_TABLE_BRANDS', brands)
   }
 }
 
@@ -25,6 +31,12 @@ export const mutations = {
   },
   SET_REPORT(state, report) {
     state.report = report
+  },
+  /**
+   * Обновляем расчетные данные выбранного отчета
+   */
+  UPDATE_TABLE_BRANDS(state, brands) {
+    state.reports.brands = brands
   }
 }
 
