@@ -1,0 +1,50 @@
+.hydrated
+  & .row
+    margin: 0
+    & div
+      // padding: 0
+
+.grid
+  position: relative
+  transition: all .2s
+  &.disabled
+    &::before
+      content: ''
+      position: absolute
+      top: 0
+      left: 0
+      width: 100%
+      height: 100%
+      background: #00000036
+      z-index: 9
+
+
+.global-grid-small
+  & .col
+    padding: 0
+  & revogr-header
+    & .data-header-cell
+      display: flex
+      align-items: center
+      justify-content: center
+      border-right: 1px solid #f1f1f1
+      & .header-content
+        font-size: 10px
+        white-space: break-spaces
+        line-height: 13px
+  //
+  & revogr-viewport
+    & revogr-data
+      & .data-cell
+        font-size: 11px
+        & span
+          font-size: 11px
+
+revo-grid[theme=compact] revogr-data .row.focused-row, revo-grid[theme=compact] revogr-data .row.focused-row .data-cell.disabled
+  background-color: #e7e7e7 !important
+
+
+
+
+
+

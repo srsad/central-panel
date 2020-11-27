@@ -17,7 +17,7 @@ module.exports = {
         content: process.env.npm_package_description || ''
       }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [ { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' } ]
   },
   /**
    * Переменные окружения
@@ -37,15 +37,11 @@ module.exports = {
   /*
    ** Global CSS
    */
-  css: [
-    'element-ui/lib/theme-chalk/index.css',
-    '@assets/sass/styles.sass',
-    'font-awesome/css/font-awesome.min.css'
-  ],
+  css: [ 'element-ui/lib/theme-chalk/index.css', '@assets/sass/styles.sass', 'font-awesome/css/font-awesome.min.css' ],
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
-    ['@nuxtjs/dotenv'],
+    [ '@nuxtjs/dotenv' ]
   ],
   /*
    ** Plugins to load before mounting the App
@@ -85,8 +81,17 @@ module.exports = {
    ** Build configuration
    */
   build: {
-    transpile: [/^element-ui/],
+    transpile: [ /^element-ui/ ],
     extractCSS: true,
-    extend(config, ctx) {}
+    extend(config, ctx) {
+      // Web Worker support
+      if (!ctx.isDev && ctx.isClient) {
+        config.module.rules.push({
+          test: /\.worker\.js$/,
+          use: { loader: 'worker-loader' },
+          exclude: /(node_modules)/
+        })
+      }
+    }
   }
 }
