@@ -34,10 +34,14 @@ export default {
       loading: false
     }
   },
+  mounted() {
+    if (this.$store.getters['report/branch/branches'].length === 0) {
+      this.$store.dispatch('report/branch/fetchItems')
+    }
+  },
   methods: {
     async fetchBranches() {
       this.loading = true
-
       try {
         const rem = new Rem(process.env.REMONLINE_API_KEY, true)
         const res = await rem.getBranches()
@@ -65,11 +69,6 @@ export default {
       } catch (e) {
         this.$store.commit('SET_ERROR', e.response.data.message)
       }
-    }
-  },
-  mounted() {
-    if (this.$store.getters['report/branch/branches'].length === 0) {
-      this.$store.dispatch('report/branch/fetchItems')
     }
   }
 }
