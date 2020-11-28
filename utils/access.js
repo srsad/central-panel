@@ -311,20 +311,144 @@ export default [
     label: 'Отчеты',
     children: [
       {
-        _id: 'report-read',
-        label: 'Чтение'
+        _id: 'report-main_branch_panel',
+        label: 'Основная',
+        children: [
+          {
+            _id: 'report-main_branch_panel_summorysheat_panel',
+            label: 'Сводные листы',
+            children: [
+              {
+                _id: 'report-main_branch_panel_summorysheat_panel-read',
+                label: 'Чтение'
+              },
+              {
+                _id: 'report-main_branch_panel_summorysheat_panel-create',
+                label: 'Создание'
+              },
+              {
+                _id: 'report-main_branch_panel_summorysheat_panel-update',
+                label: 'Редактирование'
+              },
+              {
+                _id: 'report-main_branch_panel_summorysheat_panel-remove',
+                label: 'Удаление'
+              }
+            ]
+          }
+        ]
       },
       {
-        _id: 'report-create',
-        label: 'Создание'
+        _id: 'report-spb_26047_panel',
+        label: 'СПБ 2-я Красноармейская',
+        children: [
+          {
+            _id: 'report-spb_26047_panel_summorysheat_panel',
+            label: 'Сводные листы',
+            children: [
+              {
+                _id: 'report-spb_26047_panel_summorysheat_panel-read',
+                label: 'Чтение'
+              },
+              {
+                _id: 'report-spb_26047_panel_summorysheat_panel-create',
+                label: 'Создание'
+              },
+              {
+                _id: 'report-spb_26047_panel_summorysheat_panel-update',
+                label: 'Редактирование'
+              },
+              {
+                _id: 'report-spb_26047_panel_summorysheat_panel-remove',
+                label: 'Удаление'
+              }
+            ]
+          }
+        ]
       },
       {
-        _id: 'report-update',
-        label: 'Редактирование'
+        _id: 'report-spb_33038_panel',
+        label: 'СПБ Дмитровский',
+        children: [
+          {
+            _id: 'report-spb_33038_panel_summorysheat_panel',
+            label: 'Сводные листы',
+            children: [
+              {
+                _id: 'report-spb_33038_panel_summorysheat_panel-read',
+                label: 'Чтение'
+              },
+              {
+                _id: 'report-spb_33038_panel_summorysheat_panel-create',
+                label: 'Создание'
+              },
+              {
+                _id: 'report-spb_33038_panel_summorysheat_panel-update',
+                label: 'Редактирование'
+              },
+              {
+                _id: 'report-spb_33038_panel_summorysheat_panel-remove',
+                label: 'Удаление'
+              }
+            ]
+          }
+        ]
       },
       {
-        _id: 'report-remove',
-        label: 'Удаление'
+        _id: 'report-msk_63323_panel',
+        label: 'МСК Новослободская',
+        children: [
+          {
+            _id: 'report-msk_63323_panel_summorysheat_panel',
+            label: 'Сводные листы',
+            children: [
+              {
+                _id: 'report-msk_63323_panel_summorysheat_panel-read',
+                label: 'Чтение'
+              },
+              {
+                _id: 'report-msk_63323_panel_summorysheat_panel-create',
+                label: 'Создание'
+              },
+              {
+                _id: 'report-msk_63323_panel_summorysheat_panel-update',
+                label: 'Редактирование'
+              },
+              {
+                _id: 'report-msk_63323_panel_summorysheat_panel-remove',
+                label: 'Удаление'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        _id: 'report-msk_72021_panel',
+        label: 'МСК Армянский',
+        children: [
+          {
+            _id: 'report-msk_72021_panel_summorysheat_panel',
+            label: 'Сводные листы',
+            children: [
+              {
+                _id: 'report-msk_72021_panel_summorysheat_panel-read',
+                label: 'Чтение'
+              },
+              {
+                _id: 'report-msk_72021_panel_summorysheat_panel-create',
+                label: 'Создание'
+              },
+              {
+                _id: 'report-msk_72021_panel_summorysheat_panel-update',
+                label: 'Редактирование'
+              },
+              {
+                _id: 'report-msk_72021_panel_summorysheat_panel-remove',
+                label: 'Удаление'
+              }
+            ]
+          }
+        ]
       }
     ]
   },
