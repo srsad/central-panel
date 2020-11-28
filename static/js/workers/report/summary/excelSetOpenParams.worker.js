@@ -27,9 +27,9 @@ self.addEventListener('message', async (event) => {
         if (row[4].trim() !== 'Закрыт') closeOrders++
       }
     }
-    item.order.count = allOrders // все заявки бренда
-    item.came_to_sc.count = cameToService // кто пришли в СЦ
-    item.order_closed.count = closeOrders // закрытые заказы
+    item.order.count = Math.round(allOrders) // все заявки бренда
+    item.came_to_sc.count = Math.round(cameToService) // кто пришли в СЦ
+    item.order_closed.count = Math.round(closeOrders) // закрытые заказы
   }
   self.postMessage(table)
 })

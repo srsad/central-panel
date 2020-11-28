@@ -24,9 +24,9 @@ self.addEventListener('message', async (event) => {
         expenses += row[16]
       }
     }
-    item.revenue = revenue
-    item.expenses = expenses
-    item.orders = orders
+    item.revenue = Math.round(revenue)
+    item.expenses = Math.round(expenses)
+    item.orders = Math.round(orders)
   }
   self.postMessage(table)
 })
