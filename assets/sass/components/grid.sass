@@ -44,8 +44,16 @@
 revo-grid[theme=compact] revogr-data .row.focused-row, revo-grid[theme=compact] revogr-data .row.focused-row .data-cell.disabled
   background-color: #e7e7e7 !important
 
-// revo-grid[theme=compact] revogr-viewport revogr-data .data-cell
-
+.cellMinus
+  color: #000 !important
+  &::before
+    content: ''
+    position: absolute
+    top: 0
+    left: 0
+    background: #ff00001c
+    width: 100%
+    height: 100%
 
 
 
