@@ -197,7 +197,7 @@ export default {
      * Обновляем ширину окна
      */
     windowUpdate() {
-      const item = document.querySelector('#pane-main-branch')
+      const item = document.querySelector('#pane-main_branch')
       if (item.clientWidth) this.windowWidth = item.clientWidth - 50
     },
     // TODO перевести в фильтры
