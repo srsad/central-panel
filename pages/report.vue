@@ -58,6 +58,7 @@ export default {
     ])
     // TODO вывести в mounted с проверкой наличия и постзагрузкой
     await store.dispatch('report/brand/fetchItems')
+    await store.dispatch('report/branch/fetchItems')
     await store.dispatch('report/summary/fetchItems')
   }
   // TODO считаем активную вкладку
