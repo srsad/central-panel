@@ -279,16 +279,19 @@ export default [
   {
     name: 'Выручка',
     sortable: true,
+    size: 100,
     prop: 'revenue'
   },
   {
     name: 'Расходы',
     sortable: true,
+    size: 100,
     prop: 'expenses'
   },
   {
     name: 'Вал',
     prop: 'val',
+    size: 100,
     sortable: true,
     readonly: true
   },
@@ -320,6 +323,7 @@ export default [
     pin: 'colPinEnd',
     sortable: true,
     readonly: true,
+    size: 80,
     cellTemplate: (createElement, props) => {
       return createElement(
         'span',
@@ -339,9 +343,13 @@ export default [
     readonly: true,
     size: 80,
     cellTemplate: (createElement, props) => {
+      const cellClass = props.model.profit < 0 ? 'cellMinus' : ''
       return createElement(
         'span',
-        { style: { color: '#f0f' } },
+        {
+          class: cellClass,
+          style: { color: '#f0f' }
+        },
         props.model.profit
       )
     },
@@ -355,6 +363,7 @@ export default [
     pin: 'colPinEnd',
     sortable: true,
     readonly: true,
+    size: 60,
     cellTemplate: (createElement, props) => {
       return createElement(
         'span',

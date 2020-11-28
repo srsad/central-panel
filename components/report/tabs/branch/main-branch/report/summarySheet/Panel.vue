@@ -11,6 +11,7 @@
         Создать отчет из excel
       </el-button> -->
       <el-button
+        v-if="$abilities('report-main_branch_panel-create')"
         @click="addNewReport"
         size="mini"
         type="success"
@@ -19,7 +20,12 @@
       >
         Создать отчет
       </el-button>
-      <el-select v-model="report" size="mini" placeholder="Выберите период">
+      <el-select
+        v-if="$abilities('report-main_branch_panel-read')"
+        v-model="report"
+        size="mini"
+        placeholder="Выберите период"
+      >
         <el-option
           v-for="item in reports"
           :key="item._id"
@@ -28,6 +34,7 @@
         />
       </el-select>
       <el-button
+        v-if="$abilities('report-main_branch_panel-read')"
         @click="loadReport"
         size="mini"
         type="primary"
@@ -41,7 +48,10 @@
       </el-button> -->
     </div>
     <div class="mt-15" style="margin-bottom:-15px;">
-      <app-list @updateReport="loadReport" />
+      <app-list
+        v-if="$abilities('report-main_branch_panel-update')"
+        @updateReport="loadReport"
+      />
     </div>
     <!-- для создания отчета -->
     <app-report-window-create />
@@ -51,8 +61,8 @@
 <script>
 import Rem from '~/utils/remonline.js'
 
-import AppReportWindowCreate from '~/components/report/summarySheet/tabs/report/window/Create'
-import AppList from '~/components/report/summarySheet/tabs/report/List'
+import AppReportWindowCreate from '~/components/report/tabs/branch/main-branch/report/summarySheet/window/Create'
+import AppList from '~/components/report/tabs/branch/main-branch/report/summarySheet/List'
 
 export default {
   components: {
@@ -85,7 +95,7 @@ export default {
       const rem = new Rem(process.env.REMONLINE_API_KEY, true)
       // order/?token=...&created_at[]=1597352400000&created_at[]=1597438799999&branches[]=26047
       const items = []
-      for (let i = 7; i <= 14; i++) {
+      for (let i = 14; i <= 21; i++) {
         // new Date('2020,7,1,00:01:01').getTime()
         const created1 = new Date(`2020,11,${i},00:01:01`).getTime()
         const created2 = new Date(`2020,11,${i},23:59:50`).getTime()

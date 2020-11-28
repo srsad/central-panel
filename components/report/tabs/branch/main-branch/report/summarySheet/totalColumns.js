@@ -294,9 +294,13 @@ export default [
     size: 80,
     readonly: true,
     cellTemplate: (createElement, props) => {
+      const cellClass = props.model.requests.common_price > 0 ? 'cellMinus' : ''
       return createElement(
         'span',
-        { style: { color: '#f0f' } },
+        {
+          class: cellClass,
+          style: { color: '#f0f' }
+        },
         props.model.profit
       )
     },

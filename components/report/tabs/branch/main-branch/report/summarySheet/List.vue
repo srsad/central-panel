@@ -44,6 +44,7 @@
           cancel-button-text="Нет, спасибо"
         >
           <el-button
+            v-if="$abilities('report-main_branch_panel-remove')"
             slot="reference"
             :loading="loading"
             class="removeTable pt-10 pointer"
@@ -100,16 +101,30 @@
         <!--  -->
       </div>
       <!--  -->
+      <!-- {{ pageData.total }} -->
       <no-ssr>
         <div :class="['grid', loading ? 'disabled' : '']">
           <v-grid
             @beforeEdit="onCellEdit"
             :source="pageData.brands"
-            :columns="columns"
+            :columns="commonСolumns"
             :resize="true"
-            :pinnedTopRows="pinnedTopRows"
+            :col-size="70"
             :columnTypes="columnTypes"
             :style="`height: 69vh; max-width: ${windowWidth}px`"
+            class="global-grid-small"
+            theme="compact"
+          />
+          <!-- :pinnedTopSource="pinnedTopSource" -->
+          <!--  -->
+          <v-grid
+            @beforeEdit="onCellEdit"
+            :source="[pageData.total]"
+            :columns="totalColumns"
+            :resize="true"
+            :col-size="70"
+            :columnTypes="columnTypes"
+            :style="`height: 150px; max-width: ${windowWidth}px`"
             class="global-grid-small"
             theme="compact"
           />
@@ -121,6 +136,8 @@
 </template>
 
 <script>
+import СommonСolumns from './commonСolumns'
+import TotalColumns from './totalColumns'
 import XLSX from 'xlsx'
 /* eslint-disable prettier/prettier */
 import Rem from '~/utils/remonline.js'
@@ -130,327 +147,12 @@ export default {
   data() {
     return {
       loading: false,
-      pinnedTopRows: [
-        // { brand: 'Bnjuj' }
+      pinnedTopSource: [
+        // { 'orders': '31231' }
       ],
       columnTypes: [], // тыпы колонок таблицы
-      columns: [
-        {
-          name: 'Сайт',
-          prop: 'brand',
-          size: 100,
-          pin: 'colPinStart',
-          readonly: true,
-          sortable: true,
-          cellTemplate: (createElement, props) => {
-            return createElement('span', {}, props.model.brand.name)
-          }
-        },
-        {
-          name: 'Филиал',
-          prop: 'branch',
-          size: 80,
-          pin: 'colPinStart',
-          readonly: true,
-          sortable: true,
-          cellTemplate: (createElement, props) => {
-            return createElement('span', {}, props.model.branch.name)
-          }
-        },
-        // Заявки
-        {
-          name: 'Заявки',
-          children: [
-            {
-              name: 'PK',
-              prop: 'requests.chanel.pk',
-              size: 60,
-              columnType: 'numeric',
-              cellTemplate: (createElement, props) => {
-                return createElement('span', {}, props.model.requests.chanel.pk)
-              }
-            },
-            {
-              name: 'SEO',
-              prop: 'requests.chanel.seo',
-              size: 60, // BUG меняет размер предыдущей ячейки
-              cellTemplate: (createElement, props) => {
-                return createElement('span', {}, props.model.requests.chanel.seo)
-              }
-            },
-            {
-              name: 'цена за трафик',
-              prop: 'requests.traffik_price',
-              readonly: true,
-              size: 65,
-              cellTemplate: (createElement, props) => {
-                return createElement('span', {}, props.model.requests.traffik_price)
-              }
-            },
-            {
-              name: 'цена общая',
-              prop: 'requests.common_price',
-              readonly: true,
-              size: 65,
-              cellTemplate: (createElement, props) => {
-                return createElement('span', {}, props.model.requests.common_price)
-              }
-            },
-          ]
-        },
-        // Запись
-        {
-          name: 'Запись',
-          children: [
-            {
-              name: 'кол-во',
-              prop: 'order.count',
-              sortable: true,
-              cellTemplate: (createElement, props) => {
-                return createElement('span', {
-                  style: { width: '30px' }
-                }, props.model.order.count)
-              },
-              columnTemplate: (createElement, column) => {
-                return createElement('span', {
-                  style: { width: '30px' }
-                }, column.name)
-              }
-            },
-            {
-              name: 'цена за трафик',
-              prop: 'order.traffik_price',
-              readonly: true,
-              cellTemplate: (createElement, props) => {
-                return createElement('span', {}, props.model.order.traffik_price)
-              }
-            },
-            {
-              name: 'цена общая',
-              prop: 'order.common_price',
-              readonly: true,
-              cellTemplate: (createElement, props) => {
-                return createElement('span', {}, props.model.order.common_price)
-              }
-            },
-            {
-              name: 'конверсия %',
-              prop: 'order.conversion',
-              readonly: true,
-              cellTemplate: (createElement, props) => {
-                return createElement('span', {}, props.model.order.conversion)
-              }
-            },
-          ]
-        },
-        // Пришёл в СЦ
-        {
-          name: 'Пришёл в СЦ',
-          children: [
-            {
-              name: 'кол-во',
-              prop: 'came_to_sc.count',
-              sortable: true,
-              cellTemplate: (createElement, props) => {
-                return createElement('span', {}, props.model.came_to_sc.count)
-              }
-            },
-            {
-              name: 'цена за трафик',
-              prop: 'came_to_sc.traffik_price',
-              readonly: true,
-              cellTemplate: (createElement, props) => {
-                return createElement('span', {}, props.model.came_to_sc.traffik_price)
-              }
-            },
-            {
-              name: 'цена общая',
-              prop: 'came_to_sc.common_price',
-              readonly: true,
-              cellTemplate: (createElement, props) => {
-                return createElement('span', {
-                  style: { color: 'red' }
-                }, props.model.came_to_sc.common_price)
-              },
-              columnTemplate: (createElement, column) => {
-                return createElement('span', {
-                  style: { color: 'red' }
-                }, column.name)
-              }
-            },
-            {
-              name: 'конверсия %',
-              prop: 'came_to_sc.conversion',
-              readonly: true,
-              cellTemplate: (createElement, props) => {
-                return createElement('span', {}, props.model.came_to_sc.conversion)
-              }
-            },
-
-          ]
-        },
-        // Клиент закрыт
-        {
-          name: 'Клиент закрыт',
-          children: [
-            {
-              name: 'кол-во',
-              prop: 'order_closed.count',
-              sortable: true,
-              cellTemplate: (createElement, props) => {
-                return createElement('span', {}, props.model.order_closed.count)
-              }
-            },
-            {
-              name: 'цена за трафик',
-              prop: 'order_closed.traffik_price',
-              readonly: true,
-              cellTemplate: (createElement, props) => {
-                return createElement('span', {}, props.model.order_closed.traffik_price)
-              }
-            },
-            {
-              name: 'цена общая',
-              prop: 'order_closed.common_price',
-              readonly: true,
-              cellTemplate: (createElement, props) => {
-                return createElement('span', {}, props.model.order_closed.common_price)
-              }
-            },
-            {
-              name: 'конверсия %',
-              prop: 'order_closed.conversion',
-              readonly: true,
-              cellTemplate: (createElement, props) => {
-                return createElement('span', {}, props.model.order_closed.conversion)
-              }
-            },
-          ]
-        },
-        // Расходы
-        {
-          name: 'Расходы',
-          children: [
-            {
-              name: 'Баланс',
-              prop: 'common_expenses.balance',
-              size: 80,
-              sortable: true,
-              cellTemplate: (createElement, props) => {
-                return createElement('span', {
-                  style: { color: 'green' }
-                }, props.model.common_expenses.balance)
-              },
-              columnTemplate: (createElement, column) => {
-                return createElement('span', {
-                  style: { color: 'green' }
-                }, column.name)
-              }
-            },
-            {
-              name: 'РК',
-              prop: 'common_expenses.pk',
-              size: 80,
-              sortable: true,
-              cellTemplate: (createElement, props) => {
-                return createElement('span', {}, props.model.common_expenses.pk)
-              }
-            },
-            {
-              name: 'SEO',
-              prop: 'common_expenses.seo',
-              size: 80,
-              sortable: true,
-              cellTemplate: (createElement, props) => {
-                return createElement('span', {}, props.model.common_expenses.seo)
-              }
-            },
-            {
-              name: 'Алока и т.д',
-              prop: 'common_expenses.common',
-              size: 80,
-              sortable: true,
-              cellTemplate: (createElement, props) => {
-                return createElement('span', {}, props.model.common_expenses.common)
-              }
-            },
-          ]
-        },
-        //
-        {
-          name: 'Выручка',
-          sortable: true,
-          prop: 'revenue'
-        },
-        {
-          name: 'Расходы',
-          sortable: true,
-          prop: 'expenses'
-        },
-        {
-          name: 'Вал',
-          prop: 'val',
-          sortable: true,
-          readonly: true
-        },
-        {
-          name: 'Заказы',
-          sortable: true,
-          prop: 'orders'
-        },
-        {
-          name: 'Ср. чек',
-          prop: 'wed_check',
-          pin: 'colPinEnd',
-          sortable: true,
-          readonly: true,
-          cellTemplate: (createElement, props) => {
-            return createElement('span', { style: { color: 'red' } }, props.model.wed_check)
-          },
-          columnTemplate: (createElement, column) => {
-            return createElement('span', { style: { color: 'red' } }, column.name)
-          }
-        },
-        {
-          name: 'Дельта',
-          prop: 'delta',
-          pin: 'colPinEnd',
-          sortable: true,
-          readonly: true,
-          cellTemplate: (createElement, props) => {
-            return createElement('span', { style: { color: 'orange' } }, props.model.delta)
-          },
-          columnTemplate: (createElement, column) => {
-            return createElement('span', { style: { color: 'orange' } }, column.name)
-          }
-        },
-        {
-          name: 'Прибыль',
-          prop: 'profit',
-          pin: 'colPinEnd',
-          sortable: true,
-          readonly: true,
-          cellTemplate: (createElement, props) => {
-            return createElement('span', { style: { color: '#f0f' } }, props.model.profit)
-          },
-          columnTemplate: (createElement, column) => {
-            return createElement('span', { style: { color: '#f0f' } }, column.name)
-          }
-        },
-        {
-          name: 'СПЗ',
-          prop: 'spz',
-          pin: 'colPinEnd',
-          sortable: true,
-          readonly: true,
-          cellTemplate: (createElement, props) => {
-            return createElement('span', { style: { color: '#00f' } }, props.model.spz)
-          },
-          columnTemplate: (createElement, column) => {
-            return createElement('span', { style: { color: '#00f' } }, column.name)
-          }
-        }
-      ],
+      commonСolumns: СommonСolumns,
+      totalColumns: TotalColumns,
       /**
        * тип загружаемого дакумента, для открытых или закрытых заказов
        * runWorkerOpenParams - открытые
@@ -495,7 +197,7 @@ export default {
      * Обновляем ширину окна
      */
     windowUpdate() {
-      const item = document.querySelector('#pane-statistiks')
+      const item = document.querySelector('#pane-main-branch')
       if (item.clientWidth) this.windowWidth = item.clientWidth - 50
     },
     // TODO перевести в фильтры
@@ -754,99 +456,6 @@ export default {
     },
 
     /**
-     * Обновление отчета
-     */
-    runWorkerUpdateTable() {
-      this.loading = true
-      this.onlyRefresh = true
-      // запуск воркера
-      const worker = new Worker(
-        '/js/workers/report/summary/updateTable.worker.js'
-      )
-      worker.postMessage({
-        table: this.pageData.brands
-      })
-      this.excelList = []
-      worker.onmessage = (event) => {
-        this.setDataTableAndSave(event.data)
-        // worker.terminate() // убиваем
-      }
-    },
-
-    /**
-     * Подсчет итогов
-     */
-    async countingTheTotal() {
-      try {
-        // обнуляем базовые данные
-        this.pageData.total.requests.pkSeo = 0
-        this.pageData.total.order.count = 0
-        this.pageData.total.came_to_sc.count = 0
-        this.pageData.total.order_closed.count = 0
-
-        this.pageData.total.common_expenses.balance = 0
-        this.pageData.total.common_expenses.pk = 0
-        this.pageData.total.common_expenses.seo = 0
-        this.pageData.total.common_expenses.common = 0
-
-        this.pageData.total.revenue = 0
-        this.pageData.total.expenses = 0
-        this.pageData.total.orders = 0
-
-        for await (const item of this.pageData.brands) {
-          // заявки - реклама + сео
-          this.pageData.total.requests.pkSeo += +item.requests.chanel.pk + +item.requests.chanel.seo
-          this.pageData.total.order.count += +item.order.count // запись кол-во
-          this.pageData.total.came_to_sc.count += +item.came_to_sc.count // пришел в СЦ
-          this.pageData.total.order_closed.count += +item.order_closed.count // клиент закрыт
-          // общие расходы
-          this.pageData.total.common_expenses.balance += +item.common_expenses.balance // Баланс
-          this.pageData.total.common_expenses.pk += +item.common_expenses.pk // РК
-          this.pageData.total.common_expenses.seo += +item.common_expenses.seo // СЕО
-          this.pageData.total.common_expenses.common += +item.common_expenses.common // Общие, алока и т.д
-
-          this.pageData.total.revenue += +item.revenue // основная выручка
-          this.pageData.total.expenses += +item.expenses // основные расходы
-          this.pageData.total.orders += +item.orders // заказы
-        }
-        // блок расходы
-        // баланс + сео
-        const commonExpensesBalansAndSeo = +this.pageData.total.common_expenses.balance + +this.pageData.total.common_expenses.seo
-        // все расхоты (баланс + рк + сео + общее)
-        const allCommonExpenses = commonExpensesBalansAndSeo + this.pageData.total.common_expenses.pk + +this.pageData.total.common_expenses.common
-
-        // заявки
-        this.pageData.total.requests.traffik_price = Math.round(commonExpensesBalansAndSeo / +this.pageData.total.requests.pkSeo) // цена за трафик - (расходы_баланс_и_сео / заявки_реклама_и_сео)
-        this.pageData.total.requests.common_price = Math.round(allCommonExpenses / +this.pageData.total.requests.pkSeo) // цена общая - (все_расходы / заявки_реклама_и_сео)
-        // Запись
-        this.pageData.total.order.traffik_price = Math.round(commonExpensesBalansAndSeo / +this.pageData.total.order.count) // цена за трафик - (расходы_рк_сео / кол-во_записанных)
-        this.pageData.total.order.common_price = Math.round(allCommonExpenses / +this.pageData.total.order.count) // цена общая - (все_расходы / кол-во_записанных)
-        this.pageData.total.order.conversion = Math.round(+this.pageData.total.order.count / +this.pageData.total.requests.pkSeo * 100) // коверсия - (кол-во_записанных / заявки_реклама_и_сео)
-        // пришел в СЦ
-        this.pageData.total.came_to_sc.traffik_price = Math.round(commonExpensesBalansAndSeo / +this.pageData.total.came_to_sc.count) // цена за трафик - (расходы_рк_сео / кол-во_записанных)
-        this.pageData.total.came_to_sc.common_price = Math.round(allCommonExpenses / +this.pageData.total.came_to_sc.count) // цена общая - (все_расходы / кол-во_записанных)
-        this.pageData.total.came_to_sc.conversion = Math.round(+this.pageData.total.came_to_sc.count / +this.pageData.total.requests.pkSeo * 100) // коверсия - (кол-во_записанных / заявки_реклама_и_сео)
-        // клиент закрыт
-        this.pageData.total.order_closed.traffik_price = Math.round(commonExpensesBalansAndSeo / +this.pageData.total.order_closed.count) // цена за трафик - (расходы_рк_сео / кол-во_записанных)
-        this.pageData.total.order_closed.common_price = Math.round(allCommonExpenses / +this.pageData.total.order_closed.count) // цена общая - (все_расходы / кол-во_записанных)
-        this.pageData.total.order_closed.conversion = Math.round(+this.pageData.total.order_closed.count / +this.pageData.total.requests.pkSeo * 100) // коверсия - (кол-во_записанных / заявки_реклама_и_сео)
-
-        // Вал - (выручка - расхооды)
-        this.pageData.total.val = +this.pageData.total.revenue - +this.pageData.total.expenses
-        // Ср. чек - (вал / заказы)
-        this.pageData.total.wed_check = Math.round(+this.pageData.total.val / +this.pageData.total.orders)
-        // Дельта - (Ср. чек - пришел_сц_ср._цена)
-        this.pageData.total.delta = Math.round(+this.pageData.total.wed_check / +this.pageData.total.came_to_sc.common_price)
-        // прибыль - (вал * 0,65) - (пришел_сц_кол-вл * 70) - все_расходы
-        this.pageData.total.profit = Math.round((+this.pageData.total.val * 0.65) - (+this.pageData.total.came_to_sc.count * 70)) - +allCommonExpenses
-        // спз - (прибыль / заказы)
-        this.pageData.total.spz = Math.round(+this.pageData.total.profit / +this.pageData.total.orders)
-      } catch (e) {
-        console.error('Не удалось посчитать итог сводном отчете')
-      }
-    },
-
-    /**
      * TODO Обновление данных одного бренда
      */
     // TODO Обновление данных одного бренда
@@ -956,11 +565,8 @@ export default {
         arr: this.excelList,
       })
       // запускаем его в очередь выполнения
-      // this.turnWorkers.push()
-      worker.onmessage = async (event) => {
-        await this.setDataTable(event.data)
-        this.runWorkerUpdateTable()
-        // worker.terminate()
+      worker.onmessage = (event) => {
+        this.setDataTableAndSave(event.data)
       }
     },
 
@@ -980,10 +586,49 @@ export default {
       })
       this.excelList = []
 
+      worker.onmessage = (event) => {
+        this.setDataTableAndSave(event.data)
+      }
+    },
+
+
+    /**
+     * Обновление отчета
+     */
+    runWorkerUpdateTable() {
+      this.loading = true
+      this.onlyRefresh = true
+      // запуск воркера
+      const worker = new Worker(
+        '/js/workers/report/summary/updateTable.worker.js'
+      )
+      worker.postMessage({
+        table: this.pageData.brands
+      })
+      this.excelList = []
       worker.onmessage = async (event) => {
-        await this.setDataTable(event.data)
-        this.runWorkerUpdateTable()
-        // worker.terminate()
+        // сохраняем данные по брендам
+        await this.setDataTableAndSave(event.data)
+        await this.runWorkerCountingTheTotal()
+      }
+    },
+
+    /**
+     * Подсчет итогов
+     */
+    runWorkerCountingTheTotal() {
+      this.loading = true
+      this.onlyRefresh = true
+      // запуск воркера
+      const worker = new Worker(
+        '/js/workers/report/summary/countingTheTotal.worker.js'
+      )
+      worker.postMessage({
+        table: this.pageData
+      })
+      worker.onmessage = (event) => {
+        this.setTotalDataTableAndSave(event.data)
+        // worker.terminate() // убиваем
       }
     },
 
@@ -991,9 +636,9 @@ export default {
      * Установка данных, после пересета данных
      */
     setDataTable(data) {
+      this.loading = false
       this.pageData.brands = []
       this.pageData.brands = data
-      this.loading = false
     },
 
     /**
@@ -1005,6 +650,14 @@ export default {
       this.pageData.brands = data
       this.saveTable()
     },
+
+    /**
+     * Сохраняем данные после итогового подсчета
+     */
+    setTotalDataTableAndSave(data) {
+      this.pageData.total = data.total
+      this.saveTable()
+    }
   }
 }
 </script>
