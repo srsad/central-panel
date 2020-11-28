@@ -491,6 +491,56 @@ export default [
             label: 'Удаление'
           }
         ]
+      },
+      {
+        _id: 'settings-remonline_panel',
+        label: 'Панель от ремонлайн',
+        children: [
+          {
+            _id: 'settings-remonline_panel_branches',
+            label: 'Филиалы',
+            children: [
+              {
+                _id: 'settings-remonline_panel_branches-read',
+                label: 'Чтение'
+              },
+              {
+                _id: 'settings-remonline_panel_branches-create',
+                label: 'Создание'
+              },
+              {
+                _id: 'settings-remonline_panel_branches-update',
+                label: 'Редактирование'
+              },
+              {
+                _id: 'settings-remonline_panel_branches-remove',
+                label: 'Удаление'
+              }
+            ]
+          },
+          {
+            _id: 'settings-remonline_panel_brands',
+            label: 'Бренды',
+            children: [
+              {
+                _id: 'settings-remonline_panel_brands-read',
+                label: 'Чтение'
+              },
+              {
+                _id: 'settings-remonline_panel_brands-create',
+                label: 'Создание'
+              },
+              {
+                _id: 'settings-remonline_panel_brands-update',
+                label: 'Редактирование'
+              },
+              {
+                _id: 'settings-remonline_panel_brands-remove',
+                label: 'Удаление'
+              }
+            ]
+          }
+        ]
       }
     ]
   },
