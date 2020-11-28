@@ -30,6 +30,13 @@
         >
           <app-yandex-profiles />
         </el-tab-pane>
+        <el-tab-pane
+          v-if="$abilities('settings-remonline_panel')"
+          label="Ремонлайн"
+          name="remonline"
+        >
+          <app-remonline-panel />
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -40,13 +47,15 @@ import AppApiKey from '~/components/settings/ApiKeys'
 import AppCityes from '~/components/settings/Cityes'
 import AppYandexProfiles from '~/components/settings/YandexProfiles'
 import AppOtherSettings from '~/components/settings/OtherSettings'
+import AppRemonlinePanel from '~/components/settings/remonline/Panel'
 
 export default {
   components: {
     AppApiKey,
     AppCityes,
     AppYandexProfiles,
-    AppOtherSettings
+    AppOtherSettings,
+    AppRemonlinePanel
   },
   data() {
     return {
