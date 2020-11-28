@@ -213,153 +213,72 @@ const summoryReportSchema = new Schema({
       // заявки
       requests: {
         // канал
-        pkSeo: {
-          type: Number,
-          default: 0
-        },
+        pkSeo: 0,
         // цена за трафик
-        traffik_price: {
-          type: Number,
-          default: 0
-        },
+        traffik_price: 0,
         // общая
-        common_price: {
-          type: Number,
-          default: 0
-        }
+        common_price: 0
       },
       // Запись
       order: {
         // кол-во
-        count: {
-          type: Number,
-          default: 0
-        },
+        count: 0,
         // цена за трафик
-        traffik_price: {
-          type: Number,
-          default: 0
-        },
+        traffik_price: 0,
         // цена общая
-        common_price: {
-          type: Number,
-          default: 0
-        },
+        common_price: 0,
         // конверсия %
-        conversion: {
-          type: Number,
-          default: 0
-        }
+        conversion: 0
       },
       // пришел в СЦ
       came_to_sc: {
         // кол-во
-        count: {
-          type: Number,
-          default: 0
-        },
+        count: 0,
         // цена за трафик
-        traffik_price: {
-          type: Number,
-          default: 0
-        },
+        traffik_price: 0,
         // цена общая
-        common_price: {
-          type: Number,
-          default: 0
-        },
+        common_price: 0,
         // конверсия %
-        conversion: {
-          type: Number,
-          default: 0
-        }
+        conversion: 0
       },
       // клиент закрыт
       order_closed: {
         // кол-во
-        count: {
-          type: Number,
-          default: 0
-        },
+        count: 0,
         // цена за трафик
-        traffik_price: {
-          type: Number,
-          default: 0
-        },
+        traffik_price: 0,
         // цена общая
-        common_price: {
-          type: Number,
-          default: 0
-        },
+        common_price: 0,
         // конверсия %
-        conversion: {
-          type: Number,
-          default: 0
-        }
+        conversion: 0
       },
       // Расходы
       common_expenses: {
         // Баланс
-        balance: {
-          type: Number,
-          default: 0
-        },
+        balance: 0,
         // РК
-        pk: {
-          type: Number,
-          default: 0
-        },
+        pk: 0,
         // СЕО
-        seo: {
-          type: Number,
-          default: 0
-        },
+        seo: 0,
         // Общие, алока и т.д
-        common: {
-          type: Number,
-          default: 0
-        }
+        common: 0
       },
       // Выручка
-      revenue: {
-        type: Number,
-        default: 0
-      },
+      revenue: 0,
       // Расходы
-      expenses: {
-        type: Number,
-        default: 0
-      },
+      expenses: 0,
       // Вал
-      val: {
-        type: Number,
-        default: 0
-      },
+      val: 0,
       // Заказы
-      orders: {
-        type: Number,
-        default: 0
-      },
+      orders: 0,
       // Ср. чек
-      wed_check: {
-        type: Number,
-        default: 0
-      },
+      wed_check: 0,
       // Дельта
-      delta: {
-        type: Number,
-        default: 0
-      },
+      delta: 0,
       // Прибыль
-      profit: {
-        type: Number,
-        default: 0
-      },
+      profit: 0,
       // СПЗ
-      spz: {
-        type: Number,
-        default: 0
-      }
+      spz: 0
     }
   },
   created: {
