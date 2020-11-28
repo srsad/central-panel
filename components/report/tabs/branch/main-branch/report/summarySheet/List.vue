@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="tableData">
+    <div v-if="pageData.brands">
       <div class="col-12">
         <!--  -->
         <el-button
