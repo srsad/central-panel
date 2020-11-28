@@ -30,7 +30,7 @@ import AppStatusPanel from '~/components/crm/status/Panel'
 import AppStagePanel from '~/components/crm/stage/Panel'
 import AppTypeRequestPanel from '~/components/crm/typeRequests/Panel'
 import AppTypeDevicePanel from '~/components/crm/typeDevice/Panel'
-import AppBrandsPanel from '~/components/report/summarySheet/tabs/brand/Panel'
+import AppBrandsPanel from '~/components/settings/remonline/brand/Panel'
 import AppMalfunctionsPanel from '~/components/crm/malfunctions/Panel'
 
 export default {
