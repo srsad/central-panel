@@ -33,6 +33,7 @@ export default [
         name: 'PK',
         prop: 'requests.chanel.pk',
         size: 60,
+        readonly: true,
         columnType: 'numeric',
         cellTemplate: (createElement, props) => {
           return createElement('span', {}, props.model.requests.chanel.pk)
@@ -41,6 +42,7 @@ export default [
       {
         name: 'SEO',
         prop: 'requests.chanel.seo',
+        readonly: true,
         size: 60, // BUG меняет размер предыдущей ячейки
         cellTemplate: (createElement, props) => {
           return createElement('span', {}, props.model.requests.chanel.seo)
@@ -73,6 +75,7 @@ export default [
       {
         name: 'кол-во',
         prop: 'order.count',
+        readonly: true,
         sortable: true,
         cellTemplate: (createElement, props) => {
           return createElement(
@@ -126,6 +129,7 @@ export default [
       {
         name: 'кол-во',
         prop: 'came_to_sc.count',
+        readonly: true,
         sortable: true,
         cellTemplate: (createElement, props) => {
           return createElement('span', {}, props.model.came_to_sc.count)
@@ -179,6 +183,7 @@ export default [
       {
         name: 'кол-во',
         prop: 'order_closed.count',
+        readonly: true,
         sortable: true,
         cellTemplate: (createElement, props) => {
           return createElement('span', {}, props.model.order_closed.count)
@@ -227,6 +232,7 @@ export default [
         prop: 'common_expenses.balance',
         size: 80,
         sortable: true,
+        readonly: true,
         cellTemplate: (createElement, props) => {
           return createElement(
             'span',
@@ -251,6 +257,7 @@ export default [
         prop: 'common_expenses.pk',
         size: 80,
         sortable: true,
+        readonly: true,
         cellTemplate: (createElement, props) => {
           return createElement('span', {}, props.model.common_expenses.pk)
         }
@@ -260,6 +267,7 @@ export default [
         prop: 'common_expenses.seo',
         size: 80,
         sortable: true,
+        readonly: true,
         cellTemplate: (createElement, props) => {
           return createElement('span', {}, props.model.common_expenses.seo)
         }
@@ -269,6 +277,7 @@ export default [
         prop: 'common_expenses.common',
         size: 80,
         sortable: true,
+        readonly: true,
         cellTemplate: (createElement, props) => {
           return createElement('span', {}, props.model.common_expenses.common)
         }
@@ -279,12 +288,14 @@ export default [
   {
     name: 'Выручка',
     sortable: true,
+    readonly: true,
     size: 100,
     prop: 'revenue'
   },
   {
     name: 'Расходы',
     sortable: true,
+    readonly: true,
     size: 100,
     beforeValueFormatted: (event, instance) => {
       console.log('onBeforeValueFormatted', event, instance)
@@ -301,6 +312,7 @@ export default [
   {
     name: 'Заказы',
     sortable: true,
+    readonly: true,
     prop: 'orders'
   },
   {

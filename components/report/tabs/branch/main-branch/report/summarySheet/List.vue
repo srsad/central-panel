@@ -44,8 +44,8 @@
           cancel-button-text="Нет, спасибо"
         >
           <el-button
-            v-if="$abilities('report-main_branch_panel-remove')"
             slot="reference"
+            v-if="$abilities('report-main_branch_panel-remove')"
             :loading="loading"
             class="removeTable pt-10 pointer"
             type="danger"
@@ -110,9 +110,9 @@
             :columns="commonСolumns"
             :resize="true"
             :col-size="70"
-            :columnTypes="columnTypes"
+            :column-types="columnTypes"
             :style="`height: 69vh; max-width: ${windowWidth}px`"
-            class="global-grid-small"
+            class="global-grid-small main-summory-table"
             theme="compact"
           />
           <!-- :pinnedTopSource="pinnedTopSource" -->
@@ -125,7 +125,7 @@
             :col-size="70"
             :columnTypes="columnTypes"
             :style="`height: 150px; max-width: ${windowWidth}px`"
-            class="global-grid-small"
+            class="global-grid-small total-summory-table"
             theme="compact"
           />
         </div>
@@ -150,7 +150,7 @@ export default {
       pinnedTopSource: [
         // { 'orders': '31231' }
       ],
-      columnTypes: [], // тыпы колонок таблицы
+      columnTypes: {}, // типы колонок таблицы
       commonСolumns: СommonСolumns,
       totalColumns: TotalColumns,
       /**
@@ -184,9 +184,12 @@ export default {
         // eslint-disable-next-line
         import('@revolist/revogrid-column-numeral').then((p) => (types.number = new p.default('0,0')))
       ]).then(() => {
+        console.log('columnTypes1', this.columnTypes)
         this.columnTypes = types
+        console.log('columnTypes2', this.columnTypes)
       })
     })
+
     // считаем ширину таблицы
     window.addEventListener('resize', (e) => {
       this.windowUpdate()
@@ -197,9 +200,26 @@ export default {
      * Обновляем ширину окна
      */
     windowUpdate() {
-      const item = document.querySelector('#pane-main_branch')
-      if (item.clientWidth) this.windowWidth = item.clientWidth - 50
+      let time = 30
+      const timeValue = setInterval((interval) => {
+        const item = document.querySelector('#branchWidth')
+        if (item.clientWidth) this.windowWidth = item.clientWidth - 50
+
+        time -= 1
+        if (time <= 0) {
+          clearInterval(timeValue)
+        }
+      }, 1000)
     },
+
+
+    /**
+     *
+     */
+    testMethod(e) {
+      console.log('asd', e)
+    },
+
     // TODO перевести в фильтры
     priceMask(val) {
       return val ? `${val} ₽` : '-'

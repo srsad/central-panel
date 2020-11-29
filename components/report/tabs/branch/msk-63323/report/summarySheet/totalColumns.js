@@ -1,28 +1,15 @@
 /**
- * Модель таблицы для свобных отчетов - общая
+ * Модель таблицы для свобных отчетов - итого
  */
 export default [
   {
-    name: 'Сайт',
-    prop: 'brand.name',
-    size: 100,
+    name: 'Итого',
+    prop: 'lastText',
+    size: 180,
     pin: 'colPinStart',
     readonly: true,
-    sortable: true,
-    cellTemplate: (createElement, props) => {
-      // return createElement('span', {}, props.model[props.prop])
-      return createElement('span', {}, props.model.brand.name)
-    }
-  },
-  {
-    name: 'Филиал',
-    prop: 'branch.name',
-    size: 80,
-    pin: 'colPinStart',
-    readonly: true,
-    sortable: true,
-    cellTemplate: (createElement, props) => {
-      return createElement('span', {}, props.model.branch.name)
+    cellTemplate: (createElement) => {
+      return createElement('span', {}, 'Итого')
     }
   },
   // Заявки
@@ -30,20 +17,12 @@ export default [
     name: 'Заявки',
     children: [
       {
-        name: 'PK',
-        prop: 'requests.chanel.pk',
-        size: 60,
-        columnType: 'numeric',
+        name: 'PK + SEO',
+        prop: 'requests.pkSeo',
+        size: 120,
+        readonly: true,
         cellTemplate: (createElement, props) => {
-          return createElement('span', {}, props.model.requests.chanel.pk)
-        }
-      },
-      {
-        name: 'SEO',
-        prop: 'requests.chanel.seo',
-        size: 60, // BUG меняет размер предыдущей ячейки
-        cellTemplate: (createElement, props) => {
-          return createElement('span', {}, props.model.requests.chanel.seo)
+          return createElement('span', {}, props.model.requests.pkSeo)
         }
       },
       {
@@ -73,24 +52,9 @@ export default [
       {
         name: 'кол-во',
         prop: 'order.count',
-        sortable: true,
+        readonly: true,
         cellTemplate: (createElement, props) => {
-          return createElement(
-            'span',
-            {
-              style: { width: '30px' }
-            },
-            props.model.order.count
-          )
-        },
-        columnTemplate: (createElement, column) => {
-          return createElement(
-            'span',
-            {
-              style: { width: '30px' }
-            },
-            column.name
-          )
+          return createElement('span', {}, props.model.order.count)
         }
       },
       {
@@ -126,7 +90,7 @@ export default [
       {
         name: 'кол-во',
         prop: 'came_to_sc.count',
-        sortable: true,
+        readonly: true,
         cellTemplate: (createElement, props) => {
           return createElement('span', {}, props.model.came_to_sc.count)
         }
@@ -179,7 +143,7 @@ export default [
       {
         name: 'кол-во',
         prop: 'order_closed.count',
-        sortable: true,
+        readonly: true,
         cellTemplate: (createElement, props) => {
           return createElement('span', {}, props.model.order_closed.count)
         }
@@ -226,7 +190,7 @@ export default [
         name: 'Баланс',
         prop: 'common_expenses.balance',
         size: 80,
-        sortable: true,
+        readonly: true,
         cellTemplate: (createElement, props) => {
           return createElement(
             'span',
@@ -235,22 +199,13 @@ export default [
             },
             props.model.common_expenses.balance
           )
-        },
-        columnTemplate: (createElement, column) => {
-          return createElement(
-            'span',
-            {
-              style: { color: 'green' }
-            },
-            column.name
-          )
         }
       },
       {
         name: 'РК',
         prop: 'common_expenses.pk',
         size: 80,
-        sortable: true,
+        readonly: true,
         cellTemplate: (createElement, props) => {
           return createElement('span', {}, props.model.common_expenses.pk)
         }
@@ -259,7 +214,7 @@ export default [
         name: 'SEO',
         prop: 'common_expenses.seo',
         size: 80,
-        sortable: true,
+        readonly: true,
         cellTemplate: (createElement, props) => {
           return createElement('span', {}, props.model.common_expenses.seo)
         }
@@ -268,7 +223,7 @@ export default [
         name: 'Алока и т.д',
         prop: 'common_expenses.common',
         size: 80,
-        sortable: true,
+        readonly: true,
         cellTemplate: (createElement, props) => {
           return createElement('span', {}, props.model.common_expenses.common)
         }
@@ -278,36 +233,31 @@ export default [
   //
   {
     name: 'Выручка',
-    sortable: true,
+    prop: 'revenue',
     size: 100,
-    prop: 'revenue'
+    readonly: true
   },
   {
     name: 'Расходы',
-    sortable: true,
+    prop: 'expenses',
     size: 100,
-    beforeValueFormatted: (event, instance) => {
-      console.log('onBeforeValueFormatted', event, instance)
-    },
-    prop: 'expenses'
+    readonly: true
   },
   {
     name: 'Вал',
     prop: 'val',
     size: 100,
-    sortable: true,
     readonly: true
   },
   {
     name: 'Заказы',
-    sortable: true,
-    prop: 'orders'
+    prop: 'orders',
+    readonly: true
   },
   {
     name: 'Ср. чек',
     prop: 'wed_check',
     pin: 'colPinEnd',
-    sortable: true,
     readonly: true,
     cellTemplate: (createElement, props) => {
       return createElement(
@@ -324,9 +274,8 @@ export default [
     name: 'Дельта',
     prop: 'delta',
     pin: 'colPinEnd',
-    sortable: true,
-    readonly: true,
     size: 80,
+    readonly: true,
     cellTemplate: (createElement, props) => {
       return createElement(
         'span',
@@ -342,11 +291,10 @@ export default [
     name: 'Прибыль',
     prop: 'profit',
     pin: 'colPinEnd',
-    sortable: true,
-    readonly: true,
     size: 80,
+    readonly: true,
     cellTemplate: (createElement, props) => {
-      const cellClass = props.model.profit < 0 ? 'cellMinus' : ''
+      const cellClass = props.model.requests.common_price > 0 ? 'cellMinus' : ''
       return createElement(
         'span',
         {
@@ -364,10 +312,8 @@ export default [
     name: 'СПЗ',
     prop: 'spz',
     pin: 'colPinEnd',
-    sortable: true,
-    columnType: 'numeric',
-    readonly: true,
     size: 60,
+    readonly: true,
     cellTemplate: (createElement, props) => {
       return createElement(
         'span',

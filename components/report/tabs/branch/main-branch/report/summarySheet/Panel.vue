@@ -114,6 +114,7 @@ export default {
       }
       console.log('items', items)
     },
+
     async loadReport(reportId) {
       if (!this.report) {
         this.$notify({
