@@ -203,13 +203,13 @@ export default {
       let time = 30
       const timeValue = setInterval((interval) => {
         const item = document.querySelector('#branchWidth')
-        if (item.clientWidth) this.windowWidth = item.clientWidth - 50
+        if (item && item.clientWidth) this.windowWidth = item.clientWidth - 50
 
         time -= 1
         if (time <= 0) {
           clearInterval(timeValue)
         }
-      }, 1000)
+      }, 2000)
     },
 
 
@@ -278,7 +278,7 @@ export default {
           message: 'Отчет успушно удален!',
           customClass: 'success-notyfy'
         })
-        this.$store.commit('report/summary/SET_REPORT', null)
+        this.$store.commit('report/summary/SET_REPORT', {})
         this.$store.dispatch('report/summary/fetchItems')
       } catch (e) {
         console.error('Не удалось удалить отчет', e)

@@ -88,7 +88,7 @@ export default {
         if (time <= 0) {
           clearInterval(timeValue)
         }
-      }, 1000)
+      }, 2000)
     },
 
     /**
