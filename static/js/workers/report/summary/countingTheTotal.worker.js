@@ -78,7 +78,8 @@ self.addEventListener('message', async (event) => {
     const profit = Math.round((+table.total.val * 0.65) - (+table.total.came_to_sc.count * 70)) - +allCommonExpenses
     table.total.profit = isFinite(profit) ? profit : 0
     // спз - (прибыль / заказы)
-    table.total.spz = Math.round(+table.total.profit / +table.total.orders) || 0
+    const spz = Math.round(+table.total.profit / +table.total.orders)
+    table.total.spz = isFinite(spz) ? spz : 0
   } catch (e) {
     console.error('Не удалось посчитать итог сводном отчете')
   }
