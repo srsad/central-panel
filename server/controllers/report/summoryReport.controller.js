@@ -50,7 +50,7 @@ module.exports.getById = async (req, res) => {
 /** Вернуть весь список */
 module.exports.getAll = async (req, res) => {
   try {
-    const reports = await Report.find({}, { name: 1 }).sort({ created: -1 })
+    const reports = await Report.find({}, { name: 1, branch_id: 1 }).sort({ created: -1 })
     res.json(reports)
   } catch (error) {
     res.status(500).json({ message: 'Не удалось получить список отчетов!', error })
