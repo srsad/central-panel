@@ -39,7 +39,7 @@ module.exports.remove = async (req, res) => {
 /** Вернуть по id */
 module.exports.getById = async (req, res) => {
   try {
-    const recording = await Brand.findById()
+    const recording = await Brand.findById(req.params.id)
     res.status(200).json(recording)
   } catch (error) {
     req.status(500).json({ message: 'Не удалось полуичть бренд!', error })

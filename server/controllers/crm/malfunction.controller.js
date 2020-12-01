@@ -38,7 +38,7 @@ module.exports.remove = async (req, res) => {
 /** Вернуть по id */
 module.exports.getById = async (req, res) => {
   try {
-    const malfunction = await Malfunctions.findById()
+    const malfunction = await Malfunctions.findById(req.params.id)
     res.status(200).json(malfunction)
   } catch (error) {
     req.status(500).json({ message: 'Не удалось полуичть неисправность!', error })

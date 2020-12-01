@@ -46,7 +46,7 @@ module.exports.remove = async (req, res) => {
  */
 module.exports.getById = async (req, res) => {
   try {
-    const branch = await Branch.findById()
+    const branch = await Branch.findById(req.params.id)
     res.status(200).json(branch)
   } catch (error) {
     req.status(500).json({ message: 'Не удалось полуичть филиал!', error })

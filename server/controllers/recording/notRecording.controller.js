@@ -38,7 +38,7 @@ module.exports.remove = async (req, res) => {
 /** Вернуть по id */
 module.exports.getById = async (req, res) => {
   try {
-    const recording = await NotRecording.findById()
+    const recording = await NotRecording.findById(req.params.id)
     res.status(200).json(recording)
   } catch (error) {
     req.status(500).json({ message: 'Не удалось полуичть запись!', error })
