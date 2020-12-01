@@ -61,10 +61,10 @@ router.delete(
 )
 
 /**
- * Вывод всех филиала по id
+ * Вывод филиала по id
  * @group branchesReport - Филиалы (защищенные роуты)
  * @route GET /api/v1/report/branch/get/:id
- * @summary Вывод всех филиала по id
+ * @summary Вывод филиала по id
  * @returns {object} 200 - При успешном выводе
  * @returns {Error} default - При возникновении ошибки
  * @security JWT
