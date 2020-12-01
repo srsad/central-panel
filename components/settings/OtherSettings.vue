@@ -66,6 +66,10 @@ export default {
       })
       this.loading = false
     },
+
+    /**
+     * Возвращает список исключений в excel
+     */
     async getExceptions() {
       this.loading = true
       try {
