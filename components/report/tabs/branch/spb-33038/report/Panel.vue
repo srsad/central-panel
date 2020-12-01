@@ -3,15 +3,20 @@
     <el-tab-pane label="Сводные листы" name="summarysheet">
       <app-summary-sheet-panel />
     </el-tab-pane>
+    <el-tab-pane label="График работ" name="schedule">
+      <app-schedule-panel />
+    </el-tab-pane>
   </el-tabs>
 </template>
 
 <script>
 import AppSummarySheetPanel from '~/components/report/tabs/branch/spb-33038/report/summarySheet/Panel'
+import AppSchedulePanel from '~/components/report/tabs/branch/spb-33038/report/schedule/Panel'
 
 export default {
   components: {
-    AppSummarySheetPanel
+    AppSummarySheetPanel,
+    AppSchedulePanel
   }
 }
 </script>
