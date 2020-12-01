@@ -38,7 +38,8 @@ export const state = () => ({
   drawerCreateClient: false, // Окно создания клиента в CRM
   drawerUpdateClient: false, // Окно обновления клиента в CRM
   drawerSiteTestimonialCreate: false, // Окно создания отзыва
-  drawerSiteTestimonialUpdate: false // Окно редактирования отзыва
+  drawerSiteTestimonialUpdate: false, // Окно редактирования отзыва
+  drawerReportScheduleCreate: false // Окно создания новго расписания в разделе отчеты
 })
 
 export const actions = {
