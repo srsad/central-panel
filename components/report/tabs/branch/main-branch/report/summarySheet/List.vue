@@ -184,9 +184,7 @@ export default {
         // eslint-disable-next-line
         import('@revolist/revogrid-column-numeral').then((p) => (types.number = new p.default('0,0')))
       ]).then(() => {
-        console.log('columnTypes1', this.columnTypes)
         this.columnTypes = types
-        console.log('columnTypes2', this.columnTypes)
       })
     })
 
