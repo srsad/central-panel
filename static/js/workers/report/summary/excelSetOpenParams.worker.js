@@ -15,7 +15,7 @@ self.addEventListener('message', async (event) => {
     let closeOrders = 0
 
     for await (const row of items) {
-      let brand = row[33].split(',')
+      let brand = row[31].split(',')
       brand = brand[0].toLowerCase().trim()
       const branch = row[23].toLowerCase().trim()
       // все заказы текущего филиала

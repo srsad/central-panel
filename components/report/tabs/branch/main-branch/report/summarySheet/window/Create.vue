@@ -266,7 +266,7 @@ export default {
       }
 
       for await (const row of this.excelList) {
-        let brand = row[33].split(',')
+        let brand = row[31].split(',')
         brand = brand[0].trim()
         const branch = row[23].trim()
         // eslint-disable-next-line
