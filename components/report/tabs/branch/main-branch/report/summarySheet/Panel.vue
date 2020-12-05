@@ -43,9 +43,9 @@
       >
         Выбрать отчет
       </el-button>
-      <!-- <el-button @click="loadRemOnline">
+      <el-button @click="loadRemOnline">
         test
-      </el-button> -->
+      </el-button>
     </div>
     <div class="mt-15" style="margin-bottom:-15px;">
       <app-list
@@ -95,7 +95,7 @@ export default {
       const rem = new Rem(process.env.REMONLINE_API_KEY, true)
       // order/?token=...&created_at[]=1597352400000&created_at[]=1597438799999&branches[]=26047
       const items = []
-      for (let i = 14; i <= 21; i++) {
+      for (let i = 27; i <= 30; i++) {
         // new Date('2020,7,1,00:01:01').getTime()
         const created1 = new Date(`2020,11,${i},00:01:01`).getTime()
         const created2 = new Date(`2020,11,${i},23:59:50`).getTime()

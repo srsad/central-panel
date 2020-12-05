@@ -81,7 +81,6 @@ export default {
     }
   },
   mounted() {
-    console.log('загружаем графики')
     this.fetchItems()
   },
   methods: {
