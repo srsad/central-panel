@@ -17,8 +17,8 @@
           <template slot-scope="scope">
             <el-input
               v-model="scope.row.monday"
-              size="mini"
               :class="[scope.row.monday || 'bg-3a3']"
+              size="mini"
             />
           </template>
         </el-table-column>
@@ -28,8 +28,8 @@
           <template slot-scope="scope">
             <el-input
               v-model="scope.row.tuesday"
-              size="mini"
               :class="[scope.row.tuesday || 'bg-3a3']"
+              size="mini"
             />
           </template>
         </el-table-column>
@@ -39,8 +39,8 @@
           <template slot-scope="scope">
             <el-input
               v-model="scope.row.wednesday"
-              size="mini"
               :class="[scope.row.wednesday || 'bg-3a3']"
+              size="mini"
             />
           </template>
         </el-table-column>
@@ -50,8 +50,8 @@
           <template slot-scope="scope">
             <el-input
               v-model="scope.row.thursday"
-              size="mini"
               :class="[scope.row.thursday || 'bg-3a3']"
+              size="mini"
             />
           </template>
         </el-table-column>
@@ -61,8 +61,8 @@
           <template slot-scope="scope">
             <el-input
               v-model="scope.row.friday"
-              size="mini"
               :class="[scope.row.friday || 'bg-3a3']"
+              size="mini"
             />
           </template>
         </el-table-column>
@@ -72,8 +72,8 @@
           <template slot-scope="scope">
             <el-input
               v-model="scope.row.saturday"
-              size="mini"
               :class="[scope.row.saturday || 'bg-3a3']"
+              size="mini"
             />
           </template>
         </el-table-column>
@@ -83,8 +83,8 @@
           <template slot-scope="scope">
             <el-input
               v-model="scope.row.sunday"
-              size="mini"
               :class="[scope.row.sunday || 'bg-3a3']"
+              size="mini"
             />
           </template>
         </el-table-column>
