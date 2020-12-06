@@ -31,7 +31,7 @@ const unanswerdSchema = new Schema({
   expired: {
     type: Date,
     default: Date.now,
-    expires: 60 // секунты
+    expires: 1209600 // неделя в секундах
   },
 })
 
