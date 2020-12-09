@@ -15,49 +15,77 @@
         <!-- Пн -->
         <el-table-column prop="monday" label="Пн">
           <template slot-scope="scope">
-            <el-input v-model="scope.row.monday" size="mini" />
+            <el-input
+              v-model="scope.row.monday"
+              :class="[scope.row.monday || 'bg-3a3']"
+              size="mini"
+            />
           </template>
         </el-table-column>
         <!-- /Пн -->
         <!-- Вт -->
         <el-table-column prop="tuesday" label="Вт">
           <template slot-scope="scope">
-            <el-input v-model="scope.row.tuesday" size="mini" />
+            <el-input
+              v-model="scope.row.tuesday"
+              :class="[scope.row.tuesday || 'bg-3a3']"
+              size="mini"
+            />
           </template>
         </el-table-column>
         <!-- /Вт -->
         <!-- Ср -->
         <el-table-column prop="wednesday" label="Ср">
           <template slot-scope="scope">
-            <el-input v-model="scope.row.wednesday" size="mini" />
+            <el-input
+              v-model="scope.row.wednesday"
+              :class="[scope.row.wednesday || 'bg-3a3']"
+              size="mini"
+            />
           </template>
         </el-table-column>
         <!-- /Ср -->
         <!-- Чт -->
         <el-table-column prop="thursday" label="Чт">
           <template slot-scope="scope">
-            <el-input v-model="scope.row.thursday" size="mini" />
+            <el-input
+              v-model="scope.row.thursday"
+              :class="[scope.row.thursday || 'bg-3a3']"
+              size="mini"
+            />
           </template>
         </el-table-column>
         <!-- /Чт -->
         <!-- Пт -->
         <el-table-column prop="friday" label="Пт">
           <template slot-scope="scope">
-            <el-input v-model="scope.row.friday" size="mini" />
+            <el-input
+              v-model="scope.row.friday"
+              :class="[scope.row.friday || 'bg-3a3']"
+              size="mini"
+            />
           </template>
         </el-table-column>
         <!-- /Пт -->
         <!-- Сб -->
         <el-table-column prop="saturday" label="Сб">
           <template slot-scope="scope">
-            <el-input v-model="scope.row.saturday" size="mini" />
+            <el-input
+              v-model="scope.row.saturday"
+              :class="[scope.row.saturday || 'bg-3a3']"
+              size="mini"
+            />
           </template>
         </el-table-column>
         <!-- /Сб -->
         <!-- Вс -->
         <el-table-column prop="sunday" label="Вс">
           <template slot-scope="scope">
-            <el-input v-model="scope.row.sunday" size="mini" />
+            <el-input
+              v-model="scope.row.sunday"
+              :class="[scope.row.sunday || 'bg-3a3']"
+              size="mini"
+            />
           </template>
         </el-table-column>
         <!-- /Вс -->
@@ -82,11 +110,53 @@
         </el-table-column>
         <!-- /События -->
       </el-table>
+      <!-- printTable -->
       <!--  -->
+      <div style="display: none;">
+        <table :id="`print-${item._id}`" border="1">
+          <thead>
+            <th style="width:200px;padding:2px">Сотрудник</th>
+            <th style="width:70px;padding:2px">Пн</th>
+            <th style="width:70px;padding:2px">Вт</th>
+            <th style="width:70px;padding:2px">Ср</th>
+            <th style="width:70px;padding:2px">Чт</th>
+            <th style="width:70px;padding:2px">Пт</th>
+            <th style="width:70px;padding:2px">Сб</th>
+            <th style="width:70px;padding:2px">Вс</th>
+            <th style="width:150px;padding:2px">Номер</th>
+          </thead>
+          <tbody>
+            <tr v-for="(el, i) in item.schedules" :key="i">
+              <td style="padding:2px">{{ el.employee }}</td>
+              <td style="padding:2px">{{ el.monday || '-' }}</td>
+              <td style="padding:2px">{{ el.tuesday || '-' }}</td>
+              <td style="padding:2px">{{ el.wednesday || '-' }}</td>
+              <td style="padding:2px">{{ el.thursday || '-' }}</td>
+              <td style="padding:2px">{{ el.friday || '-' }}</td>
+              <td style="padding:2px">{{ el.saturday || '-' }}</td>
+              <td style="padding:2px">{{ el.sunday || '-' }}</td>
+              <td style="padding:2px">{{ el.phone || '-' }}</td>
+            </tr>
+            <tr>
+              <td style="padding:2px">Сотрудников в смене</td>
+              <td style="padding:2px">{{ item.result.monday }}</td>
+              <td style="padding:2px">{{ item.result.tuesday }}</td>
+              <td style="padding:2px">{{ item.result.wednesday }}</td>
+              <td style="padding:2px">{{ item.result.thursday }}</td>
+              <td style="padding:2px">{{ item.result.friday }}</td>
+              <td style="padding:2px">{{ item.result.saturday }}</td>
+              <td style="padding:2px">{{ item.result.sunday }}</td>
+              <td style="padding:2px"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- /printTable -->
       <!--  -->
       <div class="text-center mt-10 mb-30">
         <el-button
           @click="addEmployee(idx)"
+          :loading="loading"
           size="mini"
           type="success"
           icon="el-icon-plus"
@@ -96,6 +166,7 @@
         </el-button>
         <el-button
           @click="saveTable(idx)"
+          :loading="loading"
           size="mini"
           type="primary"
           icon="fa fa-floppy-o"
@@ -105,6 +176,7 @@
         </el-button>
         <el-button
           @click="removeTable(idx)"
+          :loading="loading"
           size="mini"
           type="danger"
           icon="el-icon-delete"
@@ -112,12 +184,24 @@
         >
           Удалить таблицу
         </el-button>
+        <el-button
+          @click.prevent="printTable(`print-${item._id}`)"
+          :loading="loading"
+          size="mini"
+          type="info"
+          icon="el-icon-printer"
+          title="Печать"
+        >
+          Печать
+        </el-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+// import Print from 'print-js'
+
 export default {
   props: {
     items: {
@@ -162,18 +246,47 @@ export default {
     async saveTable(idx) {
       this.loading = true
       try {
-        const scheduleId = this.items[idx]._id
         const fd = this.items[idx]
+        const scheduleId = fd._id
+        let monday = 0
+        let tuesday = 0
+        let wednesday = 0
+        let thursday = 0
+        let friday = 0
+        let saturday = 0
+        let sunday = 0
+
+        fd.schedules.forEach((el) => {
+          if (el.monday) monday++
+          if (el.tuesday) tuesday++
+          if (el.wednesday) wednesday++
+          if (el.thursday) thursday++
+          if (el.friday) friday++
+          if (el.saturday) saturday++
+          if (el.sunday) sunday++
+        })
+
+        fd.result.monday = monday
+        fd.result.tuesday = tuesday
+        fd.result.wednesday = wednesday
+        fd.result.thursday = thursday
+        fd.result.friday = friday
+        fd.result.saturday = saturday
+        fd.result.sunday = sunday
+
+        console.log('fd', fd)
+
         await this.$axios.$put(
           `/api/v1/report/schedule/update/${scheduleId}`,
           fd
         )
+
         this.$notify({
           message: 'Данные сохранены!',
           customClass: 'success-notyfy'
         })
       } catch (e) {
-        this.$store.commit('SET_ERROR', e.response.data.message)
+        await this.$store.commit('SET_ERROR', e.response.data.message)
       } finally {
         this.loading = false
       }
@@ -199,6 +312,16 @@ export default {
       } finally {
         this.loading = false
       }
+    },
+
+    /**
+     * Распечатать таблицу
+     */
+    printTable(tableId) {
+      // eslint-disable-next-line
+      const printJs = require('print-js')
+      // eslint-disable-next-line
+      printJS(tableId, 'html')
     }
   }
 }
