@@ -209,6 +209,7 @@ export default {
         this.$store.commit('SET_ERROR', e.response.data.message, { root: true })
       }
     },
+
     /**
      * Загрузить бренды и начальные данные из excel
      */
@@ -250,6 +251,7 @@ export default {
         e.path[0].value = '' // отчищаем input file для повторной загрузки файла
       }
     },
+
     /**
      * Парсим exel и бренды
      */
@@ -279,6 +281,8 @@ export default {
           // eslint-disable-next-line
           brandId = this.brandList.find((el) => el.name.toLowerCase() === brand.toLowerCase())
         }
+
+        if (branchId === undefined) continue
 
         // загружаем id бренда
         if (!this.form.brands_id.includes(brandId._id)) {
@@ -320,6 +324,7 @@ export default {
         )
       }
     },
+
     /**
      * Закрыть окно
      */
@@ -329,6 +334,7 @@ export default {
         status: false
       })
     },
+
     /**
      * Отчистить бренды
      */
@@ -336,6 +342,7 @@ export default {
       this.form.brands_id = []
       this.form.brands_id = []
     },
+
     /**
      * Отчистить форму
      */
