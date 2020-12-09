@@ -61,7 +61,7 @@ module.exports.getByBrandId = async (req, res) => {
   try {
     const schedule = await Schedule.find({
       branch: req.params.id
-    })
+    }).sort({ menuindex: 1 })
     res.status(200).json(schedule)
   } catch (error) {
     req.status(500).json({ message: 'Не удалось полуичть график!', error })
@@ -73,7 +73,7 @@ module.exports.getByBrandId = async (req, res) => {
  */
 module.exports.getAll = async (req, res) => {
   try {
-    const schedules = await Schedule.find().sort({ name: 1 })
+    const schedules = await Schedule.find().sort({ menuindex: 1 })
     res.json(schedules)
   } catch (error) {
     res
@@ -81,5 +81,4 @@ module.exports.getAll = async (req, res) => {
       .json({ message: 'Не удалось получить список графиков!', error })
   }
 }
-
 
