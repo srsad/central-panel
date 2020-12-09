@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-10">
       <el-select
-        v-if="$abilities('report-msk_63323_panel-read')"
+        v-if="$abilities('report-msk_63323_panel_summorysheat_panel-read')"
         v-model="report"
         size="mini"
         placeholder="Выберите период"
@@ -15,7 +15,7 @@
         />
       </el-select>
       <el-button
-        v-if="$abilities('report-msk_63323_panel-read')"
+        v-if="$abilities('report-msk_63323_panel_summorysheat_panel-read')"
         @click="loadReport"
         size="mini"
         type="primary"
@@ -26,7 +26,7 @@
       </el-button>
     </div>
     <div class="mt-15" style="margin-bottom:-15px;">
-      <!-- v-if="$abilities('report-msk_63323_panel-read')" -->
+      <!-- v-if="$abilities('report-msk_63323_panel_summorysheat_panel-read')" -->
       <app-list :page-data="pageData" />
       <!-- @updateReport="loadReport" -->
     </div>
