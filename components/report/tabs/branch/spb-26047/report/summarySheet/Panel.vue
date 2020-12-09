@@ -101,7 +101,8 @@ export default {
 
         // запус воркера итоговой суммы для данного филиала
       } catch (e) {
-        this.$store.commit('SET_ERROR', e.response.data.message)
+        console.error('Не удалось загрузить данные таблицы', e)
+        this.$store.commit('SET_ERROR', 'Не удалось загрузить данные таблицы')
       }
     },
 
