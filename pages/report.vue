@@ -3,35 +3,35 @@
     <div class="col-12">
       <el-tabs id="branchWidth" value="main_branch">
         <el-tab-pane
-          v-if="$abilities('report-main_branch_panel-read')"
+          v-if="$abilities('report-main_branch_panel_summorysheat_panel')"
           label="Основная"
           name="main_branch"
         >
           <app-main-branch-panel />
         </el-tab-pane>
         <el-tab-pane
-          v-if="$abilities('report-spb_26047_panel-read')"
+          v-if="$abilities('report-spb_26047_panel_summorysheat_panel')"
           label="СПБ 2-я Красноармейская"
           name="spb_26047"
         >
           <app-spb-26047-branch-panel />
         </el-tab-pane>
         <el-tab-pane
-          v-if="$abilities('report-spb_33038_panel-read')"
+          v-if="$abilities('report-spb_33038_panel_summorysheat_panel')"
           label="СПБ Дмитровский"
           name="spb_33038"
         >
           <app-spb-33038-branch-panel />
         </el-tab-pane>
         <el-tab-pane
-          v-if="$abilities('report-msk_63323_panel-read')"
+          v-if="$abilities('report-msk_63323_panel_summorysheat_panel')"
           label="МСК Новослободская"
           name="msk_63323"
         >
           <app-msk-63323-branch-panel />
         </el-tab-pane>
         <el-tab-pane
-          v-if="$abilities('report-msk_72021_panel-read')"
+          v-if="$abilities('report-msk_72021_panel_summorysheat_panel')"
           label="МСК Армянский"
           name="msk_72021"
         >

@@ -5,6 +5,12 @@ const cors = require('cors')
 const passport = require('passport')
 const compression = require('compression')
 const bodyParser = require('body-parser')
+const http = require('http')
+const socket = require('socket.io')
+
+const app = express()
+const server = http.createServer(app)
+const io = socket(server)
 
 const passportStrategy = require('./middleware/passport-strategy')
 // const sessionMiddleware = require('./middleware/sessions')
@@ -22,8 +28,7 @@ const reportRoutes = require('./routes/v1/report')
 const crmRoutes = require('./routes/v1/crm')
 const siteRoutes = require('./routes/v1/site')
 const analyticsRoutes = require('./routes/v1/analytics')
-
-const app = express()
+const unansweredRoutes = require('./routes/v1/unanswered.routes')
 
 mongoose
   // .plugin(accessibleRecordsPlugin)
@@ -48,6 +53,12 @@ passport.use(passportStrategy)
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
+// подключаю socket.io как доплнительный плагин express
+app.use((req, res, next) => {
+  req.io = io
+  next()
+})
+
 // app.use(accessesCASL)
 // app.use(busboyBodyParser())
 
@@ -66,5 +77,22 @@ app.use('/api/v1/crm', crmRoutes)
 app.use('/api/v1/site', siteRoutes)
 app.use('/api/v1/exceptions', exceptionsRoutes)
 app.use('/api/v1/analytics', analyticsRoutes)
+app.use('/api/v1/unanswered', unansweredRoutes)
 
-module.exports = app
+// socket.io
+const wrap = (middleware) => (socket, next) =>
+  middleware(socket.request, {}, next)
+io.use(wrap(passport.initialize()))
+
+io.on('connection', (socket) => {
+  socket.on('showUnansweredItem', (data, cb) => {
+    io.emit('NEW_MESSAGE', 'an event sent to all connected clients22')
+    // socket.emit('NEW_MESSAGE', 'an event sent to all connected clients')
+    // socket.emit('NEW_MESSAGE', 'asd as dsa asaad')
+  })
+})
+
+module.exports = {
+  app,
+  server
+}

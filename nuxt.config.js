@@ -49,11 +49,10 @@ module.exports = {
   plugins: [
     '@/plugins/element-ui',
     '@/plugins/abilities.js',
-    // '@/plugins/ability.js',
-    // '@/plugins/casl.js',
-    '@plugins/globals.js',
-    '@plugins/axios.js',
-    { src: '@plugins/no-ssr.js', ssr: false }
+    '@/plugins/globals.js',
+    '@/plugins/axios.js',
+    { src: '@/plugins/no-ssr.js', ssr: false },
+    { src: '@/plugins/socket.js', ssr: false }
     // { src: '@plugins/yaMaps.js', mode: 'client' }
   ],
   /*
@@ -68,7 +67,8 @@ module.exports = {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    // 'nuxt-socket-io'
   ],
   /*
    ** Axios module configuration
@@ -77,6 +77,30 @@ module.exports = {
   axios: {
     baseURL: process.env.BASE_URL || 'http://localhost:3000'
   },
+  /**
+   * socket io options
+   */
+  // io: {
+  //   sockets: [{
+  //     name: 'main',
+  //     url: 'http://localhost:3000',
+  //     path: 'io',
+  //     // secure: true
+  //     namespaces: {
+  //       '/index': {
+  //         emitters: ['getMessage2 + testMsg --> message2Rxd'],
+  //         listeners: ['chatMessage2', 'chatMessage3 --> message3Rxd']
+  //       },
+  //       '/examples': {
+  //         emitBacks: ['sample3', 'sample4 <-- myObj.sample4'],
+  //         emitters: [
+  //           'reset] getProgress + refreshInfo --> progress [handleDone'
+  //         ],
+  //         listeners: ['progress']
+  //       }
+  //     }
+  //   }]
+  // },
   /*
    ** Build configuration
    */

@@ -45,7 +45,9 @@
         >
           <el-button
             slot="reference"
-            v-if="$abilities('report-main_branch_panel-remove')"
+            v-if="
+              $abilities('report-main_branch_panel_summorysheat_panel-remove')
+            "
             :loading="loading"
             class="removeTable pt-10 pointer"
             type="danger"
@@ -210,14 +212,6 @@ export default {
       }, 2000)
     },
 
-
-    /**
-     *
-     */
-    testMethod(e) {
-      console.log('asd', e)
-    },
-
     // TODO перевести в фильтры
     priceMask(val) {
       return val ? `${val} ₽` : '-'
@@ -324,13 +318,16 @@ export default {
           'statuses[]=198277', // Закрыт (Отказ СХ)
           'statuses[]=198285', // Закрыт (Отказ Менеджер)
           'statuses[]=241717', // Для открытия
-          'statuses[]=192751', // Не пришел
+          'statuses[]=192751' // Не пришел
         ]
         const orders = await rem.getOrders(`&${filter.join('&')}`)
         // console.log('tableData.period', this.pageData.period, brandName, '-', orders.count)
         return orders.count
       } catch (e) {
-        this.$store.commit('SET_ERROR', 'Не удалось получить данные от remonline. Попробуйте по позже повторить данное действие.')
+        this.$store.commit(
+          'SET_ERROR',
+          'Не удалось получить данные от remonline. Попробуйте по позже повторить данное действие.'
+        )
       } finally {
         this.loading = false
       }
@@ -373,7 +370,7 @@ export default {
           'statuses[]=162791', // Выкупил СЦ
           'statuses[]=198277', // Закрыт (Отказ СХ)
           'statuses[]=198285', // Закрыт (Отказ Менеджер)
-          'statuses[]=241717', // Для открытия
+          'statuses[]=241717' // Для открытия
           // 'statuses[]=192751', // Не пришел
           // 'page=1',
         ]
@@ -383,7 +380,10 @@ export default {
 
         return orders.count
       } catch (e) {
-        this.$store.commit('SET_ERROR', 'Не удалось получить данные от remonline. Попробуйте по позже повторить данное действие.')
+        this.$store.commit(
+          'SET_ERROR',
+          'Не удалось получить данные от remonline. Попробуйте по позже повторить данное действие.'
+        )
       } finally {
         this.loading = false
       }
@@ -405,7 +405,7 @@ export default {
           `created_at[]=${created[1]}`,
           `branches[]=${this.pageData.branch_id.branch_id}`,
           `brands[]=${brandName}`,
-          'statuses[]=151384', // Закрыт
+          'statuses[]=151384' // Закрыт
           // 'page=1',
         ]
         const orders = await rem.getOrders(`&${filter.join('&')}`)
@@ -416,7 +416,10 @@ export default {
         // console.log('tableData.period', this.pageData.period, brandName, '-', orders.count)
         return orders.count
       } catch (e) {
-        this.$store.commit('SET_ERROR', 'Не удалось получить данные от remonline. Попробуйте по позже повторить данное действие.')
+        this.$store.commit(
+          'SET_ERROR',
+          'Не удалось получить данные от remonline. Попробуйте по позже повторить данное действие.'
+        )
       } finally {
         this.loading = false
       }
@@ -448,7 +451,7 @@ export default {
             'statuses[]=198277', // Закрыт (Отказ СХ)
             'statuses[]=198285', // Закрыт (Отказ Менеджер)
             'statuses[]=241717', // Для открытия
-            `page=${i}`,
+            `page=${i}`
           ]
           const allOrders = await rem.getOrders(`&${filter.join('&')}`)
 
@@ -467,7 +470,10 @@ export default {
         // console.log({ brandName, revenue, expenses, orders })
         return { revenue, expenses, orders }
       } catch (e) {
-        this.$store.commit('SET_ERROR', 'Не удалось получить данные от remonline, чтоб посчитать выручку расходы и заказы')
+        this.$store.commit(
+          'SET_ERROR',
+          'Не удалось получить данные от remonline, чтоб посчитать выручку расходы и заказы'
+        )
       } finally {
         this.loading = false
       }
@@ -507,9 +513,14 @@ export default {
         const report = JSON.parse(JSON.stringify(this.pageData))
         // удаляем бренд
         report.brands_id = report.brands_id.filter((el) => el !== row.brand._id)
-        report.brands = report.brands.filter((el) => el.brand._id !== row.brand._id)
+        report.brands = report.brands.filter(
+          (el) => el.brand._id !== row.brand._id
+        )
         // обновляем отчет
-        await this.$axios.$put('/api/v1/report/summory/update/' + report._id, report)
+        await this.$axios.$put(
+          '/api/v1/report/summory/update/' + report._id,
+          report
+        )
         // обновляем отчет в таблице
         this.$emit('updateReport', {
           reportId: report._id
@@ -535,11 +546,13 @@ export default {
         reader.onload = (e) => {
           let data = e.target.result
           if (!rABS) data = new Uint8Array(data)
-          const wb = XLSX.read(data, {type: rABS ? 'binary' : 'array'})
+          const wb = XLSX.read(data, { type: rABS ? 'binary' : 'array' })
 
           let result = {}
           wb.SheetNames.forEach((sheetName) => {
-            const roa = XLSX.utils.sheet_to_json(wb.Sheets[sheetName], { header: 1 })
+            const roa = XLSX.utils.sheet_to_json(wb.Sheets[sheetName], {
+              header: 1
+            })
             if (roa.length) result = roa
           })
           result.shift() // удаляем первую строку
@@ -556,8 +569,10 @@ export default {
       } catch (e) {
         console.error(
           'Ошибка при попытке загрузки ексель, файла.',
-          'Используемый метод', this.excelListType,
-          'ошибка', e
+          'Используемый метод',
+          this.excelListType,
+          'ошибка',
+          e
         )
       } finally {
         e.path[0].value = '' // отчищаем input file для повторной загрузки файла
@@ -568,7 +583,7 @@ export default {
      * Запуск воркера для подсчета данных из excel
      * Первый блок - открытые заявки
      */
-    runWorkerOpenParams () {
+    runWorkerOpenParams() {
       this.loading = true
       this.onlyRefresh = true
       // если очередь не пуста, то тогда записываем ее в конец выполнения
@@ -580,7 +595,7 @@ export default {
       )
       worker.postMessage({
         table: this.pageData.brands,
-        arr: this.excelList,
+        arr: this.excelList
       })
       // запускаем его в очередь выполнения
       worker.onmessage = (event) => {
@@ -592,7 +607,7 @@ export default {
      * Запуск воркера для подсчета данных из excel
      * Второй блок - закрытые заявки
      */
-    runWorkerCloseParams () {
+    runWorkerCloseParams() {
       this.loading = true
       this.onlyRefresh = true // на всякий случай блокируем загрузку данных из ремонлайн
       const worker = new Worker(
@@ -608,7 +623,6 @@ export default {
         this.setDataTableAndSave(event.data)
       }
     },
-
 
     /**
      * Обновление отчета
@@ -696,14 +710,15 @@ export default {
 .input-transparent input {
   padding-right: 7px !important;
 }
-.el-input__inner{}
-.el-table th>.cell{
+.el-input__inner {
+}
+.el-table th > .cell {
   font-weight: 400;
   font-size: 13px;
   color: black;
 }
 .removeTableRow,
-.updateTableRow{
+.updateTableRow {
   position: absolute;
   z-index: 9;
   bottom: 7px;

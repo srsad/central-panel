@@ -1,4 +1,4 @@
-const app = require('../app')
+const { app } = require('../app')
 const expressSwagger = require('express-swagger-generator')(app)
 
 let options = {

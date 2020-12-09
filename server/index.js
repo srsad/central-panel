@@ -1,5 +1,5 @@
 const config = require('../nuxt.config.js')
-const app = require('./app')
+const { app, server} = require('./app')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 require('./docs/swagger')
@@ -20,7 +20,7 @@ async function start() {
 
   app.use(nuxt.render)
 
-  app.listen(port, host, () => {
+  server.listen(port, () => {
     consola.ready({
       message: `Server listening on http://${host}:${port}`,
       badge: true
