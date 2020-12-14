@@ -67,7 +67,7 @@
             @click="() => (excelListType = 'runWorkerOpenParams')"
           >
             <span class="el-button el-button--default el-button--mini">
-              <i class="el-icon-download"></i>
+              <i class="el-icon-download"></i> Созданные заказы
             </span>
             <input
               @change="uploadFromExcel"
@@ -89,7 +89,7 @@
             @click="() => (excelListType = 'runWorkerCloseParams')"
           >
             <span class="el-button el-button--info el-button--mini">
-              <i class="el-icon-download"></i>
+              <i class="el-icon-download"></i> Закрытые заказы
             </span>
             <input
               @change="uploadFromExcel"
@@ -101,8 +101,52 @@
           </label>
         </el-popover>
         <!--  -->
+        |
+        <!-- Заявки и расходы -->
+        <el-dropdown
+          :loading="loading"
+          @command="handleCommand"
+          trigger="click"
+        >
+          <el-button :loading="loading" type="primary" size="mini">
+            Заявки и расходы <i class="el-icon-arrow-down el-icon--right" />
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item
+              :loading="loading"
+              icon="fa fa-upload"
+              command="importExpenses"
+            >
+              Импорт (выгрузить данные)
+            </el-dropdown-item>
+            <!--  -->
+            <!-- <el-dropdown-item
+              :loading="loading"
+              icon="fa fa-download"
+              command="runWorkerExportExpenses"
+            >
+              Экспорт (загрузить данные)
+            </el-dropdown-item> -->
+            <!--  -->
+          </el-dropdown-menu>
+        </el-dropdown>
+        <!-- /Заявки и расходы -->
+        <!-- Форма для экспорта данных по расходам -->
+        <label
+          id="uploadFromExportExpenses"
+          @click="() => (excelListType = 'runWorkerExportExpenses')"
+        >
+          <input
+            @change="uploadFromExcel"
+            :disabled="loading"
+            type="file"
+            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+            style="display:none"
+          />
+        </label>
+        <!-- /Форма для экспорта данных по расходам -->
+        <!--  -->
       </div>
-      <!--  -->
       <!-- {{ pageData.total }} -->
       <no-ssr>
         <div :class="['grid', loading ? 'disabled' : '']">
@@ -138,10 +182,11 @@
 </template>
 
 <script>
+/* eslint-disable prettier/prettier */
+import XLSX from 'xlsx'
+import { saveAs } from 'file-saver'
 import СommonСolumns from './commonСolumns'
 import TotalColumns from './totalColumns'
-import XLSX from 'xlsx'
-/* eslint-disable prettier/prettier */
 import Rem from '~/utils/remonline.js'
 const rem = new Rem(process.env.REMONLINE_API_KEY, true)
 
@@ -183,8 +228,10 @@ export default {
     import('@revolist/vue-datagrid').then((m) => {
       const types = {}
       Promise.all([
-        // eslint-disable-next-line
-        import('@revolist/revogrid-column-numeral').then((p) => (types.number = new p.default('0,0')))
+        import('@revolist/revogrid-column-numeral').then(
+          // eslint-disable-next-line
+          (p) => (types.number = new p.default('0,0'))
+        )
       ]).then(() => {
         this.columnTypes = types
       })
@@ -215,6 +262,23 @@ export default {
     // TODO перевести в фильтры
     priceMask(val) {
       return val ? `${val} ₽` : '-'
+    },
+
+    /**
+     * Импорт/экспорт данных для наполнение Леней
+     */
+    handleCommand(command) {
+      // такой вариант самый явный и читабельный
+      switch (command) {
+        // выгрузить в эксель
+        case 'importExpenses':
+          this.importExpenses()
+          break
+        // загрузить из эксель
+        case 'runWorkerExportExpenses':
+          this.runWorkerExportExpenses()
+          break
+      }
     },
 
     /**
@@ -480,14 +544,6 @@ export default {
     },
 
     /**
-     * TODO Обновление данных одного бренда
-     */
-    // TODO Обновление данных одного бренда
-    updateRowTable(row) {
-      console.log('updateRowTable', row)
-    },
-
-    /**
      * Сохранить текущее состояние таблицы
      */
     async saveTable() {
@@ -539,6 +595,7 @@ export default {
       try {
         const files = e.target.files
         const file = files[0]
+        console.log('file', file)
         // this.excelList
         const reader = new FileReader()
         const rABS = !!reader.readAsBinaryString
@@ -662,6 +719,73 @@ export default {
         this.setTotalDataTableAndSave(event.data)
         // worker.terminate() // убиваем
       }
+    },
+
+    /**
+     * Выгрузить данные в эксель для наполнение Леней
+     */
+    async importExpenses() {
+      this.loading = true
+      try {
+        const items = [
+          ['Филиал', 'Бренд', 'PK', 'SEO', 'Расходы - баланс', 'Расходы - РК', 'Расходы - СЕО', 'Расходы - Общие', 'id Филиала', 'id Бренда']
+        ]
+
+        for await (const el of this.tableData.brands) {
+          const part = [
+            el.branch.name,
+            el.brand.name,
+            // pk + seo
+            el.requests.chanel.pk,
+            el.requests.chanel.seo,
+            // Расходы
+            el.common_expenses.balance,
+            el.common_expenses.pk,
+            el.common_expenses.seo,
+            el.common_expenses.common,
+            // id филиала и бренда
+            el.branch._id,
+            el.brand._id,
+          ]
+          items.push(part)
+        }
+
+        const wb = XLSX.utils.book_new();
+        wb.SheetNames.push('Сводная таблица - расходы')
+        const ws = XLSX.utils.aoa_to_sheet(items)
+        wb.Sheets['Сводная таблица - расходы'] = ws
+
+        const file = await XLSX.write(wb, { bookType:'xlsx',  type: 'binary' })
+
+        const buf = new ArrayBuffer(file.length)
+        const view = new Uint8Array(buf)
+        for (let i = 0; i < file.length; i++) {
+          view[i] = file.charCodeAt(i) & 0xFF
+        }
+
+        const blob = new Blob([buf],{ type: 'application/octet-stream' })
+        saveAs(blob, 'Сводная таблица - расходы.xlsx')
+      } catch (e) {
+        await console.error('Не удалось выгрузить данные сводных таблиц', e)
+        this.$store.commit(
+          'SET_ERROR',
+          'Не удалось выгрузить данные сводных таблиц!'
+        )
+      } finally {
+        this.loading = false
+      }
+    },
+
+    /**
+     * Загрузить данные из эксель наполненные Леней
+     */
+    runWorkerExportExpenses() {
+      console.log('runWorkerExportExpenses')
+      this.excelListType = 'runWorkerExportExpenses'
+      // открываем форму загрузки файла
+      const fileInput = document.getElementById('uploadFromExportExpenses')
+      fileInput.click()
+      // запускаем воркер
     },
 
     /**
