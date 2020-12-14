@@ -75,7 +75,7 @@ export default {
       try {
         const { data } = await this.$axios.$get('/api/v1/exceptions/getAll')
 
-        const wb = XLSX.utils.book_new();
+        const wb = XLSX.utils.book_new()
         wb.SheetNames.push('Исключения')
         const ws = XLSX.utils.aoa_to_sheet(data)
         wb.Sheets['Исключения'] = ws
