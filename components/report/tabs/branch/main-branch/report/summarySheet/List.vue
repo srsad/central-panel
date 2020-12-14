@@ -120,13 +120,13 @@
               Импорт (выгрузить данные)
             </el-dropdown-item>
             <!--  -->
-            <!-- <el-dropdown-item
+            <el-dropdown-item
               :loading="loading"
               icon="fa fa-download"
-              command="runWorkerExportExpenses"
+              command="openFileLoader"
             >
               Экспорт (загрузить данные)
-            </el-dropdown-item> -->
+            </el-dropdown-item>
             <!--  -->
           </el-dropdown-menu>
         </el-dropdown>
@@ -274,9 +274,10 @@ export default {
         case 'importExpenses':
           this.importExpenses()
           break
-        // загрузить из эксель
-        case 'runWorkerExportExpenses':
-          this.runWorkerExportExpenses()
+        // открываем форму загрузки файла
+        case 'openFileLoader':
+          const fileInput = document.getElementById('uploadFromExportExpenses')
+          fileInput.click()
           break
       }
     },
@@ -595,7 +596,6 @@ export default {
       try {
         const files = e.target.files
         const file = files[0]
-        console.log('file', file)
         // this.excelList
         const reader = new FileReader()
         const rABS = !!reader.readAsBinaryString
@@ -722,6 +722,33 @@ export default {
     },
 
     /**
+     * Загрузить данные из эксель наполненные Леней
+     */
+    runWorkerExportExpenses() {
+      console.log('runWorkerExportExpenses')
+      this.loading = true
+      // на всякий случай блокируем загрузку данных из ремонлайн
+      this.onlyRefresh = true
+      const worker = new Worker(
+        '/js/workers/report/summary/exportExpenses.worker.js'
+      )
+      worker.postMessage({
+        table: this.pageData.brands,
+        arr: this.excelList
+      })
+      this.excelList = []
+
+      worker.onmessage = (event) => {
+        // Установка данных
+        this.setDataTable(event.data)
+        // пересчет таблицы
+        this.runWorkerUpdateTable()
+        // Подсчет итогов и сохранение
+        this.runWorkerCountingTheTotal()
+      }
+    },
+
+    /**
      * Выгрузить данные в эксель для наполнение Леней
      */
     async importExpenses() {
@@ -774,18 +801,6 @@ export default {
       } finally {
         this.loading = false
       }
-    },
-
-    /**
-     * Загрузить данные из эксель наполненные Леней
-     */
-    runWorkerExportExpenses() {
-      console.log('runWorkerExportExpenses')
-      this.excelListType = 'runWorkerExportExpenses'
-      // открываем форму загрузки файла
-      const fileInput = document.getElementById('uploadFromExportExpenses')
-      fileInput.click()
-      // запускаем воркер
     },
 
     /**
