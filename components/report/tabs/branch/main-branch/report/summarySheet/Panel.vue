@@ -43,9 +43,9 @@
       >
         Выбрать отчет
       </el-button>
-      <el-button @click="loadRemOnline">
+      <!-- <el-button @click="loadRemOnline">
         test
-      </el-button>
+      </el-button> -->
     </div>
     <div class="mt-15" style="margin-bottom:-15px;">
       <app-list
