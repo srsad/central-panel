@@ -37,7 +37,7 @@
     "element-ui": "^2.4.11",
     "element-ui-el-table-draggable": "^1.2.9",
     "express": "^4.16.4",
-    "file-saver": "^2.0.2",
+    "file-saver": "^2.0.5",
     "fingerprintjs2": "^2.1.0",
     "font-awesome": "^4.7.0",
     "js-cookie": "^2.2.1",
