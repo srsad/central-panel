@@ -385,6 +385,28 @@ export default [
                 label: 'Удаление'
               }
             ]
+          },
+          {
+            _id: 'report-spb_26047_panel_plan_panel',
+            label: 'План',
+            children: [
+              {
+                _id: 'report-spb_26047_panel_plan_panel-read',
+                label: 'Чтение'
+              },
+              {
+                _id: 'report-spb_26047_panel_plan_panel-create',
+                label: 'Создание'
+              },
+              {
+                _id: 'report-spb_26047_panel_plan_panel-update',
+                label: 'Редактирование'
+              },
+              {
+                _id: 'report-spb_26047_panel_plan_panel-remove',
+                label: 'Удаление'
+              }
+            ]
           }
         ]
       },
@@ -432,6 +454,28 @@ export default [
               },
               {
                 _id: 'report-spb_33038_panel_schedule_panel-remove',
+                label: 'Удаление'
+              }
+            ]
+          },
+          {
+            _id: 'report-spb_33038_panel_plan_panel',
+            label: 'План',
+            children: [
+              {
+                _id: 'report-spb_33038_panel_plan_panel-read',
+                label: 'Чтение'
+              },
+              {
+                _id: 'report-spb_33038_panel_plan_panel-create',
+                label: 'Создание'
+              },
+              {
+                _id: 'report-spb_33038_panel_plan_panel-update',
+                label: 'Редактирование'
+              },
+              {
+                _id: 'report-spb_33038_panel_plan_panel-remove',
                 label: 'Удаление'
               }
             ]
@@ -485,6 +529,28 @@ export default [
                 label: 'Удаление'
               }
             ]
+          },
+          {
+            _id: 'report-msk_63323_panel_plan_panel',
+            label: 'План',
+            children: [
+              {
+                _id: 'report-msk_63323_panel_plan_panel-read',
+                label: 'Чтение'
+              },
+              {
+                _id: 'report-msk_63323_panel_plan_panel-create',
+                label: 'Создание'
+              },
+              {
+                _id: 'report-msk_63323_panel_plan_panel-update',
+                label: 'Редактирование'
+              },
+              {
+                _id: 'report-msk_63323_panel_plan_panel-remove',
+                label: 'Удаление'
+              }
+            ]
           }
         ]
       },
@@ -532,6 +598,28 @@ export default [
               },
               {
                 _id: 'report-msk_72021_panel_schedule_panel-remove',
+                label: 'Удаление'
+              }
+            ]
+          },
+          {
+            _id: 'report-msk_72021_panel_plan_panel',
+            label: 'План',
+            children: [
+              {
+                _id: 'report-msk_72021_panel_plan_panel-read',
+                label: 'Чтение'
+              },
+              {
+                _id: 'report-msk_72021_panel_plan_panel-create',
+                label: 'Создание'
+              },
+              {
+                _id: 'report-msk_72021_panel_plan_panel-update',
+                label: 'Редактирование'
+              },
+              {
+                _id: 'report-msk_72021_panel_plan_panel-remove',
                 label: 'Удаление'
               }
             ]
