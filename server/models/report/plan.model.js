@@ -36,33 +36,30 @@ const reportPlans = new Schema({
   },
   // Планируемые
   planned: {
-    type: Number,
-    default: 0
-  },
-  // Выполнение
-  fulfillment: {
-    type: Number,
-    default: 0
+    type: Object,
+    default: {
+      number_of_orders: 0, // Количество заказов
+      gross_profit: 0, // Валовая прибыл
+      average_bill: 0 // Средний чек
+    }
   },
   // Фактические
   actual: {
-    type: Number,
-    default: 0
+    type: Object,
+    default: {
+      number_of_orders: 0, // Количество заказов
+      gross_profit: 0, // Валовая прибыл
+      average_bill: 0 // Средний чек
+    }
   },
-  // Количество заказов
-  number_of_orders: {
-    type: Number,
-    default: 0
-  },
-  // Валовая прибыль
-  gross_profit: {
-    type: Number,
-    default: 0
-  },
-  // Средний чек
-  average_bill: {
-    type: Number,
-    default: 0
+  // Выполнение
+  fulfillment: {
+    type: Object,
+    default: {
+      number_of_orders: 0, // Количество заказов
+      gross_profit: 0, // Валовая прибыл
+      average_bill: 0 // Средний чек
+    }
   },
   created: {
     type: Date,

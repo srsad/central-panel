@@ -1,9 +1,17 @@
 <template>
   <el-tabs type="border-card" value="summarysheet">
-    <el-tab-pane label="Сводные листы" name="summarysheet">
+    <el-tab-pane
+      v-if="$abilities('report-msk_63323_panel_summorysheat_panel')"
+      label="Сводные листы"
+      name="summarysheet"
+    >
       <app-summary-sheet-panel />
     </el-tab-pane>
-    <el-tab-pane label="График работ" name="schedule">
+    <el-tab-pane
+      v-if="$abilities('report-msk_63323_panel_schedule_panel')"
+      label="График работ"
+      name="schedule"
+    >
       <app-schedule-panel />
     </el-tab-pane>
   </el-tabs>

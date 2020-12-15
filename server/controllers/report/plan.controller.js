@@ -58,7 +58,7 @@ module.exports.getById = async (req, res) => {
  */
 module.exports.getList = async (req, res) => {
   try {
-    const plans = await Plan.find().sort({ name: 1 })
+    const plans = await Plan.find().sort({ plan_date: -1 })
     res.json(plans)
   } catch (error) {
     res
