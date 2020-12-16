@@ -51,8 +51,8 @@ module.exports = {
     '@/plugins/abilities.js',
     '@/plugins/globals.js',
     '@/plugins/axios.js',
-    { src: '@/plugins/no-ssr.js', ssr: false },
-    { src: '@/plugins/socket.js', ssr: false }
+    { src: '@/plugins/no-ssr.js', ssr: false }
+    // { src: '@/plugins/socket.js', ssr: false }
     // { src: '@plugins/yaMaps.js', mode: 'client' }
   ],
   /*
