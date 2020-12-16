@@ -11,7 +11,7 @@
         <td class="planTable__header">Количество заказов</td>
         <td>
           <el-input-number
-            v-if="$abilities('report-spb_33038_panel_plan_panel-update')"
+            v-if="$abilities('report-msk_63323_panel_plan_panel-update')"
             v-model="item.planned.number_of_orders"
             :controls="false"
             :disabled="loading"
@@ -23,7 +23,7 @@
         </td>
         <td>
           <el-input-number
-            v-if="$abilities('report-spb_33038_panel_plan_panel-update')"
+            v-if="$abilities('report-msk_63323_panel_plan_panel-update')"
             v-model="item.actual.number_of_orders"
             :controls="false"
             :disabled="loading"
@@ -39,7 +39,7 @@
         <td class="planTable__header">Валовая прибыль</td>
         <td>
           <el-input-number
-            v-if="$abilities('report-spb_33038_panel_plan_panel-update')"
+            v-if="$abilities('report-msk_63323_panel_plan_panel-update')"
             v-model="item.planned.gross_profit"
             :controls="false"
             :disabled="loading"
@@ -51,7 +51,7 @@
         </td>
         <td>
           <el-input-number
-            v-if="$abilities('report-spb_33038_panel_plan_panel-update')"
+            v-if="$abilities('report-msk_63323_panel_plan_panel-update')"
             v-model="item.actual.gross_profit"
             :controls="false"
             :disabled="loading"
@@ -68,7 +68,7 @@
         <td class="planTable__header">Средний чек</td>
         <td>
           <el-input-number
-            v-if="$abilities('report-spb_33038_panel_plan_panel-update')"
+            v-if="$abilities('report-msk_63323_panel_plan_panel-update')"
             v-model="item.planned.average_bill"
             :controls="false"
             :disabled="loading"
@@ -80,7 +80,7 @@
         </td>
         <td>
           <el-input-number
-            v-if="$abilities('report-spb_33038_panel_plan_panel-update')"
+            v-if="$abilities('report-msk_63323_panel_plan_panel-update')"
             v-model="item.actual.average_bill"
             :controls="false"
             :disabled="loading"
@@ -97,7 +97,7 @@
     <!--  -->
     <div class="ml-15">
       <el-popconfirm
-        v-if="$abilities('report-spb_33038_panel_plan_panel-remove')"
+        v-if="$abilities('report-msk_63323_panel_plan_panel-remove')"
         @onConfirm="remove(item)"
         title="Удалить план?"
         confirm-button-text="Да"

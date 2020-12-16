@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div
-      v-if="$abilities('report-spb_33038_panel_plan_panel-create')"
+      v-if="$abilities('report-spb_26047_panel_plan_panel-create')"
       class="col-12"
     >
       <el-form
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import AppList from '~/components/report/tabs/branch/spb-33038/report/plan/List'
+import AppList from '~/components/report/tabs/branch/spb-26047/report/plan/List'
 import moment from 'moment'
 moment.locale('ru')
 
@@ -60,7 +60,7 @@ export default {
   data() {
     return {
       loading: false,
-      branch: '33038',
+      branch: '26047',
       form: {
         name: '',
         plan_date: ''
