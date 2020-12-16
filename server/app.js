@@ -6,11 +6,11 @@ const passport = require('passport')
 const compression = require('compression')
 const bodyParser = require('body-parser')
 const http = require('http')
-// const socket = require('socket.io')
+const socket = require('socket.io')
 
 const app = express()
 const server = http.createServer(app)
-// const io = socket(server)
+const io = socket(server)
 
 const passportStrategy = require('./middleware/passport-strategy')
 // const sessionMiddleware = require('./middleware/sessions')
@@ -80,17 +80,16 @@ app.use('/api/v1/analytics', analyticsRoutes)
 app.use('/api/v1/unanswered', unansweredRoutes)
 
 // socket.io
-// const wrap = (middleware) => (socket, next) =>
-//   middleware(socket.request, {}, next)
-// io.use(wrap(passport.initialize()))
+const wrap = (middleware) => (socket, next) => middleware(socket.request, {}, next)
+io.use(wrap(passport.initialize()))
 
-// io.on('connection', (socket) => {
-//   socket.on('showUnansweredItem', (data, cb) => {
-//     io.emit('NEW_MESSAGE', 'an event sent to all connected clients22')
-//     // socket.emit('NEW_MESSAGE', 'an event sent to all connected clients')
-//     // socket.emit('NEW_MESSAGE', 'asd as dsa asaad')
-//   })
-// })
+io.on('connection', (socket) => {
+  socket.on('showUnansweredItem', (data, cb) => {
+    io.emit('NEW_MESSAGE', 'an event sent to all connected clients22')
+    // socket.emit('NEW_MESSAGE', 'an event sent to all connected clients')
+    // socket.emit('NEW_MESSAGE', 'asd as dsa asaad')
+  })
+})
 
 module.exports = {
   app,
