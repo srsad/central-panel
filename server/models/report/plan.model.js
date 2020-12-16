@@ -18,7 +18,6 @@ const reportPlans = new Schema({
   name: {
     type: String,
     maxlength: 255,
-    unique: true,
     index: true
   },
   // дата плана
