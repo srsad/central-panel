@@ -13,6 +13,7 @@ export const actions = {
       const brands = await this.$axios.$get('/api/v1/report/brand/getall')
       commit('SET_BRANDS', brands)
     } catch (e) {
+      console.error('Не удалось получить список брендов', e.response)
       commit('SET_ERROR', e.response.data.message, { root: true })
       throw e
     }
