@@ -19,6 +19,7 @@
   "dependencies": {
     "@casl/ability": "^4.0.5",
     "@casl/vue": "^1.0.2",
+    "@handsontable/vue": "^5.1.0",
     "@nuxtjs/axios": "^5.3.6",
     "@revolist/revogrid-column-numeral": "^1.0.2",
     "@revolist/vue-datagrid": "^1.1.2",
@@ -39,7 +40,9 @@
     "express": "^4.16.4",
     "file-saver": "^2.0.2",
     "fingerprintjs2": "^2.1.0",
+    "flat": "^5.0.2",
     "font-awesome": "^4.7.0",
+    "handsontable": "^8.2.0",
     "js-cookie": "^2.2.1",
     "js-md5": "^0.7.3",
     "jsonwebtoken": "^8.5.1",

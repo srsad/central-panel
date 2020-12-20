@@ -106,55 +106,264 @@
       <!-- {{ pageData.total }} -->
       <no-ssr>
         <div :class="['grid', loading ? 'disabled' : '']">
-          <v-grid
-            @beforeEdit="onCellEdit"
-            :source="pageData.brands"
-            :columns="commonСolumns"
-            :resize="true"
-            :col-size="70"
-            :column-types="columnTypes"
-            :style="`height: 69vh; max-width: ${windowWidth}px`"
-            class="global-grid-small main-summory-table"
-            theme="compact"
-          />
-          <!-- :pinnedTopSource="pinnedTopSource" -->
-          <!--  -->
-          <v-grid
-            @beforeEdit="onCellEdit"
-            :source="[pageData.total]"
-            :columns="totalColumns"
-            :resize="true"
-            :col-size="70"
-            :columnTypes="columnTypes"
-            :style="`height: 150px; max-width: ${windowWidth}px`"
-            class="global-grid-small total-summory-table"
-            theme="compact"
-          />
+          <!-- :nested-headers="nestedHeaders" -->
+          <hot-table
+            ref="hotTableComponent"
+            :data="pageData.brands"
+            :settings="hotSettings"
+            :col-headers="true"
+            :row-headers="true"
+            :column-sorting="true"
+            height="300"
+          >
+            <!-- Филлиал -->
+            <hot-column
+              :read-only="true"
+              data="branch.name"
+              width="80px"
+              class-name="table__branch-name"
+            />
+
+            <!-- Бренд -->
+            <hot-column
+              :read-only="true"
+              data="brand.name"
+              width="50px"
+              class-name="table__branch-name"
+            />
+            <!-- заявки -->
+            <!-- PK -->
+            <hot-column
+              :numericFormat="{ pattern: '0' }"
+              type="numeric"
+              data="requests.chanel.pk"
+            />
+            <!-- seo -->
+            <hot-column
+              :numericFormat="{ pattern: '0' }"
+              type="numeric"
+              data="requests.chanel.seo"
+            />
+            <!-- цена за трафик -->
+            <hot-column
+              :read-only="true"
+              width="80px"
+              data="requests.traffik_price"
+              class-name="htDimmed"
+            >
+              <app-custom-columns-price hot-renderer />
+            </hot-column>
+            <!-- цена общая -->
+            <hot-column
+              :read-only="true"
+              width="80px"
+              data="requests.common_price"
+              class-name="htDimmed"
+            >
+              <app-custom-columns-price hot-renderer />
+            </hot-column>
+            <!-- /заявки -->
+            <!-- Запись -->
+            <!-- кол-во -->
+            <hot-column width="80px" data="order.count" />
+            <!-- цена за трафик -->
+            <hot-column
+              :read-only="true"
+              width="80px"
+              data="order.traffik_price"
+              class-name="htDimmed"
+            >
+              <app-custom-columns-price hot-renderer />
+            </hot-column>
+            <!-- цена общая -->
+            <hot-column
+              :read-only="true"
+              width="80px"
+              data="order.common_price"
+              class-name="htDimmed"
+            >
+              <app-custom-columns-price hot-renderer />
+            </hot-column>
+            <!-- конверсия % -->
+            <hot-column width="80px" data="order.conversion">
+              <app-custom-columns-conversion hot-renderer />
+            </hot-column>
+            <!-- /Запись -->
+            <!-- Пришёл в СЦ -->
+            <hot-column width="80px" data="came_to_sc.count" />
+            <!-- цена за трафик -->
+            <hot-column
+              :read-only="true"
+              width="80px"
+              data="came_to_sc.traffik_price"
+              class-name="htDimmed"
+            >
+              <app-custom-columns-price hot-renderer />
+            </hot-column>
+            <!-- цена общая -->
+            <hot-column
+              :read-only="true"
+              width="80px"
+              data="came_to_sc.common_price"
+              class-name="htDimmed"
+            >
+              <app-custom-columns-price hot-renderer />
+            </hot-column>
+            <!-- конверсия % -->
+            <hot-column width="80px" data="came_to_sc.conversion">
+              <app-custom-columns-conversion hot-renderer />
+            </hot-column>
+            <!-- /Пришёл в СЦ -->
+            <!-- Клиент закрыт -->
+            <hot-column width="80px" data="order_closed.count" />
+            <!-- цена за трафик -->
+            <hot-column
+              :read-only="true"
+              width="80px"
+              data="order_closed.traffik_price"
+              class-name="htDimmed"
+            >
+              <app-custom-columns-price hot-renderer />
+            </hot-column>
+            <!-- цена общая -->
+            <hot-column
+              :read-only="true"
+              width="80px"
+              data="order_closed.common_price"
+              class-name="htDimmed"
+            >
+              <app-custom-columns-price hot-renderer />
+            </hot-column>
+            <!-- конверсия % -->
+            <hot-column width="80px" data="order_closed.conversion">
+              <app-custom-columns-conversion hot-renderer />
+            </hot-column>
+            <!-- /Клиент закрыт -->
+            <!-- Расходы -->
+            <!-- Баланс -->
+            <hot-column data="common_expenses.balance" />
+            <!-- РК -->
+            <hot-column data="common_expenses.pk" />
+            <!-- SEO -->
+            <hot-column data="common_expenses.seo" />
+            <!-- Алока и т.д -->
+            <hot-column data="common_expenses.common" />
+            <!-- /Расходы -->
+            <!-- Выручка -->
+            <hot-column data="revenue" />
+            <!-- Расходы -->
+            <hot-column data="expenses" />
+            <!-- Вал -->
+            <hot-column data="val" />
+            <!-- Заказы -->
+            <hot-column data="orders" />
+            <!-- Ср. чек -->
+            <hot-column data="wed_check" />
+            <!-- Дельта -->
+            <hot-column data="delta" />
+            <!-- Прибыль -->
+            <hot-column data="profit" />
+            <!-- СПЗ -->
+            <hot-column data="spz" />
+          </hot-table>
         </div>
-        <!-- :row-headers="true" -->
       </no-ssr>
+      {{ pageData.brands }}
     </div>
   </div>
 </template>
 
 <script>
-import СommonСolumns from './commonСolumns'
-import TotalColumns from './totalColumns'
 import XLSX from 'xlsx'
+import AppCustomColumnsPrice from '~/components/common/handsontable/columns/Price'
+import AppCustomColumnsConversion from '~/components/common/handsontable/columns/Conversion'
 /* eslint-disable prettier/prettier */
 import Rem from '~/utils/remonline.js'
 const rem = new Rem(process.env.REMONLINE_API_KEY, true)
 
 export default {
+  components: {
+    AppCustomColumnsPrice,
+    AppCustomColumnsConversion
+  },
   data() {
     return {
       loading: false,
       pinnedTopSource: [
         // { 'orders': '31231' }
       ],
-      columnTypes: {}, // типы колонок таблицы
-      commonСolumns: СommonСolumns,
-      totalColumns: TotalColumns,
+      hotSettings: {
+        columnSorting: true,
+        // шапка
+        nestedHeaders: [
+          [
+            '', // Филлиал
+            '', // Сайт
+            { label: 'Заявки', colspan: 4 },
+            { label: 'Запись', colspan: 4 },
+            { label: 'Пришёл в СЦ', colspan: 4 },
+            { label: 'Клиент закрыт', colspan: 4 },
+            { label: 'Расходы', colspan: 4 },
+            '', // Выручка
+            '', // Расходы
+            '', // Вал
+            '', // Заказы
+            '', // Ср. чек
+            '', // Дельта
+            '', // Прибыль
+            '' // СПЗ
+          ],
+          [
+            {
+              label: 'Филлиал',
+              width: '50'
+            },
+            {
+              label: 'Сайт',
+              width: '50'
+            },
+            // заявки
+            'PK',
+            'SEO',
+            'цена за<br/>трафик',
+            'цена<br />общая',
+            // Запись
+            'кол-во',
+            'цена за<br/>трафик',
+            'цена<br />общая',
+            'конв. %',
+            // Прищелв СЦ
+            'кол-во',
+            'цена за<br/>трафик',
+            'цена<br />общая',
+            'конв. %',
+            // Клиент закрыт
+            'кол-во',
+            'цена за<br/>трафик',
+            'цена<br />общая',
+            'конв. %',
+            // Расходы
+            'Баланс',
+            'PK',
+            'SEO',
+            'Алока и т.д',
+            //
+            'Выручка',
+            'Расходы',
+            'Вал',
+            'Заказы',
+            'Ср. чек',
+            'Дельта',
+            'Прибыль',
+            'СПЗ'
+          ]
+        ],
+        // данные
+        fixedColumnsLeft: 2,
+        fixedColumnsRight: 4,
+      },
+      // Заголовки
+      nestedHeaders: [],
       /**
        * тип загружаемого дакумента, для открытых или закрытых заказов
        * runWorkerOpenParams - открытые
@@ -176,85 +385,17 @@ export default {
   watch: {
     tableData(val) {
       this.pageData = val
-      this.windowUpdate()
+      this.updateColumnsData()
     }
-  },
-  mounted() {
-    import('@revolist/vue-datagrid').then((m) => {
-      const types = {}
-      Promise.all([
-        // eslint-disable-next-line
-        import('@revolist/revogrid-column-numeral').then((p) => (types.number = new p.default('0,0')))
-      ]).then(() => {
-        this.columnTypes = types
-      })
-    })
-
-    // считаем ширину таблицы
-    window.addEventListener('resize', (e) => {
-      this.windowUpdate()
-    })
   },
   methods: {
     /**
-     * Обновляем ширину окна
+     * Обновить данные и перерендерить таблицу
      */
-    windowUpdate() {
-      let time = 30
-      const timeValue = setInterval((interval) => {
-        const item = document.querySelector('#branchWidth')
-        if (item && item.clientWidth) this.windowWidth = item.clientWidth - 50
-
-        time -= 1
-        if (time <= 0) {
-          clearInterval(timeValue)
-        }
-      }, 2000)
-    },
-
-    // TODO перевести в фильтры
-    priceMask(val) {
-      return val ? `${val} ₽` : '-'
-    },
-
-    /**
-     * Редактирование ячейки
-     */
-    onCellEdit(row) {
-      // console.log('row', row.detail.rowIndex, row.detail.prop)
-      // ужасно, но я не придумал как сделать красиво
-      const idx = row.detail.rowIndex
-      switch (row.detail.prop) {
-        case 'requests.chanel.pk':
-          this.pageData.brands[idx].requests.chanel.pk = row.detail.val
-          break
-        case 'requests.chanel.seo':
-          this.pageData.brands[idx].requests.chanel.seo = row.detail.val
-          break
-        case 'order.count':
-          this.pageData.brands[idx].order.count = row.detail.val
-          break
-        case 'order_closed.count':
-          this.pageData.brands[idx].order_closed.count = row.detail.val
-          break
-        case 'came_to_sc.count':
-          this.pageData.brands[idx].came_to_sc.count = row.detail.val
-          break
-        case 'common_expenses.balance':
-          this.pageData.brands[idx].common_expenses.balance = row.detail.val
-          break
-        case 'common_expenses.pk':
-          this.pageData.brands[idx].common_expenses.pk = row.detail.val
-          break
-        case 'common_expenses.seo':
-          this.pageData.brands[idx].common_expenses.seo = row.detail.val
-          break
-        case 'common_expenses.common':
-          this.pageData.brands[idx].common_expenses.common = row.detail.val
-          break
-      }
-      // this.pageData.brands[row.detail.rowIndex].requests.chanel.pk = row.detail.val
-      // this.pageData.brands[row.detail.rowIndex][row.detail.prop] = row.detail.val
+    updateColumnsData() {
+      setTimeout(() => {
+        this.$refs.hotTableComponent.hotInstance.loadData(this.pageData.brands)
+      }, 0)
     },
 
     /**
@@ -480,14 +621,6 @@ export default {
     },
 
     /**
-     * TODO Обновление данных одного бренда
-     */
-    // TODO Обновление данных одного бренда
-    updateRowTable(row) {
-      console.log('updateRowTable', row)
-    },
-
-    /**
      * Сохранить текущее состояние таблицы
      */
     async saveTable() {
@@ -671,6 +804,7 @@ export default {
       this.loading = false
       this.pageData.brands = []
       this.pageData.brands = data
+      this.updateColumnsData()
     },
 
     /**
@@ -681,6 +815,7 @@ export default {
       this.pageData.brands = []
       this.pageData.brands = data
       this.saveTable()
+      this.updateColumnsData()
     },
 
     /**
@@ -689,6 +824,7 @@ export default {
     setTotalDataTableAndSave(data) {
       this.pageData.total = data.total
       this.saveTable()
+      this.updateColumnsData()
     }
   }
 }
@@ -729,5 +865,12 @@ export default {
   padding: 4px !important;
   height: 20px;
   left: 32px;
+}
+
+.table__branch-name {
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  white-space: nowrap !important;
+  font-size: 12px;
 }
 </style>
