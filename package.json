@@ -37,6 +37,8 @@
     "element-ui": "^2.4.11",
     "element-ui-el-table-draggable": "^1.2.9",
     "express": "^4.16.4",
+    "fancy-grid-vue": "^1.0.6",
+    "fancygrid": "^1.7.143",
     "file-saver": "^2.0.2",
     "fingerprintjs2": "^2.1.0",
     "font-awesome": "^4.7.0",

@@ -106,29 +106,16 @@
       <!-- {{ pageData.total }} -->
       <no-ssr>
         <div :class="['grid', loading ? 'disabled' : '']">
-          <v-grid
-            @beforeEdit="onCellEdit"
-            :source="pageData.brands"
-            :columns="commonСolumns"
-            :resize="true"
-            :col-size="70"
-            :column-types="columnTypes"
-            :style="`height: 69vh; max-width: ${windowWidth}px`"
-            class="global-grid-small main-summory-table"
-            theme="compact"
-          />
-          <!-- :pinnedTopSource="pinnedTopSource" -->
-          <!--  -->
-          <v-grid
-            @beforeEdit="onCellEdit"
-            :source="[pageData.total]"
-            :columns="totalColumns"
-            :resize="true"
-            :col-size="70"
-            :columnTypes="columnTypes"
-            :style="`height: 150px; max-width: ${windowWidth}px`"
-            class="global-grid-small total-summory-table"
-            theme="compact"
+          <fancy-grid-vue
+            :width="gridConfig.width"
+            :height="gridConfig.height"
+            :data="columnData"
+            :resizable="true"
+            :defaults="gridConfig.defaults"
+            :sel-model="'rows'"
+            :trackOver="true"
+            :columns="gridConfig.columns"
+            theme="gray"
           />
         </div>
         <!-- :row-headers="true" -->
@@ -138,23 +125,169 @@
 </template>
 
 <script>
-import СommonСolumns from './commonСolumns'
-import TotalColumns from './totalColumns'
 import XLSX from 'xlsx'
 /* eslint-disable prettier/prettier */
 import Rem from '~/utils/remonline.js'
 const rem = new Rem(process.env.REMONLINE_API_KEY, true)
 
 export default {
+  components: {
+    // FancyGridVue
+  },
   data() {
     return {
       loading: false,
       pinnedTopSource: [
         // { 'orders': '31231' }
       ],
-      columnTypes: {}, // типы колонок таблицы
-      commonСolumns: СommonСolumns,
-      totalColumns: TotalColumns,
+      columnData: [
+        {
+          name: 'Ted',
+          surname: 'Smith',
+          position: 'Java Developer',
+          email: 'ted.smith@gmail.com',
+          company: 'Electrical Systems',
+          age: 30,
+          knownledge: 'Java, Ruby',
+          elm: {
+            param1: '555'
+          }
+        },
+        {
+          name: 'Ed',
+          surname: 'Johnson',
+          position: 'C/C++ Market Data Developer',
+          email: 'ed.johnson@gmail.com',
+          company: 'Energy and Oil',
+          age: 35,
+          knownledge: 'C++',
+          elm: {
+            param1: '555'
+          }
+        },
+        {
+          name: 'Sam',
+          surname: 'Williams',
+          position: 'Technical Analyst',
+          email: 'sam.williams@gmail.com',
+          company: 'Airbus',
+          age: 38,
+          knownledge: '',
+          elm: {
+            param1: '555'
+          }
+        },
+        {
+          name: 'Alexander',
+          surname: 'Brown',
+          position: 'Project Manager',
+          email: 'alexander.brown@gmail.com',
+          company: 'Renault',
+          age: 24,
+          knownledge: '',
+          elm: {
+            param1: '555'
+          }
+        },
+        {
+          name: 'Nicholas',
+          surname: 'Miller',
+          position: 'Senior Software Engineer',
+          email: 'nicholas.miller@gmail.com',
+          company: 'Adobe',
+          age: 33,
+          knownledge: 'Unix, C/C++',
+          elm: {
+            param1: '555'
+          }
+        },
+        {
+          name: 'Andrew',
+          surname: 'Thompson',
+          position: 'Agile Project Manager',
+          email: 'andrew.thompson@gmail.com',
+          company: 'Google',
+          age: 28,
+          knownledge: '',
+          elm: {
+            param1: '555'
+          }
+        },
+        {
+          name: 'Ryan',
+          surname: 'Walker',
+          position: 'Application Support Engineer',
+          email: 'ryan.walker@gmail.com',
+          company: 'Siemens',
+          age: 39,
+          knownledge: 'ActionScript',
+          elm: {
+            param1: '555'
+          }
+        },
+        {
+          name: 'John',
+          surname: 'Scott',
+          position: 'Flex Developer',
+          email: 'john.scott@gmail.com',
+          company: 'Cargo',
+          age: 45,
+          knownledge: 'Flex',
+          elm: {
+            param1: '555'
+          }
+        }
+      ], // типы колонок таблицы
+      gridConfig: {
+        title: 'Vue with FancyGrid',
+        theme: 'gray',
+        width: 700,
+        height: 400,
+        resizable: true,
+        defaults: {
+          type: 'string',
+          width: 100,
+          sortable: true,
+          // editable: true,
+          resizable: true
+        },
+        selModel: 'rows',
+        trackOver: true,
+        columns: [
+          {
+            type: 'select'
+          },
+          {
+            index: 'company',
+            title: 'Company'
+          },
+          {
+            index: 'name',
+            title: 'Name'
+          },
+          {
+            index: 'surname',
+            title: 'Sur Name'
+          },
+          {
+            index: 'age',
+            title: 'Age',
+            type: 'number',
+            width: 80
+          },
+          {
+            index: 'email',
+            title: 'Email',
+            width: 160
+          },
+          {
+            index: 'elem',
+            title: 'test param',
+            width: 160,
+            render: (el) => el.param1
+          },
+        ]
+      },
       /**
        * тип загружаемого дакумента, для открытых или закрытых заказов
        * runWorkerOpenParams - открытые
@@ -180,16 +313,6 @@ export default {
     }
   },
   mounted() {
-    import('@revolist/vue-datagrid').then((m) => {
-      const types = {}
-      Promise.all([
-        // eslint-disable-next-line
-        import('@revolist/revogrid-column-numeral').then((p) => (types.number = new p.default('0,0')))
-      ]).then(() => {
-        this.columnTypes = types
-      })
-    })
-
     // считаем ширину таблицы
     window.addEventListener('resize', (e) => {
       this.windowUpdate()
