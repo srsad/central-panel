@@ -23,6 +23,7 @@
       <el-select
         v-if="$abilities('report-main_branch_panel_summorysheat_panel-read')"
         v-model="report"
+        :disable="loading"
         size="mini"
         placeholder="Выберите период"
       >
@@ -36,6 +37,7 @@
       <el-button
         v-if="$abilities('report-main_branch_panel_summorysheat_panel-read')"
         @click="loadReport"
+        :loading="loading"
         size="mini"
         type="primary"
         icon="el-icon-position"
@@ -43,9 +45,9 @@
       >
         Выбрать отчет
       </el-button>
-      <el-button @click="loadRemOnline">
+      <!-- <el-button @click="loadRemOnline">
         test
-      </el-button>
+      </el-button> -->
     </div>
     <div class="mt-15" style="margin-bottom:-15px;">
       <app-list
@@ -71,6 +73,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       rem: '',
       report: '',
       remlen: 0
@@ -95,7 +98,7 @@ export default {
       const rem = new Rem(process.env.REMONLINE_API_KEY, true)
       // order/?token=...&created_at[]=1597352400000&created_at[]=1597438799999&branches[]=26047
       const items = []
-      for (let i = 1; i <= 4; i++) {
+      for (let i = 17; i <= 18; i++) {
         // new Date('2020,7,1,00:01:01').getTime()
         const created1 = new Date(`2020,12,${i},00:01:01`).getTime()
         const created2 = new Date(`2020,12,${i},23:59:50`).getTime()
@@ -103,10 +106,10 @@ export default {
         const filter = [
           `created_at[]=${created1}`,
           `created_at[]=${created2}`,
-          `branches[]=26047` // rservice
+          // `branches[]=26047` // rservice
           // `branches[]=33038` // impuls
           // `branches[]=63323` // msk
-          // `branches[]=72021` // msk арм
+          `branches[]=72021` // msk арм
         ]
         const orders = await rem.getOrders(`${filter.join('&')}`)
         items.push(orders.count)
@@ -115,7 +118,7 @@ export default {
       console.log('items', items)
     },
 
-    async loadReport(reportId) {
+    async loadReport() {
       if (!this.report) {
         this.$notify({
           message: 'Выберите отчет!',
@@ -123,15 +126,12 @@ export default {
         })
         return false
       }
-
+      this.loading = true
       try {
-        reportId = !reportId || this.report
-        const report = await this.$axios.$get(
-          '/api/v1/report/summory/get/' + this.report
-        )
-        this.$store.commit('report/summary/SET_REPORT', report)
+        await this.$store.dispatch('report/summary/findById', this.report)
       } catch (e) {
-        this.$store.commit('SET_ERROR', e.response.data.message)
+      } finally {
+        this.loading = false
       }
     }
   }
