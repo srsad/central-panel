@@ -25,6 +25,13 @@
           >
             2-я Красноармейская 11
           </el-button>
+          <el-button
+            @click="selectCity('Дмитровский')"
+            size="mini"
+            type="primary"
+          >
+            Дмитровский пер., 8
+          </el-button>
           <!-- <el-button
             @click="selectCity('Пашковская')"
             size="mini"
@@ -40,18 +47,11 @@
             ул. Новослободская 71
           </el-button>
           <el-button
-            @click="selectCity('Армянский')"
+            @click="selectCity('Сеславинская')"
             size="mini"
             type="primary"
           >
-            Армянский пер.
-          </el-button>
-          <el-button
-            @click="selectCity('Дмитровский')"
-            size="mini"
-            type="primary"
-          >
-            Дмитровский пер., 8
+            Сеславинская 16к1
           </el-button>
           <el-button
             @click="() => $store.dispatch('domains/fetchDomains')"
