@@ -20,7 +20,7 @@
             />
           </template>
         </el-table-column>
-        <el-table-column label="Аккаунт" width="60" fixed="left">
+        <el-table-column label="Акк." width="60" fixed="left">
           <template slot-scope="scope">
             <div :style="setColor(scope.row.color)" class="ws-normal">
               {{ scope.row.priority === 0 ? '' : scope.row.priority }}
