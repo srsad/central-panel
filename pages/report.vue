@@ -4,6 +4,7 @@
       <el-tabs id="branchWidth" value="main_branch">
         <el-tab-pane
           v-if="$abilities('report-main_branch_panel_summorysheat_panel')"
+          :lazy="true"
           label="Основная"
           name="main_branch"
         >
@@ -11,6 +12,7 @@
         </el-tab-pane>
         <el-tab-pane
           v-if="$abilities('report-spb_26047_panel_summorysheat_panel')"
+          :lazy="true"
           label="СПБ 2-я Красноармейская"
           name="spb_26047"
         >
@@ -18,6 +20,7 @@
         </el-tab-pane>
         <el-tab-pane
           v-if="$abilities('report-spb_33038_panel_summorysheat_panel')"
+          :lazy="true"
           label="СПБ Дмитровский"
           name="spb_33038"
         >
@@ -25,6 +28,7 @@
         </el-tab-pane>
         <el-tab-pane
           v-if="$abilities('report-msk_63323_panel_summorysheat_panel')"
+          :lazy="true"
           label="МСК Новослободская"
           name="msk_63323"
         >
@@ -32,6 +36,7 @@
         </el-tab-pane>
         <el-tab-pane
           v-if="$abilities('report-msk_72021_panel_summorysheat_panel')"
+          :lazy="true"
           label="МСК Армянский"
           name="msk_72021"
         >

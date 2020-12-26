@@ -77,10 +77,10 @@ router.get(
 )
 
 /**
- * Вывод всех графиков по id
+ * Вывод всех графиков
  * @group scheduleReport - Отчеты, график работ (защищенные роуты)
  * @route GET /api/v1/report/schedule/getall/
- * @summary Вывод всех графиков по id
+ * @summary Вывод всех графиков
  * @returns {object} 200 - При успешном выводе
  * @returns {Error} default - При возникновении ошибки
  * @security JWT

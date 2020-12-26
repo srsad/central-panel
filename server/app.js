@@ -80,8 +80,7 @@ app.use('/api/v1/analytics', analyticsRoutes)
 app.use('/api/v1/unanswered', unansweredRoutes)
 
 // socket.io
-const wrap = (middleware) => (socket, next) =>
-  middleware(socket.request, {}, next)
+const wrap = (middleware) => (socket, next) => middleware(socket.request, {}, next)
 io.use(wrap(passport.initialize()))
 
 io.on('connection', (socket) => {
