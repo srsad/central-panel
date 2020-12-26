@@ -2,7 +2,7 @@
   <el-drawer
     :visible.sync="$store.state.settings.drawerUpdateDomains"
     :with-header="false"
-    :before-close="close"
+    :before-close="blockClose"
     @open="onOpen"
     title="Редактировать домен"
     custom-class="drawer"
@@ -14,6 +14,16 @@
       element-loading-text="Загрузка..."
       element-loading-spinner="el-icon-loading"
     />
+
+    <!-- закрытие окна -->
+    <el-button
+      @click="close"
+      icon="el-icon-close"
+      size="mini"
+      class="drawerCloseBtn"
+    />
+    <!-- /закрытие окна -->
+
     <el-form
       ref="form"
       :model="form"
@@ -116,7 +126,7 @@
           <!-- analytics -->
           <el-tab-pane label="Аналитика" name="analytics" class="row">
             <div class="col-4">
-              <el-form-item prop="priority" label="Приоритет">
+              <el-form-item prop="priority" label="Аккаунт">
                 <el-input
                   v-model="form.priority"
                   size="mini"
@@ -124,7 +134,7 @@
                 />
               </el-form-item>
             </div>
-            <div class="col-4">
+            <!-- <div class="col-4">
               <el-form-item prop="priority2" label="Приоритет 2">
                 <el-input-number
                   v-model="form.priority2"
@@ -134,19 +144,18 @@
                   controls-position="right"
                 />
               </el-form-item>
-            </div>
+            </div> -->
             <div class="col-4">
-              <el-form-item prop="priority3" label="Приоритет 3">
+              <el-form-item prop="priority3" label="Порядковый номер">
                 <el-input-number
                   v-model="form.priority3"
                   :min="0"
-                  :max="10"
                   size="mini"
                   controls-position="right"
                 />
               </el-form-item>
             </div>
-            <!-- 
+            <!--
             <div class="col-4">
               <el-form-item prop="login" label="Логин">
                 <el-input
@@ -453,11 +462,25 @@ export default {
       this.loading = false
       this.loadContent = false
     },
+
+    /**
+     * Закрыаемокно
+     */
     close() {
       this.loadContent = false
       this.$store.commit('settings/SWITCH_DRAWNER', {
         dranwer: 'drawerUpdateDomains',
         status: false
+      })
+    },
+
+    /**
+     * Блокируем окно закрытия
+     */
+    blockClose() {
+      this.$store.commit('settings/SWITCH_DRAWNER', {
+        dranwer: 'drawerUpdateDomains',
+        status: true
       })
     },
     /** Возвращает отчищенный источник */

@@ -15,14 +15,12 @@ const domainSchema = new Schema({
   priority2: {
     type: Number,
     min: 0,
-    max: 15,
     index: true
   },
   // подприоритет3
   priority3: {
     type: Number,
     min: 0,
-    max: 15,
     index: true
   },
   // исполнитель

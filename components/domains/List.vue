@@ -20,7 +20,7 @@
             />
           </template>
         </el-table-column>
-        <el-table-column label="П" width="50" fixed="left">
+        <el-table-column label="Аккаунт" width="60" fixed="left">
           <template slot-scope="scope">
             <div :style="setColor(scope.row.color)" class="ws-normal">
               {{ scope.row.priority === 0 ? '' : scope.row.priority }}
@@ -46,7 +46,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="Изг" width="40">
+        <!-- <el-table-column label="Изг" width="40">
           <template slot-scope="scope">
             <div
               :title="scope.row.vendor"
@@ -56,7 +56,7 @@
               {{ scope.row.vendor }}
             </div>
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column
           :filters="company_"
           :filter-method="filterHandlerCompany"
