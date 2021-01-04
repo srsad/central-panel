@@ -19,6 +19,15 @@
         </el-button>
         <el-button-group>
           <el-button
+            @click="() => $store.dispatch('domains/fetchDomains')"
+            size="mini"
+            type="warning"
+            style="padding: 2px 9px 2px 5px;font-size: 11px;"
+          >
+            Сбросить <br />
+            сортировку
+          </el-button>
+          <el-button
             @click="selectCity('Красноармейская')"
             size="mini"
             type="primary"
@@ -53,14 +62,6 @@
           >
             Сеславинская 16к1
           </el-button>
-          <el-button
-            @click="() => $store.dispatch('domains/fetchDomains')"
-            size="mini"
-            type="primary"
-            icon="el-icon-close"
-            title="Сбросить"
-            style="padding: 9px 9px 5px 5px"
-          />
         </el-button-group>
       </div>
       <div class="col-3 text-right">
