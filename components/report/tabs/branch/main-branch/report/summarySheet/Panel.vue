@@ -47,7 +47,7 @@
         test
       </el-button>
     </div>
-    <div class="mt-15" style="margin-bottom:-15px;">
+    <div class="col-12 mt-15" style="margin-bottom:-15px;">
       <app-list
         v-if="$abilities('report-main_branch_panel_summorysheat_panel-update')"
         @updateReport="loadReport"

@@ -107,14 +107,14 @@
       <no-ssr>
         <div :class="['grid', loading ? 'disabled' : '']">
           <!-- :nested-headers="nestedHeaders" -->
+          <!-- :data="allTableData" -->
           <hot-table
             ref="hotTableComponent"
-            :data="pageData.brands"
             :settings="hotSettings"
             :col-headers="true"
             :row-headers="true"
             :column-sorting="true"
-            height="300"
+            height="650"
           >
             <!-- Филлиал -->
             <hot-column
@@ -132,6 +132,19 @@
               class-name="table__branch-name"
             />
             <!-- заявки -->
+            <!-- Ср. чек -->
+            <hot-column
+              :read-only="true"
+              data="wed_check"
+              class-name="htDimmed"
+              style="color: red;"
+            />
+            <!-- Дельта -->
+            <hot-column :read-only="true" data="delta" class-name="htDimmed" />
+            <!-- Прибыль -->
+            <hot-column :read-only="true" data="profit" class-name="htDimmed" />
+            <!-- СПЗ -->
+            <hot-column :read-only="true" data="spz" class-name="htDimmed" />
             <!-- PK -->
             <hot-column
               :numericFormat="{ pattern: '0' }"
@@ -151,7 +164,11 @@
               data="requests.traffik_price"
               class-name="htDimmed"
             >
-              <app-custom-columns-price hot-renderer />
+              <app-custom-columns-price
+                hot-renderer
+                class="htDimmed"
+                style="opacity: .5;"
+              />
             </hot-column>
             <!-- цена общая -->
             <hot-column
@@ -257,18 +274,10 @@
             <hot-column data="val" />
             <!-- Заказы -->
             <hot-column data="orders" />
-            <!-- Ср. чек -->
-            <hot-column data="wed_check" />
-            <!-- Дельта -->
-            <hot-column data="delta" />
-            <!-- Прибыль -->
-            <hot-column data="profit" />
-            <!-- СПЗ -->
-            <hot-column data="spz" />
           </hot-table>
         </div>
       </no-ssr>
-      {{ pageData.brands }}
+      <!-- {{ pageData.brands }} -->
     </div>
   </div>
 </template>
@@ -293,12 +302,17 @@ export default {
         // { 'orders': '31231' }
       ],
       hotSettings: {
-        columnSorting: true,
-        // шапка
+        // columnSorting: true,
+        // contextMenu: true,
+        // Заголовки
         nestedHeaders: [
           [
             '', // Филлиал
-            '', // Сайт
+            '', // Бренд
+            '', // Ср. чек
+            '', // Дельта
+            '', // Прибыль
+            '', // СПЗ
             { label: 'Заявки', colspan: 4 },
             { label: 'Запись', colspan: 4 },
             { label: 'Пришёл в СЦ', colspan: 4 },
@@ -307,11 +321,7 @@ export default {
             '', // Выручка
             '', // Расходы
             '', // Вал
-            '', // Заказы
-            '', // Ср. чек
-            '', // Дельта
-            '', // Прибыль
-            '' // СПЗ
+            '' // Заказы
           ],
           [
             {
@@ -319,9 +329,13 @@ export default {
               width: '50'
             },
             {
-              label: 'Сайт',
+              label: 'Бренд',
               width: '50'
             },
+            'Ср. чек',
+            'Дельта',
+            'Прибыль',
+            'СПЗ',
             // заявки
             'PK',
             'SEO',
@@ -346,24 +360,21 @@ export default {
             'Баланс',
             'PK',
             'SEO',
-            'Алока и т.д',
+            'Алока<br/>и т.д',
             //
             'Выручка',
             'Расходы',
             'Вал',
-            'Заказы',
-            'Ср. чек',
-            'Дельта',
-            'Прибыль',
-            'СПЗ'
+            'Заказы'
           ]
         ],
         // данные
-        fixedColumnsLeft: 2,
-        fixedColumnsRight: 4,
+        fixedColumnsLeft: 6,
+        manualColumnResize: true,
+        // manualRowResize: true
+        fixedRowsTop: 1,
+        manualColumnFreeze: true
       },
-      // Заголовки
-      nestedHeaders: [],
       /**
        * тип загружаемого дакумента, для открытых или закрытых заказов
        * runWorkerOpenParams - открытые
@@ -378,8 +389,24 @@ export default {
     }
   },
   computed: {
+    // загрузка данных таблицы в
     tableData() {
       return this.$store.getters['report/summary/report']
+    },
+    // данные для таблицы
+    allTableData() {
+      const res = []
+      if (this.pageData?.total) {
+        const total = this.pageData?.total
+        total.branch = { name: 'Итого' }
+        res.push(total)
+      }
+      if (this.pageData?.brands) res.push(...this.pageData?.brands)
+      // const total = this.pageData?.brands || []
+      console.log('total', this.pageData?.total)
+      // console.log('brands', this.pageData?.brands)
+      console.log('res', res)
+      return res
     }
   },
   watch: {
@@ -394,7 +421,7 @@ export default {
      */
     updateColumnsData() {
       setTimeout(() => {
-        this.$refs.hotTableComponent.hotInstance.loadData(this.pageData.brands)
+        this.$refs.hotTableComponent.hotInstance.loadData(this.allTableData)
       }, 0)
     },
 

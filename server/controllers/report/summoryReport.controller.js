@@ -1,4 +1,4 @@
-// const Brand = require('../../models/report/brans.model')
+// Сводные листы
 const Report = require('../../models/report/summoryReport.model')
 
 /** Создание */
