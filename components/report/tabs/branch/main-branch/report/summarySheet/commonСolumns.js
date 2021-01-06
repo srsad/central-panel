@@ -3,6 +3,17 @@
  */
 export default [
   {
+    name: 'Филиал',
+    prop: 'branch.name',
+    size: 50,
+    pin: 'colPinStart',
+    readonly: true,
+    sortable: true,
+    cellTemplate: (createElement, props) => {
+      return createElement('span', {}, getBranchCode(props.model.branch.name))
+    }
+  },
+  {
     name: 'Сайт',
     prop: 'brand.name',
     size: 100,
@@ -10,19 +21,7 @@ export default [
     readonly: true,
     sortable: true,
     cellTemplate: (createElement, props) => {
-      // return createElement('span', {}, props.model[props.prop])
       return createElement('span', {}, props.model.brand.name)
-    }
-  },
-  {
-    name: 'Филиал',
-    prop: 'branch.name',
-    size: 80,
-    pin: 'colPinStart',
-    readonly: true,
-    sortable: true,
-    cellTemplate: (createElement, props) => {
-      return createElement('span', {}, props.model.branch.name)
     }
   },
   // Заявки
@@ -380,3 +379,14 @@ export default [
     }
   }
 ]
+
+function getBranchCode(key) {
+  const map = new Map([
+    ['СПБ 2-я Красноармейская', 'KRS'],
+    ['СПБ Дмитровский', 'DMR'],
+    ['МСК Новослободская', 'NVS'],
+    ['МСК Армянский', 'ARM'],
+    ['МСК Сеславинская', 'SES']
+  ])
+  return map.get(key) || '---'
+}
