@@ -63,6 +63,8 @@ export const getters = {
   // eslint-disable-next-line
   report: (state, getters, rootState) => {
     const report = JSON.parse(JSON.stringify(state.report))
+    if (!report?.brands) return report
+
     const domains = rootState.domains.damains
 
     const rserviceSPB = []
