@@ -131,6 +131,18 @@
           </el-dropdown-menu>
         </el-dropdown>
         <!-- /Заявки и расходы -->
+        <!-- показать/скрыть дополнительные бренды -->
+        <el-button
+          @click="toogleMoreData"
+          :loading="loading"
+          class="pt-10 pointer"
+          type="default"
+          size="mini"
+          icon="el-icon-view"
+        >
+          {{ moreData ? 'Показать' : 'Скрыть' }} дополнительные бренды
+        </el-button>
+        <!-- /показать/скрыть дополнительные бренды -->
         <!-- Форма для экспорта данных по расходам -->
         <label
           id="uploadFromExportExpenses"
@@ -206,11 +218,13 @@ export default {
        * runWorkerCloseParams - закрытые
        */
       pageData: [], // реальные данные
+      excludedData: [], // данные которые которые не идут по рекламе
       excelListType: 'runWorkerOpenParams',
       excelList: [], // загружаемоя екселька
       onlyRefresh: true, // без получения новых данных из ремонлайн
       turnWorkers: [], // очередь выполнения воркеров
-      windowWidth: 1000 // ширина окна
+      windowWidth: 1000, // ширина окна
+      moreData: false, // статус - показать/скрыть дополнительные данные
     }
   },
   computed: {
@@ -550,9 +564,16 @@ export default {
     async saveTable() {
       this.loading = true
       try {
+        const brands = this.pageData
+        // если скрыты
+        if(!this.moreData) {
+          brands.brands = this.pageData.brands
+          brands.brands.push(...this.excludedData)
+        }
+
         await this.$axios.$put(
           '/api/v1/report/summory/update/' + this.pageData._id,
-          this.pageData
+          brands
         )
       } catch (e) {
         this.$store.commit('SET_ERROR', e.response.data.message)
@@ -828,6 +849,25 @@ export default {
     setTotalDataTableAndSave(data) {
       this.pageData.total = data.total
       this.saveTable()
+    },
+
+    /**
+     * Показать скрыть дополнительные бренды
+     */
+    toogleMoreData() {
+      this.moreData = !this.moreData
+      const brands = this.$store.getters['report/summary/report']
+      if(this.moreData) {
+        // если надо скрыть
+        this.excludedData = this.pageData.brands.filter((el) => el.priority === 150)
+        brands.brands = this.pageData.brands.filter((el) => el.priority !== 150)
+        this.$store.commit('report/summary/SET_REPORT', brands)
+      } else {
+        brands.brands = this.pageData.brands
+        brands.brands.push(...this.excludedData)
+        this.$store.commit('report/summary/SET_REPORT', brands)
+      }
+      this.windowUpdate()
     }
   }
 }
