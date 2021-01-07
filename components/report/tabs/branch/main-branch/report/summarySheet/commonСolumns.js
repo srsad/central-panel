@@ -388,5 +388,5 @@ function getBranchCode(key) {
     ['МСК Армянский', 'ARM'],
     ['МСК Сеславинская', 'SES']
   ])
-  return map.get(key) || '---'
+  return map.get(key) || key
 }
