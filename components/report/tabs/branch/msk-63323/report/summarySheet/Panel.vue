@@ -27,7 +27,7 @@
     </div>
     <div class="mt-15" style="margin-bottom:-15px;">
       <!-- v-if="$abilities('report-msk_63323_panel_summorysheat_panel-read')" -->
-      <app-list :page-data="pageData" />
+      <app-list :page-data="pageData" @toogleMoreData="toogleMoreData" />
       <!-- @updateReport="loadReport" -->
     </div>
   </div>
@@ -47,7 +47,9 @@ export default {
       tempBrands: {},
       branchId: '63323', // id филиала - из ремонлайн
       branchIdOnReport: '', // id из отчета
-      pageData: {}
+      pageData: {},
+      originalData: {}, // оригинальные данные
+      moreData: false // показать/скрыть лишние бренды
     }
   },
   computed: {
@@ -96,7 +98,7 @@ export default {
         })
         worker.onmessage = (event) => {
           // сохраняем данные по итогам
-          this.setTotalDataTable(event.data)
+          this.prioritySorting(event.data)
         }
 
         // запус воркера итоговой суммы для данного филиала
@@ -106,11 +108,70 @@ export default {
     },
 
     /**
+     * Обрабатываем данные по приоритету
+     */
+    async prioritySorting(report) {
+      // const report = JSON.parse(JSON.stringify(data))
+      if (this.$store.state.domains.damains.length === 0) {
+        await this.$store.dispatch('domains/fetchDomains')
+      }
+      const domains = this.$store.state.domains.damains
+      const result = []
+
+      for (const idx in report.brands) {
+        const brand = report.brands[idx].brand.name.toLowerCase()
+        let sortPriority = {
+          priority: 150,
+          priority2: 150,
+          priority3: 150
+        }
+
+        // возвращаем найденные приоритеты
+        for (const el of domains) {
+          if (el.brand.toLowerCase() === brand) {
+            sortPriority = el
+            break
+          }
+        }
+
+        // достаем параметры для сортировки
+        const item = {
+          ...report.brands[idx],
+          priority: +sortPriority.priority || 150,
+          priority2: +sortPriority.priority2 || 150,
+          priority3: +sortPriority.priority3 || 150
+        }
+        result.push(item)
+      }
+
+      report.brands = [...result]
+      this.setTotalDataTable(report)
+    },
+
+    /**
      * Сохраняем данные после итогового подсчета
      */
     setTotalDataTable(data) {
-      this.pageData = data
+      this.pageData = JSON.parse(JSON.stringify(data))
+      this.originalData = JSON.parse(JSON.stringify(data))
       this.tempBrands = {}
+    },
+
+    /**
+     * Показать скрыть дополнительные бренды
+     */
+    toogleMoreData(status) {
+      this.moreData = status
+      // если оригинальные данные еще не заполненны
+      const brands = JSON.parse(JSON.stringify(this.pageData))
+      // если надо скрыть
+      if (this.moreData) {
+        // eslint-disable-next-line
+        brands.brands = brands.brands.filter((el) => el.priority !== 150)
+      } else {
+        brands.brands = this.originalData.brands
+      }
+      this.pageData.brands = brands.brands
     }
   }
 }

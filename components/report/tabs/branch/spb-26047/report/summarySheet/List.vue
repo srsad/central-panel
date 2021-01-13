@@ -1,7 +1,20 @@
 <template>
   <div>
     <div v-if="pageData.brands">
-      <!--  -->
+      <div class="col-12">
+        <!-- показать/скрыть дополнительные бренды -->
+        <el-button
+          @click="toogleMoreData"
+          :loading="loading"
+          class="pt-10 pointer"
+          type="default"
+          size="mini"
+          icon="el-icon-view"
+        >
+          {{ moreData ? 'Показать' : 'Скрыть' }} дополнительные бренды
+        </el-button>
+        <!-- /показать/скрыть дополнительные бренды -->
+      </div>
       <no-ssr>
         <div :class="['grid', loading ? 'disabled' : '']">
           <v-grid
@@ -50,7 +63,8 @@ export default {
       columnTypes: {}, // типы колонок таблицы
       commonСolumns: СommonСolumns,
       totalColumns: TotalColumns,
-      windowWidth: 1000 // ширина окна
+      windowWidth: 1000, // ширина окна
+      moreData: false // статус - показать/скрыть дополнительные данные
     }
   },
   watch: {
@@ -92,10 +106,11 @@ export default {
     },
 
     /**
-     * Сохраняем данные после итогового подсчета
+     * показываем/скрываем дополнительные данные
      */
-    setTotalDataTable(data) {
-      this.pageData.total = data.total
+    toogleMoreData() {
+      this.moreData = !this.moreData
+      this.$emit('toogleMoreData', this.moreData)
     }
   }
 }
