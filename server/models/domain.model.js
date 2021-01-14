@@ -23,6 +23,12 @@ const domainSchema = new Schema({
     min: 0,
     index: true
   },
+  // dcod - доменный код
+  dcod: {
+    type: String,
+    index: true,
+    default: '00.00.00.00.00.00.00.00'
+  },
   // исполнитель
   vendor: {
     type: String,

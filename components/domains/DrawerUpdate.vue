@@ -40,24 +40,32 @@
           <el-tab-pane label="Общие данные" name="data" class="row">
             <div class="col-6">
               <el-form-item prop="name">
-                <el-input v-model="form.name" placeholder="Наименование" />
+                <el-input
+                  v-model="form.name"
+                  size="mini"
+                  placeholder="Наименование"
+                />
               </el-form-item>
             </div>
             <div class="col-6">
               <el-form-item prop="brand">
-                <el-input v-model="form.brand" placeholder="Бренд" />
+                <el-input
+                  v-model="form.brand"
+                  size="mini"
+                  placeholder="Бренд"
+                />
               </el-form-item>
             </div>
             <div class="col-6">
               <el-form-item prop="domain">
-                <el-input v-model="form.domain" placeholder="Домен">
+                <el-input v-model="form.domain" size="mini" placeholder="Домен">
                   <template slot="prepend">https://</template>
                 </el-input>
               </el-form-item>
             </div>
             <div class="col-6">
               <el-form-item prop="city">
-                <el-select v-model="form.city" placeholder="Город">
+                <el-select v-model="form.city" size="mini" placeholder="Город">
                   <el-option
                     v-for="item in cities"
                     :key="item._id"
@@ -90,7 +98,11 @@
             </div>
             <div class="col-6">
               <el-form-item prop="vendor">
-                <el-input v-model="form.vendor" placeholder="Исполнитель" />
+                <el-input
+                  v-model="form.vendor"
+                  size="mini"
+                  placeholder="Исполнитель"
+                />
               </el-form-item>
             </div>
             <div class="col-6">
@@ -99,6 +111,7 @@
                   v-model="form.company"
                   placeholder="Компания"
                   class="w100"
+                  size="mini"
                 >
                   <el-option
                     v-for="(item, idx) in companyes"
@@ -117,6 +130,7 @@
                   placeholder="Описание"
                   maxlength="255"
                   rows="3"
+                  size="mini"
                   show-word-limit
                 />
               </el-form-item>
@@ -145,13 +159,25 @@
                 />
               </el-form-item>
             </div> -->
-            <div class="col-4">
+            <div class="col-8">
               <el-form-item prop="priority3" label="Порядковый номер">
                 <el-input-number
                   v-model="form.priority3"
                   :min="0"
                   size="mini"
                   controls-position="right"
+                />
+              </el-form-item>
+            </div>
+            <div class="col-12">
+              <el-form-item prop="dcod" label="Доменый код">
+                <el-input
+                  v-model="form.dcod"
+                  :min="0"
+                  v-mask="'##.##.##.##.00.00.00.00'"
+                  size="mini"
+                  class="w100"
+                  placeholder="##.##.##.##.00.00.00.00"
                 />
               </el-form-item>
             </div>
@@ -183,6 +209,7 @@
                   type="textarea"
                   placeholder="Yandex метрика"
                   rows="2"
+                  size="mini"
                   show-word-limit
                 />
               </el-form-item>
@@ -196,6 +223,7 @@
                   type="textarea"
                   placeholder="Google analytics"
                   rows="2"
+                  size="mini"
                   show-word-limit
                 />
               </el-form-item>
@@ -205,12 +233,20 @@
             <!--  -->
             <div class="col-12">
               <el-form-item prop="alloka" label="Alloka">
-                <el-input v-model="form.alloka.code" placeholder="Alloka" />
+                <el-input
+                  v-model="form.alloka.code"
+                  size="mini"
+                  placeholder="Alloka"
+                />
               </el-form-item>
             </div>
             <div class="col-12">
               <el-form-item prop="envybox" label="Envybox">
-                <el-input v-model="form.envybox.code" placeholder="Envybox" />
+                <el-input
+                  v-model="form.envybox.code"
+                  size="mini"
+                  placeholder="Envybox"
+                />
               </el-form-item>
             </div>
           </el-tab-pane>
@@ -219,7 +255,11 @@
           <el-tab-pane label="Контакты" name="contacts" class="row">
             <div class="col-12">
               <el-form-item prop="phone_default" label="Телефон по умолчанию">
-                <el-input v-model="form.phone_default" placeholder="Телефон" />
+                <el-input
+                  v-model="form.phone_default"
+                  size="mini"
+                  placeholder="Телефон"
+                />
               </el-form-item>
             </div>
             <!-- <div class="col-12">
@@ -229,17 +269,29 @@
             </div> -->
             <div class="col-12">
               <el-form-item prop="address" label="Адрес">
-                <el-input v-model="form.address" placeholder="Адрес" />
+                <el-input
+                  v-model="form.address"
+                  size="mini"
+                  placeholder="Адрес"
+                />
               </el-form-item>
             </div>
             <div class="col-12">
               <el-form-item prop="work_time" label="Время работы">
-                <el-input v-model="form.work_time" placeholder="Время работы" />
+                <el-input
+                  v-model="form.work_time"
+                  size="mini"
+                  placeholder="Время работы"
+                />
               </el-form-item>
             </div>
             <div class="col-12">
               <el-form-item prop="map_script" label="Код карты">
-                <el-input v-model="form.map_script" placeholder="Код карты" />
+                <el-input
+                  v-model="form.map_script"
+                  size="mini"
+                  placeholder="Код карты"
+                />
               </el-form-item>
             </div>
           </el-tab-pane>
@@ -376,6 +428,13 @@ export default {
           {
             max: 255,
             message: 'Максимум 255 символов',
+            trigger: 'blur'
+          }
+        ],
+        dcod: [
+          {
+            required: true,
+            message: 'Доменый код',
             trigger: 'blur'
           }
         ],
