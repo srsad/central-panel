@@ -86,46 +86,57 @@ export const mutations = {
 
 export const getters = {
   domains: (state) => {
-    // TODO вынести это на сторону бд
-    const rserviceSPB = []
-    const impulsSPB = []
-    const rserviceMSK = []
-    const impulsMSK = []
-    const rserviceKRD = []
-    const impulsKRD = []
-    // разбиваем по филиалам
-    // R-service СПб→Impuls СПб→R-service МСК→Impuls МСК
-    state.damains.forEach((el) => {
-      if (el.company === 'R-service СПб') rserviceSPB.push(el)
-      if (el.company === 'R-service МСК') rserviceMSK.push(el)
-      if (el.company === 'R-service КРД') rserviceKRD.push(el)
-      if (el.company === 'Impuls СПб') impulsSPB.push(el)
-      if (el.company === 'Impuls МСК') impulsMSK.push(el)
-      if (el.company === 'Impuls КРД') impulsKRD.push(el)
+    const res = state.damains
+    // сортируем по доменному коду
+    res.sort(function(a, b) {
+      const aCode = a.dcod.replace(/\./g, '')
+      const bCode = b.dcod.replace(/\./g, '')
+      if (+aCode > +bCode) return 1
+      if (+aCode < +bCode) return -1
+      return 0
     })
 
-    // сортируем по приоритету
-    // eslint-disable-next-line
-    rserviceSPB.sort((a, b) => (a.priority2 - b.priority || a.priority2 - b.priority2 || a.priority3 - b.priority3))
-    // eslint-disable-next-line
-    impulsSPB.sort((a, b) => (a.priority2 - b.priority || a.priority2 - b.priority2 || a.priority3 - b.priority3))
-    // eslint-disable-next-line
-    rserviceMSK.sort((a, b) => (a.priority2 - b.priority || a.priority2 - b.priority2 || a.priority3 - b.priority3))
-    // eslint-disable-next-line
-    impulsMSK.sort((a, b) => (a.priority2 - b.priority || a.priority2 - b.priority2 || a.priority3 - b.priority3))
-    // eslint-disable-next-line
-    rserviceKRD.sort((a, b) => (a.priority2 - b.priority || a.priority2 - b.priority2 || a.priority3 - b.priority3))
-    // eslint-disable-next-line
-    impulsKRD.sort((a, b) => (a.priority2 - b.priority || a.priority2 - b.priority2 || a.priority3 - b.priority3))
+    // // TODO вынести это на сторону бд
+    // const rserviceSPB = []
+    // const impulsSPB = []
+    // const rserviceMSK = []
+    // const impulsMSK = []
+    // const rserviceKRD = []
+    // const impulsKRD = []
+    // // разбиваем по филиалам
+    // // R-service СПб→Impuls СПб→R-service МСК→Impuls МСК
+    // state.damains.forEach((el) => {
+    //   if (el.company === 'R-service СПб') rserviceSPB.push(el)
+    //   if (el.company === 'R-service МСК') rserviceMSK.push(el)
+    //   if (el.company === 'R-service КРД') rserviceKRD.push(el)
+    //   if (el.company === 'Impuls СПб') impulsSPB.push(el)
+    //   if (el.company === 'Impuls МСК') impulsMSK.push(el)
+    //   if (el.company === 'Impuls КРД') impulsKRD.push(el)
+    // })
 
-    return [
-      ...rserviceSPB,
-      ...impulsSPB,
-      ...rserviceMSK,
-      ...impulsMSK,
-      ...rserviceKRD,
-      ...impulsKRD
-    ]
+    // // сортируем по приоритету
+    // // eslint-disable-next-line
+    // rserviceSPB.sort((a, b) => (a.priority2 - b.priority || a.priority2 - b.priority2 || a.priority3 - b.priority3))
+    // // eslint-disable-next-line
+    // impulsSPB.sort((a, b) => (a.priority2 - b.priority || a.priority2 - b.priority2 || a.priority3 - b.priority3))
+    // // eslint-disable-next-line
+    // rserviceMSK.sort((a, b) => (a.priority2 - b.priority || a.priority2 - b.priority2 || a.priority3 - b.priority3))
+    // // eslint-disable-next-line
+    // impulsMSK.sort((a, b) => (a.priority2 - b.priority || a.priority2 - b.priority2 || a.priority3 - b.priority3))
+    // // eslint-disable-next-line
+    // rserviceKRD.sort((a, b) => (a.priority2 - b.priority || a.priority2 - b.priority2 || a.priority3 - b.priority3))
+    // // eslint-disable-next-line
+    // impulsKRD.sort((a, b) => (a.priority2 - b.priority || a.priority2 - b.priority2 || a.priority3 - b.priority3))
+
+    // return [
+    //   ...rserviceSPB,
+    //   ...impulsSPB,
+    //   ...rserviceMSK,
+    //   ...impulsMSK,
+    //   ...rserviceKRD,
+    //   ...impulsKRD
+    // ]
+    return res
   },
   domain: (state) => state.damain,
   emptyText: (state) => state.emptyText
