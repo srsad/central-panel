@@ -28,21 +28,16 @@
           </template>
         </el-table-column>
         <!-- <el-table-column prop="sitestatus" label="" width="1" fixed="left" /> -->
-        <el-table-column
-          :filters="brands_"
-          :filter-method="filterHandlerBrands"
-          prop="brand"
-          label="Бренд"
-          width="150"
-          fixed="left"
-        >
+        <!-- :filters="brands_"
+        :filter-method="filterHandlerBrands" -->
+        <el-table-column prop="name" label="Нимен." width="150" fixed="left">
           <template slot-scope="scope">
             <div
-              :title="scope.row.brand"
+              :title="scope.row.name"
               :style="setColor(scope.row.color)"
               class="ws-normal"
             >
-              {{ scope.row.brand }}
+              {{ scope.row.name }}
             </div>
           </template>
         </el-table-column>
