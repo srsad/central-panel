@@ -234,7 +234,6 @@ export default {
             })
             if (roa.length) result = roa
           })
-          result.shift() // удаляем первую строку
           this.excelList = result // устанавливаем получившийся результат
           this.excelParse() // разбираем excel
         }
@@ -267,10 +266,16 @@ export default {
         branchMap.set(item.name, item._id)
       }
 
-      for await (const row of this.excelList) {
-        let brand = row[31].split(',')
+      // получаем индексы нужных позиций
+      const excelList = [...this.excelList]
+      const indexBrand = excelList[0].indexOf('Бренд') // индекс бренда
+      const indexBranch = excelList[0].indexOf('Создан в локации') // индекс филиала
+      excelList.shift() // удаляем первую строку
+
+      for await (const row of excelList) {
+        let brand = row[indexBrand].split(',')
         brand = brand[0].trim()
-        const branch = row[23].trim()
+        const branch = row[indexBranch].trim()
         // eslint-disable-next-line
         let brandId = this.brandList.find((el) => el.name.toLowerCase() === brand.toLowerCase())
         const branchId = branchMap.get(branch)

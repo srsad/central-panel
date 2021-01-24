@@ -1,11 +1,18 @@
 /**
- * Воркер для расчета первой части таблицы сводных листов
+ * Воркер для расчета первой части таблицы сводных листов (созданные заказы)
  */
 
 self.addEventListener('message', async (event) => {
   console.log('Запущен воркер расчета данных с открытыми заказами.')
   const items = event.data.arr
   const table = event.data.table
+
+  const indexBrand = items[0].indexOf('Бренд') // индекс бренда
+  const indexBranch = items[0].indexOf('Создан в локации') // индекс филиала
+  const indexStatus = items[0].indexOf('Статус') // индекс статуса
+
+  items.shift() // удаляем первую строку
+
   for await (const item of table) {
     const brandName = item.brand.name.toLowerCase().trim()
     const branchName = item.branch.name.toLowerCase().trim()
@@ -15,16 +22,16 @@ self.addEventListener('message', async (event) => {
     let closeOrders = 0
 
     for await (const row of items) {
-      let brand = row[31].split(',')
+      let brand = row[indexBrand].split(',')
       brand = brand[0].toLowerCase().trim()
-      const branch = row[23].toLowerCase().trim()
+      const branch = row[indexBranch].toLowerCase().trim()
       // все заказы текущего филиала
       if (brand === brandName && branchName === branch) {
         allOrders++
         // кто пришли в СЦ
-        if (row[4].trim() !== 'Не пришел') cameToService++
+        if (row[indexStatus].trim() !== 'Не пришел') cameToService++
         // закрытые заказы
-        if (row[4].trim() !== 'Закрыт') closeOrders++
+        if (row[indexStatus].trim() !== 'Закрыт') closeOrders++
       }
     }
     item.order.count = Math.round(allOrders) // все заявки бренда

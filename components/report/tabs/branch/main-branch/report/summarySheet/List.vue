@@ -633,7 +633,7 @@ export default {
             })
             if (roa.length) result = roa
           })
-          result.shift() // удаляем первую строку
+          // result.shift() // удаляем первую строку
           this.excelList = result // устанавливаем получившийся результат
           console.log('отправляем данные считаться на другой поток')
           this[this.excelListType]() // запускаем нужный метод
