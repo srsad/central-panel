@@ -6,7 +6,7 @@
         <el-button
           @click="toogleMoreData"
           :loading="loading"
-          class="pt-10 pointer"
+          class="pt-10 mb-10 pointer"
           type="default"
           size="mini"
           icon="el-icon-view"
@@ -17,27 +17,28 @@
       </div>
       <no-ssr>
         <div :class="['grid', loading ? 'disabled' : '']">
-          <v-grid
-            :source="pageData.brands"
-            :columns="commonСolumns"
-            :resize="true"
-            :col-size="70"
-            :column-types="columnTypes"
-            :style="`height: 69vh; max-width: ${windowWidth}px`"
-            class="global-grid-small main-summory-table"
-            theme="compact"
+          <ag-grid-vue
+            :columnDefs="commonСolumns"
+            :rowData="pageData.brands"
+            :headerHeight="80"
+            :groupHeaderHeight="20"
+            :floatingFiltersHeight="20"
+            :defaultColDef="{ menuTabs: [] }"
+            :suppressContextMenu="true"
+            :style="`height: 69vh; min-width: ${windowWidth}px`"
+            class="ag-theme-alpine"
           />
-          <!-- :pinnedTopSource="pinnedTopSource" -->
           <!--  -->
-          <v-grid
-            :source="[pageData.total]"
-            :columns="totalColumns"
-            :resize="true"
-            :col-size="70"
-            :columnTypes="columnTypes"
-            :style="`height: 150px; max-width: ${windowWidth}px`"
-            class="global-grid-small total-summory-table"
-            theme="compact"
+          <ag-grid-vue
+            :columnDefs="totalColumns"
+            :rowData="[pageData.total]"
+            :headerHeight="80"
+            :groupHeaderHeight="20"
+            :floatingFiltersHeight="20"
+            :defaultColDef="{ menuTabs: [] }"
+            :suppressContextMenu="true"
+            :style="`height: 163px; min-width: ${windowWidth}px`"
+            class="ag-theme-alpine"
           />
         </div>
       </no-ssr>
@@ -60,7 +61,6 @@ export default {
   data() {
     return {
       loading: false,
-      columnTypes: {}, // типы колонок таблицы
       commonСolumns: СommonСolumns,
       totalColumns: TotalColumns,
       windowWidth: 1000, // ширина окна
@@ -73,16 +73,6 @@ export default {
     }
   },
   mounted() {
-    import('@revolist/vue-datagrid').then((m) => {
-      const types = {}
-      Promise.all([
-        // eslint-disable-next-line
-        import('@revolist/revogrid-column-numeral').then((p) => (types.number = new p.default('0,0')))
-      ]).then(() => {
-        this.columnTypes = types
-      })
-    })
-
     // считаем ширину таблицы
     window.addEventListener('resize', (e) => {
       this.windowUpdate()

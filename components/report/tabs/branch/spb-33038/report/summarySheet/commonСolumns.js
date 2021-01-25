@@ -3,392 +3,342 @@
  */
 export default [
   {
-    name: 'Сайт',
-    prop: 'brand.name',
-    size: 100,
-    pin: 'colPinStart',
-    readonly: true,
-    sortable: true,
-    cellTemplate: (createElement, props) => {
-      // return createElement('span', {}, props.model[props.prop])
-      return createElement('span', {}, props.model.brand.name)
-    }
+    field: 'branch.code',
+    headerName: 'Филиал',
+    width: 50,
+    pinned: 'left',
+    suppressSizeToFit: true,
+    enableRowGroup: true,
+    cellStyle: { 'background-color': '#e7e7e7' },
+    sortable: true
   },
   {
-    name: 'Филиал',
-    prop: 'branch.name',
-    size: 80,
-    pin: 'colPinStart',
-    readonly: true,
-    sortable: true,
-    cellTemplate: (createElement, props) => {
-      return createElement('span', {}, props.model.branch.name)
-    }
+    field: 'brand.name',
+    headerName: 'Сайт',
+    pinned: 'left',
+    width: 100,
+    cellStyle: { 'background-color': '#e7e7e7' },
+    sortable: true
   },
-  // Заявки
   {
-    name: 'Заявки',
+    // field: 'brand.name',
+    headerName: 'Заявки',
     children: [
       {
-        name: 'PK',
-        prop: 'requests.chanel.pk',
-        size: 60,
-        readonly: true,
-        columnType: 'numeric',
-        cellTemplate: (createElement, props) => {
-          return createElement('span', {}, props.model.requests.chanel.pk)
+        field: 'requests.chanel.pk',
+        headerName: 'PK',
+        width: 50,
+        sortable: true,
+        cellStyle: { 'background-color': '#e7e7e7' },
+        valueFormatter: (params) => {
+          return new Intl.NumberFormat().format(params.value)
         }
       },
       {
-        name: 'SEO',
-        prop: 'requests.chanel.seo',
-        readonly: true,
-        size: 60, // BUG меняет размер предыдущей ячейки
-        cellTemplate: (createElement, props) => {
-          return createElement('span', {}, props.model.requests.chanel.seo)
+        field: 'requests.chanel.seo',
+        headerName: 'SEO',
+        width: 50,
+        sortable: true,
+        cellStyle: { 'background-color': '#e7e7e7' },
+        valueFormatter: (params) => {
+          return new Intl.NumberFormat().format(params.value)
         }
       },
       {
-        name: 'цена за трафик',
-        prop: 'requests.traffik_price',
-        readonly: true,
-        size: 65,
-        cellTemplate: (createElement, props) => {
-          return createElement('span', {}, props.model.requests.traffik_price)
+        field: 'requests.traffik_price',
+        headerName: 'цена за трафик',
+        cellStyle: { 'background-color': '#e7e7e7' },
+        sortable: true,
+        width: 60,
+        valueFormatter: (params) => {
+          return new Intl.NumberFormat().format(params.value) + ' ₽'
         }
       },
       {
-        name: 'цена общая',
-        prop: 'requests.common_price',
-        readonly: true,
-        size: 65,
-        cellTemplate: (createElement, props) => {
-          return createElement('span', {}, props.model.requests.common_price)
+        field: 'requests.common_price',
+        headerName: 'цена общая',
+        cellStyle: { 'background-color': '#e7e7e7' },
+        sortable: true,
+        width: 60,
+        valueFormatter: (params) => {
+          return new Intl.NumberFormat().format(params.value) + ' ₽'
         }
       }
     ]
   },
-  // Запись
   {
-    name: 'Запись',
+    headerName: 'Запись',
     children: [
       {
-        name: 'кол-во',
-        prop: 'order.count',
-        readonly: true,
+        field: 'order.count',
+        headerName: 'кол-во',
         sortable: true,
-        cellTemplate: (createElement, props) => {
-          return createElement(
-            'span',
-            {
-              style: { width: '30px' }
-            },
-            props.model.order.count
-          )
-        },
-        columnTemplate: (createElement, column) => {
-          return createElement(
-            'span',
-            {
-              style: { width: '30px' }
-            },
-            column.name
-          )
+        cellStyle: { 'background-color': '#e7e7e7' },
+        width: 50,
+        valueFormatter: (params) => {
+          return new Intl.NumberFormat().format(params.value)
         }
       },
       {
-        name: 'цена за трафик',
-        prop: 'order.traffik_price',
-        readonly: true,
-        cellTemplate: (createElement, props) => {
-          return createElement('span', {}, props.model.order.traffik_price)
+        field: 'order.traffik_price',
+        headerName: 'цена за трафик',
+        cellStyle: { 'background-color': '#e7e7e7' },
+        sortable: true,
+        width: 80,
+        valueFormatter: (params) => {
+          return new Intl.NumberFormat().format(params.value) + ' ₽'
         }
       },
       {
-        name: 'цена общая',
-        prop: 'order.common_price',
-        readonly: true,
-        cellTemplate: (createElement, props) => {
-          return createElement('span', {}, props.model.order.common_price)
+        field: 'order.common_price',
+        headerName: 'цена общая',
+        cellStyle: { 'background-color': '#e7e7e7' },
+        sortable: true,
+        width: 80,
+        valueFormatter: (params) => {
+          return new Intl.NumberFormat().format(params.value) + ' ₽'
         }
       },
       {
-        name: 'конверсия %',
-        prop: 'order.conversion',
-        readonly: true,
-        cellTemplate: (createElement, props) => {
-          return createElement('span', {}, props.model.order.conversion)
+        field: 'order.conversion',
+        headerName: 'конверсия %',
+        cellStyle: { 'background-color': '#e7e7e7' },
+        sortable: true,
+        width: 60,
+        valueFormatter: (params) => {
+          return new Intl.NumberFormat().format(params.value) + ' %'
         }
       }
     ]
   },
-  // Пришёл в СЦ
   {
-    name: 'Пришёл в СЦ',
+    headerName: 'Пришёл в СЦ',
     children: [
       {
-        name: 'кол-во',
-        prop: 'came_to_sc.count',
-        readonly: true,
+        field: 'came_to_sc.count',
+        headerName: 'кол-во',
         sortable: true,
-        cellTemplate: (createElement, props) => {
-          return createElement('span', {}, props.model.came_to_sc.count)
+        cellStyle: { 'background-color': '#e7e7e7' },
+        width: 50,
+        valueFormatter: (params) => {
+          return new Intl.NumberFormat().format(params.value)
         }
       },
       {
-        name: 'цена за трафик',
-        prop: 'came_to_sc.traffik_price',
-        readonly: true,
-        cellTemplate: (createElement, props) => {
-          return createElement('span', {}, props.model.came_to_sc.traffik_price)
+        field: 'came_to_sc.traffik_price',
+        headerName: 'цена за трафик',
+        cellStyle: { 'background-color': '#e7e7e7' },
+        sortable: true,
+        width: 80,
+        valueFormatter: (params) => {
+          return new Intl.NumberFormat().format(params.value) + ' ₽'
         }
       },
       {
-        name: 'цена общая',
-        prop: 'came_to_sc.common_price',
-        readonly: true,
-        cellTemplate: (createElement, props) => {
-          return createElement(
-            'span',
-            {
-              style: { color: 'red' }
-            },
-            props.model.came_to_sc.common_price
-          )
-        },
-        columnTemplate: (createElement, column) => {
-          return createElement(
-            'span',
-            {
-              style: { color: 'red' }
-            },
-            column.name
-          )
+        field: 'came_to_sc.common_price',
+        headerName: 'цена общая',
+        cellStyle: { 'background-color': '#e7e7e7', color: 'red' },
+        sortable: true,
+        width: 80,
+        valueFormatter: (params) => {
+          return new Intl.NumberFormat().format(params.value) + ' ₽'
         }
       },
       {
-        name: 'конверсия %',
-        prop: 'came_to_sc.conversion',
-        readonly: true,
-        cellTemplate: (createElement, props) => {
-          return createElement('span', {}, props.model.came_to_sc.conversion)
+        field: 'came_to_sc.conversion',
+        headerName: 'конверсия %',
+        cellStyle: { 'background-color': '#e7e7e7' },
+        sortable: true,
+        width: 60,
+        valueFormatter: (params) => {
+          return new Intl.NumberFormat().format(params.value) + ' %'
         }
       }
     ]
   },
-  // Клиент закрыт
   {
-    name: 'Клиент закрыт',
+    headerName: 'Клиент закрыт',
     children: [
       {
-        name: 'кол-во',
-        prop: 'order_closed.count',
-        readonly: true,
+        field: 'order_closed.count',
+        headerName: 'кол-во',
         sortable: true,
-        cellTemplate: (createElement, props) => {
-          return createElement('span', {}, props.model.order_closed.count)
+        cellStyle: { 'background-color': '#e7e7e7' },
+        width: 50,
+        valueFormatter: (params) => {
+          return new Intl.NumberFormat().format(params.value)
         }
       },
       {
-        name: 'цена за трафик',
-        prop: 'order_closed.traffik_price',
-        readonly: true,
-        cellTemplate: (createElement, props) => {
-          return createElement(
-            'span',
-            {},
-            props.model.order_closed.traffik_price
-          )
+        field: 'order_closed.traffik_price',
+        headerName: 'цена за трафик',
+        cellStyle: { 'background-color': '#e7e7e7' },
+        sortable: true,
+        width: 80,
+        valueFormatter: (params) => {
+          return new Intl.NumberFormat().format(params.value) + ' ₽'
         }
       },
       {
-        name: 'цена общая',
-        prop: 'order_closed.common_price',
-        readonly: true,
-        cellTemplate: (createElement, props) => {
-          return createElement(
-            'span',
-            {},
-            props.model.order_closed.common_price
-          )
+        field: 'order_closed.common_price',
+        headerName: 'цена общая',
+        cellStyle: { 'background-color': '#e7e7e7' },
+        sortable: true,
+        width: 80,
+        valueFormatter: (params) => {
+          return new Intl.NumberFormat().format(params.value) + ' ₽'
         }
       },
       {
-        name: 'конверсия %',
-        prop: 'order_closed.conversion',
-        readonly: true,
-        cellTemplate: (createElement, props) => {
-          return createElement('span', {}, props.model.order_closed.conversion)
+        field: 'order_closed.conversion',
+        headerName: 'конверсия %',
+        cellStyle: { 'background-color': '#e7e7e7' },
+        sortable: true,
+        width: 60,
+        valueFormatter: (params) => {
+          return new Intl.NumberFormat().format(params.value) + ' %'
         }
       }
     ]
   },
-  // Расходы
   {
-    name: 'Расходы',
+    headerName: 'Расходы',
     children: [
       {
-        name: 'Баланс',
-        prop: 'common_expenses.balance',
-        size: 80,
+        field: 'common_expenses.balance',
+        headerName: 'Баланс',
         sortable: true,
-        readonly: true,
-        cellTemplate: (createElement, props) => {
-          return createElement(
-            'span',
-            {
-              style: { color: 'green' }
-            },
-            props.model.common_expenses.balance
-          )
-        },
-        columnTemplate: (createElement, column) => {
-          return createElement(
-            'span',
-            {
-              style: { color: 'green' }
-            },
-            column.name
-          )
+        cellStyle: { 'background-color': '#e7e7e7', color: 'green' },
+        width: 80,
+        valueFormatter: (params) => {
+          return new Intl.NumberFormat().format(params.value) + ' ₽'
         }
       },
       {
-        name: 'РК',
-        prop: 'common_expenses.pk',
-        size: 80,
+        field: 'common_expenses.pk',
+        headerName: 'РК',
         sortable: true,
-        readonly: true,
-        cellTemplate: (createElement, props) => {
-          return createElement('span', {}, props.model.common_expenses.pk)
+        cellStyle: { 'background-color': '#e7e7e7' },
+        width: 80,
+        valueFormatter: (params) => {
+          return new Intl.NumberFormat().format(params.value) + ' ₽'
         }
       },
       {
-        name: 'SEO',
-        prop: 'common_expenses.seo',
-        size: 80,
+        field: 'common_expenses.seo',
+        headerName: 'SEO',
         sortable: true,
-        readonly: true,
-        cellTemplate: (createElement, props) => {
-          return createElement('span', {}, props.model.common_expenses.seo)
+        cellStyle: { 'background-color': '#e7e7e7' },
+        width: 80,
+        valueFormatter: (params) => {
+          return new Intl.NumberFormat().format(params.value) + ' ₽'
         }
       },
       {
-        name: 'Алока и т.д',
-        prop: 'common_expenses.common',
-        size: 80,
+        field: 'common_expenses.common',
+        headerName: 'Алока и т.д',
         sortable: true,
-        readonly: true,
-        cellTemplate: (createElement, props) => {
-          return createElement('span', {}, props.model.common_expenses.common)
+        cellStyle: { 'background-color': '#e7e7e7' },
+        width: 80,
+        valueFormatter: (params) => {
+          return new Intl.NumberFormat().format(params.value) + ' ₽'
         }
       }
     ]
   },
-  //
   {
-    name: 'Выручка',
+    field: 'revenue',
+    headerName: 'Выручка',
+    cellStyle: { 'background-color': '#e7e7e7' },
     sortable: true,
-    readonly: true,
-    size: 100,
-    prop: 'revenue'
-  },
-  {
-    name: 'Расходы',
-    sortable: true,
-    readonly: true,
-    size: 100,
-    beforeValueFormatted: (event, instance) => {
-      console.log('onBeforeValueFormatted', event, instance)
-    },
-    prop: 'expenses'
-  },
-  {
-    name: 'Вал',
-    prop: 'val',
-    size: 100,
-    sortable: true,
-    readonly: true
-  },
-  {
-    name: 'Заказы',
-    sortable: true,
-    readonly: true,
-    prop: 'orders'
-  },
-  {
-    name: 'Ср. чек',
-    prop: 'wed_check',
-    pin: 'colPinEnd',
-    sortable: true,
-    readonly: true,
-    cellTemplate: (createElement, props) => {
-      return createElement(
-        'span',
-        { style: { color: 'red' } },
-        props.model.wed_check
-      )
-    },
-    columnTemplate: (createElement, column) => {
-      return createElement('span', { style: { color: 'red' } }, column.name)
+    width: 100,
+    valueFormatter: (params) => {
+      return new Intl.NumberFormat().format(params.value) + ' ₽'
     }
   },
   {
-    name: 'Дельта',
-    prop: 'delta',
-    pin: 'colPinEnd',
+    field: 'expenses',
+    headerName: 'Расходы',
+    cellStyle: { 'background-color': '#e7e7e7' },
     sortable: true,
-    readonly: true,
-    size: 80,
-    cellTemplate: (createElement, props) => {
-      return createElement(
-        'span',
-        { style: { color: 'orange' } },
-        props.model.delta
-      )
-    },
-    columnTemplate: (createElement, column) => {
-      return createElement('span', { style: { color: 'orange' } }, column.name)
+    width: 100,
+    valueFormatter: (params) => {
+      return new Intl.NumberFormat().format(params.value) + ' ₽'
     }
   },
   {
-    name: 'Прибыль',
-    prop: 'profit',
-    pin: 'colPinEnd',
+    field: 'val',
+    headerName: 'Вал',
+    cellStyle: { 'background-color': '#e7e7e7' },
     sortable: true,
-    readonly: true,
-    size: 80,
-    cellTemplate: (createElement, props) => {
-      const cellClass = props.model.profit < 0 ? 'cellMinus' : ''
-      return createElement(
-        'span',
-        {
-          class: cellClass,
-          style: { color: '#f0f' }
-        },
-        props.model.profit
-      )
-    },
-    columnTemplate: (createElement, column) => {
-      return createElement('span', { style: { color: '#f0f' } }, column.name)
+    width: 70,
+    valueFormatter: (params) => {
+      return new Intl.NumberFormat().format(params.value) + ' ₽'
     }
   },
   {
-    name: 'СПЗ',
-    prop: 'spz',
-    pin: 'colPinEnd',
+    field: 'orders',
+    headerName: 'Заказы',
     sortable: true,
-    columnType: 'numeric',
-    readonly: true,
-    size: 60,
-    cellTemplate: (createElement, props) => {
-      return createElement(
-        'span',
-        { style: { color: '#00f' } },
-        props.model.spz
-      )
-    },
-    columnTemplate: (createElement, column) => {
-      return createElement('span', { style: { color: '#00f' } }, column.name)
+    cellStyle: { 'background-color': '#e7e7e7' },
+    width: 55,
+    valueFormatter: (params) => {
+      return new Intl.NumberFormat().format(params.value)
+    }
+  },
+  {
+    field: 'wed_check',
+    headerName: 'Ср. чек',
+    cellStyle: { 'background-color': '#e7e7e7', color: 'red' },
+    sortable: true,
+    pinned: 'right',
+    width: 100,
+    valueFormatter: (params) => {
+      return new Intl.NumberFormat().format(params.value) + ' ₽'
+    }
+  },
+  {
+    field: 'delta',
+    headerName: 'Дельта',
+    cellStyle: { 'background-color': '#e7e7e7', color: 'orange' },
+    sortable: true,
+    pinned: 'right',
+    width: 100,
+    valueFormatter: (params) => {
+      return new Intl.NumberFormat().format(params.value) + ' ₽'
+    }
+  },
+  {
+    field: 'profit',
+    headerName: 'Прибыль',
+    cellStyle: { 'background-color': '#e7e7e7', color: 'magenta' },
+    sortable: true,
+    pinned: 'right',
+    width: 100,
+    valueFormatter: (params) => {
+      if (+params.value < 0) {
+        params.colDef.cellStyle = {
+          'background-color': '#eacece',
+          color: '#333'
+        }
+      } else {
+        params.colDef.cellStyle = {
+          'background-color': '#e7e7e7',
+          color: 'magenta'
+        }
+      }
+      return new Intl.NumberFormat().format(params.value) + ' ₽'
+    }
+  },
+  {
+    field: 'spz',
+    headerName: 'СПЗ',
+    cellStyle: { 'background-color': '#e7e7e7', color: 'blue' },
+    sortable: true,
+    pinned: 'right',
+    width: 100,
+    valueFormatter: (params) => {
+      return new Intl.NumberFormat().format(params.value) + ' ₽'
     }
   }
 ]

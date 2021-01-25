@@ -159,35 +159,33 @@
         <!-- /Форма для экспорта данных по расходам -->
         <!--  -->
       </div>
-      <!-- {{ pageData.total }} -->
       <no-ssr>
         <div :class="['grid', loading ? 'disabled' : '']">
-          <v-grid
-            @beforeEdit="onCellEdit"
-            :source="pageData.brands"
-            :columns="commonСolumns"
-            :resize="true"
-            :col-size="70"
-            :column-types="columnTypes"
-            :style="`height: 69vh; max-width: ${windowWidth}px`"
-            class="global-grid-small main-summory-table"
-            theme="compact"
+          <ag-grid-vue
+            :columnDefs="commonСolumns"
+            :rowData="pageData.brands"
+            :headerHeight="80"
+            :groupHeaderHeight="20"
+            :floatingFiltersHeight="20"
+            :defaultColDef="{ menuTabs: [] }"
+            :suppressContextMenu="true"
+            :style="`height: 69vh; min-width: ${windowWidth}px`"
+            class="ag-theme-alpine"
           />
-          <!-- :pinnedTopSource="pinnedTopSource" -->
           <!--  -->
-          <v-grid
-            @beforeEdit="onCellEdit"
-            :source="[pageData.total]"
-            :columns="totalColumns"
-            :resize="true"
-            :col-size="70"
-            :columnTypes="columnTypes"
-            :style="`height: 150px; max-width: ${windowWidth}px`"
-            class="global-grid-small total-summory-table"
-            theme="compact"
+          <ag-grid-vue
+            :columnDefs="totalColumns"
+            :rowData="[pageData.total]"
+            :headerHeight="80"
+            :groupHeaderHeight="20"
+            :floatingFiltersHeight="20"
+            :defaultColDef="{ menuTabs: [] }"
+            :suppressContextMenu="true"
+            :style="`height: 163px; min-width: ${windowWidth}px`"
+            class="ag-theme-alpine"
           />
         </div>
-        <!-- :row-headers="true" -->
+        <!--  -->
       </no-ssr>
     </div>
   </div>
@@ -206,10 +204,6 @@ export default {
   data() {
     return {
       loading: false,
-      pinnedTopSource: [
-        // { 'orders': '31231' }
-      ],
-      columnTypes: {}, // типы колонок таблицы
       commonСolumns: СommonСolumns,
       totalColumns: TotalColumns,
       /**
@@ -239,18 +233,6 @@ export default {
     }
   },
   mounted() {
-    import('@revolist/vue-datagrid').then((m) => {
-      const types = {}
-      Promise.all([
-        import('@revolist/revogrid-column-numeral').then(
-          // eslint-disable-next-line
-          (p) => (types.number = new p.default('0,0'))
-        )
-      ]).then(() => {
-        this.columnTypes = types
-      })
-    })
-
     // считаем ширину таблицы
     window.addEventListener('resize', (e) => {
       this.windowUpdate()
@@ -294,46 +276,6 @@ export default {
           fileInput.click()
           break
       }
-    },
-
-    /**
-     * Редактирование ячейки
-     */
-    onCellEdit(row) {
-      // console.log('row', row.detail.rowIndex, row.detail.prop)
-      // ужасно, но я не придумал как сделать красиво
-      const idx = row.detail.rowIndex
-      switch (row.detail.prop) {
-        case 'requests.chanel.pk':
-          this.pageData.brands[idx].requests.chanel.pk = row.detail.val
-          break
-        case 'requests.chanel.seo':
-          this.pageData.brands[idx].requests.chanel.seo = row.detail.val
-          break
-        case 'order.count':
-          this.pageData.brands[idx].order.count = row.detail.val
-          break
-        case 'order_closed.count':
-          this.pageData.brands[idx].order_closed.count = row.detail.val
-          break
-        case 'came_to_sc.count':
-          this.pageData.brands[idx].came_to_sc.count = row.detail.val
-          break
-        case 'common_expenses.balance':
-          this.pageData.brands[idx].common_expenses.balance = row.detail.val
-          break
-        case 'common_expenses.pk':
-          this.pageData.brands[idx].common_expenses.pk = row.detail.val
-          break
-        case 'common_expenses.seo':
-          this.pageData.brands[idx].common_expenses.seo = row.detail.val
-          break
-        case 'common_expenses.common':
-          this.pageData.brands[idx].common_expenses.common = row.detail.val
-          break
-      }
-      // this.pageData.brands[row.detail.rowIndex].requests.chanel.pk = row.detail.val
-      // this.pageData.brands[row.detail.rowIndex][row.detail.prop] = row.detail.val
     },
 
     /**
@@ -859,8 +801,8 @@ export default {
       const brands = this.$store.getters['report/summary/report']
       if(this.moreData) {
         // если надо скрыть
-        this.excludedData = this.pageData.brands.filter((el) => el.priority === 150)
-        brands.brands = this.pageData.brands.filter((el) => el.priority !== 150)
+        this.excludedData = this.pageData.brands.filter((el) => el.dcod === '99.00.00.00.00.00.00.00')
+        brands.brands = this.pageData.brands.filter((el) => el.dcod !== '99.00.00.00.00.00.00.00')
         this.$store.commit('report/summary/SET_REPORT', brands)
       } else {
         brands.brands = this.pageData.brands

@@ -98,10 +98,10 @@ export default {
       const rem = new Rem(process.env.REMONLINE_API_KEY, true)
       // order/?token=...&created_at[]=1597352400000&created_at[]=1597438799999&branches[]=26047
       const items = []
-      for (let i = 17; i <= 18; i++) {
+      for (let i = 6; i <= 8; i++) {
         // new Date('2020,7,1,00:01:01').getTime()
-        const created1 = new Date(`2020,12,${i},00:01:01`).getTime()
-        const created2 = new Date(`2020,12,${i},23:59:50`).getTime()
+        const created1 = new Date(`2021,01,${i},00:01:01`).getTime()
+        const created2 = new Date(`2021,01,${i},23:59:50`).getTime()
         // бренды - клиент закрыт
         const filter = [
           `created_at[]=${created1}`,

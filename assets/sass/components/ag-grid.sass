@@ -1,0 +1,29 @@
+@import "../../node_modules/ag-grid-community/dist/styles/ag-grid.css"
+@import "../../node_modules/ag-grid-community/dist/styles/ag-theme-alpine.css"
+
+// .ag-grid-header-rotate
+.ag-header-cell-text
+  writing-mode: vertical-lr
+  -ms-writing-mode: tb-lr
+  font-size: 10px
+  font-weight: 500
+  transform: rotate(180deg)
+
+.ag-theme-alpine .ag-header-cell, .ag-theme-alpine .ag-header-group-cell
+  border-left: 1px solid #babfc7
+  &:first-child
+    border-left: 0
+
+.ag-theme-alpine
+  .ag-cell
+    padding-left: 5px !important
+    padding-right: 5px !important
+    font-size: 12px !important
+
+  .ag-cell-inline-editing
+    padding-left: 0 !important
+    padding-right: 0 !important
+
+.ag-theme-alpine .ag-header-cell, .ag-theme-alpine .ag-header-group-cell
+  padding-left: 5px !important
+  padding-right: 5px !important
