@@ -1,3 +1,5 @@
+// import flatten from 'flat'
+
 /**
  * Стор для списка сводных отчетов
  */
@@ -65,12 +67,7 @@ export const getters = {
     const report = JSON.parse(JSON.stringify(state.report))
     if (!report?.brands) return report
 
-    const domains = rootState.domains.damains
-
-    const rserviceSPB = []
-    const impulsSPB = []
-    const rserviceMSK = []
-    const impulsMSK = []
+    const domains = JSON.parse(JSON.stringify(rootState.domains.damains))
 
     // TODO костыль для сопоставляния филиала+адреса с компанией
     const branches = new Map([
@@ -81,48 +78,51 @@ export const getters = {
       ['МСК Сеславинская', 'Impuls МСК']
     ])
 
+    const branchCodes = new Map([
+      ['СПБ 2-я Красноармейская', 'KRS'],
+      ['СПБ Дмитровский', 'DMR'],
+      ['МСК Новослободская', 'NVS'],
+      ['МСК Армянский', 'ARM'],
+      ['МСК Сеславинская', 'SES']
+    ])
+
+    // результат выполнения
+    const res = []
+
     for (const idx in report.brands) {
       const branch = branches.get(report.brands[idx].branch.name)
       const brand = report.brands[idx].brand.name.toLowerCase()
-      let sortPriority = {
-        priority: 150,
-        priority2: 150,
-        priority3: 150
-      }
+
+      let dcod = '99.00.00.00.00.00.00.00' // код по умолчанию
+
+      const branchCode = branchCodes.get(report.brands[idx].branch.name)
 
       // возвращаем найденные приоритеты
       for (const el of domains) {
         if (el.brand.toLowerCase() === brand && el.company === branch) {
-          sortPriority = el
+          dcod = el.dcod
           break
         }
       }
 
-      // достаем параметры для сортировки
-      const item = {
-        ...report.brands[idx],
-        priority: +sortPriority.priority || 150,
-        priority2: +sortPriority.priority2 || 150,
-        priority3: +sortPriority.priority3 || 150
-      }
+      // шорт код филиала
+      report.brands[idx].branch.code = branchCode
 
-      if (branch === 'R-service СПб') rserviceSPB.push(item)
-      if (branch === 'R-service МСК') rserviceMSK.push(item)
-      if (branch === 'Impuls СПб') impulsSPB.push(item)
-      if (branch === 'Impuls МСК') impulsMSK.push(item)
+      // достаем параметры для сортировки
+      res.push({ ...report.brands[idx], dcod })
+      // res.push(flatten({ ...report.brands[idx], dcod }))
     }
 
-    // сортируем по приоритету
-    // eslint-disable-next-line
-    rserviceSPB.sort((a, b) => a.priority2 - b.priority || a.priority2 - b.priority2 || a.priority3 - b.priority3)
-    // eslint-disable-next-line
-    impulsSPB.sort((a, b) => a.priority2 - b.priority || a.priority2 - b.priority2 || a.priority3 - b.priority3)
-    // eslint-disable-next-line
-    rserviceMSK.sort((a, b) => a.priority2 - b.priority || a.priority2 - b.priority2 || a.priority3 - b.priority3)
-    // eslint-disable-next-line
-    impulsMSK.sort((a, b) => a.priority2 - b.priority || a.priority2 - b.priority2 || a.priority3 - b.priority3)
+    // сортируем по доменному коду
+    res.sort(function(a, b) {
+      const aCode = a.dcod.replace(/\./g, '')
+      const bCode = b.dcod.replace(/\./g, '')
+      if (+aCode > +bCode) return 1
+      if (+aCode < +bCode) return -1
+      return 0
+    })
 
-    report.brands = [...rserviceSPB, ...impulsSPB, ...rserviceMSK, ...impulsMSK]
+    report.brands = [...res]
     return report
   }
 }
