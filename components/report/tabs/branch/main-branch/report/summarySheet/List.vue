@@ -161,6 +161,7 @@
       </div>
       <no-ssr>
         <div :class="['grid', loading ? 'disabled' : '']">
+          <!-- :defaultColDef="{ menuTabs: [] }" -->
           <ag-grid-vue
             :columnDefs="commonСolumns"
             :rowData="pageData.brands"
@@ -169,6 +170,7 @@
             :floatingFiltersHeight="20"
             :defaultColDef="{ menuTabs: [] }"
             :suppressContextMenu="true"
+            :sideBar="sideBar"
             :style="`height: 69vh; min-width: ${windowWidth}px`"
             class="ag-theme-alpine"
           />
@@ -206,6 +208,29 @@ export default {
       loading: false,
       commonСolumns: СommonСolumns,
       totalColumns: TotalColumns,
+      sideBar: {
+        toolPanels: [
+          {
+            id: 'columns',
+            labelDefault: 'Столбцы',
+            labelKey: 'columns',
+            iconKey: 'columns',
+            toolPanel: 'agColumnsToolPanel',
+            toolPanelParams: {
+              suppressRowGroups: true,
+              suppressValues: true,
+              suppressPivots: true,
+              suppressPivotMode: true,
+              suppressSideButtons: true,
+              suppressColumnFilter: true,
+              // suppressColumnSelectAll: true,
+              // suppressColumnExpandAll: true,
+              contractColumnSelection: true,
+            },
+          }
+        ],
+        // defaultToolPanel: 'columns',
+      },
       /**
        * тип загружаемого дакумента, для открытых или закрытых заказов
        * runWorkerOpenParams - открытые

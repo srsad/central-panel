@@ -26,6 +26,7 @@
             :floatingFiltersHeight="20"
             :defaultColDef="{ menuTabs: [] }"
             :suppressContextMenu="true"
+            :sideBar="sideBar"
             :style="`height: 69vh; min-width: ${windowWidth}px`"
             class="ag-theme-alpine"
           />
@@ -64,6 +65,26 @@ export default {
       loading: false,
       commonСolumns: СommonСolumns,
       totalColumns: TotalColumns,
+      sideBar: {
+        toolPanels: [
+          {
+            id: 'columns',
+            labelDefault: 'Столбцы',
+            labelKey: 'columns',
+            iconKey: 'columns',
+            toolPanel: 'agColumnsToolPanel',
+            toolPanelParams: {
+              suppressRowGroups: true,
+              suppressValues: true,
+              suppressPivots: true,
+              suppressPivotMode: true,
+              suppressSideButtons: true,
+              suppressColumnFilter: true,
+              contractColumnSelection: true
+            }
+          }
+        ]
+      },
       windowWidth: 1000, // ширина окна
       moreData: false // статус - показать/скрыть дополнительные данные
     }
