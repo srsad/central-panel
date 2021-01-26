@@ -1,84 +1,62 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col-8">
-        <el-button
-          v-if="$abilities('domains-create')"
-          @click="
-            $store.commit('settings/SWITCH_DRAWNER', {
-              dranwer: 'drawerCreateDomains',
-              status: true
-            })
-          "
-          type="success"
-          size="mini"
-          class="mb-20"
-          icon="el-icon-plus"
-        >
-          Добавить домен
-        </el-button>
-        <el-button-group>
-          <el-button
-            @click="() => $store.dispatch('domains/fetchDomains')"
-            size="mini"
-            type="warning"
-            style="padding: 2px 9px 2px 5px;font-size: 11px;"
-          >
-            Сбросить <br />
-            сортировку
-          </el-button>
-          <el-button
-            @click="selectCity('Красноармейская')"
-            size="mini"
-            type="primary"
-          >
-            2-я Красноармейская 11
-          </el-button>
-          <el-button
-            @click="selectCity('Дмитровский')"
-            size="mini"
-            type="primary"
-          >
-            Дмитровский пер., 8
-          </el-button>
-          <!-- <el-button
-            @click="selectCity('Пашковская')"
-            size="mini"
-            type="primary"
-          >
-            ул. Пашковская 83
-          </el-button> -->
-          <el-button
-            @click="selectCity('Новослободская')"
-            size="mini"
-            type="primary"
-          >
-            ул. Новослободская 71
-          </el-button>
-          <el-button
-            @click="selectCity('Сеславинская')"
-            size="mini"
-            type="primary"
-          >
-            Сеславинская 16к1
-          </el-button>
-        </el-button-group>
-      </div>
-      <div class="col-3 text-right">
-        <p class="mt-25" style="margin-right:25px">
-          Всего: <b>{{ $store.getters['domains/domains'].length }}</b>
-        </p>
-      </div>
-    </div>
-    <!-- <el-button
-      @click="checkStatus"
-      type="primary"
-      icon="el-icon-refresh-left"
-      circle
-      title="Проверить статус сайтов"
-    /> -->
     <!--  -->
-    <app-list :items="$store.getters['domains/domains']" />
+    <el-tabs value="mainPanel">
+      <el-tab-pane label="Все домены" name="mainPanel">
+        <app-list
+          :items="domains"
+          :loading="loading"
+          @edit="edit"
+          @remove="remove"
+          @switchStatus="switchStatus"
+        />
+      </el-tab-pane>
+      <el-tab-pane
+        :lazy="true"
+        label="СПБ 2-я Красноармейская"
+        name="spb_26047"
+      >
+        <app-list
+          :items="domains"
+          :loading="loading"
+          @edit="edit"
+          @remove="remove"
+          @switchStatus="switchStatus"
+          dcod="01"
+        />
+      </el-tab-pane>
+      <el-tab-pane label="СПБ Дмитровский" name="spb_33038">
+        <app-list
+          :items="domains"
+          :loading="loading"
+          @edit="edit"
+          @remove="remove"
+          @switchStatus="switchStatus"
+          dcod="02"
+        />
+      </el-tab-pane>
+      <el-tab-pane label="МСК Новослободская" name="msk_63323">
+        <app-list
+          :items="domains"
+          :loading="loading"
+          @edit="edit"
+          @remove="remove"
+          @switchStatus="switchStatus"
+          dcod="03"
+        />
+      </el-tab-pane>
+      <el-tab-pane label="МСК Сеславинская" name="msk_72021">
+        <app-list
+          :items="domains"
+          :loading="loading"
+          @edit="edit"
+          @remove="remove"
+          @switchStatus="switchStatus"
+          dcod="04"
+        />
+      </el-tab-pane>
+    </el-tabs>
+
     <!--  -->
     <app-drawer-create />
     <app-drawer-update />
@@ -96,12 +74,69 @@ export default {
     AppDrawerUpdate,
     AppList
   },
+  data() {
+    return {
+      loading: false
+    }
+  },
+  computed: {
+    domains() {
+      return JSON.parse(JSON.stringify(this.$store.getters['domains/domains']))
+    }
+  },
   methods: {
-    selectCity(address) {
-      this.$store.dispatch('domains/selectByAddress', address)
+    /**
+     * Удаление домена
+     */
+    async remove({ idx, item }) {
+      this.loading = true
+      try {
+        await this.$axios.$delete('/api/v1/domain/remove/' + item._id)
+        this.$store.dispatch('domains/fetchDomains')
+        this.$notify({
+          message: 'Домемн успушно удален!',
+          customClass: 'success-notyfy'
+        })
+      } catch (e) {
+        this.$store.commit('SET_ERROR', e.response.data.message)
+        throw e
+      } finally {
+        this.loading = false
+      }
     },
-    checkStatus() {
-      console.log('check domain status')
+
+    /**
+     * Обновление домена
+     */
+    edit(item) {
+      if (this.loading === true) return
+      if (!this.$abilities('domains-update')) return
+      this.$store.commit('domains/SET_DOMAIN', item)
+      this.$store.commit('settings/SWITCH_DRAWNER', {
+        dranwer: 'drawerUpdateDomains',
+        status: true
+      })
+    },
+
+    /**
+     * Смена статуса
+     */
+    async switchStatus(item) {
+      this.loading = true
+      try {
+        const formData = JSON.parse(JSON.stringify(item))
+        formData.status = !formData.status
+        await this.$store.dispatch('domains/updateDomain', formData)
+        this.$notify({
+          message: 'Данные обновлены!',
+          customClass: 'success-notyfy'
+        })
+      } catch (e) {
+        this.$store.commit('SET_ERROR', e.response.data.message)
+        throw e
+      } finally {
+        this.loading = false
+      }
     }
   }
 }

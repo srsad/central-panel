@@ -44,21 +44,6 @@ export const actions = {
       commit('SET_EMPTY_TEXT', 'Нет данных')
     }
   },
-  async selectByAddress({ commit }, address) {
-    try {
-      commit('SET_DOMAINS', [])
-      commit('SET_EMPTY_TEXT', 'Загрузка данных')
-      const domains = await this.$axios.$get(
-        '/api/v1/domain/byaddress/' + address
-      )
-      commit('SET_DOMAINS', domains.data)
-    } catch (e) {
-      commit('SET_ERROR', e.response.data.message, { root: true })
-      throw e
-    } finally {
-      commit('SET_EMPTY_TEXT', 'Нет данных')
-    }
-  },
   updateMenuindex({ commit }, domains) {
     commit('SET_DOMAINS', domains)
   }

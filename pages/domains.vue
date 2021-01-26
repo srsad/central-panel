@@ -1,8 +1,5 @@
 <template>
   <div class="row w100 mt-15">
-    <div class="col-12 mt-10 mb-10">
-      <h3>Домены</h3>
-    </div>
     <div class="col-12">
       <app-domains-panel v-if="$abilities('domains')" />
     </div>

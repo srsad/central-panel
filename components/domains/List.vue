@@ -1,17 +1,15 @@
 <template>
   <div>
     <div>
-      <!-- <el-table-draggable @drop="dragFn"> -->
       <el-table
         :data="domains"
         @row-dblclick="edit"
         :row-style="tableRowStyle"
-        :style="`max-width:${tableWidth}px;height:${tableHeight}px`"
         :empty-text="$store.getters['domains/emptyText']"
-        height="500"
+        height="calc(100vh - 140px)"
         size="mini"
       >
-        <el-table-column label="" width="10" fixed="left">
+        <el-table-column label="" width="10">
           <template slot-scope="scope">
             <div
               :style="
@@ -20,60 +18,18 @@
             />
           </template>
         </el-table-column>
-        <el-table-column label="Акк." width="60" fixed="left">
+        <el-table-column prop="dcod" label="Филиал" width="80">
           <template slot-scope="scope">
-            <div :style="setColor(scope.row.color)" class="ws-normal">
-              {{ scope.row.priority === 0 ? '' : scope.row.priority }}
+            <div :title="scope.row.name" class="ws-normal">
+              {{ scope.row.dcod | shortCode }}
             </div>
           </template>
         </el-table-column>
-        <!-- <el-table-column prop="sitestatus" label="" width="1" fixed="left" /> -->
-        <!-- :filters="brands_"
-        :filter-method="filterHandlerBrands" -->
-        <el-table-column prop="name" label="Нимен." width="150" fixed="left">
+        <el-table-column prop="name" label="Объект" width="150">
           <template slot-scope="scope">
-            <div
-              :title="scope.row.name"
-              :style="setColor(scope.row.color)"
-              class="ws-normal"
-            >
+            <div :title="scope.row.name" class="ws-normal">
               {{ scope.row.name }}
             </div>
-          </template>
-        </el-table-column>
-        <!-- <el-table-column label="Изг" width="40">
-          <template slot-scope="scope">
-            <div
-              :title="scope.row.vendor"
-              :style="setColor(scope.row.color)"
-              class="ws-normal"
-            >
-              {{ scope.row.vendor }}
-            </div>
-          </template>
-        </el-table-column> -->
-        <el-table-column
-          :filters="company_"
-          :filter-method="filterHandlerCompany"
-          label="Филиал"
-          width="130"
-        >
-          <template slot-scope="scope">
-            <div :title="scope.row.company" class="ws-normal">
-              {{ scope.row.company }}
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          :filters="cities_"
-          :filter-method="filterHandlerCities"
-          label="Город"
-          width="180"
-        >
-          <template slot-scope="scope">
-            <el-tag type="primary" disable-transitions>
-              {{ getCity(scope.row.city) }}
-            </el-tag>
           </template>
         </el-table-column>
         <el-table-column label="Домен" width="250">
@@ -88,102 +44,56 @@
             </a>
           </template>
         </el-table-column>
-        <!-- <el-table-column prop="vendor" label="Исполнитель" width="180" /> -->
         <el-table-column label="Заглушка" width="100">
           <template slot-scope="scope">
-            <div
-              :title="scope.row.phone_default"
-              :style="setColor(scope.row.color)"
-              class="ws-normal"
-            >
+            <div :title="scope.row.phone_default" class="ws-normal">
               {{ scope.row.phone_default | filterPhone }}
             </div>
           </template>
         </el-table-column>
-        <!-- <el-table-column label="Визитка" width="100">
-          <template slot-scope="scope">
-            <div
-              :title="scope.row.phone"
-              :style="setColor(scope.row.color)"
-              class="ws-normal"
-            >
-              {{ scope.row.phone | filterPhone }}
-            </div>
-          </template>
-        </el-table-column> -->
         <el-table-column label="Метрика" width="80">
           <template slot-scope="scope">
-            <div
-              :title="scope.row.yametrika.id"
-              :style="setColor(scope.row.color)"
-              class="ws-normal"
-            >
+            <div :title="scope.row.yametrika.id" class="ws-normal">
               {{ scope.row.yametrika.id }}
             </div>
           </template>
         </el-table-column>
         <el-table-column label="Analytics" width="110">
           <template slot-scope="scope">
-            <div
-              :title="scope.row.analytics.id"
-              :style="setColor(scope.row.color)"
-              class="ws-normal"
-            >
+            <div :title="scope.row.analytics.id" class="ws-normal">
               {{ scope.row.analytics.id }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="Alloka">
+        <el-table-column label="Alloka" width="110">
           <template slot-scope="scope">
-            <div
-              :title="scope.row.alloka.id"
-              :style="setColor(scope.row.color)"
-              class="ws-normal"
-            >
+            <div :title="scope.row.alloka.id" class="ws-normal">
               {{ scope.row.alloka.id }}
             </div>
           </template>
         </el-table-column>
         <el-table-column prop="envybox.id" label="Envybox" width="110">
           <template slot-scope="scope">
-            <div
-              :title="scope.row.envybox.id"
-              :style="setColor(scope.row.color)"
-              class="ws-normal"
-            >
+            <div :title="scope.row.envybox.id" class="ws-normal">
               {{ scope.row.envybox.id }}
             </div>
           </template>
         </el-table-column>
-        <!-- <el-table-column prop="accaunts" label="Аккаунты" width="150">
-          <template slot-scope="scope">
-            <div
-              v-if="scope.row.accaunts.login"
-              :title="scope.row.accaunts.login"
-              :style="setColor(scope.row.color)"
-              class="ws-normal"
-            >
-              <el-button
-                v-if="$abilities('domains-create')"
-                @click="copyToBuffer(scope.row.accaunts)"
-                icon="el-icon-document-copy"
-                title="Копировать в буфер обмена"
-                style="padding:0px"
-                size="mini"
-              />
-              <span>{{ scope.row.accaunts.login }}</span>
-            </div>
-          </template>
-        </el-table-column> -->
         <el-table-column
           v-if="$abilities('domains-update') || $abilities('domains-remove')"
-          label="Действия"
-          label-class-name="text-center"
-          fixed="right"
-          width="200"
         >
+          <div slot="header">
+            Действия
+            <el-button
+              @click="createDomain"
+              type="success"
+              size="mini"
+              icon="el-icon-plus"
+              style="margin-left: 30px"
+            />
+          </div>
           <template slot-scope="scope">
-            <div class="text-center">
+            <div>
               <el-button-group>
                 <el-button
                   v-if="$abilities('domains-update')"
@@ -230,193 +140,98 @@
           </template>
         </el-table-column>
       </el-table>
-      <!-- </el-table-draggable> -->
     </div>
   </div>
 </template>
 
 <script>
-import { writeText } from 'clipboard-polyfill'
-// import ElTableDraggable from 'element-ui-el-table-draggable'
+import { shortCodeForCodes } from '~/utils/brancheCodes'
 
 export default {
-  components: {
-    // ElTableDraggable
-  },
   filters: {
     filterPhone(str) {
       const phone = str.match(/\d*(-|)\d*(-)\d*/)
       return phone ? phone[0] : str
+    },
+
+    /**
+     * Возвращает шорткод по dcod
+     */
+    shortCode(str) {
+      let res = '---'
+      if (!str) return res
+
+      const dcod = str.split('.')
+      res = shortCodeForCodes.get(dcod[0])
+      return res || '---'
     }
   },
   props: {
     items: {
       type: Array,
       default: () => []
-    }
-  },
-  data() {
-    return {
-      loading: false,
-      tableHeight: 700, // высота блока по умолчанию
-      tableWidth: 1400, // ширина таблицы по умолчанию
-      cities_: [], // список городов для фильтра в таблице
-      cities: [], // список для фильтрации городов
-      brands_: [], // список брендов для фильтра в таблице
-      brands: [], // список для фильтрации брендов
-      company_: [], // список компаний для фильтра в таблице
-      company: [] // список для фильтрации компаний
+    },
+    loading: {
+      type: Boolean,
+      default: false
+    },
+    dcod: {
+      type: String,
+      default: '00'
     }
   },
   computed: {
     domains() {
-      return JSON.parse(JSON.stringify(this.items))
+      let res = this.items
+      if (this.dcod === '00') return res
+
+      res = this.items.filter((el) => {
+        const dcod = el.dcod.split('.')
+        if (dcod[0] === this.dcod) return el
+      })
+
+      return res
     }
   },
-  mounted() {
-    this.getFilterItems() // подготовка данных для фильтрации
-    setTimeout(() => {
-      this.tableHeight = window.innerHeight - 210
-      this.tableWidth = window.innerWidth - 300
-    }, 100)
-  },
   methods: {
-    async remove(idx, item) {
-      this.loading = true
-      try {
-        await this.$axios.$delete('/api/v1/domain/remove/' + item._id)
-        this.$store.dispatch('domains/fetchDomains')
-        this.$notify({
-          message: 'Домемн успушно удален!',
-          customClass: 'success-notyfy'
-        })
-      } catch (e) {
-        this.$store.commit('SET_ERROR', e.response.data.message)
-        throw e
-      } finally {
-        this.loading = false
-      }
-    },
-    edit(item) {
-      if (this.loading === true) return
-      if (!this.$abilities('domains-update')) return
-      this.$store.commit('domains/SET_DOMAIN', item)
+    /**
+     * Создать домен
+     */
+    createDomain() {
       this.$store.commit('settings/SWITCH_DRAWNER', {
-        dranwer: 'drawerUpdateDomains',
+        dranwer: 'drawerCreateDomains',
         status: true
       })
     },
-    /** Смена статуса */
-    async switchStatus(item) {
-      this.loading = true
-      try {
-        const formData = JSON.parse(JSON.stringify(item))
-        formData.status = !formData.status
-        await this.$store.dispatch('domains/updateDomain', formData)
-        this.$notify({
-          message: 'Данные обновлены!',
-          customClass: 'success-notyfy'
-        })
-      } catch (e) {
-        this.$store.commit('SET_ERROR', e.response.data.message)
-        throw e
-      } finally {
-        this.loading = false
-      }
+
+    /**
+     * Удаление домена
+     */
+    remove(idx, item) {
+      this.$emit('remove', { idx, item })
     },
-    /** Подцветка строк и проверка на активность */
+
+    /**
+     * Обновление домена
+     */
+    edit(item) {
+      this.$emit('edit', item)
+    },
+
+    /**
+     * Смена статуса
+     */
+    switchStatus(item) {
+      this.$emit('switchStatus', item)
+    },
+
+    /**
+     * Подцветка строк и проверка на активность
+     */
     tableRowStyle({ row, rowIndex }) {
       const style = {}
-      // const style = { background: row.color }
       if (!row.status) style.opacity = '0.6'
       return style
-    },
-    /** Загрузка данных для фильтрации */
-    async getFilterItems() {
-      // Загрузка списка городов
-      await this.$store.dispatch('city/fetchItems')
-      this.cities = await this.$store.getters['city/сityes'].map((el) => {
-        return { value: el._id, label: el.name }
-      })
-      this.cities_ = await this.$store.getters['city/сityes'].map((el) => {
-        return { value: el._id, text: el.name }
-      })
-      if (this.items.length > 0) {
-        const brands = []
-        const company = []
-        await this.items.forEach((el) => {
-          if (!brands.includes(el.brand)) brands.push(el.brand)
-          if (!company.includes(el.company)) company.push(el.company)
-        })
-        // загрузка списка брендов
-        await brands.sort()
-        this.brands = brands.map((el, idx) => {
-          return { value: el, label: el }
-        })
-        this.brands_ = brands.map((el, idx) => {
-          return { value: el, text: el }
-        })
-        // загрузка списка компаний
-        this.company = company.map((el, idx) => {
-          return { value: el, label: el }
-        })
-        this.company_ = company.map((el, idx) => {
-          return { value: el, text: el }
-        })
-      }
-    },
-    /** Возврощает название города */
-    getCity(city) {
-      try {
-        if (this.cities_.length === 0 || this.cities.length === 0) return ''
-        return this.cities.find((el) => el.value === city).label
-      } catch (error) {
-        console.error(`Не удалось получить данные города "${city}"`, error)
-        return 'ГОРОД НЕ НАЙДЕН'
-      }
-    },
-    /** Фильтр по городам */
-    filterHandlerCities(value, row) {
-      return row.city === value
-    },
-    /** Получаем уникальный список брендов */
-    getAllBrends(brand) {
-      if (this.brands_.length === 0 || this.brands.length === 0) return ''
-      return this.brands.find((el) => el.value === brand).label
-    },
-    /** Фильтр по брендам */
-    filterHandlerBrands(value, row) {
-      return row.brand === value
-    },
-    /** Получаем уникальный список брендов */
-    getAllCompanies(company) {
-      if (this.company_.length === 0 || this.company.length === 0) return ''
-      return this.company.find((el) => el.value === company).label
-    },
-    /** Фильтр по компаниям */
-    filterHandlerCompany(value, row) {
-      return row.company === value
-    },
-    /** Скопировать в буффер */
-    copyToBuffer(val) {
-      writeText(`login: ${val.login} \npassword: ${val.password}`)
-      this.$notify({
-        message: 'Логин и пароль скопированы в буфер обмена',
-        customClass: 'success-notyfy'
-      })
-    },
-    /** Проверка и установка цвета текста */
-    setColor(val) {
-      if (!val) return 'color:#333'
-      const color = val.toLowerCase() === '#ffffff' ? '#333' : val
-      return `color:${color}`
-    },
-    /** Сортировка списка */
-    dragFn() {
-      for (let i = 0; i <= this.domains.length - 1; i++) {
-        this.domains[i].menuindex = i
-      }
-      this.$store.dispatch('domains/updateMenuindex', this.domains)
     }
   }
 }
