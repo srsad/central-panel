@@ -3,21 +3,11 @@
  */
 export default [
   {
-    field: 'branch.code',
-    headerName: 'Филиал',
-    width: 50,
-    pinned: 'left',
-    suppressSizeToFit: true,
-    enableRowGroup: true,
-    cellStyle: { 'background-color': '#e7e7e7' },
-    sortable: true
-  },
-  {
     field: 'brand.name',
-    headerName: 'Сайт',
+    headerName: 'Бренд',
     pinned: 'left',
     width: 100,
-    cellStyle: { 'background-color': '#e7e7e7' },
+    cellStyle: { fontSize: '14px !important', fontWeight: 700 },
     sortable: true
   },
   {
@@ -29,7 +19,7 @@ export default [
         headerName: 'PK',
         width: 50,
         sortable: true,
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         valueFormatter: (params) => {
           return new Intl.NumberFormat().format(params.value)
         }
@@ -39,7 +29,7 @@ export default [
         headerName: 'SEO',
         width: 50,
         sortable: true,
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         valueFormatter: (params) => {
           return new Intl.NumberFormat().format(params.value)
         }
@@ -47,7 +37,7 @@ export default [
       {
         field: 'requests.traffik_price',
         headerName: 'цена за трафик',
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         sortable: true,
         width: 60,
         valueFormatter: (params) => {
@@ -57,7 +47,7 @@ export default [
       {
         field: 'requests.common_price',
         headerName: 'цена общая',
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         sortable: true,
         width: 60,
         valueFormatter: (params) => {
@@ -73,7 +63,7 @@ export default [
         field: 'order.count',
         headerName: 'кол-во',
         sortable: true,
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         width: 50,
         valueFormatter: (params) => {
           return new Intl.NumberFormat().format(params.value)
@@ -82,7 +72,7 @@ export default [
       {
         field: 'order.traffik_price',
         headerName: 'цена за трафик',
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
@@ -92,7 +82,7 @@ export default [
       {
         field: 'order.common_price',
         headerName: 'цена общая',
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
@@ -102,7 +92,7 @@ export default [
       {
         field: 'order.conversion',
         headerName: 'конверсия %',
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         sortable: true,
         width: 60,
         valueFormatter: (params) => {
@@ -118,7 +108,7 @@ export default [
         field: 'came_to_sc.count',
         headerName: 'кол-во',
         sortable: true,
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         width: 50,
         valueFormatter: (params) => {
           return new Intl.NumberFormat().format(params.value)
@@ -127,7 +117,7 @@ export default [
       {
         field: 'came_to_sc.traffik_price',
         headerName: 'цена за трафик',
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
@@ -137,7 +127,11 @@ export default [
       {
         field: 'came_to_sc.common_price',
         headerName: 'цена общая',
-        cellStyle: { 'background-color': '#e7e7e7', color: 'red' },
+        cellStyle: {
+          color: 'red',
+          fontSize: '14px !important',
+          fontWeight: 700
+        },
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
@@ -147,7 +141,7 @@ export default [
       {
         field: 'came_to_sc.conversion',
         headerName: 'конверсия %',
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         sortable: true,
         width: 60,
         valueFormatter: (params) => {
@@ -163,7 +157,7 @@ export default [
         field: 'order_closed.count',
         headerName: 'кол-во',
         sortable: true,
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         width: 50,
         valueFormatter: (params) => {
           return new Intl.NumberFormat().format(params.value)
@@ -172,7 +166,7 @@ export default [
       {
         field: 'order_closed.traffik_price',
         headerName: 'цена за трафик',
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
@@ -182,7 +176,7 @@ export default [
       {
         field: 'order_closed.common_price',
         headerName: 'цена общая',
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
@@ -192,7 +186,7 @@ export default [
       {
         field: 'order_closed.conversion',
         headerName: 'конверсия %',
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         sortable: true,
         width: 60,
         valueFormatter: (params) => {
@@ -208,7 +202,7 @@ export default [
         field: 'common_expenses.balance',
         headerName: 'Баланс',
         sortable: true,
-        cellStyle: { 'background-color': '#e7e7e7', color: 'green' },
+        cellStyle: { color: 'green' },
         width: 80,
         valueFormatter: (params) => {
           return new Intl.NumberFormat().format(params.value) + ' ₽'
@@ -218,7 +212,7 @@ export default [
         field: 'common_expenses.pk',
         headerName: 'РК',
         sortable: true,
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         width: 80,
         valueFormatter: (params) => {
           return new Intl.NumberFormat().format(params.value) + ' ₽'
@@ -228,7 +222,7 @@ export default [
         field: 'common_expenses.seo',
         headerName: 'SEO',
         sortable: true,
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         width: 80,
         valueFormatter: (params) => {
           return new Intl.NumberFormat().format(params.value) + ' ₽'
@@ -238,7 +232,7 @@ export default [
         field: 'common_expenses.common',
         headerName: 'Алока и т.д',
         sortable: true,
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         width: 80,
         valueFormatter: (params) => {
           return new Intl.NumberFormat().format(params.value) + ' ₽'
@@ -249,7 +243,7 @@ export default [
   {
     field: 'revenue',
     headerName: 'Выручка',
-    cellStyle: { 'background-color': '#e7e7e7' },
+    cellStyle: {},
     sortable: true,
     width: 100,
     valueFormatter: (params) => {
@@ -259,7 +253,7 @@ export default [
   {
     field: 'expenses',
     headerName: 'Расходы',
-    cellStyle: { 'background-color': '#e7e7e7' },
+    cellStyle: {},
     sortable: true,
     width: 100,
     valueFormatter: (params) => {
@@ -269,7 +263,7 @@ export default [
   {
     field: 'val',
     headerName: 'Вал',
-    cellStyle: { 'background-color': '#e7e7e7' },
+    cellStyle: {},
     sortable: true,
     width: 70,
     valueFormatter: (params) => {
@@ -280,7 +274,7 @@ export default [
     field: 'orders',
     headerName: 'Заказы',
     sortable: true,
-    cellStyle: { 'background-color': '#e7e7e7' },
+    cellStyle: {},
     width: 55,
     valueFormatter: (params) => {
       return new Intl.NumberFormat().format(params.value)
@@ -289,7 +283,7 @@ export default [
   {
     field: 'wed_check',
     headerName: 'Ср. чек',
-    cellStyle: { 'background-color': '#e7e7e7', color: 'red' },
+    cellStyle: { color: 'red' },
     sortable: true,
     pinned: 'right',
     width: 100,
@@ -300,7 +294,7 @@ export default [
   {
     field: 'delta',
     headerName: 'Дельта',
-    cellStyle: { 'background-color': '#e7e7e7', color: 'orange' },
+    cellStyle: { color: 'orange' },
     sortable: true,
     pinned: 'right',
     width: 100,
@@ -311,21 +305,15 @@ export default [
   {
     field: 'profit',
     headerName: 'Прибыль',
-    cellStyle: { 'background-color': '#e7e7e7', color: 'magenta' },
+    cellStyle: { color: 'magenta' },
     sortable: true,
     pinned: 'right',
     width: 100,
     valueFormatter: (params) => {
       if (+params.value < 0) {
-        params.colDef.cellStyle = {
-          'background-color': '#eacece',
-          color: '#333'
-        }
+        params.colDef.cellStyle = { color: '#333' }
       } else {
-        params.colDef.cellStyle = {
-          'background-color': '#e7e7e7',
-          color: 'magenta'
-        }
+        params.colDef.cellStyle = { color: 'magenta' }
       }
       return new Intl.NumberFormat().format(params.value) + ' ₽'
     }
@@ -333,7 +321,7 @@ export default [
   {
     field: 'spz',
     headerName: 'СПЗ',
-    cellStyle: { 'background-color': '#e7e7e7', color: 'blue' },
+    cellStyle: { color: 'blue', fontSize: '14px !important', fontWeight: 700 },
     sortable: true,
     pinned: 'right',
     width: 100,

@@ -9,15 +9,15 @@ export default [
     pinned: 'left',
     suppressSizeToFit: true,
     enableRowGroup: true,
-    cellStyle: { 'background-color': '#e7e7e7' },
+    cellStyle: {},
     sortable: true
   },
   {
     field: 'brand.name',
-    headerName: 'Сайт',
+    headerName: 'Бренд',
     pinned: 'left',
     width: 100,
-    cellStyle: { 'background-color': '#e7e7e7' },
+    cellStyle: { fontSize: '14px !important', fontWeight: 700 },
     sortable: true
   },
   {
@@ -47,7 +47,7 @@ export default [
       {
         field: 'requests.traffik_price',
         headerName: 'цена за трафик',
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         sortable: true,
         width: 60,
         valueFormatter: (params) => {
@@ -57,7 +57,7 @@ export default [
       {
         field: 'requests.common_price',
         headerName: 'цена общая',
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         sortable: true,
         width: 60,
         valueFormatter: (params) => {
@@ -82,7 +82,7 @@ export default [
       {
         field: 'order.traffik_price',
         headerName: 'цена за трафик',
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
@@ -92,7 +92,7 @@ export default [
       {
         field: 'order.common_price',
         headerName: 'цена общая',
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
@@ -102,7 +102,7 @@ export default [
       {
         field: 'order.conversion',
         headerName: 'конверсия %',
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         sortable: true,
         width: 60,
         valueFormatter: (params) => {
@@ -127,7 +127,7 @@ export default [
       {
         field: 'came_to_sc.traffik_price',
         headerName: 'цена за трафик',
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
@@ -137,7 +137,11 @@ export default [
       {
         field: 'came_to_sc.common_price',
         headerName: 'цена общая',
-        cellStyle: { 'background-color': '#e7e7e7', color: 'red' },
+        cellStyle: {
+          color: 'red',
+          fontSize: '14px !important',
+          fontWeight: 700
+        },
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
@@ -147,7 +151,7 @@ export default [
       {
         field: 'came_to_sc.conversion',
         headerName: 'конверсия %',
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         sortable: true,
         width: 60,
         valueFormatter: (params) => {
@@ -172,7 +176,7 @@ export default [
       {
         field: 'order_closed.traffik_price',
         headerName: 'цена за трафик',
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
@@ -182,7 +186,7 @@ export default [
       {
         field: 'order_closed.common_price',
         headerName: 'цена общая',
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
@@ -192,7 +196,7 @@ export default [
       {
         field: 'order_closed.conversion',
         headerName: 'конверсия %',
-        cellStyle: { 'background-color': '#e7e7e7' },
+        cellStyle: {},
         sortable: true,
         width: 60,
         valueFormatter: (params) => {
@@ -270,7 +274,7 @@ export default [
   {
     field: 'val',
     headerName: 'Вал',
-    cellStyle: { 'background-color': '#e7e7e7' },
+    cellStyle: {},
     sortable: true,
     width: 70,
     valueFormatter: (params) => {
@@ -290,7 +294,7 @@ export default [
   {
     field: 'wed_check',
     headerName: 'Ср. чек',
-    cellStyle: { 'background-color': '#e7e7e7', color: 'red' },
+    cellStyle: { color: 'red' },
     sortable: true,
     pinned: 'right',
     width: 100,
@@ -301,7 +305,7 @@ export default [
   {
     field: 'delta',
     headerName: 'Дельта',
-    cellStyle: { 'background-color': '#e7e7e7', color: 'orange' },
+    cellStyle: { color: 'orange' },
     sortable: true,
     pinned: 'right',
     width: 100,
@@ -312,7 +316,7 @@ export default [
   {
     field: 'profit',
     headerName: 'Прибыль',
-    cellStyle: { 'background-color': '#e7e7e7', color: 'magenta' },
+    cellStyle: { color: 'magenta' },
     sortable: true,
     pinned: 'right',
     width: 100,
@@ -324,7 +328,6 @@ export default [
         }
       } else {
         params.colDef.cellStyle = {
-          'background-color': '#e7e7e7',
           color: 'magenta'
         }
       }
@@ -334,7 +337,11 @@ export default [
   {
     field: 'spz',
     headerName: 'СПЗ',
-    cellStyle: { 'background-color': '#e7e7e7', color: 'blue' },
+    cellStyle: {
+      color: 'blue',
+      fontSize: '14px !important',
+      fontWeight: 700
+    },
     sortable: true,
     pinned: 'right',
     width: 100,

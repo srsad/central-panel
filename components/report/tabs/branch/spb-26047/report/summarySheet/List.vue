@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="pageData.brands">
-      <div class="col-12">
+      <div class="col-9 offset-3" style="margin-top: -47px;">
         <!-- показать/скрыть дополнительные бренды -->
         <el-button
           @click="toogleMoreData"
@@ -38,8 +38,8 @@
             :floatingFiltersHeight="20"
             :defaultColDef="{ menuTabs: [] }"
             :suppressContextMenu="true"
-            :style="`height: 163px; min-width: ${windowWidth}px`"
-            class="ag-theme-alpine"
+            :style="`height: 60px; min-width: ${windowWidth}px`"
+            class="ag-theme-alpine hideTableHeader"
           />
         </div>
       </no-ssr>
