@@ -80,6 +80,41 @@ export const getters = {
       if (+aCode < +bCode) return -1
       return 0
     })
+
+    // группируем бренды, которые работают под разную рекламные кампании
+    let rowspan = 0
+    for (let i = 0; i <= res.length - 1; i++) {
+      if (i === 0 || res[i + 1]) {
+        const currentIten = res[i].dcod.split('.')
+        const nextIten = res[i + 1].dcod.split('.')
+        // если бренд и филлиал схожи
+        if (
+          currentIten[0] === nextIten[0] &&
+          currentIten[1] === nextIten[1] &&
+          currentIten[2] === nextIten[2]
+        ) {
+          rowspan += 1
+          res[i].rowspan = 999
+          // если не входит в группу
+        } else if (rowspan === 0) {
+          res[i].rowspan = 0
+        } else {
+          res[i - rowspan].rowspan = rowspan
+          res[i].rowspan = 999 // индекс при вхождении в нруппу
+          rowspan = 0
+        }
+      }
+      if (res.length - 1 === i) {
+        if (rowspan === 0) {
+          res[i - rowspan].rowspan = rowspan
+          res[i].rowspan = 0
+        } else {
+          res[i - rowspan].rowspan = rowspan
+          res[i].rowspan = 999
+        }
+      }
+    }
+
     return res
   },
   domain: (state) => state.damain,

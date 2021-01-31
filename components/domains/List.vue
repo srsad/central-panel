@@ -5,11 +5,12 @@
         :data="domains"
         @row-dblclick="edit"
         :row-style="tableRowStyle"
+        :span-method="rowSpanMethod"
         :empty-text="$store.getters['domains/emptyText']"
         height="calc(100vh - 140px)"
         size="mini"
       >
-        <el-table-column label="" width="10">
+        <!-- <el-table-column label="" width="10">
           <template slot-scope="scope">
             <div
               :style="
@@ -17,7 +18,7 @@
               "
             />
           </template>
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column prop="dcod" label="Филиал" width="80">
           <template slot-scope="scope">
             <div :title="scope.row.name" class="ws-normal">
@@ -232,6 +233,34 @@ export default {
       const style = {}
       if (!row.status) style.opacity = '0.6'
       return style
+    },
+
+    /**
+     * Метод для обеденения строк таблицы
+     */
+    rowSpanMethod({ row, column, rowIndex, columnIndex }) {
+      if (columnIndex === 0) {
+        if (row.rowspan > 0) {
+          // если этот элемент входит в группу
+          if (row.rowspan === 999) {
+            return {
+              rowspan: 0,
+              colspan: 0
+            }
+          }
+          // группируем
+          return {
+            rowspan: row.rowspan + 1,
+            colspan: 1
+          }
+        } else {
+          // иначе отдаем простую строку
+          return {
+            rowspan: 1,
+            colspan: 1
+          }
+        }
+      }
     }
   }
 }
