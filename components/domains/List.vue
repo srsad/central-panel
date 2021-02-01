@@ -7,6 +7,7 @@
         :row-style="tableRowStyle"
         :span-method="rowSpanMethod"
         :empty-text="$store.getters['domains/emptyText']"
+        class="domainTable"
         height="calc(100vh - 140px)"
         size="mini"
       >
@@ -26,14 +27,14 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="Объект" width="150">
+        <el-table-column prop="brand" label="Объект" width="150">
           <template slot-scope="scope">
-            <div :title="scope.row.name" class="ws-normal">
-              {{ scope.row.name }}
+            <div :title="scope.row.brand" class="ws-normal">
+              {{ scope.row.brand }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="Домен" width="250">
+        <el-table-column label="Домен" width="180">
           <template slot-scope="scope">
             <a
               :href="`https://${scope.row.domain}`"
@@ -239,7 +240,7 @@ export default {
      * Метод для обеденения строк таблицы
      */
     rowSpanMethod({ row, column, rowIndex, columnIndex }) {
-      if (columnIndex === 0) {
+      if (columnIndex === 0 || columnIndex === 1) {
         if (row.rowspan > 0) {
           // если этот элемент входит в группу
           if (row.rowspan === 999) {
@@ -265,3 +266,12 @@ export default {
   }
 }
 </script>
+
+<style>
+.domainTable [colspan='1'] {
+  padding: 2px 0;
+}
+.domainTable .el-button--mini {
+  padding: 3px 7px;
+}
+</style>
