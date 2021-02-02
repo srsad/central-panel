@@ -29,7 +29,7 @@
         </el-table-column>
         <el-table-column prop="brand" label="Объект" width="150">
           <template slot-scope="scope">
-            <div :title="scope.row.brand" class="ws-normal">
+            <div :title="scope.row.brand" class="ws-normal brandName">
               {{ scope.row.brand }}
             </div>
           </template>
@@ -273,5 +273,12 @@ export default {
 }
 .domainTable .el-button--mini {
   padding: 3px 7px;
+}
+.brandName {
+  font-size: 18px;
+  font-weight: 600;
+}
+.el-table_1_column_1 {
+  height: 45px;
 }
 </style>
