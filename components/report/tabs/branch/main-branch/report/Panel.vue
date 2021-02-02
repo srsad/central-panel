@@ -1,9 +1,12 @@
 <template>
-  <el-tabs type="border-card" value="summarysheet">
+  <div>
+    <app-summary-sheet-panel />
+  </div>
+  <!-- <el-tabs type="border-card" value="summarysheet">
     <el-tab-pane :lazy="true" label="Сводные листы" name="summarysheet">
       <app-summary-sheet-panel />
     </el-tab-pane>
-  </el-tabs>
+  </el-tabs> -->
 </template>
 
 <script>

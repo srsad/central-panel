@@ -46,7 +46,7 @@ export default [
       },
       {
         field: 'requests.traffik_price',
-        headerName: 'цена за трафик',
+        headerName: '₽ трафик',
         cellStyle: {},
         sortable: true,
         width: 60,
@@ -56,7 +56,7 @@ export default [
       },
       {
         field: 'requests.common_price',
-        headerName: 'цена общая',
+        headerName: '₽ общая',
         cellStyle: {},
         sortable: true,
         width: 60,
@@ -81,7 +81,7 @@ export default [
       },
       {
         field: 'order.traffik_price',
-        headerName: 'цена за трафик',
+        headerName: '₽ трафик',
         cellStyle: {},
         sortable: true,
         width: 80,
@@ -91,7 +91,7 @@ export default [
       },
       {
         field: 'order.common_price',
-        headerName: 'цена общая',
+        headerName: '₽ общая',
         cellStyle: {},
         sortable: true,
         width: 80,
@@ -101,7 +101,7 @@ export default [
       },
       {
         field: 'order.conversion',
-        headerName: 'конверсия %',
+        headerName: '%',
         cellStyle: {},
         sortable: true,
         width: 60,
@@ -126,7 +126,7 @@ export default [
       },
       {
         field: 'came_to_sc.traffik_price',
-        headerName: 'цена за трафик',
+        headerName: '₽ трафик',
         cellStyle: {},
         sortable: true,
         width: 80,
@@ -136,7 +136,7 @@ export default [
       },
       {
         field: 'came_to_sc.common_price',
-        headerName: 'цена общая',
+        headerName: '₽ общая',
         cellStyle: {
           color: 'red',
           fontSize: '14px !important',
@@ -150,7 +150,7 @@ export default [
       },
       {
         field: 'came_to_sc.conversion',
-        headerName: 'конверсия %',
+        headerName: '%',
         cellStyle: {},
         sortable: true,
         width: 60,
@@ -175,7 +175,7 @@ export default [
       },
       {
         field: 'order_closed.traffik_price',
-        headerName: 'цена за трафик',
+        headerName: '₽ трафик',
         cellStyle: {},
         sortable: true,
         width: 80,
@@ -185,7 +185,7 @@ export default [
       },
       {
         field: 'order_closed.common_price',
-        headerName: 'цена общая',
+        headerName: '₽ общая',
         cellStyle: {},
         sortable: true,
         width: 80,
@@ -195,7 +195,7 @@ export default [
       },
       {
         field: 'order_closed.conversion',
-        headerName: 'конверсия %',
+        headerName: '%',
         cellStyle: {},
         sortable: true,
         width: 60,

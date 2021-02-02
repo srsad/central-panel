@@ -98,7 +98,7 @@ export default {
       const rem = new Rem(process.env.REMONLINE_API_KEY, true)
       // order/?token=...&created_at[]=1597352400000&created_at[]=1597438799999&branches[]=26047
       const items = []
-      for (let i = 6; i <= 8; i++) {
+      for (let i = 23; i <= 24; i++) {
         // new Date('2020,7,1,00:01:01').getTime()
         const created1 = new Date(`2021,01,${i},00:01:01`).getTime()
         const created2 = new Date(`2021,01,${i},23:59:50`).getTime()
@@ -108,11 +108,12 @@ export default {
           `created_at[]=${created2}`,
           // `branches[]=26047` // rservice
           // `branches[]=33038` // impuls
-          // `branches[]=63323` // msk
-          `branches[]=72021` // msk арм
+          `branches[]=63323` // msk
+          // `branches[]=72021` // msk арм
         ]
         const orders = await rem.getOrders(`${filter.join('&')}`)
-        items.push(orders.count)
+        console.log('orders', orders)
+        // items.push(orders?.count)
         // бренды - клиент закрыт
       }
       console.log('items', items)

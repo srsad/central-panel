@@ -156,16 +156,17 @@
             style="display:none"
           />
         </label>
-        <!-- /Форма для экспорта данных по расходам -->
         <!--  -->
       </div>
       <no-ssr>
         <div :class="['grid', loading ? 'disabled' : '']">
           <!-- :defaultColDef="{ menuTabs: [] }" -->
+          <!-- :gridOptions="gridOptions" -->
           <ag-grid-vue
+            @grid-ready="onGridReady"
             :columnDefs="commonСolumns"
             :rowData="pageData.brands"
-            :headerHeight="80"
+            :headerHeight="20"
             :groupHeaderHeight="20"
             :floatingFiltersHeight="20"
             :defaultColDef="{ menuTabs: [] }"
@@ -208,6 +209,9 @@ export default {
       loading: false,
       commonСolumns: СommonСolumns,
       totalColumns: TotalColumns,
+      gridApi: null,
+      columnApi: null,
+      gridOptions: null,
       sideBar: {
         toolPanels: [
           {
@@ -264,6 +268,16 @@ export default {
     })
   },
   methods: {
+    onGridReady(data) {
+      // this.gridApi = data.api
+      // this.columnApi = data.columnApi
+      // // this.gridOptions = data
+      // console.log('data', data)
+      // //
+      // this.gridApi.forEachNode(function(node, index) {
+      //   console.log('node', node, index)
+      // })
+    },
     /**
      * Обновляем ширину окна
      */

@@ -90,7 +90,7 @@ export const getters = {
     const res = []
 
     for (const idx in report.brands) {
-      const branch = branches.get(report.brands[idx].branch.name)
+      const branch = branches.get(report.brands[idx].branch.name) // текущий филлиал
       const brand = report.brands[idx].brand.name.toLowerCase()
 
       let dcod = '99.00.00.00.00.00.00.00' // код по умолчанию
@@ -105,12 +105,10 @@ export const getters = {
         }
       }
 
-      // шорт код филиала
-      report.brands[idx].branch.code = branchCode
+      report.brands[idx].branch.code = branchCode // шорт код филиала
 
       // достаем параметры для сортировки
       res.push({ ...report.brands[idx], dcod })
-      // res.push(flatten({ ...report.brands[idx], dcod }))
     }
 
     // сортируем по доменному коду
@@ -121,6 +119,8 @@ export const getters = {
       if (+aCode < +bCode) return -1
       return 0
     })
+
+    // проверяем является ли элемент филлиала последним
 
     report.brands = [...res]
     return report
