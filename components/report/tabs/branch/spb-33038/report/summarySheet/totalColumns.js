@@ -286,7 +286,7 @@ export default [
     field: 'spz',
     pinned: 'right',
     cellStyle: { color: 'blue', fontSize: '14px !important', fontWeight: 700 },
-    width: 101,
+    width: 121,
     valueFormatter: (params) => {
       return new Intl.NumberFormat().format(params.value) + ' ₽'
     }
