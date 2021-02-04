@@ -28,7 +28,7 @@
             :defaultColDef="{ menuTabs: [] }"
             :sideBar="sideBar"
             :suppressContextMenu="true"
-            :style="`height: 69vh; min-width: ${windowWidth}px`"
+            :style="`height: 79vh; min-width: ${windowWidth}px`"
             class="ag-theme-alpine"
           />
           <!--  -->

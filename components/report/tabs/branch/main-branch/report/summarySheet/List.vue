@@ -173,7 +173,7 @@
             :defaultColDef="{ menuTabs: [] }"
             :suppressContextMenu="true"
             :sideBar="sideBar"
-            :style="`height: 69vh; min-width: ${windowWidth}px`"
+            :style="`height: 79vh; min-width: ${windowWidth}px`"
             class="ag-theme-alpine"
           />
           <!--  -->
