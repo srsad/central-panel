@@ -22,7 +22,7 @@
         </el-table-column> -->
         <el-table-column prop="dcod" label="Филиал" width="80">
           <template slot-scope="scope">
-            <div :title="scope.row.name" class="ws-normal">
+            <div :title="scope.row.name" class="ws-normal firstColumn">
               {{ scope.row.dcod | shortCode }}
             </div>
           </template>
@@ -96,48 +96,46 @@
           </div>
           <template slot-scope="scope">
             <div>
-              <el-button-group>
+              <el-button
+                v-if="$abilities('domains-update')"
+                @click="edit(scope.row)"
+                :loading="loading"
+                type="primary"
+                size="mini"
+                icon="el-icon-edit"
+                title="Редактировать"
+              />
+              <el-button
+                v-if="$abilities('domains-update')"
+                @click="switchStatus(scope.row)"
+                :loading="loading"
+                :icon="
+                  `${scope.row.status ? 'el-icon-check' : 'el-icon-close'}`
+                "
+                :title="
+                  // eslint-disable-next-line prettier/prettier
+              `${scope.row.status ? 'Сделать не активным' : 'Сделать активным'}`
+                "
+                type="info"
+                size="mini"
+              />
+              <el-popconfirm
+                v-if="$abilities('domains-remove')"
+                @onConfirm="remove(scope.$index, scope.row)"
+                title="Удалить домен?"
+                confirm-button-text="Да"
+                confirm-button-type="success"
+                cancel-button-type="default"
+                cancel-button-text="Нет, спасибо"
+              >
                 <el-button
-                  v-if="$abilities('domains-update')"
-                  @click="edit(scope.row)"
+                  slot="reference"
                   :loading="loading"
-                  type="primary"
                   size="mini"
-                  icon="el-icon-edit"
-                  title="Редактировать"
+                  type="danger"
+                  icon="el-icon-delete"
                 />
-                <el-button
-                  v-if="$abilities('domains-update')"
-                  @click="switchStatus(scope.row)"
-                  :loading="loading"
-                  :icon="
-                    `${scope.row.status ? 'el-icon-check' : 'el-icon-close'}`
-                  "
-                  :title="
-                    // eslint-disable-next-line prettier/prettier
-                `${scope.row.status ? 'Сделать не активным' : 'Сделать активным'}`
-                  "
-                  type="info"
-                  size="mini"
-                />
-                <el-popconfirm
-                  v-if="$abilities('domains-remove')"
-                  @onConfirm="remove(scope.$index, scope.row)"
-                  title="Удалить домен?"
-                  confirm-button-text="Да"
-                  confirm-button-type="success"
-                  cancel-button-type="default"
-                  cancel-button-text="Нет, спасибо"
-                >
-                  <el-button
-                    slot="reference"
-                    :loading="loading"
-                    size="mini"
-                    type="danger"
-                    icon="el-icon-delete"
-                  />
-                </el-popconfirm>
-              </el-button-group>
+              </el-popconfirm>
             </div>
           </template>
         </el-table-column>
@@ -269,16 +267,20 @@ export default {
 
 <style>
 .domainTable [colspan='1'] {
-  padding: 2px 0;
+  padding: 0px 0;
 }
 .domainTable .el-button--mini {
-  padding: 3px 7px;
+  padding: 2px 4px;
+  margin-left: 0px;
 }
 .brandName {
   font-size: 18px;
   font-weight: 600;
 }
-.el-table_1_column_1 {
-  height: 45px;
+.firstColumn {
+  height: 40px;
+  display: grid;
+  align-items: center;
+  justify-content: center;
 }
 </style>
