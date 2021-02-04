@@ -245,7 +245,7 @@ export default {
       this.form = JSON.parse(
         JSON.stringify(this.$store.getters['site/testimonial/testimonial'])
       )
-      this.form.brand = this.form.brand._id
+      this.form.brand = this.form.brand?._id
     },
     onClose() {
       this.$store.commit('settings/SWITCH_DRAWNER', {

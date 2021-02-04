@@ -10,7 +10,7 @@
     <el-table-column prop="site_url" label="Сайт" width="150" />
     <el-table-column prop="brand" label="Бренд" width="100">
       <template slot-scope="scope">
-        <div class="text-center">{{ scope.row.brand.name }}</div>
+        <div class="text-center">{{ scope.row.brand | brandName }}</div>
       </template>
     </el-table-column>
     <el-table-column prop="order" label="Номер заказа" width="100" />
@@ -85,6 +85,11 @@
 
 <script>
 export default {
+  filters: {
+    brandName(value) {
+      return value?.name
+    }
+  },
   data() {
     return {
       loading: false

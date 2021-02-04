@@ -100,7 +100,7 @@ async function updateSourceOptions(testimonial) {
       }
     })
   } catch (e) {
-    console.log('updateSourceOptions error 2', e.response)
+    console.error('updateSourceOptions error 2', e.response)
     return false
   }
 }
