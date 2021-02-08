@@ -16,7 +16,10 @@
         <!-- /показать/скрыть дополнительные бренды -->
       </div>
       <no-ssr>
-        <div :class="['grid', loading ? 'disabled' : '']">
+        <div
+          :class="['grid', loading ? 'disabled' : '']"
+          style="margin: 0 20px"
+        >
           <ag-grid-vue
             :columnDefs="commonСolumns"
             :rowData="pageData.brands"

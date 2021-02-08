@@ -164,6 +164,7 @@
           <!-- :gridOptions="gridOptions" -->
           <ag-grid-vue
             @grid-ready="onGridReady"
+            @column-visible="onColumnVisible"
             :columnDefs="commonСolumns"
             :rowData="pageData.brands"
             :headerHeight="20"
@@ -209,7 +210,7 @@ export default {
   data() {
     return {
       loading: false,
-      commonСolumns: СommonСolumns,
+      commonСolumns: [],
       totalColumns: TotalColumns,
       gridApi: null,
       columnApi: null,
@@ -263,6 +264,31 @@ export default {
       this.windowUpdate()
     }
   },
+  beforeMount() {
+    const columns = СommonСolumns
+    const columnStatuses = JSON.parse(window.localStorage.getItem('summarySheetStatus'))
+    // columns[0].hide = true
+    // const columnsStatus = window.localStorage('summarySheetStatus')
+    // columnVisible
+    columns.map((el) => {
+      // console.log('el', el)
+      if (el.children) {
+        // вложенные элементы
+        // console.log('el.children', el.children)
+        el.children.forEach((element) => {
+          if (columnStatuses.hasOwnProperty(element.element)) {
+            element.hide = !columnStatuses[element.field]
+          }
+        })
+        // не вложенные элементы
+      } else if (columnStatuses.hasOwnProperty(el.field)) {
+        el.hide = !columnStatuses[el.field]
+      }
+
+      // return el
+    })
+    this.commonСolumns = columns
+  },
   mounted() {
     // считаем ширину таблицы
     window.addEventListener('resize', (e) => {
@@ -270,7 +296,20 @@ export default {
     })
   },
   methods: {
+    onColumnVisible(params) {
+      let columns = JSON.parse(window.localStorage.getItem('summarySheetStatus'))
+      if (!columns) columns = {}
+      columns[params.columns[0]?.colId] = params.columns[0]?.visible
+      window.localStorage.setItem('summarySheetStatus', JSON.stringify(columns))
+    },
+    /**
+     * Инициализация основной таблицы
+     */
     onGridReady(data) {
+      // console.log('onGridReady', data)
+      // const columns = data.api.columnController.columnDefs
+      // console.log('asdad', JSON.stringify(columns))
+      // data.api.columnController.columnDefs[0].hide = true
       // this.gridApi = data.api
       // this.columnApi = data.columnApi
       // // this.gridOptions = data
@@ -280,6 +319,7 @@ export default {
       //   console.log('node', node, index)
       // })
     },
+
     /**
      * Обновляем ширину окна
      */
