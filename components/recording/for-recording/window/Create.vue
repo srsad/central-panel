@@ -54,8 +54,8 @@
         </el-form-item>
       </div>
       <div class="col-6">
-        <el-form-item prop="msk2" label="МСК Армянский">
-          <el-input v-model="form.msk2" placeholder="МСК Армянский" />
+        <el-form-item prop="msk2" label="МСК Сеславинская">
+          <el-input v-model="form.msk2" placeholder="МСК Сеславинская" />
         </el-form-item>
       </div>
       <div class="col-6">

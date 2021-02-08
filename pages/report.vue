@@ -37,7 +37,7 @@
         <el-tab-pane
           v-if="$abilities('report-msk_72021_panel_summorysheat_panel')"
           :lazy="true"
-          label="МСК Армянский"
+          label="МСК Сеславинская"
           name="msk_72021"
         >
           <app-msk-72021-branch-panel />

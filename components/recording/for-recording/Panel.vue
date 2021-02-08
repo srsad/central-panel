@@ -72,7 +72,7 @@
                 </template>
                 <template v-if="item.msk2">
                   <div class="col-5">
-                    <b style="font-size:12px">МСК Армянский</b>
+                    <b style="font-size:12px">МСК Сеславинская</b>
                   </div>
                   <div class="col-7 pl-0">{{ item.msk2 }}</div>
                   <div class="col-12 pb-5 border-bottom"></div>
