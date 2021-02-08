@@ -1,10 +1,11 @@
 <template>
   <div>
     <div>
+      <!-- :row-style="tableRowStyle" -->
       <el-table
         :data="domains"
         @row-dblclick="edit"
-        :row-style="tableRowStyle"
+        :row-class-name="tableRowClass"
         :span-method="rowSpanMethod"
         :empty-text="$store.getters['domains/emptyText']"
         class="domainTable"
@@ -235,6 +236,14 @@ export default {
     },
 
     /**
+     * Подцветка строк и проверка на активность
+     */
+    tableRowClass({ row, rowIndex }) {
+      // console.log('tableRowClass', row.status)
+      return !row.status ? 'dontActiveRow' : ''
+    },
+
+    /**
      * Метод для обеденения строк таблицы
      */
     rowSpanMethod({ row, column, rowIndex, columnIndex }) {
@@ -272,6 +281,9 @@ export default {
 .domainTable .el-button--mini {
   padding: 2px 4px;
   margin-left: 0px;
+}
+.domainTable .dontActiveRow [rowspan='1'] {
+  opacity: 0.6;
 }
 .brandName {
   font-size: 18px;
