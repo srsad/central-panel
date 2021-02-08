@@ -12,7 +12,7 @@ export default class Rem {
     // eslint-disable-next-line prettier/prettier
     this.proxy =
       process.env.REMONLINE_PROXY === 'true'
-        ? 'https://cors-anywhere.herokuapp.com/'
+        ? 'https://servcors.herokuapp.com/'
         : // 'https://api.allorigins.win/get?url='
           ''
   }
