@@ -12,26 +12,37 @@
       </el-button>
     </div>
     <div class="col-12 mt-30">
-      <ol class="mb-0" style="padding: 0px 20px">
+      <ul class="branchList">
         <li
           v-for="(item, idx) in $store.getters['report/branch/branches']"
           :key="idx"
-          class="mt-15 mb-5"
         >
+          <el-button
+            @click="editItem(item)"
+            type="primary"
+            icon="el-icon-edit"
+            size="mini"
+          />
           {{ item.name }}
         </li>
-      </ol>
+      </ul>
     </div>
+    <app-window-update :item="selectItem" @edit="onEdit" />
   </div>
 </template>
 
 <script>
+import AppWindowUpdate from '~/components/settings/remonline/branches/window/Update.vue'
 import Rem from '~/utils/remonline.js'
 
 export default {
+  components: {
+    AppWindowUpdate
+  },
   data() {
     return {
-      loading: false
+      loading: false,
+      selectItem: {}
     }
   },
   mounted() {
@@ -40,6 +51,9 @@ export default {
     }
   },
   methods: {
+    /**
+     * Обновление списка из ремонлайна
+     */
     async fetchBranches() {
       this.loading = true
       try {
@@ -59,7 +73,10 @@ export default {
           }
           if (item) {
             // eslint-disable-next-line
-            await this.$axios.put(`/api/v1/report/branch/update/${item._id}`, fd)
+            await this.$axios.put(
+              `/api/v1/report/branch/update/${item._id}`,
+              fd
+            )
           } else {
             await this.$axios.post('/api/v1/report/branch/create', fd)
           }
@@ -69,7 +86,41 @@ export default {
       } catch (e) {
         this.$store.commit('SET_ERROR', e.response.data.message)
       }
+    },
+
+    /**
+     * Окно редактирование элемента
+     */
+    editItem(item) {
+      this.selectItem = item
+      this.$store.commit('settings/SWITCH_DRAWNER', {
+        dranwer: 'drawerReportBranchUpdate',
+        status: true
+      })
+    },
+
+    /**
+     * Если редактирование прошло успешно
+     */
+    async onEdit() {
+      await this.$store.dispatch('report/branch/fetchItems')
+      this.$store.commit('settings/SWITCH_DRAWNER', {
+        dranwer: 'drawerReportBranchUpdate',
+        status: false
+      })
     }
   }
 }
 </script>
+
+<style>
+.branchList {
+  margin-bottom: 0;
+  padding: 0;
+}
+.branchList li {
+  list-style: none;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+</style>
