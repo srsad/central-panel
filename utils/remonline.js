@@ -13,8 +13,7 @@ export default class Rem {
     this.proxy =
       process.env.REMONLINE_PROXY === 'true'
         ? 'https://servcors.herokuapp.com/'
-        : // 'https://api.allorigins.win/get?url='
-          ''
+        : ''
   }
 
   /**
@@ -121,13 +120,13 @@ export default class Rem {
    */
   async remonline(type, url) {
     try {
-      // если некорректный токен
-      if (url.indexOf('token=undefined') > 0) {
+      const remToken = Cookies.get('rem-token')
+      // если нет токена
+      if (!remToken) {
         const token = await this.setToken()
         url = url.replace('token=undefined', `token=${token}`)
         await this.remonline(type, url)
       }
-      // console.log('remonline.js - url', url)
       // пробуем обновить токен
       const res = await axios[type](
         `${this.proxy}https://api.remonline.ru/${url}`
