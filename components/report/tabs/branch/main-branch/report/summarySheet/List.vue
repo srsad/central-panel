@@ -267,25 +267,20 @@ export default {
   beforeMount() {
     const columns = СommonСolumns
     const columnStatuses = JSON.parse(window.localStorage.getItem('summarySheetStatus'))
-    // columns[0].hide = true
-    // const columnsStatus = window.localStorage('summarySheetStatus')
+
     // columnVisible
     columns.map((el) => {
-      // console.log('el', el)
       if (el.children) {
         // вложенные элементы
-        // console.log('el.children', el.children)
         el.children.forEach((element) => {
-          if (columnStatuses.hasOwnProperty(element.element)) {
+          if (columnStatuses && columnStatuses.hasOwnProperty(element.element)) {
             element.hide = !columnStatuses[element.field]
           }
         })
         // не вложенные элементы
-      } else if (columnStatuses.hasOwnProperty(el.field)) {
+      } else if (columnStatuses && columnStatuses.hasOwnProperty(el.field)) {
         el.hide = !columnStatuses[el.field]
       }
-
-      // return el
     })
     this.commonСolumns = columns
   },

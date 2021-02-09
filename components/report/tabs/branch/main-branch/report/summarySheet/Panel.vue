@@ -138,3 +138,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.selectPanel {
+  z-index: 2;
+}
+</style>
