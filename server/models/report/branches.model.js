@@ -4,6 +4,7 @@
  * @property {string} branch_id.required - id филиала полученное из ремонлайн
  * @property {string} realname - Наименование введенное из панели управления
  * @property {string} short_code - шорт код филиала
+ * @property {string} short_num_code - цифровой шорт код филиала
  * @property {string} address - физический адрес
  */
 
@@ -25,6 +26,10 @@ const branchesSchema = new Schema({
     require: true,
   },
   short_code: {
+    type: String,
+    default: ''
+  },
+  short_num_code: {
     type: String,
     default: ''
   },

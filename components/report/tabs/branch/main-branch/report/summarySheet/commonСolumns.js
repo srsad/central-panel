@@ -3,7 +3,7 @@
  */
 export default [
   {
-    field: 'branch.code',
+    field: 'branch.short_code',
     headerName: 'Филиал',
     width: 50,
     pinned: 'left',

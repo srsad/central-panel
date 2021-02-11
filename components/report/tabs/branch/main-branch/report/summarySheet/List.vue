@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="pageData.brands">
-      <div class="col-8 offset-4" style="margin-top: -47px;">
+      <div class="col-8 offset-4" style="margin-top: -43px;">
         <!--  -->
         <el-button
           @click="saveTable"

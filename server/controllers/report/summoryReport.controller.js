@@ -38,7 +38,7 @@ module.exports.getById = async (req, res) => {
   try {
     const report = await Report.findById(req.params.id)
       .populate('brands.brand', { name: 1 })
-      .populate('brands.branch', { name: 1 })
+      .populate('brands.branch', { name: 1, short_code: 1, short_num_code: 1 })
       .populate('branch_id', { name: 1, branch_id: 1 })
 
     res.status(200).json(report)

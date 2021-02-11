@@ -78,14 +78,6 @@ export const getters = {
       ['МСК Сеславинская', 'Impuls МСК']
     ])
 
-    const branchCodes = new Map([
-      ['СПБ 2-я Красноармейская', 'KRS'],
-      ['СПБ Дмитровский', 'DMR'],
-      ['МСК Новослободская', 'NVS'],
-      ['МСК Армянский', 'ARM'],
-      ['МСК Сеславинская', 'SES']
-    ])
-
     // результат выполнения
     const res = []
 
@@ -95,8 +87,6 @@ export const getters = {
 
       let dcod = '99.00.00.00.00.00.00.00' // код по умолчанию
 
-      const branchCode = branchCodes.get(report.brands[idx].branch.name)
-
       // возвращаем найденные приоритеты
       for (const el of domains) {
         if (el.brand.toLowerCase() === brand && el.company === branch) {
@@ -104,8 +94,6 @@ export const getters = {
           break
         }
       }
-
-      report.brands[idx].branch.code = branchCode // шорт код филиала
 
       // достаем параметры для сортировки
       res.push({ ...report.brands[idx], dcod })

@@ -17,11 +17,29 @@
         </el-form-item>
       </div>
       <div class="col-6">
+        <el-form-item prop="address" label="Физический адрес">
+          <el-input
+            v-model="form.address"
+            :disabled="loading"
+            placeholder="Физический адрес"
+          />
+        </el-form-item>
+      </div>
+      <div class="col-3">
         <el-form-item prop="short_code" label="Аббревиатура">
           <el-input
             v-model="form.short_code"
             :disabled="loading"
             placeholder="Аббревиатура"
+          />
+        </el-form-item>
+      </div>
+      <div class="col-3">
+        <el-form-item prop="short_num_code" label="Циф. код">
+          <el-input
+            v-model="form.short_num_code"
+            :disabled="loading"
+            placeholder="Циф. код"
           />
         </el-form-item>
       </div>
@@ -31,15 +49,6 @@
             v-model="form.realname"
             :disabled="loading"
             placeholder="Наименование"
-          />
-        </el-form-item>
-      </div>
-      <div class="col-6">
-        <el-form-item prop="address" label="Физический адрес">
-          <el-input
-            v-model="form.address"
-            :disabled="loading"
-            placeholder="Физический адрес"
           />
         </el-form-item>
       </div>

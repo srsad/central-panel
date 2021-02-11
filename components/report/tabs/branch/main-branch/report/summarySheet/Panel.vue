@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col selectPanel">
+    <div class="col-4 selectPanel">
       <!-- <el-button
         @click="addNewReportFromExcel"
         size="mini"

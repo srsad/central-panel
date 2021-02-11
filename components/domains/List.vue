@@ -24,7 +24,7 @@
         <el-table-column prop="dcod" label="Филиал" width="80">
           <template slot-scope="scope">
             <div :title="scope.row.name" class="ws-normal firstColumn">
-              {{ scope.row.dcod | shortCode }}
+              {{ shortCode(scope.row.dcod) }}
             </div>
           </template>
         </el-table-column>
@@ -115,7 +115,11 @@
                 "
                 :title="
                   // eslint-disable-next-line prettier/prettier
-              `${scope.row.status ? 'Сделать не активным' : 'Сделать активным'}`
+                  `${
+                    scope.row.status
+                      ? 'Сделать не активным'
+                      : 'Сделать активным'
+                  }`
                 "
                 type="info"
                 size="mini"
@@ -146,25 +150,11 @@
 </template>
 
 <script>
-import { shortCodeForCodes } from '~/utils/brancheCodes'
-
 export default {
   filters: {
     filterPhone(str) {
       const phone = str.match(/\d*(-|)\d*(-)\d*/)
       return phone ? phone[0] : str
-    },
-
-    /**
-     * Возвращает шорткод по dcod
-     */
-    shortCode(str) {
-      let res = '---'
-      if (!str) return res
-
-      const dcod = str.split('.')
-      res = shortCodeForCodes.get(dcod[0])
-      return res || '---'
     }
   },
   props: {
@@ -269,6 +259,20 @@ export default {
           }
         }
       }
+    },
+
+    /**
+     * Возвращает шорткод по dcod
+     */
+    shortCode(str) {
+      let res = '---'
+      if (!str) return res
+
+      const dcod = str.split('.')
+      // eslint-disable-next-line
+      res = this.$store.getters['report/branch/branches'].find((el) => el.short_num_code === dcod[0])
+
+      return res?.short_code || '---'
     }
   }
 }

@@ -20,7 +20,15 @@ export default {
         label: 'Управление доменными именами'
       }
     ])
+
+    // eslint-disable-next-line
+    const branches = store.getters['report/branch/branches']
+
     try {
+      if (branches?.length === 0) {
+        await store.dispatch('report/branch/fetchItems')
+      }
+
       // загрузка списка доменных имен
       if (store.getters['domains/domains'].length === 0) {
         await store.dispatch('domains/fetchDomains')
