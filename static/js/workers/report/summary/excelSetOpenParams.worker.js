@@ -31,7 +31,7 @@ self.addEventListener('message', async (event) => {
         // кто пришли в СЦ
         if (row[indexStatus].trim() !== 'Не пришел') cameToService++
         // закрытые заказы
-        if (row[indexStatus].trim() !== 'Закрыт') closeOrders++
+        if (row[indexStatus].trim() === 'Закрыт') closeOrders++
       }
     }
     item.order.count = Math.round(allOrders) // все заявки бренда
