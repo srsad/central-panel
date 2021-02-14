@@ -74,6 +74,7 @@ export default [
         headerName: 'кол-во',
         sortable: true,
         editable: true,
+        cellStyle: { fontSize: '14px !important', fontWeight: 700 },
         width: 50,
         valueFormatter: (params) => {
           return new Intl.NumberFormat().format(params.value)
@@ -119,6 +120,7 @@ export default [
         headerName: 'кол-во',
         sortable: true,
         editable: true,
+        cellStyle: { fontSize: '14px !important', fontWeight: 700 },
         width: 50,
         valueFormatter: (params) => {
           return new Intl.NumberFormat().format(params.value)
@@ -168,6 +170,7 @@ export default [
         headerName: 'кол-во',
         sortable: true,
         editable: true,
+        cellStyle: { fontSize: '14px !important', fontWeight: 700 },
         width: 50,
         valueFormatter: (params) => {
           return new Intl.NumberFormat().format(params.value)

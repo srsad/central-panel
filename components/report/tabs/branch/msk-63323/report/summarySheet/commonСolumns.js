@@ -63,7 +63,7 @@ export default [
         field: 'order.count',
         headerName: 'кол-во',
         sortable: true,
-        cellStyle: {},
+        cellStyle: { fontSize: '14px !important', fontWeight: 700 },
         width: 50,
         valueFormatter: (params) => {
           return new Intl.NumberFormat().format(params.value)
@@ -108,7 +108,7 @@ export default [
         field: 'came_to_sc.count',
         headerName: 'кол-во',
         sortable: true,
-        cellStyle: {},
+        cellStyle: { fontSize: '14px !important', fontWeight: 700 },
         width: 50,
         valueFormatter: (params) => {
           return new Intl.NumberFormat().format(params.value)
@@ -157,7 +157,7 @@ export default [
         field: 'order_closed.count',
         headerName: 'кол-во',
         sortable: true,
-        cellStyle: {},
+        cellStyle: { fontSize: '14px !important', fontWeight: 700 },
         width: 50,
         valueFormatter: (params) => {
           return new Intl.NumberFormat().format(params.value)
