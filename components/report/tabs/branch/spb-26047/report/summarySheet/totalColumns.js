@@ -7,7 +7,7 @@ export default [
     headerName: 'Итого',
     pinned: 'left',
     cellStyle: {},
-    width: 100
+    width: 150
   },
   // Заявки
   {

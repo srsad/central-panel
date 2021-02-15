@@ -3,6 +3,16 @@
  */
 export default [
   {
+    field: 'branch.short_code',
+    headerName: 'Филиал',
+    width: 50,
+    pinned: 'left',
+    suppressSizeToFit: true,
+    enableRowGroup: true,
+    cellStyle: {},
+    sortable: true
+  },
+  {
     field: 'brand.name',
     headerName: 'Бренд',
     pinned: 'left',

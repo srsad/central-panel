@@ -117,7 +117,7 @@
               icon="fa fa-upload"
               command="importExpenses"
             >
-              Импорт (выгрузить данные)
+              Экспорт (выгрузить данные)
             </el-dropdown-item>
             <!--  -->
             <el-dropdown-item
@@ -125,7 +125,7 @@
               icon="fa fa-download"
               command="openFileLoader"
             >
-              Экспорт (загрузить данные)
+              Импорт (загрузить данные)
             </el-dropdown-item>
             <!--  -->
           </el-dropdown-menu>
@@ -165,6 +165,8 @@
           <ag-grid-vue
             @grid-ready="onGridReady"
             @column-visible="onColumnVisible"
+            @cell-value-changed="onCellValueChanged"
+            @start-editing-cell="onStartEditingCell"
             :columnDefs="commonСolumns"
             :rowData="pageData.brands"
             :headerHeight="20"
@@ -181,7 +183,7 @@
           <ag-grid-vue
             :columnDefs="totalColumns"
             :rowData="[pageData.total]"
-            :headerHeight="80"
+            :headerHeight="20"
             :groupHeaderHeight="20"
             :floatingFiltersHeight="20"
             :rowHeight="30"
@@ -297,6 +299,7 @@ export default {
       columns[params.columns[0]?.colId] = params.columns[0]?.visible
       window.localStorage.setItem('summarySheetStatus', JSON.stringify(columns))
     },
+
     /**
      * Инициализация основной таблицы
      */
@@ -313,6 +316,33 @@ export default {
       // this.gridApi.forEachNode(function(node, index) {
       //   console.log('node', node, index)
       // })
+    },
+
+    onCellValueChanged(data) {
+      console.log('onCellValueChanged', data)
+      window.addEventListener('keydown', (e) => {
+        console.log('e.key', e.key, data)
+        // const key = e.key; // "ArrowRight", "ArrowLeft", "ArrowUp", or "ArrowDown"
+      })
+    },
+
+    onStartEditingCell(data) {
+      console.log('onCellValueChanged', data)
+      window.addEventListener('keydown', (e) => {
+        console.log('e.key', e.key, data)
+        // const key = e.key; // "ArrowRight", "ArrowLeft", "ArrowUp", or "ArrowDown"
+      })
+    },
+
+    onBtStartEditing(key, char, pinned) {
+      this.gridApi.setFocusedCell(0, 'lastName', pinned);
+      this.gridApi.startEditingCell({
+        rowIndex: 0,
+        colKey: 'lastName',
+        rowPinned: pinned,
+        keyPress: key,
+        charPress: char,
+      });
     },
 
     /**

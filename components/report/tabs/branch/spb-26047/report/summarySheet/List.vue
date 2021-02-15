@@ -23,7 +23,7 @@
           <ag-grid-vue
             :columnDefs="commonСolumns"
             :rowData="pageData.brands"
-            :headerHeight="80"
+            :headerHeight="20"
             :groupHeaderHeight="20"
             :floatingFiltersHeight="20"
             :rowHeight="30"
@@ -37,7 +37,7 @@
           <ag-grid-vue
             :columnDefs="totalColumns"
             :rowData="[pageData.total]"
-            :headerHeight="80"
+            :headerHeight="20"
             :groupHeaderHeight="20"
             :floatingFiltersHeight="20"
             :rowHeight="30"
