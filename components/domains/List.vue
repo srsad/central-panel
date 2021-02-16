@@ -294,7 +294,7 @@ export default {
   font-weight: 600;
 }
 .firstColumn {
-  height: 40px;
+  height: 47px;
   display: grid;
   align-items: center;
   justify-content: center;
