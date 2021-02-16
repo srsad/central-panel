@@ -260,6 +260,19 @@ export default {
       const brandAndBranch = new Map()
       // временная таблица для хранения наименование филиала + id филиала
       const branchMap = new Map()
+      // алиасы
+      const alias = new Map([
+        ['Hewlett-Packard', 'HP'],
+        ['Microsoft', 'xBox'],
+        ['Seagate', 'A-Data'],
+        ['Western Digital', 'A-Data'],
+        ['Kingston', 'A-Data'],
+        ['Silicon Power', 'A-Data'],
+        ['Transcend', 'A-Data'],
+        ['SanDisk', 'A-Data'],
+        ['QUMO', 'A-Data'],
+        ['Vebratim', 'A-Data']
+      ])
 
       // наполняю branchMap актуальными данными
       for (const item of this.$store.getters['report/branch/branches']) {
@@ -275,6 +288,10 @@ export default {
       for await (const row of excelList) {
         let brand = row[indexBrand].split(',')
         brand = brand[0].trim()
+
+        // замена на alias
+        if (alias.get(brand)) brand = alias.get(brand)
+
         const branch = row[indexBranch].trim()
         // eslint-disable-next-line
         let brandId = this.brandList.find((el) => el.name.toLowerCase() === brand.toLowerCase())

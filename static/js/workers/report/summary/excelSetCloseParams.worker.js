@@ -11,6 +11,20 @@ self.addEventListener('message', async (event) => {
   const indexRevenue = items[0].indexOf('Оплачено') // индекс выручки
   const indexExpenses = items[0].indexOf('Себестоимость') // индекс расходов
 
+  // алиасы
+  const alias = new Map([
+    ['Hewlett-Packard', 'HP'],
+    ['Microsoft', 'xBox'],
+    ['Seagate', 'A-Data'],
+    ['Western Digital', 'A-Data'],
+    ['Kingston', 'A-Data'],
+    ['Silicon Power', 'A-Data'],
+    ['Transcend', 'A-Data'],
+    ['SanDisk', 'A-Data'],
+    ['QUMO', 'A-Data'],
+    ['Vebratim', 'A-Data']
+  ])
+
   items.shift() // удаляем первую строку
 
   for await (const item of table) {
@@ -22,7 +36,11 @@ self.addEventListener('message', async (event) => {
 
     for await (const row of items) {
       let brand = row[indexBrand].split(',')
-      brand = brand[0].toLowerCase().trim()
+      brand = brand[0].trim()
+      // замена на alias
+      if (alias.get(brand)) brand = alias.get(brand)
+      brand = brand.toLowerCase()
+
       const branch = row[indexBranch].toLowerCase().trim()
       // все заказы
       if (brand === brandName && branchName === branch) {
