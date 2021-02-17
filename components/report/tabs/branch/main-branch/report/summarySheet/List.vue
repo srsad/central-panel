@@ -167,6 +167,7 @@
             @column-visible="onColumnVisible"
             @cell-value-changed="onCellValueChanged"
             @start-editing-cell="onStartEditingCell"
+            @range-selection-changed="onRangeSelectionChanged"
             :columnDefs="commonСolumns"
             :rowData="pageData.brands"
             :headerHeight="20"
@@ -176,6 +177,9 @@
             :defaultColDef="{ menuTabs: [] }"
             :suppressContextMenu="true"
             :sideBar="sideBar"
+            :enableRangeSelection="true"
+            :processCellForClipboard="processCellForClipboard"
+            :processCellFromClipboard="processCellFromClipboard"
             :style="`height: 79vh; min-width: ${windowWidth}px`"
             class="ag-theme-alpine"
           />
@@ -217,6 +221,8 @@ export default {
       gridApi: null,
       columnApi: null,
       gridOptions: null,
+      processCellForClipboard: null,
+      processCellFromClipboard: null,
       sideBar: {
         toolPanels: [
           {
@@ -285,6 +291,28 @@ export default {
       }
     })
     this.commonСolumns = columns
+
+    //
+    this.processCellForClipboard = (params) => {
+      if (
+        params.column.getColId() === 'athlete' &&
+        params.value &&
+        params.value.toUpperCase
+      ) {
+        return params.value.toUpperCase()
+      }
+      return params.value
+    }
+    this.processCellFromClipboard = (params) => {
+      if (
+        params.column.getColId() === 'athlete' &&
+        params.value &&
+        params.value.toLowerCase
+      ) {
+        return params.value.toLowerCase()
+      }
+      return params.value
+    }
   },
   mounted() {
     // считаем ширину таблицы
@@ -308,29 +336,47 @@ export default {
       // const columns = data.api.columnController.columnDefs
       // console.log('asdad', JSON.stringify(columns))
       // data.api.columnController.columnDefs[0].hide = true
-      // this.gridApi = data.api
-      // this.columnApi = data.columnApi
-      // // this.gridOptions = data
+      this.gridApi = data.api
+      this.columnApi = data.columnApi
+      // this.gridOptions = data
       // console.log('data', data)
-      // //
       // this.gridApi.forEachNode(function(node, index) {
       //   console.log('node', node, index)
       // })
     },
 
     onCellValueChanged(data) {
-      console.log('onCellValueChanged', data)
-      window.addEventListener('keydown', (e) => {
-        console.log('e.key', e.key, data)
-        // const key = e.key; // "ArrowRight", "ArrowLeft", "ArrowUp", or "ArrowDown"
-      })
+      // console.log('onCellValueChanged', data)
+      // window.addEventListener('keydown', (e) => {
+      //   console.log('e.key', e.key, data)
+      //   // const key = e.key; // "ArrowRight", "ArrowLeft", "ArrowUp", or "ArrowDown"
+      // })
     },
 
     onStartEditingCell(data) {
-      console.log('onCellValueChanged', data)
-      window.addEventListener('keydown', (e) => {
-        console.log('e.key', e.key, data)
-        // const key = e.key; // "ArrowRight", "ArrowLeft", "ArrowUp", or "ArrowDown"
+      // console.log('onCellValueChanged', data)
+      // window.addEventListener('keydown', (e) => {
+      //   console.log('e.key', e.key, data)
+      //   // const key = e.key; // "ArrowRight", "ArrowLeft", "ArrowUp", or "ArrowDown"
+      // })
+    },
+
+    /**
+     * Работа с буфером обмена
+     */
+    onRangeSelectionChanged(event) {
+      const cellRanges = this.gridApi.getCellRanges()
+      const api = this.gridApi
+      cellRanges.forEach(function (range) {
+        const startRow = Math.min(range.startRow.rowIndex, range.endRow.rowIndex)
+        const endRow = Math.max(range.startRow.rowIndex, range.endRow.rowIndex)
+        for (let rowIndex = startRow; rowIndex <= endRow; rowIndex++) {
+          range.columns.forEach(function (column) {
+            const rowModel = api.getModel()
+            const rowNode = rowModel.getRow(rowIndex)
+            api.getValue(column, rowNode)
+          })
+        }
       })
     },
 
@@ -342,7 +388,7 @@ export default {
         rowPinned: pinned,
         keyPress: key,
         charPress: char,
-      });
+      })
     },
 
     /**
