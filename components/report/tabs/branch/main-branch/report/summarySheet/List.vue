@@ -273,25 +273,6 @@ export default {
     }
   },
   beforeMount() {
-    const columns = СommonСolumns
-    const columnStatuses = JSON.parse(window.localStorage.getItem('summarySheetStatus'))
-
-    // columnVisible
-    columns.map((el) => {
-      if (el.children) {
-        // вложенные элементы
-        el.children.forEach((element) => {
-          if (columnStatuses && columnStatuses.hasOwnProperty(element.element)) {
-            element.hide = !columnStatuses[element.field]
-          }
-        })
-        // не вложенные элементы
-      } else if (columnStatuses && columnStatuses.hasOwnProperty(el.field)) {
-        el.hide = !columnStatuses[el.field]
-      }
-    })
-    this.commonСolumns = columns
-
     //
     this.processCellForClipboard = (params) => {
       if (
@@ -303,6 +284,7 @@ export default {
       }
       return params.value
     }
+
     this.processCellFromClipboard = (params) => {
       if (
         params.column.getColId() === 'athlete' &&
@@ -321,9 +303,15 @@ export default {
     })
   },
   methods: {
+    /**
+     * Колонки видимые/не видимые
+     */
     onColumnVisible(params) {
       let columns = JSON.parse(window.localStorage.getItem('summarySheetStatus'))
       if (!columns) columns = {}
+      for (const item of params.columns) {
+        columns[item?.colId] = item?.visible
+      }
       columns[params.columns[0]?.colId] = params.columns[0]?.visible
       window.localStorage.setItem('summarySheetStatus', JSON.stringify(columns))
     },
@@ -338,11 +326,26 @@ export default {
       // data.api.columnController.columnDefs[0].hide = true
       this.gridApi = data.api
       this.columnApi = data.columnApi
-      // this.gridOptions = data
-      // console.log('data', data)
-      // this.gridApi.forEachNode(function(node, index) {
-      //   console.log('node', node, index)
-      // })
+      this.toogleMoreData()
+
+      // меняем видимость колонок
+      const columns = СommonСolumns
+      const columnStatuses = JSON.parse(window.localStorage.getItem('summarySheetStatus'))
+
+      columns.map((el) => {
+        if (el.children) {
+          // вложенные элементы
+          el.children.forEach((element) => {
+            if (columnStatuses && columnStatuses.hasOwnProperty(element.field)) {
+              element.hide = !columnStatuses[element.field]
+            }
+          })
+          // не вложенные элементы
+        } else if (columnStatuses && columnStatuses.hasOwnProperty(el.field)) {
+          el.hide = !columnStatuses[el.field]
+        }
+      })
+      this.commonСolumns = columns
     },
 
     onCellValueChanged(data) {
@@ -377,17 +380,6 @@ export default {
             api.getValue(column, rowNode)
           })
         }
-      })
-    },
-
-    onBtStartEditing(key, char, pinned) {
-      this.gridApi.setFocusedCell(0, 'lastName', pinned);
-      this.gridApi.startEditingCell({
-        rowIndex: 0,
-        colKey: 'lastName',
-        rowPinned: pinned,
-        keyPress: key,
-        charPress: char,
       })
     },
 
@@ -875,7 +867,7 @@ export default {
 
         for await (const el of this.tableData.brands) {
           const part = [
-            el.branch.name,
+            el.branch.short_code,
             el.brand.name,
             // pk + seo
             el.requests.chanel.pk,

@@ -22,6 +22,8 @@
           style="margin: 0 20px"
         >
           <ag-grid-vue
+            @grid-ready="onGridReady"
+            @column-visible="onColumnVisible"
             :columnDefs="commonСolumns"
             :rowData="pageData.brands"
             :headerHeight="20"
@@ -68,8 +70,10 @@ export default {
   data() {
     return {
       loading: false,
-      commonСolumns: СommonСolumns,
+      commonСolumns: null,
       totalColumns: TotalColumns,
+      gridApi: null,
+      columnApi: null,
       sideBar: {
         toolPanels: [
           {
@@ -106,6 +110,50 @@ export default {
     })
   },
   methods: {
+    /**
+     * Инициализация основной таблицы
+     */
+    onGridReady(data) {
+      this.gridApi = data.api
+      this.columnApi = data.columnApi
+      this.toogleMoreData()
+
+      // меняем видимость колонок
+      const columns = СommonСolumns
+      // eslint-disable-next-line
+      const columnStatuses = JSON.parse(window.localStorage.getItem('summarySheetStatus'))
+
+      columns.map((el) => {
+        if (el.children) {
+          // вложенные элементы
+          el.children.forEach((element) => {
+            // eslint-disable-next-line
+            if (columnStatuses && columnStatuses.hasOwnProperty(element.field)) {
+              element.hide = !columnStatuses[element.field]
+            }
+          })
+          // не вложенные элементы
+        } else if (columnStatuses && columnStatuses.hasOwnProperty(el.field)) {
+          el.hide = !columnStatuses[el.field]
+        }
+      })
+      this.commonСolumns = columns
+    },
+
+    /**
+     * Колонки видимые/не видимые
+     */
+    onColumnVisible(params) {
+      // eslint-disable-next-line
+      let columns = JSON.parse(window.localStorage.getItem('summarySheetStatus'))
+      if (!columns) columns = {}
+      for (const item of params.columns) {
+        columns[item?.colId] = item?.visible
+      }
+      columns[params.columns[0]?.colId] = params.columns[0]?.visible
+      window.localStorage.setItem('summarySheetStatus', JSON.stringify(columns))
+    },
+
     /**
      * Обновляем ширину окна
      */
