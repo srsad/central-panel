@@ -97,7 +97,7 @@ export default {
         ]
       },
       windowWidth: 1000, // ширина окна
-      moreData: false // статус - показать/скрыть дополнительные данные
+      moreData: true // статус - показать/скрыть дополнительные данные
     }
   },
   watch: {
@@ -141,7 +141,6 @@ export default {
     onGridReady(data) {
       this.gridApi = data.api
       this.columnApi = data.columnApi
-      this.toogleMoreData()
 
       // меняем видимость колонок
       const columns = СommonСolumns

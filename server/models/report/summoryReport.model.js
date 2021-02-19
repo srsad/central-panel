@@ -4,7 +4,7 @@
  * @property {string} name.required - Наименование отчета
  * @property {Array.<string>} brands_id.required - id брендов, ссылка на коллекцию report_brands
  * @property {Array.<string>} branch_id.required - id филиалов, ссылка на коллекцию report_branches
- * @property {string} period.required - период в формате (YYYY-MM-DD YYYY-MM-DD)
+ * @property {string} period - период в формате (YYYY-MM-DD YYYY-MM-DD)
  * @property {Brands.model} brands.required - массив со списком брендов и его сводными данными
  * @property {Total.model} total.required - объект с итогом
  */
@@ -33,7 +33,7 @@ const summoryReportSchema = new Schema({
   ],
   period: {
     type: String,
-    require: true
+    default: ''
   },
   // массив с данными по брендам
   brands: [

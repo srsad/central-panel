@@ -166,6 +166,7 @@ export default {
       this.pageData = JSON.parse(JSON.stringify(data))
       this.originalData = JSON.parse(JSON.stringify(data))
       this.tempBrands = {}
+      this.toogleMoreData(true)
     },
 
     /**

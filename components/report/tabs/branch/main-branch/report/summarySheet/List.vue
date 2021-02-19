@@ -270,6 +270,7 @@ export default {
     tableData(val) {
       this.pageData = val
       this.windowUpdate()
+      // this.hideMoreData()
     }
   },
   beforeMount() {
@@ -325,7 +326,6 @@ export default {
       // data.api.columnController.columnDefs[0].hide = true
       this.gridApi = data.api
       this.columnApi = data.columnApi
-      this.toogleMoreData()
 
       // меняем видимость колонок
       const columns = СommonСolumns
@@ -959,6 +959,24 @@ export default {
         this.$store.commit('report/summary/SET_REPORT', brands)
       }
       this.windowUpdate()
+    },
+
+    /**
+     * Отдельный мметод для скрытия доп. брендов
+     */
+    hideMoreData() {
+      this.moreData = false
+      const brands = this.$store.getters['report/summary/report']
+      // если надо скрыть
+      this.excludedData = this.pageData.brands.filter((el) => {
+        const dcod = el.dcod.split('.') // '99.00.00.00.00.00.00.00'
+        return +dcod[0] >= 90
+      })
+      brands.brands = this.pageData.brands.filter((el) => {
+        const dcod = el.dcod.split('.') // '99.00.00.00.00.00.00.00'
+        return +dcod[0] < 90
+      })
+      this.$store.commit('report/summary/SET_REPORT', brands)
     }
   }
 }

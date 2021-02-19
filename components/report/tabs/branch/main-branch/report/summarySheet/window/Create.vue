@@ -19,7 +19,7 @@
           <el-input v-model="form.name" />
         </el-form-item>
       </div>
-      <div class="mb-20">
+      <!-- <div class="mb-20">
         <el-form-item prop="period" label="Период">
           <el-date-picker
             v-model="form.period"
@@ -30,7 +30,7 @@
             end-placeholder="До"
           />
         </el-form-item>
-      </div>
+      </div> -->
       <div class="mb-20">
         <el-form-item prop="branch_id" label="Филиал">
           <el-select v-model="form.branch_id" multiple class="w100">
@@ -79,7 +79,7 @@
               class="el-button el-button--primary is-plain el-button--sm w100"
             >
               <i class="el-icon-download"></i>
-              Загрузить бренды из Excel
+              Загрузить бренды и филиалы из Excel
             </span>
             <input
               @change="uploadFromExcel"
@@ -148,13 +148,6 @@ export default {
           {
             required: true,
             message: 'Выберите филиал',
-            trigger: 'blur'
-          }
-        ],
-        period: [
-          {
-            required: true,
-            message: 'Выберите период',
             trigger: 'blur'
           }
         ]
@@ -271,7 +264,9 @@ export default {
         ['Transcend', 'A-Data'],
         ['SanDisk', 'A-Data'],
         ['QUMO', 'A-Data'],
-        ['Vebratim', 'A-Data']
+        ['Vebratim', 'A-Data'],
+        ['Verbatim', 'A-Data'],
+        ['SiliconPower', 'A-Data']
       ])
 
       // наполняю branchMap актуальными данными
