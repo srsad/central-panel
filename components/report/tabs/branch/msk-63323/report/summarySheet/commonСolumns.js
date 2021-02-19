@@ -29,7 +29,7 @@ export default [
         headerName: 'PK',
         width: 50,
         sortable: true,
-        cellStyle: {},
+        editable: true,
         valueFormatter: (params) => {
           return new Intl.NumberFormat().format(params.value)
         }
@@ -39,7 +39,7 @@ export default [
         headerName: 'SEO',
         width: 50,
         sortable: true,
-        cellStyle: {},
+        editable: true,
         valueFormatter: (params) => {
           return new Intl.NumberFormat().format(params.value)
         }
@@ -73,6 +73,7 @@ export default [
         field: 'order.count',
         headerName: 'кол-во',
         sortable: true,
+        editable: true,
         cellStyle: { fontSize: '14px !important', fontWeight: 700 },
         width: 50,
         valueFormatter: (params) => {
@@ -118,6 +119,7 @@ export default [
         field: 'came_to_sc.count',
         headerName: 'кол-во',
         sortable: true,
+        editable: true,
         cellStyle: { fontSize: '14px !important', fontWeight: 700 },
         width: 50,
         valueFormatter: (params) => {
@@ -167,6 +169,7 @@ export default [
         field: 'order_closed.count',
         headerName: 'кол-во',
         sortable: true,
+        editable: true,
         cellStyle: { fontSize: '14px !important', fontWeight: 700 },
         width: 50,
         valueFormatter: (params) => {
@@ -212,6 +215,7 @@ export default [
         field: 'common_expenses.balance',
         headerName: 'Баланс',
         sortable: true,
+        editable: true,
         cellStyle: { color: 'green' },
         width: 80,
         valueFormatter: (params) => {
@@ -222,7 +226,7 @@ export default [
         field: 'common_expenses.pk',
         headerName: 'РК',
         sortable: true,
-        cellStyle: {},
+        editable: true,
         width: 80,
         valueFormatter: (params) => {
           return new Intl.NumberFormat().format(params.value) + ' ₽'
@@ -232,7 +236,7 @@ export default [
         field: 'common_expenses.seo',
         headerName: 'SEO',
         sortable: true,
-        cellStyle: {},
+        editable: true,
         width: 80,
         valueFormatter: (params) => {
           return new Intl.NumberFormat().format(params.value) + ' ₽'
@@ -242,7 +246,7 @@ export default [
         field: 'common_expenses.common',
         headerName: 'Алока и т.д',
         sortable: true,
-        cellStyle: {},
+        editable: true,
         width: 80,
         valueFormatter: (params) => {
           return new Intl.NumberFormat().format(params.value) + ' ₽'
@@ -253,8 +257,8 @@ export default [
   {
     field: 'revenue',
     headerName: 'Выручка',
-    cellStyle: {},
     sortable: true,
+    editable: true,
     width: 100,
     valueFormatter: (params) => {
       return new Intl.NumberFormat().format(params.value) + ' ₽'
@@ -263,8 +267,8 @@ export default [
   {
     field: 'expenses',
     headerName: 'Расходы',
-    cellStyle: {},
     sortable: true,
+    editable: true,
     width: 100,
     valueFormatter: (params) => {
       return new Intl.NumberFormat().format(params.value) + ' ₽'
@@ -284,7 +288,7 @@ export default [
     field: 'orders',
     headerName: 'Заказы',
     sortable: true,
-    cellStyle: {},
+    editable: true,
     width: 55,
     valueFormatter: (params) => {
       return new Intl.NumberFormat().format(params.value)

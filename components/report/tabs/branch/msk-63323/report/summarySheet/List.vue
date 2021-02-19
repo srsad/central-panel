@@ -24,6 +24,7 @@
           <ag-grid-vue
             @grid-ready="onGridReady"
             @column-visible="onColumnVisible"
+            @range-selection-changed="onRangeSelectionChanged"
             :columnDefs="commonСolumns"
             :rowData="pageData.brands"
             :headerHeight="20"
@@ -33,6 +34,9 @@
             :defaultColDef="{ menuTabs: [] }"
             :suppressContextMenu="true"
             :sideBar="sideBar"
+            :enableRangeSelection="true"
+            :processCellForClipboard="processCellForClipboard"
+            :processCellFromClipboard="processCellFromClipboard"
             :style="`height: 79vh; min-width: ${windowWidth}px`"
             class="ag-theme-alpine"
           />
@@ -74,6 +78,8 @@ export default {
       totalColumns: TotalColumns,
       gridApi: null,
       columnApi: null,
+      processCellForClipboard: null,
+      processCellFromClipboard: null,
       sideBar: {
         toolPanels: [
           {
@@ -102,6 +108,29 @@ export default {
     pageData(val) {
       this.tableData = val.brands
       this.windowUpdate()
+    }
+  },
+  beforeMount() {
+    this.processCellForClipboard = (params) => {
+      if (
+        params.column.getColId() === 'athlete' &&
+        params.value &&
+        params.value.toUpperCase
+      ) {
+        return params.value.toUpperCase()
+      }
+      return params.value
+    }
+
+    this.processCellFromClipboard = (params) => {
+      if (
+        params.column.getColId() === 'athlete' &&
+        params.value &&
+        params.value.toLowerCase
+      ) {
+        return params.value.toLowerCase()
+      }
+      return params.value
     }
   },
   mounted() {
@@ -177,6 +206,25 @@ export default {
     toogleMoreData() {
       this.moreData = !this.moreData
       this.$emit('toogleMoreData', this.moreData)
+    },
+
+    /**
+     * Работа с буфером обмена
+     */
+    onRangeSelectionChanged(event) {
+      const cellRanges = this.gridApi.getCellRanges()
+      const api = this.gridApi
+      cellRanges.forEach(function(rng) {
+        const startRow = Math.min(rng.startRow.rowIndex, rng.endRow.rowIndex)
+        const endRow = Math.max(rng.startRow.rowIndex, rng.endRow.rowIndex)
+        for (let rowIndex = startRow; rowIndex <= endRow; rowIndex++) {
+          rng.columns.forEach(function(column) {
+            const rowModel = api.getModel()
+            const rowNode = rowModel.getRow(rowIndex)
+            api.getValue(column, rowNode)
+          })
+        }
+      })
     }
   }
 }

@@ -162,11 +162,11 @@
         <div :class="['grid', loading ? 'disabled' : '']">
           <!-- :defaultColDef="{ menuTabs: [] }" -->
           <!-- :gridOptions="gridOptions" -->
+          <!-- @cell-value-changed="onCellValueChanged" -->
+          <!-- @start-editing-cell="onStartEditingCell" -->
           <ag-grid-vue
             @grid-ready="onGridReady"
             @column-visible="onColumnVisible"
-            @cell-value-changed="onCellValueChanged"
-            @start-editing-cell="onStartEditingCell"
             @range-selection-changed="onRangeSelectionChanged"
             :columnDefs="commonСolumns"
             :rowData="pageData.brands"
@@ -273,7 +273,6 @@ export default {
     }
   },
   beforeMount() {
-    //
     this.processCellForClipboard = (params) => {
       if (
         params.column.getColId() === 'athlete' &&
