@@ -944,8 +944,14 @@ export default {
       const brands = this.$store.getters['report/summary/report']
       if(this.moreData) {
         // если надо скрыть
-        this.excludedData = this.pageData.brands.filter((el) => el.dcod === '99.00.00.00.00.00.00.00')
-        brands.brands = this.pageData.brands.filter((el) => el.dcod !== '99.00.00.00.00.00.00.00')
+        this.excludedData = this.pageData.brands.filter((el) => {
+          const dcod = el.dcod.split('.') // '99.00.00.00.00.00.00.00'
+          return +dcod[0] >= 90
+        })
+        brands.brands = this.pageData.brands.filter((el) => {
+          const dcod = el.dcod.split('.') // '99.00.00.00.00.00.00.00'
+          return +dcod[0] < 90
+        })
         this.$store.commit('report/summary/SET_REPORT', brands)
       } else {
         brands.brands = this.pageData.brands

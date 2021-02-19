@@ -117,35 +117,45 @@ export default {
         await this.$store.dispatch('domains/fetchDomains')
       }
       const domains = this.$store.state.domains.damains
-      const result = []
+      const res = []
+
+      // TODO костыль для сопоставляния филиала+адреса с компанией
+      const branches = new Map([
+        ['СПБ 2-я Красноармейская', 'R-service СПб'],
+        ['СПБ Дмитровский', 'Impuls СПб'],
+        ['МСК Новослободская', 'R-service МСК'],
+        ['МСК Армянский', 'Impuls МСК'],
+        ['МСК Сеславинская', 'Impuls МСК']
+      ])
 
       for (const idx in report.brands) {
+        const branch = branches.get(report.brands[idx].branch.name) // текущий филлиал
         const brand = report.brands[idx].brand.name.toLowerCase()
-        let sortPriority = {
-          priority: 150,
-          priority2: 150,
-          priority3: 150
-        }
+
+        let dcod = '99.00.00.00.00.00.00.00' // код по умолчанию
 
         // возвращаем найденные приоритеты
         for (const el of domains) {
-          if (el.brand.toLowerCase() === brand) {
-            sortPriority = el
+          if (el.brand.toLowerCase() === brand && el.company === branch) {
+            dcod = el.dcod
             break
           }
         }
 
         // достаем параметры для сортировки
-        const item = {
-          ...report.brands[idx],
-          priority: +sortPriority.priority || 150,
-          priority2: +sortPriority.priority2 || 150,
-          priority3: +sortPriority.priority3 || 150
-        }
-        result.push(item)
+        res.push({ ...report.brands[idx], dcod })
       }
 
-      report.brands = [...result]
+      // сортируем по доменному коду
+      res.sort(function(a, b) {
+        const aCode = a.dcod.replace(/\./g, '')
+        const bCode = b.dcod.replace(/\./g, '')
+        if (+aCode > +bCode) return 1
+        if (+aCode < +bCode) return -1
+        return 0
+      })
+
+      report.brands = [...res]
       this.setTotalDataTable(report)
     },
 
@@ -167,8 +177,10 @@ export default {
       const brands = JSON.parse(JSON.stringify(this.pageData))
       // если надо скрыть
       if (this.moreData) {
-        // eslint-disable-next-line
-        brands.brands = brands.brands.filter((el) => el.priority !== 150)
+        brands.brands = brands.brands.filter((el) => {
+          const dcod = el.dcod.split('.') // '99.00.00.00.00.00.00.00'
+          return +dcod[0] < 90
+        })
       } else {
         brands.brands = this.originalData.brands
       }
