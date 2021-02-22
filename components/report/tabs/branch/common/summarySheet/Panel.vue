@@ -32,9 +32,10 @@
         :page-data="pageData"
         :loading="loading"
         @toogleMoreData="toogleMoreData"
-        @saveTable="saveTable"
+        @saveTable="runWorkerCountingFullTheTotal"
         @updateTable="updateTable"
       />
+      <!-- созраняю через переподсчет всей таблицы -->
     </div>
   </div>
 </template>
@@ -246,6 +247,7 @@ export default {
       })
       worker.onmessage = (event) => {
         this.fullData.total = event.data.total
+        this.saveTable()
       }
     },
 
