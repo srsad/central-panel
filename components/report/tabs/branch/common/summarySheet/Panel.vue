@@ -1,6 +1,7 @@
 <template>
   <div class="row">
     <div class="col-md-10">
+      <!-- v-if="$abilities(`report-msk_${branchId}_panel_summorysheat_panel-read`)" -->
       <el-select v-model="report" size="mini" placeholder="Выберите период">
         <el-option
           v-for="item in reports"
@@ -9,6 +10,7 @@
           :value="item._id"
         />
       </el-select>
+      <!-- v-if="$abilities(`report-msk_${branchId}_panel_summorysheat_panel-read`)" -->
       <el-button
         @click="loadReport"
         size="mini"
@@ -20,26 +22,30 @@
       </el-button>
     </div>
     <div class="mt-15" style="margin-bottom:-15px;">
-      <!-- v-if="$abilities('report-msk_63323_panel_summorysheat_panel-read')" -->
       <app-list :page-data="pageData" @toogleMoreData="toogleMoreData" />
-      <!-- @updateReport="loadReport" -->
     </div>
   </div>
 </template>
 
 <script>
-import AppList from '~/components/report/tabs/branch/msk-63323/report/summarySheet/List'
+import AppList from '~/components/report/tabs/branch/common/summarySheet/List'
 
 export default {
   components: {
     AppList
+  },
+  props: {
+    // id филиала - из ремонлайн
+    branchId: {
+      type: String,
+      default: '72021'
+    }
   },
   data() {
     return {
       rem: '',
       report: '',
       tempBrands: {},
-      branchId: '63323', // id филиала - из ремонлайн
       branchIdOnReport: '', // id из отчета
       pageData: {},
       originalData: {}, // оригинальные данные
@@ -53,9 +59,7 @@ export default {
         (el) => el.branch_id === this.branchId
       )
       // eslint-disable-next-line
-      return this.$store.getters['report/summary/reports'].filter((el) =>
-        el.branch_id.includes(branchId._id)
-      )
+      return this.$store.getters['report/summary/reports'].filter((el) => el.branch_id.includes(branchId._id))
     }
   },
   methods: {
@@ -82,9 +86,7 @@ export default {
         )
         this.tempBrands = {}
         // eslint-disable-next-line
-        this.tempBrands.brands = report.brands.filter(
-          (el) => el.branch._id === branchId._id
-        )
+        this.tempBrands.brands = report.brands.filter((el) => el.branch._id === branchId._id)
         this.tempBrands.total = report.total
 
         // запуск воркера
