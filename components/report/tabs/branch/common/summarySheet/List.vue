@@ -2,6 +2,24 @@
   <div>
     <div v-if="pageData.brands">
       <div class="col-9 offset-3" style="margin-top: -47px;">
+        <el-button
+          @click="saveTable"
+          :loading="loading"
+          class="saveTable"
+          type="success"
+          size="mini"
+          icon="fa fa-floppy-o"
+          title="Сохранить данные"
+        />
+        <el-button
+          @click="updateTable"
+          :loading="loading"
+          class="updateTable2"
+          type="primary"
+          size="mini"
+          icon="el-icon-refresh-left"
+          title="Обновить данные"
+        />
         <!-- показать/скрыть дополнительные бренды -->
         <el-button
           @click="toogleMoreData"
@@ -66,11 +84,15 @@ export default {
     pageData: {
       type: Object,
       default: () => {}
+    },
+    // статус загрузки
+    loading: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
-      loading: false,
       commonСolumns: null,
       totalColumns: TotalColumns,
       gridApi: null,
@@ -220,6 +242,17 @@ export default {
           })
         }
       })
+    },
+
+    /**
+     * Сохраняем таблицу
+     */
+    saveTable() {
+      this.$emit('saveTable')
+    },
+
+    updateTable() {
+      this.$emit('updateTable')
     }
   }
 }
