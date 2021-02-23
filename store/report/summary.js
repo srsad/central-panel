@@ -90,8 +90,12 @@ export const getters = {
       // возвращаем найденные приоритеты
       for (const el of domains) {
         if (el.brand.toLowerCase() === brand && el.company === branch) {
-          dcod = el.dcod
-          break
+          let _dcod = el.dcod.split('.')
+          _dcod = +_dcod[0]
+          if (_dcod < 90) {
+            dcod = el.dcod
+            break
+          }
         }
       }
 

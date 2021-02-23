@@ -148,14 +148,17 @@ export default {
 
           let dcod = '99.00.00.00.00.00.00.00' // код по умолчанию
 
-          // возвращаем найденные приоритеты
+          // возвращаем найденный dcod
           for (const el of domains) {
             if (el.brand.toLowerCase() === brand && el.company === branch) {
-              dcod = el.dcod
-              break
+              let _dcod = el.dcod.split('.')
+              _dcod = +_dcod[0]
+              if (_dcod < 90) {
+                dcod = el.dcod
+                break
+              }
             }
           }
-
           // достаем параметры для сортировки
           res.push({ ...report.brands[idx], dcod })
         }
