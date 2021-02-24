@@ -219,7 +219,8 @@ export default [
         cellStyle: { color: 'green' },
         width: 80,
         valueFormatter: (params) => {
-          return parseInt(params.value) + ' ₽'
+          const str = ('' + params.value).replace(/\s/g, '') || 0
+          return parseInt(str) + ' ₽'
         }
       },
       {
