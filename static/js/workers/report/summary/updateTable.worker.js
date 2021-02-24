@@ -1010,6 +1010,7 @@ const summarySheetPercent = {
 
 self.addEventListener('message', async (event) => {
   const table = event.data.table
+  console.log('Воркер обновления общих данных')
 
   for await (const item of table) {
     // (c4+c5) | requests.chanel.pk+requests.chanel.seo
