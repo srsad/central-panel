@@ -50,6 +50,7 @@
             :floatingFiltersHeight="20"
             :rowHeight="30"
             :defaultColDef="{ menuTabs: [] }"
+            :enableRangeSelection="true"
             :sideBar="sideBar"
             :suppressContextMenu="true"
             :style="`height: 79vh; min-width: ${windowWidth}px`"
