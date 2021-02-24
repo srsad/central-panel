@@ -219,7 +219,7 @@ export default [
         cellStyle: { color: 'green' },
         width: 80,
         valueFormatter: (params) => {
-          return new Intl.NumberFormat().format(params.value) + ' ₽'
+          return parseInt(params.value) + ' ₽'
         }
       },
       {
