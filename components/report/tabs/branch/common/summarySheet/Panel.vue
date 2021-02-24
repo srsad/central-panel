@@ -285,7 +285,7 @@ export default {
         (el) => el.branch_id === this.branchId
       )
       // eslint-disable-next-line
-      this.tempBrands.brands = data.filter((el) => el.branch._id === branchId._id)
+      this.pageData.brands = data.filter((el) => el.branch._id === branchId._id)
     },
 
     /**
