@@ -319,7 +319,7 @@ export default {
     async saveTable() {
       this.loading = true
       try {
-        this.compareTable()
+        await this.findAndCompareTable()
         await this.$axios.$put(
           '/api/v1/report/summory/update/' + this.fullData._id,
           this.fullData
@@ -342,6 +342,34 @@ export default {
         el.common_expenses.balance = parseInt(num)
         return el
       })
+    },
+
+    /**
+     * Достает актуальные данные данные и сравнивает с текущими
+     */
+    async findAndCompareTable() {
+      try {
+        const report = await this.$axios.$get(
+          '/api/v1/report/summory/get/' + this.report
+        )
+        this.fullData = JSON.parse(JSON.stringify(report))
+        this.fullData.brands = this.fullData.brands.map((el) => {
+          const item = this.pageData.brands.find((elem) => elem._id === el._id)
+          if (item) el = item
+          const num = ('' + el.common_expenses.balance).replace(/\s/g, '') || 0
+          el.common_expenses.balance = parseInt(num)
+          return el
+        })
+      } catch (e) {
+        console.error(
+          'Не удалось получить и сравнить актуальные данные',
+          e.response
+        )
+        this.$store.commit(
+          'SET_ERROR',
+          'Не удалось получить и сравнить актуальные данные'
+        )
+      }
     }
   }
 }
