@@ -174,6 +174,7 @@ export default {
 
         report.brands = [...res]
         this.setTotalDataTable(report)
+        this.toogleMoreData(true)
       } catch (e) {
         this.$store.commit(
           'SET_ERROR',
@@ -191,7 +192,6 @@ export default {
       this.pageData = JSON.parse(JSON.stringify(data))
       this.originalData = JSON.parse(JSON.stringify(data))
       this.tempBrands = {}
-      this.toogleMoreData(true)
     },
 
     /**
@@ -204,10 +204,17 @@ export default {
       // если надо скрыть
       if (this.moreData) {
         brands.brands = brands.brands.filter((el) => {
-          const dcod = el.dcod.split('.') // '99.00.00.00.00.00.00.00'
-          return +dcod[0] < 90
+          const dcod = el.dcod?.split('.') // '99.00.00.00.00.00.00.00'
+          if (dcod) return +dcod[0] < 90
+          return false
         })
       } else {
+        // актуализируем оригинальные данные
+        this.originalData.brands = this.originalData.brands.map((el) => {
+          const item = this.pageData.brands.find((elem) => elem._id === el._id)
+          if (item) el = item
+          return el
+        })
         brands.brands = this.originalData.brands
       }
       this.pageData.brands = brands.brands
@@ -284,8 +291,26 @@ export default {
       const branchId = this.$store.getters['report/branch/branches'].find(
         (el) => el.branch_id === this.branchId
       )
-      // eslint-disable-next-line
-      this.pageData.brands = data.filter((el) => el.branch._id === branchId._id)
+
+      // актуализируем оригинальные данные
+      this.originalData.brands = this.originalData.brands.map((el) => {
+        const item = data.find((elem) => elem._id === el._id)
+        if (item) el = item
+        return el
+      })
+
+      // если заполняем данные в отображаемый массив
+      // если данные скрыты
+      if (!this.moreData) {
+        // eslint-disable-next-line
+        this.pageData.brands = data.filter((el) => el.branch._id === branchId._id)
+      } else {
+        this.pageData.brands = data.filter((el) => {
+          const dcod = el.dcod?.split('.') // '99.00.00.00.00.00.00.00'
+          if (dcod) return +dcod[0] < 90
+          return false
+        })
+      }
     },
 
     /**
@@ -313,6 +338,8 @@ export default {
       this.fullData.brands = this.fullData.brands.map((el) => {
         const item = this.pageData.brands.find((elem) => elem._id === el._id)
         if (item) el = item
+        const num = ('' + el.common_expenses.balance).replace(/\s/g, '') || 0
+        el.common_expenses.balance = parseInt(num)
         return el
       })
     }
