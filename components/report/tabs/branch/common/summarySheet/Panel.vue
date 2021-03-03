@@ -356,12 +356,14 @@ export default {
         this.fullData.brands = this.fullData.brands.map((el) => {
           const item = this.pageData.brands.find((elem) => elem._id === el._id)
           if (item) el = item
+          // eslint-disable-next-line
           const balance = ('' + el.common_expenses.balance).replace(/\s/g, '') || 0
           el.common_expenses.balance = parseInt(balance)
 
           const pk = ('' + el.common_expenses.pk).replace(/\s/g, '') || 0
           el.common_expenses.pk = parseInt(pk)
 
+          // eslint-disable-next-line
           const common = ('' + el.common_expenses.common).replace(/\s/g, '') || 0
           el.common_expenses.common = parseInt(common)
 

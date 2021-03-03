@@ -31,6 +31,7 @@ export default [
         sortable: true,
         editable: true,
         valueFormatter: (params) => {
+          if (!params.value) return 0
           return ('' + params.value).replace(/\s/g, '') || 0
         }
       },
@@ -41,6 +42,7 @@ export default [
         sortable: true,
         editable: true,
         valueFormatter: (params) => {
+          if (!params.value) return 0
           return ('' + params.value).replace(/\s/g, '') || 0
         }
       },
@@ -51,6 +53,7 @@ export default [
         sortable: true,
         width: 60,
         valueFormatter: (params) => {
+          if (!params.value) return 0 + ' ₽'
           const str = ('' + params.value).replace(/\s/g, '') || 0
           return parseInt(str) + ' ₽'
         }
@@ -62,6 +65,7 @@ export default [
         sortable: true,
         width: 60,
         valueFormatter: (params) => {
+          if (!params.value) return 0 + ' ₽'
           const str = ('' + params.value).replace(/\s/g, '') || 0
           return parseInt(str) + ' ₽'
         }
@@ -79,6 +83,7 @@ export default [
         cellStyle: { fontSize: '14px !important', fontWeight: 700 },
         width: 50,
         valueFormatter: (params) => {
+          if (!params.value) return 0
           return ('' + params.value).replace(/\s/g, '') || 0
         }
       },
@@ -89,6 +94,7 @@ export default [
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
+          if (!params.value) return 0 + ' ₽'
           const str = ('' + params.value).replace(/\s/g, '') || 0
           return parseInt(str) + ' ₽'
         }
@@ -100,6 +106,7 @@ export default [
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
+          if (!params.value) return 0 + ' ₽'
           const str = ('' + params.value).replace(/\s/g, '') || 0
           return parseInt(str) + ' ₽'
         }
@@ -111,6 +118,7 @@ export default [
         sortable: true,
         width: 60,
         valueFormatter: (params) => {
+          if (!params.value) return 0 + ' ₽'
           const str = ('' + params.value).replace(/\s/g, '') || 0
           return parseInt(str) + ' ₽'
         }
@@ -128,6 +136,7 @@ export default [
         cellStyle: { fontSize: '14px !important', fontWeight: 700 },
         width: 50,
         valueFormatter: (params) => {
+          if (!params.value) return 0
           return ('' + params.value).replace(/\s/g, '') || 0
         }
       },
@@ -138,6 +147,7 @@ export default [
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
+          if (!params.value) return 0 + ' ₽'
           const str = ('' + params.value).replace(/\s/g, '') || 0
           return parseInt(str) + ' ₽'
         }
@@ -153,6 +163,7 @@ export default [
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
+          if (!params.value) return 0 + ' ₽'
           const str = ('' + params.value).replace(/\s/g, '') || 0
           return parseInt(str) + ' ₽'
         }
@@ -164,6 +175,7 @@ export default [
         sortable: true,
         width: 60,
         valueFormatter: (params) => {
+          if (!params.value) return 0 + ' ₽'
           const str = ('' + params.value).replace(/\s/g, '') || 0
           return parseInt(str) + ' ₽'
         }
@@ -181,6 +193,7 @@ export default [
         cellStyle: { fontSize: '14px !important', fontWeight: 700 },
         width: 50,
         valueFormatter: (params) => {
+          if (!params.value) return 0
           return ('' + params.value).replace(/\s/g, '') || 0
         }
       },
@@ -191,6 +204,7 @@ export default [
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
+          if (!params.value) return 0 + ' ₽'
           const str = ('' + params.value).replace(/\s/g, '') || 0
           return parseInt(str) + ' ₽'
         }
@@ -202,6 +216,7 @@ export default [
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
+          if (!params.value) return 0 + ' ₽'
           const str = ('' + params.value).replace(/\s/g, '') || 0
           return parseInt(str) + ' ₽'
         }
@@ -213,6 +228,7 @@ export default [
         sortable: true,
         width: 60,
         valueFormatter: (params) => {
+          if (!params.value) return 0 + ' ₽'
           const str = ('' + params.value).replace(/\s/g, '') || 0
           return parseInt(str) + ' ₽'
         }
@@ -230,6 +246,7 @@ export default [
         cellStyle: { color: 'green' },
         width: 80,
         valueFormatter: (params) => {
+          if (!params.value) return 0 + ' ₽'
           const str = ('' + params.value).replace(/\s/g, '') || 0
           return parseInt(str) + ' ₽'
         }
@@ -241,6 +258,7 @@ export default [
         editable: true,
         width: 80,
         valueFormatter: (params) => {
+          if (!params.value) return 0 + ' ₽'
           const str = ('' + params.value).replace(/\s/g, '') || 0
           return parseInt(str) + ' ₽'
         }
@@ -252,6 +270,7 @@ export default [
         editable: true,
         width: 80,
         valueFormatter: (params) => {
+          if (!params.value) return 0 + ' ₽'
           const str = ('' + params.value).replace(/\s/g, '') || 0
           return parseInt(str) + ' ₽'
         }
@@ -263,6 +282,7 @@ export default [
         editable: true,
         width: 80,
         valueFormatter: (params) => {
+          if (!params.value) return 0 + ' ₽'
           const str = ('' + params.value).replace(/\s/g, '') || 0
           return parseInt(str) + ' ₽'
         }
@@ -276,6 +296,7 @@ export default [
     editable: true,
     width: 100,
     valueFormatter: (params) => {
+      if (!params.value) return 0 + ' ₽'
       const str = ('' + params.value).replace(/\s/g, '') || 0
       return parseInt(str) + ' ₽'
     }
@@ -287,6 +308,7 @@ export default [
     editable: true,
     width: 100,
     valueFormatter: (params) => {
+      if (!params.value) return 0 + ' ₽'
       const str = ('' + params.value).replace(/\s/g, '') || 0
       return parseInt(str) + ' ₽'
     }
@@ -298,6 +320,7 @@ export default [
     sortable: true,
     width: 70,
     valueFormatter: (params) => {
+      if (!params.value) return 0 + ' ₽'
       const str = ('' + params.value).replace(/\s/g, '') || 0
       return parseInt(str) + ' ₽'
     }
@@ -309,6 +332,7 @@ export default [
     editable: true,
     width: 55,
     valueFormatter: (params) => {
+      if (!params.value) return 0
       return ('' + params.value).replace(/\s/g, '') || 0
     }
   },
@@ -320,6 +344,7 @@ export default [
     pinned: 'right',
     width: 100,
     valueFormatter: (params) => {
+      if (!params.value) return 0 + ' ₽'
       const str = ('' + params.value).replace(/\s/g, '') || 0
       return parseInt(str) + ' ₽'
     }
@@ -332,6 +357,7 @@ export default [
     pinned: 'right',
     width: 100,
     valueFormatter: (params) => {
+      if (!params.value) return 0 + ' ₽'
       const str = ('' + params.value).replace(/\s/g, '') || 0
       return parseInt(str) + ' ₽'
     }
@@ -349,6 +375,7 @@ export default [
       } else {
         params.colDef.cellStyle = { color: 'magenta' }
       }
+      if (!params.value) return 0 + ' ₽'
       const str = ('' + params.value).replace(/\s/g, '') || 0
       return parseInt(str) + ' ₽'
     }
@@ -361,6 +388,7 @@ export default [
     pinned: 'right',
     width: 100,
     valueFormatter: (params) => {
+      if (!params.value) return 0 + ' ₽'
       const str = ('' + params.value).replace(/\s/g, '') || 0
       return parseInt(str) + ' ₽'
     }
