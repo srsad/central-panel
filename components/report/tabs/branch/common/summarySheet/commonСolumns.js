@@ -118,9 +118,9 @@ export default [
         sortable: true,
         width: 60,
         valueFormatter: (params) => {
-          if (!params.value) return 0 + ' ₽'
+          if (!params.value) return 0
           const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          return parseInt(str)
         }
       }
     ]
@@ -175,9 +175,9 @@ export default [
         sortable: true,
         width: 60,
         valueFormatter: (params) => {
-          if (!params.value) return 0 + ' ₽'
+          if (!params.value) return 0
           const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          return parseInt(str)
         }
       }
     ]
@@ -228,9 +228,9 @@ export default [
         sortable: true,
         width: 60,
         valueFormatter: (params) => {
-          if (!params.value) return 0 + ' ₽'
+          if (!params.value) return 0
           const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          return parseInt(str)
         }
       }
     ]
