@@ -293,4 +293,7 @@ export default {
   height: 20px;
   left: 32px;
 }
+.ag-row-focus {
+  background: #dadada !important;
+}
 </style>
