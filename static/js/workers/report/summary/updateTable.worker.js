@@ -1013,6 +1013,10 @@ self.addEventListener('message', async (event) => {
   console.log('Воркер обновления общих данных')
 
   for await (const item of table) {
+    // "расходы РК" заполняются в зависимости от "расходы Баланс"
+    const balance = +(+item.common_expenses.balance / 1000).toFixed() || 0
+    item.common_expenses.pk = summarySheetPercent[balance].result * 1000
+
     // (c4+c5) | requests.chanel.pk+requests.chanel.seo
     const orderRang = +item.requests.chanel.pk + +item.requests.chanel.seo
     // (R4+S4+T4+U4) | common_expenses.balance+common_expenses.pk+common_expenses.seo+common_expenses.common
@@ -1049,10 +1053,6 @@ self.addEventListener('message', async (event) => {
     item.order_closed.traffik_price = isFinite(orderClosedTraffikPrice) ? orderClosedTraffikPrice : 0
     item.order_closed.common_price = isFinite(orderClosedCommonPrice) ? orderClosedCommonPrice : 0
     item.order_closed.conversion = isFinite(orderClosedConversion) ? orderClosedConversion : 0
-
-    // "расходы РК" заполняются в зависимости от "расходы Баланс"
-    const balance = +(+item.common_expenses.balance / 1000).toFixed() || 0
-    item.common_expenses.pk = summarySheetPercent[balance].result * 1000
 
     // вал
     item.val = Math.round(+item.revenue - +item.expenses) || 0
