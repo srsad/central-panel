@@ -32,7 +32,9 @@ export default [
         editable: true,
         valueFormatter: (params) => {
           if (!params.value) return 0
-          return ('' + params.value).replace(/\s/g, '') || 0
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value)
         }
       },
       {
@@ -43,7 +45,9 @@ export default [
         editable: true,
         valueFormatter: (params) => {
           if (!params.value) return 0
-          return ('' + params.value).replace(/\s/g, '') || 0
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value)
         }
       },
       {
@@ -54,8 +58,9 @@ export default [
         width: 60,
         valueFormatter: (params) => {
           if (!params.value) return 0 + ' ₽'
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       },
       {
@@ -66,8 +71,9 @@ export default [
         width: 60,
         valueFormatter: (params) => {
           if (!params.value) return 0 + ' ₽'
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       }
     ]
@@ -84,7 +90,9 @@ export default [
         width: 50,
         valueFormatter: (params) => {
           if (!params.value) return 0
-          return ('' + params.value).replace(/\s/g, '') || 0
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value)
         }
       },
       {
@@ -95,8 +103,9 @@ export default [
         width: 80,
         valueFormatter: (params) => {
           if (!params.value) return 0 + ' ₽'
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       },
       {
@@ -107,8 +116,9 @@ export default [
         width: 80,
         valueFormatter: (params) => {
           if (!params.value) return 0 + ' ₽'
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       },
       {
@@ -119,8 +129,9 @@ export default [
         width: 60,
         valueFormatter: (params) => {
           if (!params.value) return 0
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str)
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value)
         }
       }
     ]
@@ -137,7 +148,9 @@ export default [
         width: 50,
         valueFormatter: (params) => {
           if (!params.value) return 0
-          return ('' + params.value).replace(/\s/g, '') || 0
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value)
         }
       },
       {
@@ -148,8 +161,9 @@ export default [
         width: 80,
         valueFormatter: (params) => {
           if (!params.value) return 0 + ' ₽'
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       },
       {
@@ -164,8 +178,9 @@ export default [
         width: 80,
         valueFormatter: (params) => {
           if (!params.value) return 0 + ' ₽'
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       },
       {
@@ -176,8 +191,9 @@ export default [
         width: 60,
         valueFormatter: (params) => {
           if (!params.value) return 0
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str)
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value)
         }
       }
     ]
@@ -194,7 +210,9 @@ export default [
         width: 50,
         valueFormatter: (params) => {
           if (!params.value) return 0
-          return ('' + params.value).replace(/\s/g, '') || 0
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value)
         }
       },
       {
@@ -205,8 +223,9 @@ export default [
         width: 80,
         valueFormatter: (params) => {
           if (!params.value) return 0 + ' ₽'
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       },
       {
@@ -217,8 +236,9 @@ export default [
         width: 80,
         valueFormatter: (params) => {
           if (!params.value) return 0 + ' ₽'
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       },
       {
@@ -229,8 +249,9 @@ export default [
         width: 60,
         valueFormatter: (params) => {
           if (!params.value) return 0
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str)
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value)
         }
       }
     ]
@@ -247,8 +268,9 @@ export default [
         width: 80,
         valueFormatter: (params) => {
           if (!params.value) return 0 + ' ₽'
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       },
       {
@@ -259,8 +281,9 @@ export default [
         width: 80,
         valueFormatter: (params) => {
           if (!params.value) return 0 + ' ₽'
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       },
       {
@@ -271,8 +294,9 @@ export default [
         width: 80,
         valueFormatter: (params) => {
           if (!params.value) return 0 + ' ₽'
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       },
       {
@@ -283,8 +307,9 @@ export default [
         width: 80,
         valueFormatter: (params) => {
           if (!params.value) return 0 + ' ₽'
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       }
     ]
@@ -297,8 +322,9 @@ export default [
     width: 100,
     valueFormatter: (params) => {
       if (!params.value) return 0 + ' ₽'
-      const str = ('' + params.value).replace(/\s/g, '') || 0
-      return parseInt(str) + ' ₽'
+      let value = ('' + params.value).replace(/\s/g, '')
+      value = parseInt(value) || 0
+      return new Intl.NumberFormat().format(value) + ' ₽'
     }
   },
   {
@@ -309,8 +335,9 @@ export default [
     width: 100,
     valueFormatter: (params) => {
       if (!params.value) return 0 + ' ₽'
-      const str = ('' + params.value).replace(/\s/g, '') || 0
-      return parseInt(str) + ' ₽'
+      let value = ('' + params.value).replace(/\s/g, '')
+      value = parseInt(value) || 0
+      return new Intl.NumberFormat().format(value) + ' ₽'
     }
   },
   {
@@ -321,8 +348,9 @@ export default [
     width: 70,
     valueFormatter: (params) => {
       if (!params.value) return 0 + ' ₽'
-      const str = ('' + params.value).replace(/\s/g, '') || 0
-      return parseInt(str) + ' ₽'
+      let value = ('' + params.value).replace(/\s/g, '')
+      value = parseInt(value) || 0
+      return new Intl.NumberFormat().format(value) + ' ₽'
     }
   },
   {
@@ -333,7 +361,9 @@ export default [
     width: 55,
     valueFormatter: (params) => {
       if (!params.value) return 0
-      return ('' + params.value).replace(/\s/g, '') || 0
+      let value = ('' + params.value).replace(/\s/g, '')
+      value = parseInt(value) || 0
+      return new Intl.NumberFormat().format(value)
     }
   },
   {
@@ -345,8 +375,9 @@ export default [
     width: 100,
     valueFormatter: (params) => {
       if (!params.value) return 0 + ' ₽'
-      const str = ('' + params.value).replace(/\s/g, '') || 0
-      return parseInt(str) + ' ₽'
+      let value = ('' + params.value).replace(/\s/g, '')
+      value = parseInt(value) || 0
+      return new Intl.NumberFormat().format(value) + ' ₽'
     }
   },
   {
@@ -358,8 +389,9 @@ export default [
     width: 100,
     valueFormatter: (params) => {
       if (!params.value) return 0 + ' ₽'
-      const str = ('' + params.value).replace(/\s/g, '') || 0
-      return parseInt(str) + ' ₽'
+      let value = ('' + params.value).replace(/\s/g, '')
+      value = parseInt(value) || 0
+      return new Intl.NumberFormat().format(value) + ' ₽'
     }
   },
   {
@@ -376,8 +408,9 @@ export default [
         params.colDef.cellStyle = { color: 'magenta' }
       }
       if (!params.value) return 0 + ' ₽'
-      const str = ('' + params.value).replace(/\s/g, '') || 0
-      return parseInt(str) + ' ₽'
+      let value = ('' + params.value).replace(/\s/g, '')
+      value = parseInt(value) || 0
+      return new Intl.NumberFormat().format(value) + ' ₽'
     }
   },
   {
@@ -389,8 +422,9 @@ export default [
     width: 100,
     valueFormatter: (params) => {
       if (!params.value) return 0 + ' ₽'
-      const str = ('' + params.value).replace(/\s/g, '') || 0
-      return parseInt(str) + ' ₽'
+      let value = ('' + params.value).replace(/\s/g, '')
+      value = parseInt(value) || 0
+      return new Intl.NumberFormat().format(value) + ' ₽'
     }
   }
 ]

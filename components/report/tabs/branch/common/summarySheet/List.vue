@@ -43,6 +43,7 @@
             @grid-ready="onGridReady"
             @column-visible="onColumnVisible"
             @range-selection-changed="onRangeSelectionChanged"
+            @cell-value-changed="onCellValueChanged"
             :columnDefs="commonСolumns"
             :rowData="pageData.brands"
             :headerHeight="20"
@@ -243,6 +244,20 @@ export default {
           })
         }
       })
+    },
+
+    /**
+     * Форматирование данных при вставке в таблицу
+     */
+    onCellValueChanged(item) {
+      let value = ('' + item.value).replace(/\s/g, '') || 0
+      value = parseInt(value)
+      this.gridApi.startEditingCell({
+        rowIndex: item.rowIndex,
+        colKey: item.colDef.field,
+        charPress: value
+      })
+      this.gridApi.stopEditing()
     },
 
     /**
