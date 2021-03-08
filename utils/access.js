@@ -556,7 +556,7 @@ export default [
       },
       {
         _id: 'report-msk_72021_panel',
-        label: 'МСК Армянский',
+        label: 'МСК Сеславинская',
         children: [
           {
             _id: 'report-msk_72021_panel_summorysheat_panel',
@@ -620,6 +620,213 @@ export default [
               },
               {
                 _id: 'report-msk_72021_panel_plan_panel-remove',
+                label: 'Удаление'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  // филиалы
+  {
+    _id: 'manager',
+    label: 'Филиалы',
+    children: [
+      {
+        _id: 'manager-spb_26047_panel',
+        label: 'СПБ 2-я Красноармейская',
+        children: [
+          {
+            _id: 'manager-spb_26047_panel_schedule_panel',
+            label: 'График работ',
+            children: [
+              {
+                _id: 'manager-spb_26047_panel_schedule_panel-read',
+                label: 'Чтение'
+              },
+              {
+                _id: 'manager-spb_26047_panel_schedule_panel-create',
+                label: 'Создание'
+              },
+              {
+                _id: 'manager-spb_26047_panel_schedule_panel-update',
+                label: 'Редактирование'
+              },
+              {
+                _id: 'manager-spb_26047_panel_schedule_panel-remove',
+                label: 'Удаление'
+              }
+            ]
+          },
+          {
+            _id: 'manager-spb_26047_panel_plan_panel',
+            label: 'План',
+            children: [
+              {
+                _id: 'manager-spb_26047_panel_plan_panel-read',
+                label: 'Чтение'
+              },
+              {
+                _id: 'manager-spb_26047_panel_plan_panel-create',
+                label: 'Создание'
+              },
+              {
+                _id: 'manager-spb_26047_panel_plan_panel-update',
+                label: 'Редактирование'
+              },
+              {
+                _id: 'manager-spb_26047_panel_plan_panel-remove',
+                label: 'Удаление'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        _id: 'manager-spb_33038_panel',
+        label: 'СПБ Дмитровский',
+        children: [
+          {
+            _id: 'manager-spb_33038_panel_schedule_panel',
+            label: 'График работ',
+            children: [
+              {
+                _id: 'manager-spb_33038_panel_schedule_panel-read',
+                label: 'Чтение'
+              },
+              {
+                _id: 'manager-spb_33038_panel_schedule_panel-create',
+                label: 'Создание'
+              },
+              {
+                _id: 'manager-spb_33038_panel_schedule_panel-update',
+                label: 'Редактирование'
+              },
+              {
+                _id: 'manager-spb_33038_panel_schedule_panel-remove',
+                label: 'Удаление'
+              }
+            ]
+          },
+          {
+            _id: 'report-spb_33038_panel_plan_panel',
+            label: 'План',
+            children: [
+              {
+                _id: 'report-spb_33038_panel_plan_panel-read',
+                label: 'Чтение'
+              },
+              {
+                _id: 'report-spb_33038_panel_plan_panel-create',
+                label: 'Создание'
+              },
+              {
+                _id: 'report-spb_33038_panel_plan_panel-update',
+                label: 'Редактирование'
+              },
+              {
+                _id: 'report-spb_33038_panel_plan_panel-remove',
+                label: 'Удаление'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        _id: 'manager-msk_63323_panel',
+        label: 'МСК Новослободская',
+        children: [
+          {
+            _id: 'manager-msk_63323_panel_schedule_panel',
+            label: 'График работ',
+            children: [
+              {
+                _id: 'manager-msk_63323_panel_schedule_panel-read',
+                label: 'Чтение'
+              },
+              {
+                _id: 'manager-msk_63323_panel_schedule_panel-create',
+                label: 'Создание'
+              },
+              {
+                _id: 'manager-msk_63323_panel_schedule_panel-update',
+                label: 'Редактирование'
+              },
+              {
+                _id: 'manager-msk_63323_panel_schedule_panel-remove',
+                label: 'Удаление'
+              }
+            ]
+          },
+          {
+            _id: 'report-msk_63323_panel_plan_panel',
+            label: 'План',
+            children: [
+              {
+                _id: 'report-msk_63323_panel_plan_panel-read',
+                label: 'Чтение'
+              },
+              {
+                _id: 'report-msk_63323_panel_plan_panel-create',
+                label: 'Создание'
+              },
+              {
+                _id: 'report-msk_63323_panel_plan_panel-update',
+                label: 'Редактирование'
+              },
+              {
+                _id: 'report-msk_63323_panel_plan_panel-remove',
+                label: 'Удаление'
+              }
+            ]
+          }
+        ]
+      },
+      {
+        _id: 'manager-msk_72021_panel',
+        label: 'МСК Сеславинская',
+        children: [
+          {
+            _id: 'manager-msk_72021_panel_schedule_panel',
+            label: 'График работ',
+            children: [
+              {
+                _id: 'manager-msk_72021_panel_schedule_panel-read',
+                label: 'Чтение'
+              },
+              {
+                _id: 'manager-msk_72021_panel_schedule_panel-create',
+                label: 'Создание'
+              },
+              {
+                _id: 'manager-msk_72021_panel_schedule_panel-update',
+                label: 'Редактирование'
+              },
+              {
+                _id: 'manager-msk_72021_panel_schedule_panel-remove',
+                label: 'Удаление'
+              }
+            ]
+          },
+          {
+            _id: 'manager-msk_72021_panel_plan_panel',
+            label: 'План',
+            children: [
+              {
+                _id: 'manager-msk_72021_panel_plan_panel-read',
+                label: 'Чтение'
+              },
+              {
+                _id: 'manager-msk_72021_panel_plan_panel-create',
+                label: 'Создание'
+              },
+              {
+                _id: 'manager-msk_72021_panel_plan_panel-update',
+                label: 'Редактирование'
+              },
+              {
+                _id: 'manager-msk_72021_panel_plan_panel-remove',
                 label: 'Удаление'
               }
             ]

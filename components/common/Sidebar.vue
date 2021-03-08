@@ -71,6 +71,12 @@
         Отчеты
       </span>
     </el-menu-item>
+    <el-menu-item v-if="$abilities('manager')" index="/manager">
+      <i class="el-icon-school" />
+      <span slot="title">
+        Филиалы
+      </span>
+    </el-menu-item>
     <!--  -->
     <!-- crm -->
     <template v-if="$abilities('crm')">
