@@ -40,14 +40,14 @@
 import AppList from '~/components/manager/schedule/List'
 
 export default {
+  components: {
+    AppList
+  },
   props: {
     branch: {
       type: String,
       default: '33038'
     }
-  },
-  components: {
-    AppList
   },
   data() {
     return {

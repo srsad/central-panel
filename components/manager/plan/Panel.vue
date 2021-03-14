@@ -52,14 +52,14 @@ import moment from 'moment'
 moment.locale('ru')
 
 export default {
+  components: {
+    AppList
+  },
   props: {
     branch: {
       type: String,
       default: '33038'
     }
-  },
-  components: {
-    AppList
   },
   data() {
     return {
