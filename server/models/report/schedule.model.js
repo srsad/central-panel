@@ -5,7 +5,7 @@
  * @property {string} branch.required - id филиала из таблицы report_branches
  * @property {integer} menuindex - поле по которому будет происходить сортировка
  * @property {Array.<Schedules>} schedules - Расписание
- * @property {SchedulesResunlt.model} result - Результат
+ * @property {SchedulesResult.model} result - Результат
  */
 
 const { model, Schema } = require('mongoose')
@@ -86,7 +86,7 @@ module.exports = model('report_schedules', scheduleSchema)
  */
 
 /**
- * @typedef SchedulesResunlt - Результат расписания
+ * @typedef SchedulesResult - Результат расписания
  * @description - Результат расписания
  * @property {string} monday - Понедельник
  * @property {string} tuesday - Вторник
