@@ -182,7 +182,10 @@ export default [
         cellStyle: { color: 'green' },
         width: 80,
         valueFormatter: (params) => {
-          return new Intl.NumberFormat().format(params.value) + ' ₽'
+          if (!params.value) return 0 + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       },
       {
@@ -191,7 +194,11 @@ export default [
         cellStyle: {},
         width: 80,
         valueFormatter: (params) => {
-          return new Intl.NumberFormat().format(params.value) + ' ₽'
+          if (!params.value) return 0 + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          if (value !== 0) value = Math.round(value / 100) * 100
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       },
       {

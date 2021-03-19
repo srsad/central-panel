@@ -227,8 +227,10 @@ export default [
         editable: true,
         width: 80,
         valueFormatter: (params) => {
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          if (!params.value) return 0 + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       },
       {
@@ -238,8 +240,11 @@ export default [
         editable: true,
         width: 80,
         valueFormatter: (params) => {
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          if (!params.value) return 0 + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          if (value !== 0) value = Math.round(value / 100) * 100
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       },
       {
