@@ -1033,23 +1033,23 @@ self.addEventListener('message', async (event) => {
     item.requests.traffik_price = isFinite(requestsTraffikPrice) ? requestsTraffikPrice : 0
     item.requests.common_price = isFinite(requestsCommonPrice) ? requestsCommonPrice : 0
     // запись
-    const orderTraffikPrice = Math.round(+item.common_expenses.balance / +item.order.count)
-    const orderCommonPrice = Math.round(commonExpenses / +item.order.count)
-    const orderConversion = Math.round(+item.order.count / orderRang * 100)
+    const orderTraffikPrice = +item.order.count === 0 ? +item.common_expenses.balance : Math.round(+item.common_expenses.balance / +item.order.count)
+    const orderCommonPrice = +item.order.count === 0 ? commonExpenses : Math.round(commonExpenses / +item.order.count)
+    const orderConversion = +item.order.count === 0 ? Math.round(orderRang * 100) : Math.round(+item.order.count / orderRang * 100)
     item.order.traffik_price = isFinite(orderTraffikPrice) ? orderTraffikPrice : 0
     item.order.common_price = isFinite(orderCommonPrice) ? orderCommonPrice : 0
     item.order.conversion = isFinite(orderConversion) ? orderConversion : 0
     // Пришёл в СЦ
-    const cameToSCTraffikPrice = Math.round(+item.common_expenses.balance / +item.came_to_sc.count)
-    const cameToSCCommonPrice = Math.round(commonExpenses / +item.came_to_sc.count)
-    const cameToSCConversion = Math.round(+item.came_to_sc.count / orderRang * 100)
+    const cameToSCTraffikPrice = +item.came_to_sc.count === 0 ? +item.common_expenses.balance : Math.round(+item.common_expenses.balance / +item.came_to_sc.count)
+    const cameToSCCommonPrice = +item.came_to_sc.count === 0 ? commonExpenses : Math.round(commonExpenses / +item.came_to_sc.count)
+    const cameToSCConversion = +item.came_to_sc.count === 0 ? Math.round(orderRang * 100) : Math.round(+item.came_to_sc.count / orderRang * 100)
     item.came_to_sc.traffik_price = isFinite(cameToSCTraffikPrice) ? cameToSCTraffikPrice : 0
     item.came_to_sc.common_price = isFinite(cameToSCCommonPrice) ? cameToSCCommonPrice : 0
     item.came_to_sc.conversion = isFinite(cameToSCConversion) ? cameToSCConversion : 0
     // Клиент закрыт
-    const orderClosedTraffikPrice = Math.round(+item.common_expenses.balance / +item.order_closed.count)
-    const orderClosedCommonPrice = Math.round(commonExpenses / +item.order_closed.count)
-    const orderClosedConversion = Math.round(+item.order_closed.count / orderRang * 100)
+    const orderClosedTraffikPrice = +item.order_closed.count === 0 ? +item.common_expenses.balance : Math.round(+item.common_expenses.balance / +item.order_closed.count)
+    const orderClosedCommonPrice = +item.order_closed.count === 0 ? commonExpenses : Math.round(commonExpenses / +item.order_closed.count)
+    const orderClosedConversion = +item.order_closed.count === 0 ? Math.round(orderRang * 100) : Math.round(+item.order_closed.count / orderRang * 100)
     item.order_closed.traffik_price = isFinite(orderClosedTraffikPrice) ? orderClosedTraffikPrice : 0
     item.order_closed.common_price = isFinite(orderClosedCommonPrice) ? orderClosedCommonPrice : 0
     item.order_closed.conversion = isFinite(orderClosedConversion) ? orderClosedConversion : 0
