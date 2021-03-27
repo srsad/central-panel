@@ -398,11 +398,6 @@ export default {
       }, 2000)
     },
 
-    // TODO перевести в фильтры
-    priceMask(val) {
-      return val ? `${val} ₽` : '-'
-    },
-
     /**
      * Импорт/экспорт данных для наполнение Леней
      */
@@ -998,8 +993,7 @@ export default {
 .input-transparent input {
   padding-right: 7px !important;
 }
-.el-input__inner {
-}
+.el-input__inner {}
 .el-table th > .cell {
   font-weight: 400;
   font-size: 13px;
