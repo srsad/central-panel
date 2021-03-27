@@ -11,8 +11,8 @@ self.addEventListener('message', async (event) => {
   const indexRevenue = items[0].indexOf('Оплачено') // индекс выручки
   const indexExpenses = items[0].indexOf('Себестоимость') // индекс расходов
 
-  // алиасы
-  const alias = new Map([
+  // алиасы для брендов
+  const brandAlias = new Map([
     ['Hewlett-Packard', 'HP'],
     ['Microsoft', 'xBox'],
     ['Seagate', 'A-Data'],
@@ -22,7 +22,14 @@ self.addEventListener('message', async (event) => {
     ['Transcend', 'A-Data'],
     ['SanDisk', 'A-Data'],
     ['QUMO', 'A-Data'],
-    ['Vebratim', 'A-Data']
+    ['Vebratim', 'A-Data'],
+    ['Verbatim', 'A-Data'],
+    ['SiliconPower', 'A-Data']
+  ])
+
+  // алиасы для филиалов
+  const branchAlias = new Map([
+    ['мск армянский', 'мск сеславинская']
   ])
 
   items.shift() // удаляем первую строку
@@ -38,10 +45,12 @@ self.addEventListener('message', async (event) => {
       let brand = row[indexBrand].split(',')
       brand = brand[0].trim()
       // замена на alias
-      if (alias.get(brand)) brand = alias.get(brand)
+      if (brandAlias.get(brand)) brand = brandAlias.get(brand)
       brand = brand.toLowerCase()
 
-      const branch = row[indexBranch].toLowerCase().trim()
+      let branch = row[indexBranch].trim().toLowerCase()
+      if (branchAlias.get(branch)) branch = branchAlias.get(branch)
+
       // все заказы
       if (brand === brandName && branchName === branch) {
         orders++

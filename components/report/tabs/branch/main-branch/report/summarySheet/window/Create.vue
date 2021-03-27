@@ -273,6 +273,9 @@ export default {
       for (const item of this.$store.getters['report/branch/branches']) {
         branchMap.set(item.name, item._id)
       }
+      // Дополняем уже не актуальными филиалами, чтоб не потерять данные из старых отчетов
+      // МСК Сеславинская = МСК Армянский, по этому id один и тот-же
+      branchMap.set('МСК Армянский', '5fb91dba28d2c0ccb048554a')
 
       // получаем индексы нужных позиций
       const excelList = [...this.excelList]
@@ -320,6 +323,7 @@ export default {
           brandAndBranch.set(`${brandId._id}_${branchId}`, '+')
         }
       }
+
       brandAndBranch.clear()
       this.loading = false
       this.excelList = []
