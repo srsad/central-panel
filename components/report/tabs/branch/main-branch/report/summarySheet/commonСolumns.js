@@ -21,7 +21,6 @@ export default [
     sortable: true
   },
   {
-    // field: 'brand.name',
     headerName: 'Заявки',
     children: [
       {
@@ -31,7 +30,10 @@ export default [
         sortable: true,
         editable: true,
         valueFormatter: (params) => {
-          return ('' + params.value).replace(/\s/g, '') || 0
+          if (!params.value) return 0
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value)
         }
       },
       {
@@ -41,7 +43,10 @@ export default [
         sortable: true,
         editable: true,
         valueFormatter: (params) => {
-          return ('' + params.value).replace(/\s/g, '') || 0
+          if (!params.value) return 0
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value)
         }
       },
       {
@@ -51,8 +56,10 @@ export default [
         sortable: true,
         width: 60,
         valueFormatter: (params) => {
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          if (!params.value) return 0 + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       },
       {
@@ -62,8 +69,10 @@ export default [
         sortable: true,
         width: 60,
         valueFormatter: (params) => {
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          if (!params.value) return 0 + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       }
     ]
@@ -79,7 +88,10 @@ export default [
         cellStyle: { fontSize: '14px !important', fontWeight: 700 },
         width: 50,
         valueFormatter: (params) => {
-          return ('' + params.value).replace(/\s/g, '') || 0
+          if (!params.value) return 0
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value)
         }
       },
       {
@@ -89,8 +101,10 @@ export default [
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          if (!params.value) return 0 + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       },
       {
@@ -100,8 +114,10 @@ export default [
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          if (!params.value) return 0 + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       },
       {
@@ -111,7 +127,10 @@ export default [
         sortable: true,
         width: 60,
         valueFormatter: (params) => {
-          return ('' + params.value).replace(/\s/g, '') || 0 + ' %'
+          if (!params.value) return 0
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value)
         }
       }
     ]
@@ -127,7 +146,10 @@ export default [
         cellStyle: { fontSize: '14px !important', fontWeight: 700 },
         width: 50,
         valueFormatter: (params) => {
-          return ('' + params.value).replace(/\s/g, '') || 0
+          if (!params.value) return 0
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value)
         }
       },
       {
@@ -137,8 +159,10 @@ export default [
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          if (!params.value) return 0 + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       },
       {
@@ -152,8 +176,10 @@ export default [
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          if (!params.value) return 0 + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       },
       {
@@ -163,7 +189,10 @@ export default [
         sortable: true,
         width: 60,
         valueFormatter: (params) => {
-          return ('' + params.value).replace(/\s/g, '') || 0 + ' %'
+          if (!params.value) return 0
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value)
         }
       }
     ]
@@ -179,7 +208,10 @@ export default [
         cellStyle: { fontSize: '14px !important', fontWeight: 700 },
         width: 50,
         valueFormatter: (params) => {
-          return ('' + params.value).replace(/\s/g, '') || 0
+          if (!params.value) return 0
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value)
         }
       },
       {
@@ -189,8 +221,10 @@ export default [
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          if (!params.value) return 0 + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       },
       {
@@ -200,8 +234,10 @@ export default [
         sortable: true,
         width: 80,
         valueFormatter: (params) => {
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          if (!params.value) return 0 + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       },
       {
@@ -211,7 +247,10 @@ export default [
         sortable: true,
         width: 60,
         valueFormatter: (params) => {
-          return ('' + params.value).replace(/\s/g, '') || 0 + ' %'
+          if (!params.value) return 0
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value)
         }
       }
     ]
@@ -222,9 +261,9 @@ export default [
       {
         field: 'common_expenses.balance',
         headerName: 'Баланс',
-        cellStyle: { color: 'green' },
         sortable: true,
         editable: true,
+        cellStyle: { color: 'green' },
         width: 80,
         valueFormatter: (params) => {
           if (!params.value) return 0 + ' ₽'
@@ -254,8 +293,10 @@ export default [
         editable: true,
         width: 80,
         valueFormatter: (params) => {
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          if (!params.value) return 0 + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       },
       {
@@ -265,8 +306,10 @@ export default [
         editable: true,
         width: 80,
         valueFormatter: (params) => {
-          const str = ('' + params.value).replace(/\s/g, '') || 0
-          return parseInt(str) + ' ₽'
+          if (!params.value) return 0 + ' ₽'
+          let value = ('' + params.value).replace(/\s/g, '')
+          value = parseInt(value) || 0
+          return new Intl.NumberFormat().format(value) + ' ₽'
         }
       }
     ]
@@ -278,8 +321,10 @@ export default [
     editable: true,
     width: 100,
     valueFormatter: (params) => {
-      const str = ('' + params.value).replace(/\s/g, '') || 0
-      return parseInt(str) + ' ₽'
+      if (!params.value) return 0 + ' ₽'
+      let value = ('' + params.value).replace(/\s/g, '')
+      value = parseInt(value) || 0
+      return new Intl.NumberFormat().format(value) + ' ₽'
     }
   },
   {
@@ -289,8 +334,10 @@ export default [
     editable: true,
     width: 100,
     valueFormatter: (params) => {
-      const str = ('' + params.value).replace(/\s/g, '') || 0
-      return parseInt(str) + ' ₽'
+      if (!params.value) return 0 + ' ₽'
+      let value = ('' + params.value).replace(/\s/g, '')
+      value = parseInt(value) || 0
+      return new Intl.NumberFormat().format(value) + ' ₽'
     }
   },
   {
@@ -300,8 +347,10 @@ export default [
     sortable: true,
     width: 70,
     valueFormatter: (params) => {
-      const str = ('' + params.value).replace(/\s/g, '') || 0
-      return parseInt(str) + ' ₽'
+      if (!params.value) return 0 + ' ₽'
+      let value = ('' + params.value).replace(/\s/g, '')
+      value = parseInt(value) || 0
+      return new Intl.NumberFormat().format(value) + ' ₽'
     }
   },
   {
@@ -311,7 +360,10 @@ export default [
     editable: true,
     width: 55,
     valueFormatter: (params) => {
-      return ('' + params.value).replace(/\s/g, '') || 0
+      if (!params.value) return 0
+      let value = ('' + params.value).replace(/\s/g, '')
+      value = parseInt(value) || 0
+      return new Intl.NumberFormat().format(value)
     }
   },
   {
@@ -322,8 +374,10 @@ export default [
     pinned: 'right',
     width: 100,
     valueFormatter: (params) => {
-      const str = ('' + params.value).replace(/\s/g, '') || 0
-      return parseInt(str) + ' ₽'
+      if (!params.value) return 0 + ' ₽'
+      let value = ('' + params.value).replace(/\s/g, '')
+      value = parseInt(value) || 0
+      return new Intl.NumberFormat().format(value) + ' ₽'
     }
   },
   {
@@ -334,8 +388,10 @@ export default [
     pinned: 'right',
     width: 100,
     valueFormatter: (params) => {
-      const str = ('' + params.value).replace(/\s/g, '') || 0
-      return parseInt(str) + ' ₽'
+      if (!params.value) return 0 + ' ₽'
+      let value = ('' + params.value).replace(/\s/g, '')
+      value = parseInt(value) || 0
+      return new Intl.NumberFormat().format(value) + ' ₽'
     }
   },
   {
@@ -347,33 +403,28 @@ export default [
     width: 100,
     valueFormatter: (params) => {
       if (+params.value < 0) {
-        params.colDef.cellStyle = {
-          'background-color': '#eacece',
-          color: '#333'
-        }
+        params.colDef.cellStyle = { color: '#333' }
       } else {
-        params.colDef.cellStyle = {
-          color: 'magenta'
-        }
+        params.colDef.cellStyle = { color: 'magenta' }
       }
-      const str = ('' + params.value).replace(/\s/g, '') || 0
-      return parseInt(str) + ' ₽'
+      if (!params.value) return 0 + ' ₽'
+      let value = ('' + params.value).replace(/\s/g, '')
+      value = parseInt(value) || 0
+      return new Intl.NumberFormat().format(value) + ' ₽'
     }
   },
   {
     field: 'spz',
     headerName: 'СПЗ',
-    cellStyle: {
-      color: 'blue',
-      fontSize: '14px !important',
-      fontWeight: 700
-    },
+    cellStyle: { color: 'blue', fontSize: '14px !important', fontWeight: 700 },
     sortable: true,
     pinned: 'right',
     width: 100,
     valueFormatter: (params) => {
-      const str = ('' + params.value).replace(/\s/g, '') || 0
-      return parseInt(str) + ' ₽'
+      if (!params.value) return 0 + ' ₽'
+      let value = ('' + params.value).replace(/\s/g, '')
+      value = parseInt(value) || 0
+      return new Intl.NumberFormat().format(value) + ' ₽'
     }
   }
 ]
