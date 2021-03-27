@@ -35,7 +35,7 @@
         @saveTable="runWorkerCountingFullTheTotal"
         @updateTable="updateTable"
       />
-      <!-- созраняю через переподсчет всей таблицы -->
+      <!-- сохраняю через переподсчет всей таблицы -->
     </div>
   </div>
 </template>
