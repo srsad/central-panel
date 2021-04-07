@@ -7,7 +7,11 @@ self.addEventListener('message', async (event) => {
   const items = event.data.arr
   const table = event.data.table
 
-  const indexBrand = items[0].indexOf('Бренд') // индекс бренда
+  let indexBrand = items[0].indexOf('Бренд') // индекс бренда
+  // если поле бренда нижене пустое, в ином случае ищим второе совподение
+  if (!items[1][indexBrand]) {
+    indexBrand = items[0].indexOf('Бренд', indexBrand + 1) // индекс бренда
+  }
   const indexBranch = items[0].indexOf('Создан в локации') // индекс филиала
   const indexStatus = items[0].indexOf('Статус') // индекс статуса
 

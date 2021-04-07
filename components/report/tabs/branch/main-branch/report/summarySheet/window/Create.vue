@@ -279,7 +279,12 @@ export default {
 
       // получаем индексы нужных позиций
       const excelList = [...this.excelList]
-      const indexBrand = excelList[0].indexOf('Бренд') // индекс бренда
+      let indexBrand = excelList[0].indexOf('Бренд') // индекс бренда
+      // если поле бренда нижене пустое, в ином случае ищим второе совподение
+      if (!excelList[1][indexBrand]) {
+        indexBrand = excelList[0].indexOf('Бренд', indexBrand + 1) // индекс бренда
+      }
+
       const indexBranch = excelList[0].indexOf('Создан в локации') // индекс филиала
       excelList.shift() // удаляем первую строку
 
