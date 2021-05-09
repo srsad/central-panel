@@ -81,7 +81,7 @@ const reportManagerPlans = new Schema({
       }
     }]
   },
-  // инженеры
+  // сервисного центра
   service_center: {
     type: Object,
     default: {

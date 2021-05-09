@@ -6,3 +6,14 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    branch: {
+      type: String,
+      default: '33038'
+    }
+  }
+}
+</script>
