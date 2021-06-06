@@ -47,6 +47,11 @@
             </a>
           </template>
         </el-table-column>
+        <el-table-column width="60">
+          <div slot-scope="scope" class="text-right">
+            {{ getAdType(scope.row.dcod) }}
+          </div>
+        </el-table-column>
         <el-table-column label="Заглушка" width="100">
           <template slot-scope="scope">
             <div :title="scope.row.phone_default" class="ws-normal">
@@ -68,14 +73,14 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="Alloka" width="110">
+        <el-table-column label="Alloka" width="130">
           <template slot-scope="scope">
             <div :title="scope.row.alloka.id" class="ws-normal">
               {{ scope.row.alloka.id }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="envybox.id" label="Envybox" width="110">
+        <el-table-column prop="envybox.id" label="Envybox" width="240">
           <template slot-scope="scope">
             <div :title="scope.row.envybox.id" class="ws-normal">
               {{ scope.row.envybox.id }}
@@ -273,6 +278,23 @@ export default {
       res = this.$store.getters['report/branch/branches'].find((el) => el.short_num_code === dcod[0])
 
       return res?.short_code || '---'
+    },
+
+    /**
+     * Возвращает тип рекламы по dcod
+     */
+    getAdType(str) {
+      if (!str) return '-'
+
+      const dcod = str.split('.')
+      switch (dcod[3]) {
+        case '01':
+          return 'YD'
+        case '02':
+          return 'GA'
+        default:
+          return 'YD GA'
+      }
     }
   }
 }
