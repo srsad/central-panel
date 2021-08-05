@@ -55,6 +55,28 @@
           dcod="04"
         />
       </el-tab-pane>
+      <el-tab-pane name="ban">
+        <div slot="label">
+          <el-popover
+            placement="top-start"
+            trigger="hover"
+            content="Все домены начинающиеся с id = 99.*"
+          >
+            <span slot="reference">
+              Бан
+              <i class="el-icon-s-opportunity" />
+            </span>
+          </el-popover>
+        </div>
+        <app-list
+          :items="domains"
+          :loading="loading"
+          @edit="edit"
+          @remove="remove"
+          @switchStatus="switchStatus"
+          dcod="99"
+        />
+      </el-tab-pane>
     </el-tabs>
 
     <!--  -->
