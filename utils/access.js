@@ -1052,6 +1052,28 @@ export default [
     ]
   },
   {
+    _id: 'constructor',
+    label: 'Конструктор сайтов',
+    children: [
+      {
+        _id: 'constructor-read',
+        label: 'Чтение'
+      },
+      {
+        _id: 'constructor-create',
+        label: 'Создание'
+      },
+      {
+        _id: 'constructor-update',
+        label: 'Редактирование'
+      },
+      {
+        _id: 'constructor-remove',
+        label: 'Удаление'
+      }
+    ]
+  },
+  {
     _id: 'code',
     label: 'Консоль'
   }
