@@ -132,9 +132,13 @@
       <span slot="title">Настройки</span>
     </el-menu-item>
     <!-- TODO в разделе "Настройки" будем хранить логи деталей -->
-    <el-menu-item v-if="$abilities('code')" index="/code">
+    <!-- <el-menu-item v-if="$abilities('code')" index="/code">
       <i class="fa fa-code" />
       <span slot="title">Console</span>
+    </el-menu-item> -->
+    <el-menu-item v-if="$abilities('constructor')" index="/constructor">
+      <i class="fa fa-code" />
+      <span slot="title">Конструктор сайтов</span>
     </el-menu-item>
     <!--  -->
     <el-menu-item @click="logout" index="">
