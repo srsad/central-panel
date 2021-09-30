@@ -266,7 +266,8 @@ export default {
         ['QUMO', 'A-Data'],
         ['Vebratim', 'A-Data'],
         ['Verbatim', 'A-Data'],
-        ['SiliconPower', 'A-Data']
+        ['SiliconPower', 'A-Data'],
+        ['Восстановление данных', 'A-Data']
       ])
 
       // наполняю branchMap актуальными данными

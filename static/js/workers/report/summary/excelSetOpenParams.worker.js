@@ -28,7 +28,8 @@ self.addEventListener('message', async (event) => {
     ['QUMO', 'A-Data'],
     ['Vebratim', 'A-Data'],
     ['Verbatim', 'A-Data'],
-    ['SiliconPower', 'A-Data']
+    ['SiliconPower', 'A-Data'],
+    ['Восстановление данных', 'A-Data']
   ])
 
   // алиасы для филиалов
