@@ -10,6 +10,7 @@ import Cookies from 'js-cookie'
 
 export const state = () => ({
   breadcrumbs: [], // хлебные крошки
+  tableEmptyText: 'Нет данных', // текст при пустой таблице
   isCollapse: true, // скрытие/раскрытие бокового меню
   drawerCreateRole: false, // Окно для создания роли
   drawerUpdateRole: false, // Окно для редактироавния роли
@@ -40,7 +41,9 @@ export const state = () => ({
   drawerSiteTestimonialCreate: false, // Окно создания отзыва
   drawerSiteTestimonialUpdate: false, // Окно редактирования отзыва
   drawerReportScheduleCreate: false, // Окно создания новго расписания в разделе отчеты
-  drawerReportBranchUpdate: false // Окно редактирования филиала
+  drawerReportBranchUpdate: false, // Окно редактирования филиала
+  windowConstructorSiteCreate: false, // Окно создания новго сайта конструктора
+  windowConstructorSiteUpdate: false // Окно редактиорвания сайта конструктора
 })
 
 export const actions = {
