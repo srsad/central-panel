@@ -19,6 +19,10 @@
 </template>
 
 <script>
+/**
+ * Верхняя навигация на странице конструктора
+ */
+
 export default {
   methods: {
     /**
@@ -67,6 +71,8 @@ export default {
         'siteConstructor/page/options/SET_WIDTH',
         windowSize.get(size[1])
       )
+      //  TODO добавить эти параметры в query uri, для удобной навигации
+      // this.$router.push('?size=' + size[1])
     }
   }
 }
