@@ -29,6 +29,7 @@ const crmRoutes = require('./routes/v1/crm')
 const siteRoutes = require('./routes/v1/site')
 const analyticsRoutes = require('./routes/v1/analytics')
 const unansweredRoutes = require('./routes/v1/unanswered.routes')
+const constructorRoutes = require('./routes/v1/constructor')
 
 mongoose
   // .plugin(accessibleRecordsPlugin)
@@ -78,6 +79,7 @@ app.use('/api/v1/site', siteRoutes)
 app.use('/api/v1/exceptions', exceptionsRoutes)
 app.use('/api/v1/analytics', analyticsRoutes)
 app.use('/api/v1/unanswered', unansweredRoutes)
+app.use('/api/v1/constructor', constructorRoutes)
 
 // socket.io
 const wrap = (middleware) => (socket, next) => middleware(socket.request, {}, next)
