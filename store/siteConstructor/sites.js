@@ -56,6 +56,24 @@ export const actions = {
       commit('SET_ERROR', e.response.data.message, { root: true })
       throw e
     }
+  },
+
+  /**
+   * Проверка сайта на наличие. Используется для валиадации
+   */
+  async checkSite({ commit }, siteId) {
+    try {
+      const res = await this.$axios.get(
+        '/api/v1/constructor/site/get/' + siteId
+      )
+      return res.data
+    } catch (e) {
+      console.error(
+        '[store/siteConstructor/sites.js/ action => checkSite] Не удалось проверить сайт'
+      )
+      commit('SET_ERROR', e.response.data.message, { root: true })
+      throw e
+    }
   }
 }
 

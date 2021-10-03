@@ -1,7 +1,7 @@
 <template>
   <div class="bodyPage">
     <div :style="{ width: windowWidth + 'px' }">
-      <div v-for="idx in 35" :key="idx">asdasdasd {{ idx }}</div>
+      <div>asdasdasd</div>
     </div>
   </div>
 </template>
@@ -14,23 +14,13 @@ export default {
       return this.$store.getters['siteConstructor/page/options/width']
     }
   },
-  validate({ params, query, store }) {
-    // let res = false
-    // try {
-    //   // загрузка данных страницы
-    //   await store.dispatch('source/page/getPage', params.id)
-    //   const page = await store.getters['source/page/params']
-    //   // store.dispatch('settings/setBreadcrumbs', [
-    //   //   {
-    //   //     uri: '/company/' + page._id,
-    //   //     label: page.brand + ' - ' + page.company
-    //   //   }
-    //   // ])
-    //   if (page) res = true // false => 404
-    // } catch (e) {}
-    console.log('ctx', params, query)
-    // return res
-    return true
+  async validate({ params, query, store }) {
+    // console.log('ctx', params, query)
+    const res = await store.dispatch(
+      'siteConstructor/sites/checkSite',
+      params.id
+    )
+    return res?.name
   }
 }
 </script>
