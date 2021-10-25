@@ -169,7 +169,6 @@ module.exports.getAll = async (req, res) => {
 /** Сохраняем данные на источнике */
 async function updateSourceOptions(options) {
   try {
-    // axios.$setToken(false)
     await axios.get(`https://${options.domain}/rest/`, {
       params: {
         create: 'options',
@@ -180,6 +179,7 @@ async function updateSourceOptions(options) {
         map_script: options.map_script.replace(/script/gi, '###') || '',
         phone_default: options.phone_default || '',
         work_time: options.work_time || '',
+        dcod: options.dcod || '',
         yametrika: options.yametrika.code.replace(/script/gi, '###') || ''
       }
     })
