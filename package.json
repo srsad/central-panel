@@ -62,7 +62,7 @@
     "vue-socket.io": "^3.0.10",
     "vue-yandex-maps": "^0.10.7",
     "vue2-editor": "^2.10.2",
-    "vuedraggable": "^2.23.2",
+    "vuedraggable": "^2.24.3",
     "worker-loader": "^3.0.5",
     "xlsx": "^0.16.8"
   },

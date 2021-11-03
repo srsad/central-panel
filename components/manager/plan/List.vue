@@ -96,8 +96,8 @@
 
     <!--  -->
     <div class="ml-15">
+      <!-- v-if="$abilities('report-spb_33038_panel_plan_panel-remove')" -->
       <el-popconfirm
-        v-if="$abilities('report-spb_33038_panel_plan_panel-remove')"
         @onConfirm="remove(item)"
         title="Удалить план?"
         confirm-button-text="Да"

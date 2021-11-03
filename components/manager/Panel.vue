@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-tabs value="plan" type="border-card">
+    <el-tabs value="managment" type="border-card">
       <el-tab-pane :lazy="true" label="План" name="plan">
         <app-plan :branch="branch" />
       </el-tab-pane>
@@ -15,14 +15,14 @@
 </template>
 
 <script>
-import AppSchedule from '~/components/manager/schedule/Panel'
 import AppPlan from '~/components/manager/plan/Panel'
+import AppSchedule from '~/components/manager/schedule/Panel'
 import AppManager from '~/components/manager/manager/Panel'
 
 export default {
   components: {
-    AppSchedule,
     AppPlan,
+    AppSchedule,
     AppManager
   },
   props: {

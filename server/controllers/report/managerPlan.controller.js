@@ -1,4 +1,4 @@
-const managerPlan = require('../../models/report/managerPlan.model')
+const ManagerPlan = require('../../models/report/managerPlan.model')
 
 /** Создание */
 module.exports.create = async (req, res) => {
@@ -42,6 +42,23 @@ module.exports.getById = async (req, res) => {
     res.status(200).json(recording)
   } catch (error) {
     req.status(500).json({ message: 'Не удалось полуичть отчет!', error })
+  }
+}
+
+/**
+ * Вывод планов конкретного филиала
+ */
+module.exports.getByBranch = async (req, res) => {
+  try {
+    const items = await ManagerPlan.find({
+      branch: req.params.branchId,
+    })
+    .sort({ name: 1 })
+    res.json(items)
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: 'Не удалось получить список отчетов!', error })
   }
 }
 

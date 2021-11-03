@@ -2,6 +2,7 @@
  * Отчеты - план для менеджеров и инженеров
  * @typedef ManagerPlans - план для менеджеров и инженеров
  * @property {string} name.required - Наименование отчета
+ * @property {string} branch.required - Филиал
  * @property {Array.<ManagerPlanStructur>} managers - Структура для блока с менеджерами
  * @property {ManagerPlanSCStructur.model} service_center - Структура для блока с сервисного центра
  * @property {Array.<ManagerPlanStructur>} engineer - Структура для блока с инженерами
@@ -15,204 +16,202 @@ const reportManagerPlans = new Schema({
     required: true,
     index: true
   },
-  // менеджеры
-  managers: {
-    type: Array,
-    default: [{
-      fullname: {
-        type: String,
-        default: ''
-      },
-      // 1-5
-      step_1_5: {
-        type: Object,
-        default: {
-          average_bill: 0, // средний чек
-          order_quantity: 0, // кол-во заказов
-        }
-      },
-      // 1-10
-      step_1_10: {
-        type: Object,
-        default: {
-          average_bill: 0, // средний чек
-          order_quantity: 0, // кол-во заказов
-        }
-      },
-      // 1-15
-      step_1_15: {
-        type: Object,
-        default: {
-          average_bill: 0, // средний чек
-          order_quantity: 0, // кол-во заказов
-        }
-      },
-      // 16-20
-      step_16_20: {
-        type: Object,
-        default: {
-          average_bill: 0, // средний чек
-          order_quantity: 0, // кол-во заказов
-        }
-      },
-      // 16-25
-      step_16_25: {
-        type: Object,
-        default: {
-          average_bill: 0, // средний чек
-          order_quantity: 0, // кол-во заказов
-        }
-      },
-      // 16-last
-      step_16_last: {
-        type: Object,
-        default: {
-          average_bill: 0, // средний чек
-          order_quantity: 0, // кол-во заказов
-        }
-      },
-      // итог
-      result: {
-        type: Object,
-        default: {
-          average_bill: 0, // средний чек
-          order_quantity: 0, // кол-во заказов
-        }
-      }
-    }]
+  // Филиал
+  branch: {
+    type: Schema.Types.ObjectId,
+    ref: 'report_branches',
+    require: true,
+    index: true
   },
+  // менеджеры
+  managers: [{
+    fullname: {
+      type: String,
+      default: ''
+    },
+    // 1-5
+    step_1_5: {
+      type: Object,
+      default: {
+        average_bill: 0, // средний чек
+        order_quantity: 0, // кол-во заказов
+      }
+    },
+    // 1-10
+    step_1_10: {
+      type: Object,
+      default: {
+        average_bill: 0, // средний чек
+        order_quantity: 0, // кол-во заказов
+      }
+    },
+    // 1-15
+    step_1_15: {
+      type: Object,
+      default: {
+        average_bill: 0, // средний чек
+        order_quantity: 0, // кол-во заказов
+      }
+    },
+    // 16-20
+    step_16_20: {
+      type: Object,
+      default: {
+        average_bill: 0, // средний чек
+        order_quantity: 0, // кол-во заказов
+      }
+    },
+    // 16-25
+    step_16_25: {
+      type: Object,
+      default: {
+        average_bill: 0, // средний чек
+        order_quantity: 0, // кол-во заказов
+      }
+    },
+    // 16-last
+    step_16_last: {
+      type: Object,
+      default: {
+        average_bill: 0, // средний чек
+        order_quantity: 0, // кол-во заказов
+      }
+    },
+    // итог
+    result: {
+      type: Object,
+      default: {
+        average_bill: 0, // средний чек
+        order_quantity: 0, // кол-во заказов
+      }
+    }
+  }],
   // сервисного центра
   service_center: {
-    type: Object,
-    default: {
-      fullname: {
-        type: String,
-        default: ''
-      },
-      // 1-5
-      step_1_5: {
-        type: Object,
-        default: {
-          average_bill: 0, // средний чек
-          order_quantity: 0, // кол-во заказов
-        }
-      },
-      // 1-10
-      step_1_10: {
-        type: Object,
-        default: {
-          average_bill: 0, // средний чек
-          order_quantity: 0, // кол-во заказов
-        }
-      },
-      // 1-15
-      step_1_15: {
-        type: Object,
-        default: {
-          average_bill: 0, // средний чек
-          order_quantity: 0, // кол-во заказов
-        }
-      },
-      // 16-20
-      step_16_20: {
-        type: Object,
-        default: {
-          average_bill: 0, // средний чек
-          order_quantity: 0, // кол-во заказов
-        }
-      },
-      // 16-25
-      step_16_25: {
-        type: Object,
-        default: {
-          average_bill: 0, // средний чек
-          order_quantity: 0, // кол-во заказов
-        }
-      },
-      // 16-last
-      step_16_last: {
-        type: Object,
-        default: {
-          average_bill: 0, // средний чек
-          order_quantity: 0, // кол-во заказов
-        }
-      },
-      // итог
-      result: {
-        type: Object,
-        default: {
-          average_bill: 0, // средний чек
-          order_quantity: 0, // кол-во заказов
-        }
+    fullname: {
+      type: String,
+      default: ''
+    },
+    // 1-5
+    step_1_5: {
+      type: Object,
+      default: {
+        average_bill: 0, // средний чек
+        order_quantity: 0, // кол-во заказов
+      }
+    },
+    // 1-10
+    step_1_10: {
+      type: Object,
+      default: {
+        average_bill: 0, // средний чек
+        order_quantity: 0, // кол-во заказов
+      }
+    },
+    // 1-15
+    step_1_15: {
+      type: Object,
+      default: {
+        average_bill: 0, // средний чек
+        order_quantity: 0, // кол-во заказов
+      }
+    },
+    // 16-20
+    step_16_20: {
+      type: Object,
+      default: {
+        average_bill: 0, // средний чек
+        order_quantity: 0, // кол-во заказов
+      }
+    },
+    // 16-25
+    step_16_25: {
+      type: Object,
+      default: {
+        average_bill: 0, // средний чек
+        order_quantity: 0, // кол-во заказов
+      }
+    },
+    // 16-last
+    step_16_last: {
+      type: Object,
+      default: {
+        average_bill: 0, // средний чек
+        order_quantity: 0, // кол-во заказов
+      }
+    },
+    // итог
+    result: {
+      type: Object,
+      default: {
+        average_bill: 0, // средний чек
+        order_quantity: 0, // кол-во заказов
       }
     }
   },
   // инженеры
-  engineer: {
-    type: Array,
-    default: [{
-      fullname: {
-        type: String,
-        default: ''
-      },
-      // 1-5
-      step_1_5: {
-        type: Object,
-        default: {
-          average_bill: 0, // средний чек
-          order_quantity: 0, // кол-во заказов
-        }
-      },
-      // 1-10
-      step_1_10: {
-        type: Object,
-        default: {
-          average_bill: 0, // средний чек
-          order_quantity: 0, // кол-во заказов
-        }
-      },
-      // 1-15
-      step_1_15: {
-        type: Object,
-        default: {
-          average_bill: 0, // средний чек
-          order_quantity: 0, // кол-во заказов
-        }
-      },
-      // 16-20
-      step_16_20: {
-        type: Object,
-        default: {
-          average_bill: 0, // средний чек
-          order_quantity: 0, // кол-во заказов
-        }
-      },
-      // 16-25
-      step_16_25: {
-        type: Object,
-        default: {
-          average_bill: 0, // средний чек
-          order_quantity: 0, // кол-во заказов
-        }
-      },
-      // 16-last
-      step_16_last: {
-        type: Object,
-        default: {
-          average_bill: 0, // средний чек
-          order_quantity: 0, // кол-во заказов
-        }
-      },
-      // итог
-      result: {
-        type: Object,
-        default: {
-          average_bill: 0, // средний чек
-          order_quantity: 0, // кол-во заказов
-        }
+  engineer: [{
+    fullname: {
+      type: String,
+      default: ''
+    },
+    // 1-5
+    step_1_5: {
+      type: Object,
+      default: {
+        average_bill: 0, // средний чек
+        order_quantity: 0, // кол-во заказов
       }
-    }]
-  },
+    },
+    // 1-10
+    step_1_10: {
+      type: Object,
+      default: {
+        average_bill: 0, // средний чек
+        order_quantity: 0, // кол-во заказов
+      }
+    },
+    // 1-15
+    step_1_15: {
+      type: Object,
+      default: {
+        average_bill: 0, // средний чек
+        order_quantity: 0, // кол-во заказов
+      }
+    },
+    // 16-20
+    step_16_20: {
+      type: Object,
+      default: {
+        average_bill: 0, // средний чек
+        order_quantity: 0, // кол-во заказов
+      }
+    },
+    // 16-25
+    step_16_25: {
+      type: Object,
+      default: {
+        average_bill: 0, // средний чек
+        order_quantity: 0, // кол-во заказов
+      }
+    },
+    // 16-last
+    step_16_last: {
+      type: Object,
+      default: {
+        average_bill: 0, // средний чек
+        order_quantity: 0, // кол-во заказов
+      }
+    },
+    // итог
+    result: {
+      type: Object,
+      default: {
+        average_bill: 0, // средний чек
+        order_quantity: 0, // кол-во заказов
+      }
+    }
+  }],
   // ---
   created: {
     type: Date,

@@ -5,6 +5,7 @@ const {
   update,
   remove,
   getAll,
+  getByBranch,
   getById
 } = require('../../../controllers/report/managerPlan.controller')
 const router = Router()
@@ -45,7 +46,7 @@ router.put(
 /**
  * Удаление плана
  * @group managerPlans - Отчеты, план (защищенные роуты)
- * @route DELETE /api/v1/report/manager-plan/:id
+ * @route DELETE /api/v1/report/manager-plan/remove/:id
  * @summary Удаление плана
  * @param {string} _id.query.required - id удаляемого плана
  * @returns {object} 200 - При успешном удалении
@@ -72,6 +73,23 @@ router.get(
   passport.authenticate('jwt', { session: false }),
   getById
 )
+
+/**
+ * Вывод планов конкретного филиала
+ * @group managerPlans - Отчеты, план (защищенные роуты)
+ * @route GET /api/v1/report/manager-plan/get-branch/:branchId
+ * @summary Вывод планов конкретного филиала
+ * @param {ManagerPlans.model} body.body - параметры вывода
+ * @returns {object} 200 - При успешном выводе
+ * @returns {Error} default - При возникновении ошибки
+ * @security JWT
+ */
+router.get(
+  '/get-branch/:branchId',
+  passport.authenticate('jwt', { session: false }),
+  getByBranch
+)
+
 
 /**
  * Вывод всего

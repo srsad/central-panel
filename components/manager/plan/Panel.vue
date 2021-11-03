@@ -82,15 +82,11 @@ export default {
       // параметры построчной навигации
       offset: 0,
       limit: 10,
-      total: 100 // до первой загрузки
+      total: 100, // до первой загрузки
+      brandId: '' // id филиала
     }
   },
   computed: {
-    brandId() {
-      const branches = this.$store.getters['report/branch/branches']
-      const branch = branches.find((el) => el.branch_id === this.branch)
-      return branch._id || ''
-    },
     params() {
       return {
         offset: this.offset,
@@ -100,7 +96,8 @@ export default {
       }
     }
   },
-  mounted() {
+  async mounted() {
+    await this.getBranchId()
     this.fetchItems()
   },
   methods: {
@@ -115,6 +112,19 @@ export default {
           return false
         }
       })
+    },
+
+    /**
+     * Поиск _id текущего филиала
+     */
+    async getBranchId() {
+      if (this.$store.getters['report/branch/branches'].length === 0) {
+        await this.$store.dispatch('report/branch/fetchItems')
+      }
+      const branch = this.$store.getters['report/branch/branches'].find(
+        (el) => el.branch_id === this.branch
+      )
+      this.brandId = branch._id
     },
 
     /**
@@ -161,7 +171,7 @@ export default {
         })
         this.items = res
       } catch (e) {
-        console.error('Ошибка при получении списка планов', e.response)
+        await console.error('Ошибка при получении списка планов', e.response)
         this.$store.commit('SET_ERROR', e.response.data.message)
       }
     },
