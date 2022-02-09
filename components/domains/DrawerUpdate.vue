@@ -42,10 +42,10 @@
               <el-input
                 v-model="form.dcod"
                 :min="0"
-                v-mask="'##.##.##.##.00.00.00.00'"
+                v-mask="'##.##.##.##.##.00.00.00'"
                 size="mini"
                 class="w100"
-                placeholder="##.##.##.##.00.00.00.00"
+                placeholder="##.##.##.##.##.00.00.00"
               />
             </el-form-item>
           </div>
