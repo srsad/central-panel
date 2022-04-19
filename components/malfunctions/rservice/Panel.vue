@@ -1,167 +1,70 @@
 <template>
   <!-- eslint-disable no-irregular-whitespace -->
   <div class="row">
-    <div class="col-6 col-lg-4 mb-30">
+    <div class="col-12">
+      <el-button
+        @click="openModalCreate"
+        type="success"
+        size="medium"
+        class="mb-15"
+      >
+        Создать коллекцию неисправностей
+      </el-button>
+    </div>
+    <!--  -->
+    <div
+      v-for="(collection, index) in malfunctions"
+      :key="index"
+      class="col-6 col-lg-4 mb-30"
+    >
       <table
         class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
       >
         <tbody>
           <tr>
-            <td colspan="6">смартфоны</td>
+            <td colspan="5">{{ collection.name }}</td>
+            <td>
+              <el-button
+                @click="openModalUpdate(collection)"
+                title="Редактиоравть коллекцию"
+                type="success"
+                size="mini"
+                icon="el-icon-edit"
+              />
+
+              <el-popconfirm
+                @onConfirm="removeMalfuntion(collection._id)"
+                title="Удалить категорию?"
+                confirm-button-text="Да"
+                confirm-button-type="success"
+                cancel-button-type="default"
+                cancel-button-text="Нет, спасибо"
+              >
+                <el-button
+                  slot="reference"
+                  :loading="loading"
+                  title="Удалить коллекцию"
+                  size="mini"
+                  type="danger"
+                  icon="el-icon-delete"
+                />
+              </el-popconfirm>
+            </td>
           </tr>
-          <tr>
-            <td>Разбито стекло (тачскрин)</td>
-            <td>Разбит экран (дисплей)</td>
-            <td>Не работает динамик</td>
-            <td>Не работает микрофон</td>
-            <td>Не работает камера</td>
-            <td>Не работает вибрация</td>
-          </tr>
-          <tr>
-            <td>от 850</td>
-            <td>от 1250</td>
-            <td>от 400</td>
-            <td>от 450</td>
-            <td>от 450</td>
-            <td>от 800</td>
-          </tr>
-          <tr>
-            <td>Не ловит сигнал сети</td>
-            <td>Не работает bluetooth</td>
-            <td>Не работает модуль wi-fi</td>
-            <td>Не видит карту памяти</td>
-            <td>Не видит сим-карту</td>
-            <td>Не работает аудио разъём</td>
-          </tr>
-          <tr>
-            <td>от 800</td>
-            <td>от 800</td>
-            <td>от 500</td>
-            <td>от 750</td>
-            <td>от 750</td>
-            <td>от 800</td>
-          </tr>
-          <tr>
-            <td>Не включается</td>
-            <td>Не заряжается</td>
-            <td>Чистка от воды</td>
-            <td>Замена батареи</td>
-            <td>Прошивка ПО</td>
-            <td>Другое</td>
-          </tr>
-          <tr>
-            <td>от 500</td>
-            <td>от 500</td>
-            <td>от 1250</td>
-            <td>от 400</td>
-            <td>от 500</td>
-            <td>от 350</td>
+          <tr v-for="(malfunction, idx) in collection.malfunctions" :key="idx">
+            <td
+              colspan="4"
+              style="text-align: left; padding-left: 10px; min-width: 290px"
+            >
+              {{ malfunction.name }}
+            </td>
+            <td>от {{ malfunction.price }} р.</td>
+            <td>от {{ malfunction.time || 30 }} мин.</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="col-6 col-lg-4 mb-30">
-      <table
-        class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
-      >
-        <tbody>
-          <tr>
-            <td colspan="6">фотоаппараты</td>
-          </tr>
-          <tr>
-            <td>Чистка от пыли</td>
-            <td>Чистка от воды</td>
-            <td>Ремонт затвора</td>
-            <td>Ремонт вспышки</td>
-            <td>Замена батареи</td>
-            <td>Замена дисплея</td>
-          </tr>
-          <tr>
-            <td>от 1100</td>
-            <td>от 1100</td>
-            <td>от 450</td>
-            <td>от 400</td>
-            <td>от 400</td>
-            <td>от 850</td>
-          </tr>
-          <tr>
-            <td>Ремонт разъёма HDMI</td>
-            <td>Ремонт разъёма USB</td>
-            <td>Замена стекла дисплея</td>
-            <td>Замена экрана фокусировки</td>
-            <td>Замена крышки аккумулятора</td>
-            <td>Замена крышки карты памяти</td>
-          </tr>
-          <tr>
-            <td>от 450</td>
-            <td>от 450</td>
-            <td>от 1000</td>
-            <td>от 950</td>
-            <td>от 450</td>
-            <td>от 450</td>
-          </tr>
-          <tr>
-            <td>Ремонт главной платы</td>
-            <td>Ремонт платы питания</td>
-            <td>Ремонт платы драйвера</td>
-            <td>Ремонт кнопок управления</td>
-            <td>Ремонт картридера</td>
-            <td>У меня другая неисправность</td>
-          </tr>
-          <tr>
-            <td>от 1700</td>
-            <td>от 1800</td>
-            <td>от 1700</td>
-            <td>от 1500</td>
-            <td>от 550</td>
-            <td>от 350</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="col-6 col-lg-4 mb-30">
-      <table
-        class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
-      >
-        <tbody>
-          <tr>
-            <td colspan="6">телевизоры</td>
-          </tr>
-          <tr>
-            <td>Разбит экран</td>
-            <td>Нет изображения</td>
-            <td>Нет звука</td>
-            <td>Нет сигнала</td>
-            <td>Гаснет</td>
-            <td>Не включается</td>
-          </tr>
-          <tr>
-            <td>от 1900</td>
-            <td>от 650</td>
-            <td>от 750</td>
-            <td>от 750</td>
-            <td>от 1000</td>
-            <td>от 750</td>
-          </tr>
-          <tr>
-            <td>Не переключает каналы</td>
-            <td>Не видит устройства</td>
-            <td>Ремонт главной платы</td>
-            <td>Ремонт блока питания</td>
-            <td>Ремонт подсветки экрана</td>
-            <td>У меня другая неисправность</td>
-          </tr>
-          <tr>
-            <td>от 750</td>
-            <td>от 650</td>
-            <td>от 1100</td>
-            <td>от 950</td>
-            <td>от 900</td>
-            <td>от 450</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <!--  -->
     <div class="col-6 col-lg-4 mb-30">
       <table
         class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
@@ -1346,74 +1249,72 @@
         </tbody>
       </table>
     </div>
-    <!-- <div class="col-6 col-lg-4 mb-30">
-      <table
-        class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
-      >
-        <tbody>
-          <tr>
-            <td colspan="6"></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
-    </div> -->
   </div>
 </template>
+
+<script>
+export default {
+  name: 'MalfunctionPanel',
+
+  data() {
+    return {
+      loading: false
+    }
+  },
+
+  computed: {
+    malfunctions() {
+      return this.$store.state.repair.malfunction.malfunctions
+    }
+  },
+
+  methods: {
+    openModalCreate() {
+      this.$store.commit('settings/SWITCH_DRAWNER', {
+        dranwer: 'windowCreateMalfunction',
+        status: true
+      })
+    },
+
+    openModalUpdate(collectionItem) {
+      this.$store.commit('repair/malfunction/SET_MALFUNCTION', collectionItem)
+      this.$store.commit('settings/SWITCH_DRAWNER', {
+        dranwer: 'windowUpdateMalfunction',
+        status: true
+      })
+    },
+
+    /**
+     * -
+     */
+    async removeMalfuntion(collectionId) {
+      this.loading = true
+      try {
+        await this.$axios.$delete(
+          '/api/v1/repair/malfunction/remove/' + collectionId
+        )
+        this.$store.dispatch('repair/malfunction/fetchItems')
+        await this.$notify({
+          message: 'Коллекция успушно удалена!',
+          customClass: 'success-notyfy'
+        })
+      } catch (e) {
+        this.$store.commit('SET_ERROR', e.response.data.message)
+        console.error('Неудалосьудалить коллекцию неисправностей', e)
+      } finally {
+        this.loading = false
+      }
+    }
+  }
+}
+</script>
 
 <style scoped>
 tbody td {
   text-align: center;
   font-size: 12px;
 }
-td[colspan='6'] {
+td[colspan='5'] {
   font-size: 20px;
 }
 </style>

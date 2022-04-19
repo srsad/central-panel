@@ -91,6 +91,7 @@ export default {
     AppPartList,
     AppAddDevice
   },
+
   async validate({ params, store }) {
     // отчищаем все категории
     store.dispatch('source/page/clearAllParams')
@@ -111,6 +112,7 @@ export default {
     }
     return res
   },
+
   data() {
     return {
       loadContent: false,

@@ -43,7 +43,13 @@ export const state = () => ({
   drawerReportScheduleCreate: false, // Окно создания новго расписания в разделе отчеты
   drawerReportBranchUpdate: false, // Окно редактирования филиала
   windowConstructorSiteCreate: false, // Окно создания новго сайта конструктора
-  windowConstructorSiteUpdate: false // Окно редактиорвания сайта конструктора
+  windowConstructorSiteUpdate: false, // Окно редактиорвания сайта конструктора
+  windowCreateBrand: false, // Окно создания нового бренда
+  windowUpdateBrand: false, // Окно редактирования бренда
+  windowCreateCategory: false, // Окно создания новой категории
+  windowUpdateCategory: false, // Окно ретактирования категории
+  windowCreateMalfunction: false, // Окно создания неисправности
+  windowUpdateMalfunction: false // Окно ретактирования неисправности
 })
 
 export const actions = {

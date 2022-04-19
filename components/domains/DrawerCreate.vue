@@ -3,10 +3,10 @@
     :visible.sync="$store.state.settings.drawerCreateDomains"
     :with-header="false"
     :before-close="blockClose"
+    @open="onOpen"
     size="900px"
     title="Добавить домен"
     custom-class="drawer"
-    @open="onOpen"
   >
     <!-- закрытие окна -->
     <el-button

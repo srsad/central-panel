@@ -9,13 +9,6 @@
         >
           <app-rserice-panel />
         </el-tab-pane>
-        <!-- <el-tab-pane
-          v-if="$abilities('malf-impuls_panel')"
-          label="Неисправности Impuls"
-          name="impuls_panel"
-        >
-          <app-impuls-panel />
-        </el-tab-pane> -->
         <el-tab-pane
           v-if="$abilities('malf-apple_panel')"
           label="Неисправности Apple"
@@ -25,26 +18,37 @@
         </el-tab-pane>
       </el-tabs>
     </div>
+
+    <app-create-malfunction-window />
+    <app-update-malfunction-window />
   </div>
 </template>
 
 <script>
 import AppRsericePanel from '~/components/malfunctions/rservice/Panel'
-// import AppImpulsPanel from '~/components/malfunctions/impuls/Panel'
 import AppApplePanel from '~/components/malfunctions/apple/Panel'
+import AppCreateMalfunctionWindow from '~/components/malfunctions/window/Create'
+import AppUpdateMalfunctionWindow from '~/components/malfunctions/window/Update'
 
 export default {
   components: {
     AppRsericePanel,
-    // AppImpulsPanel,
-    AppApplePanel
+    AppApplePanel,
+    AppCreateMalfunctionWindow,
+    AppUpdateMalfunctionWindow
   },
+
   computed: {
     activeTab() {
       if (this.$abilities('malf-rservice_panel')) return 'rservice_panel'
-      // if (this.$abilities('malf-impuls_panel')) return 'impuls_panel'
       if (this.$abilities('malf-apple_panel')) return 'apple_panel'
       return 'rservice_panel'
+    }
+  },
+
+  mounted() {
+    if (!this.$store.state.repair.malfunction.malfunctions.length) {
+      this.$store.dispatch('repair/malfunction/fetchItems')
     }
   }
 }

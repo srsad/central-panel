@@ -30,6 +30,7 @@ const siteRoutes = require('./routes/v1/site')
 const analyticsRoutes = require('./routes/v1/analytics')
 const unansweredRoutes = require('./routes/v1/unanswered.routes')
 const constructorRoutes = require('./routes/v1/constructor')
+const repairRoutes = require('./routes/v1/repair')
 
 mongoose
   // .plugin(accessibleRecordsPlugin)
@@ -80,6 +81,7 @@ app.use('/api/v1/exceptions', exceptionsRoutes)
 app.use('/api/v1/analytics', analyticsRoutes)
 app.use('/api/v1/unanswered', unansweredRoutes)
 app.use('/api/v1/constructor', constructorRoutes)
+app.use('/api/v1/repair', repairRoutes)
 
 // socket.io
 // const wrap = (middleware) => (socket, next) => middleware(socket.request, {}, next)
