@@ -9,13 +9,6 @@
         >
           <app-rserice-panel />
         </el-tab-pane>
-        <el-tab-pane
-          v-if="$abilities('malf-apple_panel')"
-          label="Неисправности Apple"
-          name="apple_panel"
-        >
-          <app-apple-panel />
-        </el-tab-pane>
       </el-tabs>
     </div>
 
@@ -26,14 +19,12 @@
 
 <script>
 import AppRsericePanel from '~/components/malfunctions/rservice/Panel'
-import AppApplePanel from '~/components/malfunctions/apple/Panel'
 import AppCreateMalfunctionWindow from '~/components/malfunctions/window/Create'
 import AppUpdateMalfunctionWindow from '~/components/malfunctions/window/Update'
 
 export default {
   components: {
     AppRsericePanel,
-    AppApplePanel,
     AppCreateMalfunctionWindow,
     AppUpdateMalfunctionWindow
   },

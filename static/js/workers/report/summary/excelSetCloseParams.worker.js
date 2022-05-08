@@ -13,7 +13,7 @@ self.addEventListener('message', async (event) => {
   }
   const indexBranch = items[0].indexOf('Создан в локации') // индекс филиала
   const indexRevenue = items[0].indexOf('Оплачено') // индекс выручки
-  const indexExpenses = items[0].indexOf('Себестоимость') // индекс расходов
+  const indexExpenses = items[0].indexOf('Стоимость') // индекс расходов
 
   // алиасы для брендов
   const brandAlias = new Map([
@@ -33,9 +33,7 @@ self.addEventListener('message', async (event) => {
   ])
 
   // алиасы для филиалов
-  const branchAlias = new Map([
-    ['мск армянский', 'мск сеславинская']
-  ])
+  const branchAlias = new Map([['мск армянский', 'мск сеславинская']])
 
   items.shift() // удаляем первую строку
 
