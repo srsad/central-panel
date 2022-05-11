@@ -80,10 +80,10 @@ module.exports.getAll = async (req, res) => {
 /**
  * Вернуть весь список по id бренда
  */
-module.exports.getAllByBrandId = async (req, res) => {
+module.exports.getAllByCategoryId = async (req, res) => {
   try {
     const devices = await Device.find({
-      brand_id: req.params.id
+      category_id: req.params.id
     }).sort({ name: 1 })
 
     res.json(devices)

@@ -11,13 +11,17 @@ const repairCategorySchema = new Schema({
   name: {
     type: String,
     maxlength: 255,
-    unique: true,
     index: true
   },
   // id бренд к которой пренадлежит категория
   brand_id: {
     type: Schema.Types.ObjectId,
     ref: 'repair_brands'
+  },
+  // коллекция неисправностей к которой пренодлежит данная категория
+  malfunctions_id: {
+    type: Schema.Types.ObjectId,
+    ref: 'repair_malfunctions'
   },
   created: {
     type: Date,

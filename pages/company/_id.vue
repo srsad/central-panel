@@ -22,8 +22,21 @@
       element-loading-spinner="el-icon-loading"
     />
 
-    <div class="col-12">
+    <div class="col-12"></div>
+
+    <div class="col-9">
       <h3>{{ $store.state.source.page.categoryName }}</h3>
+    </div>
+
+    <div
+      v-if="
+        $abilities('device-create') && $store.state.source.page.categoryName
+      "
+      class="col-3 text-right"
+    >
+      <el-button @click="onImport" type="success">
+        Импорт
+      </el-button>
     </div>
 
     <div class="col-12">
@@ -65,6 +78,7 @@
     <app-part-list />
     <!-- окно добовления устройства -->
     <app-add-device />
+    <app-import-device />
   </div>
 </template>
 
@@ -78,6 +92,7 @@ import AppCreatePartItem from '~/components/categories/window/CreatePartItem'
 import AppUpdatePartItem from '~/components/categories/window/UpdatePartItem'
 import AppPartList from '~/components/categories/window/PartList'
 import AppAddDevice from '~/components/categories/window/AddDevice'
+import AppImportDevice from '~/components/categories/window/ImportDevices'
 
 export default {
   components: {
@@ -89,7 +104,8 @@ export default {
     AppCreatePartItem,
     AppUpdatePartItem,
     AppPartList,
-    AppAddDevice
+    AppAddDevice,
+    AppImportDevice
   },
 
   async validate({ params, store }) {
@@ -140,6 +156,14 @@ export default {
       this.$store.dispatch('source/page/getParts')
       // загрузка списка устроиств не для записи
       this.$store.dispatch('recording/fetchNotRecordingDevice')
+    },
+
+    onImport() {
+      console.log(this.$store.state.source.page.deviceList)
+      this.$store.commit('settings/SWITCH_DRAWNER', {
+        dranwer: 'windowImportDevice',
+        status: true
+      })
     }
   }
 }

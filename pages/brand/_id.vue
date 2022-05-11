@@ -14,9 +14,13 @@
       <app-categories-list :brand="brand" />
     </div>
 
+    <div v-if="selectCategory" class="col-12 mb-15">
+      <h3>{{ selectCategory }}</h3>
+    </div>
+
     <div class="col-11">
-      <!-- каталог устройств -->
-      <app-device-list />
+      <!-- каталог устройств или быстрый прайс -->
+      <app-device-list :category="category" />
     </div>
 
     <div class="col-1">
@@ -70,11 +74,24 @@ export default {
   computed: {
     brand() {
       return this.$store.state.repair.brand.brand
+    },
+
+    category() {
+      return this.$store.state.repair.category.selectCategory
+    },
+
+    selectCategory() {
+      return this.category?.name
     }
   },
 
   async fetch({ store, params }) {
     await store.dispatch('repair/category/fetchItemsById', params.id)
+  },
+
+  created() {
+    this.$store.commit('repair/device/SET_DEVICES', [])
+    this.$store.commit('repair/malfunction/SET_MALFUNCTION', [])
   },
 
   methods: {

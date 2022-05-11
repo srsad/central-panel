@@ -22,6 +22,24 @@
           />
         </el-form-item>
       </div>
+      <div class="col-12">
+        <el-form-item prop="malfunctions_id" label="Коллекция неисправностей">
+          <el-select
+            v-model="formData.malfunctions_id"
+            size="mini"
+            placeholder="Коллекция неисправностей"
+            class="w100"
+            filterable
+          >
+            <el-option
+              v-for="malfunction in malfunctions"
+              :key="malfunction._id"
+              :label="malfunction.name"
+              :value="malfunction._id"
+            />
+          </el-select>
+        </el-form-item>
+      </div>
       <div class="col-12 text-right">
         <el-button @click="validateForm" :loading="loading" type="success">
           Обновить
@@ -39,7 +57,8 @@ export default {
     return {
       loading: false,
       formData: {
-        name: ''
+        name: '',
+        malfunctions_id: ''
       },
       rules: {
         name: [
@@ -58,14 +77,31 @@ export default {
             message: 'Максимум 255 символов',
             trigger: 'blur'
           }
+        ],
+        malfunctions_id: [
+          {
+            required: true,
+            message: 'Выберите коллекцию неисправностей',
+            trigger: 'blur'
+          }
         ]
       }
+    }
+  },
+
+  computed: {
+    malfunctions() {
+      return this.$store.state.repair.malfunction.malfunctions
     }
   },
 
   mounted() {
     const form = this.$store.state.repair.category.category
     this.form = JSON.parse(JSON.stringify(form))
+
+    if (!this.$store.state.repair.malfunction.malfunctions.length) {
+      this.$store.dispatch('repair/malfunction/fetchItems')
+    }
   },
 
   methods: {
@@ -120,7 +156,8 @@ export default {
 
     clearForm() {
       this.formData = {
-        name: ''
+        name: '',
+        malfunctions_id: ''
       }
     }
   }

@@ -6,7 +6,7 @@ const {
   remove,
   getById,
   getAll,
-  getAllByBrandId
+  getAllByCategoryId
 } = require('../../../controllers/repair/device.controller')
 const router = Router()
 
@@ -84,7 +84,7 @@ router.get('/getall', passport.authenticate('jwt', { session: false }), getAll)
 /**
  * Вывод всех категорий бренда
  * @group repairCategory - Устройства (защищенные роуты)
- * @route GET /api/v1/repair/device/getall-by-brand-id/:id
+ * @route GET /api/v1/repair/device/getall-by-category-id/:id
  * @summary Вывод всех категорий
  * @param {string} id.query.required - id удаляемого устройства
  * @returns {object} 200 - При успешном выводе
@@ -92,9 +92,9 @@ router.get('/getall', passport.authenticate('jwt', { session: false }), getAll)
  * @security JWT
  */
 router.get(
-  '/getall-by-brand-id/:id',
+  '/getall-by-category-id/:id',
   passport.authenticate('jwt', { session: false }),
-  getAllByBrandId
+  getAllByCategoryId
 )
 
 module.exports = router

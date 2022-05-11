@@ -2,6 +2,8 @@
  * Воркер для подсчета итогов
  */
 
+/* eslint-disable */
+
 self.addEventListener('message', async (event) => {
   const table = event.data.table
 
@@ -75,7 +77,7 @@ self.addEventListener('message', async (event) => {
     const delta = Math.round(+table.total.wed_check / +table.total.came_to_sc.common_price)
     table.total.delta = isFinite(delta) ? delta : 0
     // прибыль - (вал * 0,65) - (пришел_сц_кол-вл * 70) - все_расходы
-    const profit = Math.round((+table.total.val * 0.65) - (+table.total.came_to_sc.count * 70)) - +allCommonExpenses
+    const profit = Math.round(+table.total.val * 0.58) - +allCommonExpenses
     table.total.profit = isFinite(profit) ? profit : 0
     // спз - (прибыль / заказы)
     const spz = Math.round(+table.total.profit / +table.total.orders)

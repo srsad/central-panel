@@ -49,7 +49,8 @@ export const state = () => ({
   windowCreateCategory: false, // Окно создания новой категории
   windowUpdateCategory: false, // Окно ретактирования категории
   windowCreateMalfunction: false, // Окно создания неисправности
-  windowUpdateMalfunction: false // Окно ретактирования неисправности
+  windowUpdateMalfunction: false, // Окно ретактирования неисправности
+  windowImportDevice: false // Окно импорта устройств
 })
 
 export const actions = {

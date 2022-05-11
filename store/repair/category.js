@@ -25,6 +25,7 @@ export const actions = {
       commit('SET_EMPTY_TEXT', 'Загрузка данных')
       const result = await this.$axios.$get('/api/v1/repair/category/getall')
       commit('SET_CATEGORIES', result)
+      return result
     } catch (e) {
       commit('SET_ERROR', e.response.data.message, { root: true })
       throw e
@@ -41,6 +42,7 @@ export const actions = {
         '/api/v1/repair/category/getallbyid/' + brandId
       )
       commit('SET_CATEGORIES', result)
+      return result
     } catch (e) {
       commit('SET_ERROR', e.response.data.message, { root: true })
       throw e

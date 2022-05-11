@@ -18,12 +18,12 @@ export const actions = {
     }
   },
 
-  async fetchByBrandId({ commit }, brandId) {
+  async fetchByCategoryId({ commit }, brandId) {
     try {
       commit('SET_DEVICES', [])
       commit('SET_EMPTY_TEXT', 'Загрузка данных')
       const result = await this.$axios.$get(
-        '/api/v1/repair/device/getall-by-brand-id/' + brandId
+        '/api/v1/repair/device/getall-by-category-id/' + brandId
       )
       commit('SET_DEVICES', result)
     } catch (e) {

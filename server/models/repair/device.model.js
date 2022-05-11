@@ -11,7 +11,12 @@ const repairDeviceSchema = new Schema({
   name: {
     type: String,
     maxlength: 255,
-    unique: true,
+    index: true
+  },
+  // серия
+  series: {
+    type: String,
+    maxlength: 255,
     index: true
   },
   // id привязанной категории

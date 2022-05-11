@@ -32,10 +32,10 @@ export const actions = {
     }
   },
 
-  async fetchById({ commit }, brandId) {
+  async fetchById({ commit }, categoryId) {
     try {
       const result = await this.$axios.$get(
-        '/api/v1/repair/malfunction/get/' + brandId
+        '/api/v1/repair/malfunction/get/' + categoryId
       )
       commit('SET_MALFUNCTION', result)
       return result

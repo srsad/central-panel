@@ -68,6 +68,10 @@ export default {
       type: String,
       default: '',
       require: true
+    },
+    brand: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -105,7 +109,7 @@ export default {
       try {
         await this.$axios.$post('/api/v1/recording/not-device/create', {
           name: this.name,
-          brand: this.$store.getters['source/page/params'].brand,
+          brand: this.brand || this.$store.getters['source/page/params'].brand,
           status: true
         })
         await this.$store.dispatch('recording/fetchNotRecordingDevice')
