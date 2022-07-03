@@ -3,6 +3,7 @@
     :visible.sync="$store.state.settings.drawerAddDevice"
     :before-close="onClose"
     :title="title"
+    width="30%"
   >
     <el-form
       ref="form"
@@ -11,32 +12,33 @@
       :disabled="loading"
       class="row"
     >
-      <div class="col-8">
-        <div class="row">
-          <!-- name -->
-          <div class="col-7">
-            <el-form-item prop="name">
-              <el-input
-                v-model="form.name"
-                :disabled="disabledItem"
-                placeholder="Наименование"
-              />
-            </el-form-item>
-          </div>
-          <!-- end name -->
-          <!-- series -->
-          <div class="col-12">
-            <el-form-item prop="series">
-              <el-input
-                v-model="form.series"
-                placeholder="Серия"
-                maxlength="255"
-                show-word-limit
-              />
-            </el-form-item>
-          </div>
-          <!-- end series -->
-        </div>
+      <div class="col-12">
+        <!-- name -->
+        <el-form-item prop="name">
+          <el-input v-model="form.name" placeholder="Наименование" />
+        </el-form-item>
+        <!-- end name -->
+        <!-- series -->
+        <el-form-item prop="series">
+          <el-select
+            v-model="form.series"
+            :multiple-limit="1"
+            multiple
+            filterable
+            reserve-keyword
+            placeholder="Серия"
+            class="w100"
+          >
+            <el-option
+              v-for="item in seriesList"
+              :key="item"
+              :label="item"
+              :value="item"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <!-- end series -->
       </div>
       <!-- end content -->
       <div class="col-12 text-right mt-15">
@@ -59,7 +61,7 @@ export default {
       loading: false,
       form: {
         name: '',
-        series: ''
+        series: []
       },
       rules: {
         name: [
@@ -93,6 +95,17 @@ export default {
   computed: {
     title() {
       return this.form.name ? this.form.name : 'Добавить устроиство'
+    },
+
+    seriesList() {
+      const devices = this.$store.state.repair.device.devices
+      const result = []
+      for (const device of devices) {
+        if (device.series?.trim() && !result.includes(device.series)) {
+          result.push(device.series)
+        }
+      }
+      return result
     }
   },
 
@@ -108,38 +121,36 @@ export default {
     },
 
     async onCreate() {
-      // уведомляем челиков в телеге || создаем устроиство
-      // const url = `https://api.telegram.org/bot1113218700:AAE_XXJyTH4UCWE7_JfZXmVtXVA6Vyns4qE/sendMessage`
+      this.loading = true
+
       try {
-        // await this.$axios.$get(url, {
-        //   params: {
-        //     chat_id: 479029367,
-        //     text: {
-        //       name: this.form.name,
-        //       series: this.form.series,
-        //       longtitle: this.form.longtitle,
-        //       description: this.form.description,
-        //       content: this.form.content
-        //     }
-        //   }
-        // })
-        // this.clearForm()
-        // this.onClose()
-        // this.$notify({
-        //   message: 'Устройство станет доступно в течении пары часов!',
-        //   customClass: 'success-notyfy'
-        // })
-        await console.log('addDevice')
+        const categoryId = this.$store.state.repair.category.selectCategory._id
+        const result = await this.$store.dispatch('repair/device/create', {
+          name: this.form.name + ' ' + this.form.series[0],
+          series: this.form.series[0],
+          category_id: categoryId
+        })
+
+        this.$store.dispatch('repair/device/localAdd', result)
+
+        this.clearForm()
+        this.onClose()
+
+        this.$notify({
+          message: 'Устройство успешно добавленно!',
+          customClass: 'success-notyfy'
+        })
       } catch (e) {
-        // this.clearForm()
-        // this.onClose()
         this.$store.commit('SET_ERROR', 'Что-то пошло не так!')
+      } finally {
+        this.loading = false
       }
     },
 
     clearForm() {
       this.form.name = ''
       this.form.series = ''
+      this.series = []
     },
 
     onClose() {

@@ -5,7 +5,11 @@
     </div>
 
     <div class="col-12 mb-15">
-      <el-button @click="openModal" type="success" size="mini">
+      <el-button
+        @click="openModal('windowCreateCategory')"
+        type="success"
+        size="mini"
+      >
         Добавить категорию
       </el-button>
     </div>
@@ -28,8 +32,21 @@
       <app-categories-service />
     </div>
 
+    <!-- окно неисправностей устройства -->
+    <app-device-malfunctions-list-window />
+
+    <!-- окно добавления детали -->
+    <app-part-create-window />
+    <!-- окно обновления детали -->
+    <app-part-update-window />
+
+    <!-- окно списка деталей -->
+    <app-part-list-window />
+
     <app-create-category-window />
     <app-update-category-window />
+
+    <app-create-device-window />
   </div>
 </template>
 
@@ -39,6 +56,11 @@ import AppDeviceList from '~/components/callcenter/device/List'
 import AppCategoriesService from '~/components/callcenter/category/Service'
 import AppCreateCategoryWindow from '~/components/callcenter/category/window/Create'
 import AppUpdateCategoryWindow from '~/components/callcenter/category/window/Update'
+import AppCreateDeviceWindow from '~/components/callcenter/device/window/Create'
+import AppDeviceMalfunctionsListWindow from '~/components/callcenter/device/window/DeviceMalfunctionsList'
+import AppPartCreateWindow from '~/components/callcenter/part/window/Create'
+import AppPartUpdateWindow from '~/components/callcenter/part/window/Update'
+import AppPartListWindow from '~/components/callcenter/part/window/List'
 
 export default {
   name: 'BrandPage',
@@ -48,12 +70,20 @@ export default {
     AppDeviceList,
     AppCreateCategoryWindow,
     AppUpdateCategoryWindow,
-    AppCategoriesService
+    AppCategoriesService,
+    AppCreateDeviceWindow,
+    AppDeviceMalfunctionsListWindow,
+    AppPartCreateWindow,
+    AppPartUpdateWindow,
+    AppPartListWindow
   },
 
   async validate({ params, store }) {
     // отчищаем все категории
     store.commit('repair/brand/SET_BRAND', null)
+    store.commit('repair/device/SET_DEVICES', [])
+    store.commit('repair/category/SET_SELECT_CATEGORY', null)
+
     let res = false
     try {
       // загрузка данных страницы
@@ -90,14 +120,16 @@ export default {
   },
 
   created() {
-    this.$store.commit('repair/device/SET_DEVICES', [])
-    this.$store.commit('repair/malfunction/SET_MALFUNCTION', [])
+    // this.$store.commit('repair/malfunction/SET_MALFUNCTION', [])
+    // this.$store.commit('repair/brand/SET_DEVICES', [])
+    // загрузка списка не для записи
+    this.$store.dispatch('recording/fetchNotRecordingDevice')
   },
 
   methods: {
     openModal(modalName) {
       this.$store.commit('settings/SWITCH_DRAWNER', {
-        dranwer: 'windowCreateCategory',
+        dranwer: modalName,
         status: true
       })
     }

@@ -69,6 +69,7 @@ export const actions = {
           category: state.categoryName
         }
       })
+      console.log('parts', parts)
       commit('SET_PARTS', parts.data)
     } catch (e) {
       console.error('Ошибка, не удалось получить список устройств или быстрый прайс', e)
@@ -110,7 +111,7 @@ export const actions = {
       )
       commit('SET_MALFUNCTIONS_DATA', malfunctions)
     } catch (e) {
-      commit('SET_ERROR', e.response.data.message, { root: true })      
+      commit('SET_ERROR', e.response.data.message, { root: true })
     } finally {
       // TODO ставить токен из стора settings
       this.$axios.setToken(getCookiesToken(), 'Bearer')
@@ -252,7 +253,7 @@ export const getters = {
   }
 }
 
-/** 
+/**
  * Отдает токен из куки
  * TODO это костыль, но как делать отдельные ззапросы вне конткста красиво, я пока не придумал
  */

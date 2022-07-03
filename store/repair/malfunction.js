@@ -4,7 +4,7 @@
 
 export const state = () => ({
   malfunctions: [],
-  malfunction: null, // выбранный бренд для редактироваия
+  malfunction: null, // выбранный бренд для редактироваия/либо при выборе категории в категории колцентра
   emptyText: 'Нет данных' // при загрузке данных менять текст
 })
 
@@ -63,5 +63,7 @@ export const getters = {
     return (malfunctionId) => {
       return state.malfunctions.find((el) => el._id === malfunctionId)
     }
-  }
+  },
+
+  getMalfunctionCategory: (state) => state.malfunction?.malfunctions
 }

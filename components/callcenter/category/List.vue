@@ -70,6 +70,7 @@ export default {
 
     onSelect(item) {
       this.$store.commit('repair/category/SET_SELECT_CATEGORY', item)
+      this.$store.dispatch('repair/category/getParts')
       // загружаем список моделей
     }
   }

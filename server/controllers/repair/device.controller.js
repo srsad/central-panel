@@ -5,8 +5,8 @@ const Device = require('../../models/repair/device.model')
  */
 module.exports.create = async (req, res) => {
   try {
-    await Device.create(req.body)
-    res.status(201).json({ message: 'Устройство добавлено!' })
+    const result = await Device.create(req.body)
+    res.status(201).json({ message: 'Устройство добавлено!', data: result })
   } catch (error) {
     if (error.code === 11000) {
       res.status(500).json({

@@ -109,7 +109,7 @@ export default {
       try {
         await this.$axios.$post('/api/v1/recording/not-device/create', {
           name: this.name,
-          brand: this.brand || this.$store.getters['source/page/params'].brand,
+          brand: this.brand || this.$store.state.repair.brand.brand.name,
           status: true
         })
         await this.$store.dispatch('recording/fetchNotRecordingDevice')
@@ -146,5 +146,5 @@ export default {
   display: inline-block
   margin-right: 10px
   & .el-button
-    padding: 12px 7px
+    padding: 9px 7px
 </style>

@@ -45,7 +45,7 @@ export const actions = {
   async fetchNotRecordingDevice({ rootGetters, commit }) {
     try {
       const items = await this.$axios.$get(
-        `/api/v1/recording/not-device/get-by-brand/${rootGetters['source/page/params'].brand}`
+        `/api/v1/recording/not-device/get-by-brand/${rootGetters['repair/brand/brand'].name}`
       )
       commit('SET_NOT_RECORDING_DEVICE', items)
     } catch (e) {

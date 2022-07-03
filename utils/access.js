@@ -177,6 +177,28 @@ export default [
     ]
   },
   {
+    _id: 'device',
+    label: 'Устройства',
+    children: [
+      {
+        _id: 'device-read',
+        label: 'Чтение'
+      },
+      {
+        _id: 'device-create',
+        label: 'Создание'
+      },
+      {
+        _id: 'device-update',
+        label: 'Редактирование'
+      },
+      {
+        _id: 'device-remove',
+        label: 'Удаление'
+      }
+    ]
+  },
+  {
     _id: 'source',
     label: 'Источники',
     children: [

@@ -10,7 +10,7 @@
     >
       <el-table-column prop="pagetitle" label="Модель">
         <!-- eslint-disable-next-line vue/no-unused-vars -->
-        <template slot="header" slot-scope="scope">
+        <template slot="header">
           <div class="d-flex">
             <div class="cell">Модель</div>
             <i class="fa fa-filter" style="padding:5px 10px 0 0" />
@@ -24,6 +24,27 @@
           </div>
         </template>
         <template slot-scope="scope">
+          <!-- удаление устройства -->
+          <span v-if="$abilities('device-remove')" @click.stop>
+            <el-popconfirm
+              @onConfirm="removeDevice(scope.row)"
+              title="Удалить устройство?"
+              confirm-button-text="Да"
+              confirm-button-type="success"
+              cancel-button-type="default"
+              cancel-button-text="Нет, спасибо"
+            >
+              <el-button
+                slot="reference"
+                :loading="loading"
+                size="mini"
+                type="danger"
+                icon="el-icon-delete"
+                class="category__remove"
+              />
+            </el-popconfirm>
+          </span>
+          <!-- /у даление устройства -->
           <app-recording-device :name="scope.row.name" />
           <b class="color-000">{{ scope.row.name }}</b>
         </template>
@@ -71,7 +92,7 @@ export default {
     },
     searchDevice() {
       const model = this.searchModel.toLowerCase()
-      let result = this.deviceList
+      let result = this.$store.state.repair.device.devices
 
       if (model.length > 0) {
         result = result.filter((device) => {
@@ -98,10 +119,14 @@ export default {
     async loadDeviceList() {
       if (!this.category?._id) return false
 
+      this.loading = true
+
       await this.$store.dispatch(
         'repair/device/fetchByCategoryId',
         this.category._id
       )
+
+      this.loading = false
     },
 
     async loadMalfunctionsList() {
@@ -117,12 +142,23 @@ export default {
     },
 
     async showInfo(item) {
-      await console.log('showInfo')
-      // await this.$store.dispatch('source/page/setDeviceData', item)
-      // await this.$store.commit('settings/SWITCH_DRAWNER', {
-      //   dranwer: 'drawerDeviceMalf',
-      //   status: true
-      // })
+      await this.$store.commit('repair/device/SET_DEVICE', item)
+      await this.$store.dispatch('repair/device/setMalfunctionsForDevice', item)
+      await this.$store.commit('settings/SWITCH_DRAWNER', {
+        dranwer: 'drawerDeviceMalf',
+        status: true
+      })
+    },
+
+    async removeDevice(item) {
+      try {
+        await this.$axios.$delete('/api/v1/repair/device/remove/' + item._id)
+
+        this.$store.dispatch('repair/device/localRemove', item._id)
+      } catch (error) {
+        console.error('Ошибка при попытке удаления устройства', error.response)
+        this.$store.commit('SET_ERROR', error.response.data.message)
+      }
     }
   }
 }

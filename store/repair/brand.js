@@ -62,4 +62,6 @@ export const mutations = {
   }
 }
 
-export const getters = {}
+export const getters = {
+  brand: (state) => state.brand
+}

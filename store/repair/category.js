@@ -6,7 +6,9 @@ export const state = () => ({
   categories: [],
   category: null, // выбранная категория для редактирования
   selectCategory: null, // выбранная категория для просмотра
-  emptyText: 'Нет данных' // при загрузке данных менять текст
+  emptyText: 'Нет данных', // при загрузке данных менять текст
+  partItem: null, // деталь для редактировать
+  partsCategory: [] // список неисправностей выбранной категории
 })
 
 export const actions = {
@@ -62,6 +64,31 @@ export const actions = {
       commit('SET_ERROR', e.response.data.message, { root: true })
       throw e
     }
+  },
+
+  /** Список деталей */
+  async getParts({ commit, state, rootGetters }) {
+    try {
+      const parts = await this.$axios.$get('/api/v1/part/getAll', {
+        params: {
+          brand: rootGetters['repair/brand/brand'].name,
+          category: state.selectCategory.name
+        }
+      })
+      commit('SET_PARTS', parts.data)
+    } catch (e) {
+      console.error(
+        'Ошибка, не удалось получить список устройств или быстрый прайс',
+        e
+      )
+      commit('SET_ERROR', e.response.data.message, { root: true })
+      throw e
+    }
+  },
+
+  /** Установка детали для редактирования */
+  setPart({ commit }, part) {
+    commit('SET_PART', part)
   }
 }
 
@@ -77,9 +104,16 @@ export const mutations = {
   },
   SET_EMPTY_TEXT(state, text) {
     state.emptyText = text
+  },
+  SET_PARTS(state, parts) {
+    state.partsCategory = parts
+  },
+  SET_PART(state, part) {
+    state.partItem = part
   }
 }
 
 export const getters = {
-  categories: (state) => state.categories
+  categories: (state) => state.categories,
+  partsCategory: (state) => state.partsCategory
 }

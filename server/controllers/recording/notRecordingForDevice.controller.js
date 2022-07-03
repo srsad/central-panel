@@ -5,7 +5,7 @@ module.exports.create = async (req, res) => {
   try {
     await DeviceNotRecording.create(req.body)
     res.status(201).json({ message: 'Запись добавленна!' })
-} catch (error) {
+  } catch (error) {
     res.status(500).json({ message: 'Не удалось добавить запись!', error })
   }
 }
