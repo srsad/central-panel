@@ -134,11 +134,45 @@ export default {
 
       if (!this.category?.malfunctions_id) return false
 
-      const result = await this.$store.dispatch(
+      const malfunctionList = await this.$store.dispatch(
         'repair/malfunction/fetchById',
         this.category.malfunctions_id
       )
-      this.fastPrice = result?.malfunctions
+
+      const malfunctionData = malfunctionList?.malfunctions
+      const partsCategory = this.$store.getters['repair/category/partsCategory']
+
+      if (malfunctionData) {
+        for (const item of malfunctionData) {
+          // eslint-disable-next-line
+          const hasItem = partsCategory.find((el) => el.name === item.name) || null
+          if (hasItem) {
+            this.fastPrice.push({
+              ...item,
+              // тут наоборот(
+              price: hasItem.rservice, // цена ремонта
+              partPrice: hasItem.price, // цена детали
+              isParts: true
+            })
+          } else {
+            this.fastPrice.push(item)
+          }
+        }
+      }
+
+      if (partsCategory) {
+        for (const item of partsCategory) {
+          const hasItem = this.fastPrice.some((el) => el.name === item.name)
+          if (!hasItem) {
+            this.fastPrice.push({
+              name: item.name,
+              price: item.rservice, // цена ремонта
+              partPrice: item.price, // цена ремонта
+              isParts: true
+            })
+          }
+        }
+      }
     },
 
     async showInfo(item) {

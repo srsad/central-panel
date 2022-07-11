@@ -24,9 +24,17 @@
           <div class="text-center">{{ scope.row.time | toTime }}</div>
         </template>
       </el-table-column>
+      <el-table-column prop="time" label="Цена детали">
+        <template slot="header">
+          <div class="cell text-center">Цена детали</div>
+        </template>
+        <template slot-scope="scope">
+          <div class="text-center">{{ scope.row.partPrice | toPrice }}</div>
+        </template>
+      </el-table-column>
       <el-table-column prop="pPrice" label="Цена">
         <template slot-scope="scope">
-          <div>{{ scope.row.price }} руб.</div>
+          <div>{{ scope.row.price | toPrice }}</div>
         </template>
       </el-table-column>
     </el-table>
@@ -40,6 +48,12 @@ export default {
   filters: {
     toTime(val) {
       if (val && parseInt(val)) return val + ' мин.'
+      return val
+    },
+
+    toPrice(val) {
+      if (val && parseInt(val)) return val + ' руб.'
+      return val
     }
   },
 

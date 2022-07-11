@@ -69,7 +69,6 @@ export const actions = {
           category: state.categoryName
         }
       })
-      console.log('parts', parts)
       commit('SET_PARTS', parts.data)
     } catch (e) {
       console.error('Ошибка, не удалось получить список устройств или быстрый прайс', e)
