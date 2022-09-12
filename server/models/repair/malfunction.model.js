@@ -26,6 +26,11 @@ const repairMalfunctionSchema = new Schema({
     type: Number,
     default: 0
   },
+  // показывать ли в общем списке (раздел - неисправности) для полцентра
+  hide: {
+    type: Boolean,
+    default: false
+  },
   created: {
     type: Date,
     default: Date.now

@@ -78,7 +78,12 @@
         </el-button>
       </div>
       <!--  -->
-      <div class="col-12 text-right">
+      <div class="col-6">
+        <el-checkbox v-model="form.hide">
+          Скрыть из общего списка
+        </el-checkbox>
+      </div>
+      <div class="col-6 text-right">
         <el-button @click="validateForm" :loading="loading" type="success">
           Создать
         </el-button>
@@ -96,6 +101,7 @@ export default {
       loading: false,
       form: {
         name: '',
+        hide: false,
         malfunctions: [
           {
             name: '',

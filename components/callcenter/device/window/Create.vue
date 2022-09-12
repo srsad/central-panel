@@ -22,10 +22,10 @@
         <el-form-item prop="series">
           <el-select
             v-model="form.series"
-            :multiple-limit="1"
             multiple
             filterable
-            reserve-keyword
+            allow-create
+            default-first-option
             placeholder="Серия"
             class="w100"
           >
@@ -80,14 +80,14 @@ export default {
             message: 'Максимум 255 символов',
             trigger: 'blur'
           }
-        ],
-        series: [
-          {
-            required: true,
-            message: 'Выберите серию',
-            trigger: 'blur'
-          }
         ]
+        // series: [
+        //   {
+        //     required: true,
+        //     message: 'Выберите серию',
+        //     trigger: 'blur'
+        //   }
+        // ]
       }
     }
   },
@@ -125,9 +125,13 @@ export default {
 
       try {
         const categoryId = this.$store.state.repair.category.selectCategory._id
+        const deviceSeries = this.form.series[0] ?? ''
+        const deviceName = deviceSeries
+          ? this.form.name + ' ' + deviceSeries
+          : this.form.name
         const result = await this.$store.dispatch('repair/device/create', {
-          name: this.form.name + ' ' + this.form.series[0],
-          series: this.form.series[0],
+          name: deviceName,
+          series: deviceSeries,
           category_id: categoryId
         })
 

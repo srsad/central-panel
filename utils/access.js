@@ -164,7 +164,13 @@ export default [
     children: [
       {
         _id: 'malf-rservice_panel',
-        label: 'Неисправности Rservice'
+        label: 'Неисправности Rservice',
+        children: [
+          {
+            _id: 'malf-rservice_panel-hide',
+            label: 'Скрытые коллекции неисправностей'
+          }
+        ]
       },
       {
         _id: 'malf-impuls_panel',

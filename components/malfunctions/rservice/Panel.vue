@@ -12,58 +12,64 @@
       </el-button>
     </div>
     <!--  -->
-    <div
-      v-for="(collection, index) in malfunctions"
-      :key="index"
-      class="col-6 col-lg-4 mb-30"
-    >
-      <table
-        class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
+    <template v-for="(collection, index) in malfunctions">
+      <div
+        v-if="$abilities('malf-rservice_panel-hide')"
+        :key="index"
+        class="col-6 col-lg-4 mb-30"
       >
-        <tbody>
-          <tr>
-            <td colspan="5">{{ collection.name }}</td>
-            <td>
-              <el-button
-                @click="openModalUpdate(collection)"
-                title="Редактиоравть коллекцию"
-                type="success"
-                size="mini"
-                icon="el-icon-edit"
-              />
-
-              <el-popconfirm
-                @onConfirm="removeMalfuntion(collection._id)"
-                title="Удалить категорию?"
-                confirm-button-text="Да"
-                confirm-button-type="success"
-                cancel-button-type="default"
-                cancel-button-text="Нет, спасибо"
-              >
+        <table
+          :class="{ 'hide-malfunction': collection.hide }"
+          class="el-table el-table--fit el-table--border el-table--enable-row-hover el-table--enable-row-transition"
+        >
+          <tbody>
+            <tr>
+              <td colspan="5">{{ collection.name }}</td>
+              <td>
                 <el-button
-                  slot="reference"
-                  :loading="loading"
-                  title="Удалить коллекцию"
+                  @click="openModalUpdate(collection)"
+                  title="Редактиоравть коллекцию"
+                  type="success"
                   size="mini"
-                  type="danger"
-                  icon="el-icon-delete"
+                  icon="el-icon-edit"
                 />
-              </el-popconfirm>
-            </td>
-          </tr>
-          <tr v-for="(malfunction, idx) in collection.malfunctions" :key="idx">
-            <td
-              colspan="4"
-              style="text-align: left; padding-left: 10px; min-width: 290px"
+
+                <el-popconfirm
+                  @onConfirm="removeMalfuntion(collection._id)"
+                  title="Удалить категорию?"
+                  confirm-button-text="Да"
+                  confirm-button-type="success"
+                  cancel-button-type="default"
+                  cancel-button-text="Нет, спасибо"
+                >
+                  <el-button
+                    slot="reference"
+                    :loading="loading"
+                    title="Удалить коллекцию"
+                    size="mini"
+                    type="danger"
+                    icon="el-icon-delete"
+                  />
+                </el-popconfirm>
+              </td>
+            </tr>
+            <tr
+              v-for="(malfunction, idx) in collection.malfunctions"
+              :key="idx"
             >
-              {{ malfunction.name }}
-            </td>
-            <td>от {{ malfunction.price }} р.</td>
-            <td>от {{ malfunction.time || 30 }} мин.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+              <td
+                colspan="4"
+                style="text-align: left; padding-left: 10px; min-width: 290px"
+              >
+                {{ malfunction.name }}
+              </td>
+              <td>от {{ malfunction.price }} р.</td>
+              <td>от {{ malfunction.time || 30 }} мин.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </template>
     <!--  -->
   </div>
 </template>
@@ -132,5 +138,9 @@ tbody td {
 }
 td[colspan='5'] {
   font-size: 20px;
+}
+
+.hide-malfunction {
+  box-shadow: 0px 0px 0px 1px #ff9800;
 }
 </style>
