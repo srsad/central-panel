@@ -11,9 +11,8 @@
           <div class="col-1">
             <n-link to="/" class="logo">Service</n-link>
           </div>
-          <div class="col-lg-7 align-items-center"><app-breadcrumb /></div>
-          <div class="col-lg-2 text-right"><app-main-search /></div>
-          <div class="col-lg-2 text-right"><app-navbar /></div>
+          <div class="col-lg-8 align-items-center"><app-breadcrumb /></div>
+          <div class="col-lg-3 text-right"><app-navbar /></div>
         </el-header>
         <div class="m-15 mt-70">
           <nuxt />
@@ -29,7 +28,7 @@
 import AppSidebar from '~/components/common/Sidebar'
 import AppNavbar from '~/components/common/Navbar'
 import AppBreadcrumb from '~/components/common/Breadcrumb'
-import AppMainSearch from '~/components/common/MainSearch'
+// import AppMainSearch from '~/components/common/MainSearch'
 import AppBackToTop from '~/components/common/BackToTop'
 
 export default {
@@ -38,7 +37,7 @@ export default {
     AppSidebar,
     AppNavbar,
     AppBreadcrumb,
-    AppMainSearch,
+    // AppMainSearch,
     AppBackToTop
   },
   computed: {

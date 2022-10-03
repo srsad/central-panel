@@ -190,7 +190,7 @@
               <el-form-item prop="landing.img_logo" label="Логтип">
                 <app-single-image-uploader
                   v-model="form.landing.img_logo"
-                  fileType="base64"
+                  file-type="base64"
                 />
               </el-form-item>
             </div>
