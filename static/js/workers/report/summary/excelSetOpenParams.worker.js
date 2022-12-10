@@ -33,9 +33,7 @@ self.addEventListener('message', async (event) => {
   ])
 
   // алиасы для филиалов
-  const branchAlias = new Map([
-    ['мск армянский', 'мск сеславинская']
-  ])
+  const branchAlias = new Map([['мск армянский', 'мск сеславинская']])
 
   items.shift() // удаляем первую строку
 
@@ -48,22 +46,24 @@ self.addEventListener('message', async (event) => {
     let closeOrders = 0
 
     for await (const row of items) {
-      let brand = row[indexBrand].split(',')
-      brand = brand[0].trim()
-      // замена на alias
-      if (brandAlias.get(brand)) brand = brandAlias.get(brand)
-      brand = brand.toLowerCase()
+      if (row[indexBrand]) {
+        let brand = row[indexBrand].split(',')
+        brand = brand[0].trim()
+        // замена на alias
+        if (brandAlias.get(brand)) brand = brandAlias.get(brand)
+        brand = brand.toLowerCase()
 
-      let branch = row[indexBranch].trim().toLowerCase()
-      if (branchAlias.get(branch)) branch = branchAlias.get(branch)
+        let branch = row[indexBranch].trim().toLowerCase()
+        if (branchAlias.get(branch)) branch = branchAlias.get(branch)
 
-      // все заказы текущего филиала
-      if (brand === brandName && branchName === branch) {
-        allOrders++
-        // кто пришли в СЦ
-        if (row[indexStatus].trim() !== 'Не пришел') cameToService++
-        // закрытые заказы
-        if (row[indexStatus].trim() === 'Закрыт') closeOrders++
+        // все заказы текущего филиала
+        if (brand === brandName && branchName === branch) {
+          allOrders++
+          // кто пришли в СЦ
+          if (row[indexStatus].trim() !== 'Не пришел') cameToService++
+          // закрытые заказы
+          if (row[indexStatus].trim() === 'Закрыт') closeOrders++
+        }
       }
     }
     item.order.count = Math.round(allOrders) // все заявки бренда

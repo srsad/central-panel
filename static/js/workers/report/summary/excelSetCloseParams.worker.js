@@ -45,20 +45,22 @@ self.addEventListener('message', async (event) => {
     let orders = 0 // заказы
 
     for await (const row of items) {
-      let brand = row[indexBrand].split(',')
-      brand = brand[0].trim()
-      // замена на alias
-      if (brandAlias.get(brand)) brand = brandAlias.get(brand)
-      brand = brand.toLowerCase()
+      if (row[indexBrand]) {
+        let brand = row[indexBrand].split(',')
+        brand = brand[0].trim()
+        // замена на alias
+        if (brandAlias.get(brand)) brand = brandAlias.get(brand)
+        brand = brand.toLowerCase()
 
-      let branch = row[indexBranch].trim().toLowerCase()
-      if (branchAlias.get(branch)) branch = branchAlias.get(branch)
+        let branch = row[indexBranch].trim().toLowerCase()
+        if (branchAlias.get(branch)) branch = branchAlias.get(branch)
 
-      // все заказы
-      if (brand === brandName && branchName === branch) {
-        orders++
-        revenue += row[indexRevenue]
-        expenses += row[indexExpenses]
+        // все заказы
+        if (brand === brandName && branchName === branch) {
+          orders++
+          revenue += row[indexRevenue]
+          expenses += row[indexExpenses]
+        }
       }
     }
     item.revenue = Math.round(revenue)

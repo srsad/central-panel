@@ -290,43 +290,44 @@ export default {
       excelList.shift() // удаляем первую строку
 
       for await (const row of excelList) {
-        let brand = row[indexBrand].split(',')
-        brand = brand[0].trim()
+        if (row[indexBrand]) {
+          let brand = row[indexBrand].split(',')
+          brand = brand[0].trim()
+          // замена на alias
+          if (alias.get(brand)) brand = alias.get(brand)
 
-        // замена на alias
-        if (alias.get(brand)) brand = alias.get(brand)
-
-        const branch = row[indexBranch].trim()
-        // eslint-disable-next-line
-        let brandId = this.brandList.find((el) => el.name.toLowerCase() === brand.toLowerCase())
-        const branchId = branchMap.get(branch)
-
-        // если бренд не найден, то создаем и созвращаем его id
-        if (typeof brandId === 'undefined') {
-          await this.createBrand(brand)
+          const branch = row[indexBranch].trim()
           // eslint-disable-next-line
-          brandId = this.brandList.find((el) => el.name.toLowerCase() === brand.toLowerCase())
-        }
+          let brandId = this.brandList.find((el) => el.name.toLowerCase() === brand.toLowerCase())
+          const branchId = branchMap.get(branch)
 
-        if (branchId === undefined) continue
+          // если бренд не найден, то создаем и созвращаем его id
+          if (typeof brandId === 'undefined') {
+            await this.createBrand(brand)
+            // eslint-disable-next-line
+            brandId = this.brandList.find((el) => el.name.toLowerCase() === brand.toLowerCase())
+          }
 
-        // загружаем id бренда
-        if (!this.form.brands_id.includes(brandId._id)) {
-          this.form.brands_id.push(brandId._id)
-        }
+          if (branchId === undefined) continue
 
-        // загружаем id филиала
-        if (!this.form.branch_id.includes(branchId)) {
-          this.form.branch_id.push(branchId)
-        }
+          // загружаем id бренда
+          if (!this.form.brands_id.includes(brandId._id)) {
+            this.form.brands_id.push(brandId._id)
+          }
 
-        // проверяем наличие пары бренд + филиал
-        if (!brandAndBranch.get(`${brandId._id}_${branchId}`)) {
-          this.form.brands.push({
-            brand: brandId._id,
-            branch: branchId
-          })
-          brandAndBranch.set(`${brandId._id}_${branchId}`, '+')
+          // загружаем id филиала
+          if (!this.form.branch_id.includes(branchId)) {
+            this.form.branch_id.push(branchId)
+          }
+
+          // проверяем наличие пары бренд + филиал
+          if (!brandAndBranch.get(`${brandId._id}_${branchId}`)) {
+            this.form.brands.push({
+              brand: brandId._id,
+              branch: branchId
+            })
+            brandAndBranch.set(`${brandId._id}_${branchId}`, '+')
+          }
         }
       }
 
@@ -360,6 +361,7 @@ export default {
         dranwer: 'drawerReportSummarySheetCreate',
         status: false
       })
+      this.clearForm()
     },
 
     /**
