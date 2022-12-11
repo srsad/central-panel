@@ -167,19 +167,35 @@ export default [
         label: 'Неисправности Rservice',
         children: [
           {
+            _id: 'malf-rservice_panel-read',
+            label: 'Просмотр коллекции неисправностей'
+          },
+          {
+            _id: 'malf-rservice_panel-create',
+            label: 'Создание коллекции неисправностей'
+          },
+          {
+            _id: 'malf-rservice_panel-update',
+            label: 'Редактиорвание коллекции неисправностей'
+          },
+          {
+            _id: 'malf-rservice_panel-remove',
+            label: 'Удаление коллекции неисправностей'
+          },
+          {
             _id: 'malf-rservice_panel-hide',
             label: 'Скрытые коллекции неисправностей'
           }
         ]
-      },
-      {
-        _id: 'malf-impuls_panel',
-        label: 'Неисправности Impuls'
-      },
-      {
-        _id: 'malf-apple_panel',
-        label: 'Неисправности Apple'
       }
+      // {
+      //   _id: 'malf-impuls_panel',
+      //   label: 'Неисправности Impuls'
+      // },
+      // {
+      //   _id: 'malf-apple_panel',
+      //   label: 'Неисправности Apple'
+      // }
     ]
   },
   {
@@ -206,7 +222,7 @@ export default [
   },
   {
     _id: 'source',
-    label: 'Источники',
+    label: 'Бренды',
     children: [
       {
         _id: 'source-read',
@@ -222,6 +238,28 @@ export default [
       },
       {
         _id: 'source-remove',
+        label: 'Удаление'
+      }
+    ]
+  },
+  {
+    _id: 'category',
+    label: 'Категории (смартфоны/плашеты/...)',
+    children: [
+      {
+        _id: 'category-read',
+        label: 'Чтение'
+      },
+      {
+        _id: 'category-create',
+        label: 'Создание'
+      },
+      {
+        _id: 'category-update',
+        label: 'Редактирование'
+      },
+      {
+        _id: 'category-remove',
         label: 'Удаление'
       }
     ]

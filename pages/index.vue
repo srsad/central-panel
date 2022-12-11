@@ -12,6 +12,10 @@ import AppPanel from '~/components/callcenter/brand/Panel'
 export default {
   components: {
     AppPanel
+  },
+
+  mounted() {
+    this.$store.dispatch('settings/setBreadcrumbs', [])
   }
 }
 </script>

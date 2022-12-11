@@ -12,7 +12,14 @@ export const state = () => ({
 export const actions = {
   async createBrand({ commit }, formData) {
     try {
-      await this.$axios.$post('/api/v1/repair/brand/create', formData)
+      const fd = new FormData()
+      fd.append('name', formData.name)
+      if (formData.image) {
+        this.$axios.setHeader('Content-Type', 'multipart/form-data')
+        fd.append('image', formData.image.raw)
+      }
+
+      await this.$axios.$post('/api/v1/repair/brand/create', fd)
     } catch (e) {
       commit('SET_ERROR', e.response.data.message, { root: true })
       throw e

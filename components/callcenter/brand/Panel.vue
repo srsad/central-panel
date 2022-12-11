@@ -1,7 +1,12 @@
 <template>
   <div class="row w100 mt-15">
     <div class="col-12 mb-15">
-      <el-button @click="openModal" type="success" size="mini">
+      <el-button
+        v-if="$abilities('source-create')"
+        @click="openModal"
+        type="success"
+        size="mini"
+      >
         Добавить бренд
       </el-button>
     </div>

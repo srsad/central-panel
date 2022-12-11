@@ -2,9 +2,10 @@
   <div class="col-6 col-sm-4 col-md-3 mb-15">
     <div :disabled="loading" class="brand-item">
       <n-link :to="'brand/' + item._id" class="brand-item__link">
-        <!-- <div v-if="item.image" class="source__img">
-          <img :src="`/site/images/brand${item.image}`" />
-        </div> -->
+        <div v-if="brandImage" class="source__img">
+          <img :src="`/site/images/brand${brandImage}`" />
+        </div>
+
         <div class="brand-item__name">
           {{ item.name }}
         </div>
@@ -12,6 +13,7 @@
       <!--  -->
       <!-- v-if="$abilities('source-remove')" -->
       <el-button
+        v-if="$abilities('source-update')"
         :loading="loading"
         @click.stop="() => $emit('edit', item)"
         size="mini"
@@ -20,6 +22,7 @@
       />
 
       <el-popconfirm
+        v-if="$abilities('source-remove')"
         @onConfirm="() => $emit('remove', item)"
         title="Удалить бренд?"
         confirm-button-text="Да"
@@ -53,6 +56,12 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+
+  computed: {
+    brandImage() {
+      return this.item.image
+    }
   }
 }
 </script>
@@ -65,7 +74,13 @@ export default {
   padding: 4px
   display: flex
   flex-direction: row
+  align-items: center
+  height: 100%
   &__link
+    display: flex
+    align-items: center
+    height: 100%
+    gap: 4px
     flex: 1
     color: #000000
     &:hover

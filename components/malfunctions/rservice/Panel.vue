@@ -3,6 +3,7 @@
   <div class="row">
     <div class="col-12">
       <el-button
+        v-if="$abilities('malf-rservice_panel-create')"
         @click="openModalCreate"
         type="success"
         size="medium"
@@ -12,9 +13,9 @@
       </el-button>
     </div>
     <!--  -->
-    <template v-for="(collection, index) in malfunctions">
+    <template v-if="$abilities('malf-rservice_panel-read')">
       <div
-        v-if="$abilities('malf-rservice_panel-hide')"
+        v-for="(collection, index) in malfunctions"
         :key="index"
         class="col-6 col-lg-4 mb-30"
       >
@@ -27,6 +28,7 @@
               <td colspan="5">{{ collection.name }}</td>
               <td>
                 <el-button
+                  v-if="$abilities('malf-rservice_panel-update')"
                   @click="openModalUpdate(collection)"
                   title="Редактиоравть коллекцию"
                   type="success"
@@ -35,6 +37,7 @@
                 />
 
                 <el-popconfirm
+                  v-if="$abilities('malf-rservice_panel-remove')"
                   @onConfirm="removeMalfuntion(collection._id)"
                   title="Удалить категорию?"
                   confirm-button-text="Да"

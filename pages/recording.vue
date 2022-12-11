@@ -25,6 +25,12 @@ export default {
     AppForRecordingPanel
   },
   async fetch({ store }) {
+    store.dispatch('settings/setBreadcrumbs', [
+      {
+        uri: '/recording',
+        label: 'Tехника для записи'
+      }
+    ])
     await store.dispatch('recording/fetchNotRecording')
     await store.dispatch('recording/fetchForRecording')
   }

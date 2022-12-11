@@ -14,12 +14,11 @@
           <div class="d-flex">
             <div class="cell">Модель</div>
             <i class="fa fa-filter" style="padding:5px 10px 0 0" />
-            <el-input
+            <input
               v-model="searchModel"
               size="mini"
-              style="display:inline;width:150px"
+              class="_el-input"
               placeholder="Поиск по модели"
-              clearable
             />
           </div>
         </template>
@@ -197,3 +196,30 @@ export default {
   }
 }
 </script>
+
+<style>
+._el-input {
+  display: inline;
+  width: 150px;
+
+  -webkit-appearance: none;
+  background-color: #fff;
+  background-image: none;
+  border-radius: 4px;
+  border: 1px solid #dcdfe6;
+  box-sizing: border-box;
+  color: #606266;
+  display: inline-block;
+  font-size: 12px;
+  height: 26px;
+  line-height: 40px;
+  outline: 0;
+  padding: 0 8px;
+  transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+._el-input:focus {
+  border-color: #409eff;
+  outline: 0;
+}
+</style>

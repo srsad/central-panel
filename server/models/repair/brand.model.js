@@ -14,6 +14,10 @@ const repairBrandSchema = new Schema({
     unique: true,
     index: true
   },
+  image: {
+    type: String,
+    default: ''
+  },
   menuindex: {
     type: Number,
     default: 0
@@ -23,7 +27,8 @@ const repairBrandSchema = new Schema({
     default: Date.now
   },
   updated: {
-    type: Date
+    type: Date,
+    default: Date.now
   }
 })
 

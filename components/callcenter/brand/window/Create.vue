@@ -17,6 +17,9 @@
           <el-input v-model="form.name" size="mini" placeholder="Бренд" />
         </el-form-item>
       </div>
+      <div class="col-12">
+        <app-single-image-uploader v-model="form.image" />
+      </div>
       <div class="col-12 text-right">
         <el-button @click="validateForm" :loading="loading" type="success">
           Создать
@@ -27,14 +30,21 @@
 </template>
 
 <script>
+import AppSingleImageUploader from '~/components/common/uploaders/SingleImageUploader'
+
 export default {
   name: 'CreateBrand',
+
+  components: {
+    AppSingleImageUploader
+  },
 
   data() {
     return {
       loading: false,
       form: {
-        name: ''
+        name: '',
+        image: ''
       },
       rules: {
         name: [
@@ -101,6 +111,7 @@ export default {
 
     clearForm() {
       this.form.name = ''
+      this.form.image = ''
     }
   }
 }

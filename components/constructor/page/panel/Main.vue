@@ -1,13 +1,13 @@
 <template>
   <div class="mainPanel">
     <el-button-group>
-      <el-button size="mini" @click="selectSection('drawerSectionTop')">
+      <el-button @click="selectSection('drawerSectionTop')" size="mini">
         Топ
       </el-button>
-      <el-button size="mini" @click="selectSection('drawerSectionMenu')">
+      <el-button @click="selectSection('drawerSectionMenu')" size="mini">
         Меню
       </el-button>
-      <el-button size="mini" @click="selectSection('drawerSectionCover')">
+      <el-button @click="selectSection('drawerSectionCover')" size="mini">
         Обложка
       </el-button>
       <!-- <el-button size="mini" @click="selectSection('about')">

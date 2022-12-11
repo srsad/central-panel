@@ -3,7 +3,7 @@
     <div class="col-12">
       <el-tabs :value="activeTab">
         <el-tab-pane
-          v-if="$abilities('malf-rservice_panel')"
+          v-if="$abilities('malf-rservice_panel-read')"
           label="Неисправности"
           name="rservice_panel"
         >
@@ -41,6 +41,13 @@ export default {
     if (!this.$store.state.repair.malfunction.malfunctions.length) {
       this.$store.dispatch('repair/malfunction/fetchItems')
     }
+
+    this.$store.dispatch('settings/setBreadcrumbs', [
+      {
+        uri: '/malfunctions',
+        label: 'Несиправности'
+      }
+    ])
   }
 }
 </script>

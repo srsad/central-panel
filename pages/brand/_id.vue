@@ -6,6 +6,7 @@
 
     <div class="col-12 mb-15">
       <el-button
+        v-if="$abilities('category-create')"
         @click="openModal('windowCreateCategory')"
         type="success"
         size="mini"

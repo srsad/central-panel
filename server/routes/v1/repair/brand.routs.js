@@ -1,5 +1,6 @@
 const { Router } = require('express')
 const passport = require('passport')
+const busboyBodyParser = require('busboy-body-parser')
 const {
   create,
   update,
@@ -20,7 +21,12 @@ const router = Router()
  * @returns {Error} default - При возникновении ошибки
  * @security JWT
  */
-router.post('/create', passport.authenticate('jwt', { session: false }), create)
+router.post(
+  '/create',
+  busboyBodyParser(),
+  passport.authenticate('jwt', { session: false }),
+  create
+)
 
 /**
  * Обновление бренда
@@ -34,6 +40,7 @@ router.post('/create', passport.authenticate('jwt', { session: false }), create)
  */
 router.put(
   '/update/:id',
+  busboyBodyParser(),
   passport.authenticate('jwt', { session: false }),
   update
 )

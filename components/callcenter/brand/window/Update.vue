@@ -18,6 +18,12 @@
           <el-input v-model="formData.name" size="mini" placeholder="Бренд" />
         </el-form-item>
       </div>
+      <div class="col-12">
+        <app-single-image-uploader
+          v-model="formData.image"
+          :preview="preview"
+        />
+      </div>
       <div class="col-12 text-right">
         <el-button @click="validateForm" :loading="loading" type="success">
           Обновить
@@ -28,16 +34,24 @@
 </template>
 
 <script>
+import AppSingleImageUploader from '~/components/common/uploaders/SingleImageUploader'
+
 export default {
   name: 'CreateBrand',
+
+  components: {
+    AppSingleImageUploader
+  },
 
   data() {
     return {
       loading: false,
       formData: {
         name: '',
+        image: '',
         _id: ''
       },
+      preview: '',
       rules: {
         name: [
           {
@@ -74,7 +88,12 @@ export default {
 
     onOpen() {
       const selectBrand = this.$store.state.repair.brand.selectBrand
-      this.formData = JSON.parse(JSON.stringify(selectBrand))
+      this.formData._id = selectBrand._id
+      this.formData.name = selectBrand.name
+      this.formData.image = selectBrand?.image
+      this.preview = selectBrand?.image
+        ? `/site/images/brand${selectBrand?.image}`
+        : ''
     },
 
     validateForm() {
@@ -90,9 +109,21 @@ export default {
     async onUpdate() {
       this.loading = true
       try {
+        const fd = new FormData()
+        fd.append('_id', this.formData._id)
+        fd.append('name', this.formData.name)
+        fd.append('image', this.formData.image)
+
+        if (this.formData?.image?.raw) {
+          this.$axios.setHeader('Content-Type', 'multipart/form-data')
+          fd.append('image', this.formData.image.raw)
+        }
+
+        console.log('this.formData.', this.formData)
+
         await this.$axios.$put(
           '/api/v1/repair/brand/update/' + this.formData._id,
-          this.formData
+          fd
         )
         // обновлять список деталей кактегории
         this.$store.dispatch('repair/brand/fetchItems')
@@ -102,7 +133,7 @@ export default {
           customClass: 'success-notyfy'
         })
       } catch (error) {
-        console.error('Не удалось обновить бренд', error.response)
+        console.error('Не удалось обновить бренд', error)
         this.$store.commit('SET_ERROR', error.response.data.message)
       } finally {
         this.loading = false
@@ -111,7 +142,9 @@ export default {
 
     clearForm() {
       this.formData.name = ''
+      this.formData.image = ''
       this.formData._id = ''
+      this.preview = ''
       this.$store.commit('repair/brand/SET_SELECT_BRAND', null)
     }
   }

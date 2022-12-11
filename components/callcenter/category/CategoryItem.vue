@@ -9,11 +9,10 @@
         class="category__img"
         style="background:url(https://app-serv-fix.ru/dasfheafhnsdf/templates/default/img/repair/categories_new/smartphone.png) 50% 50% / contain no-repeat;"
       /> -->
-      <div class="category__text">
-        {{ item.name }}
-      </div>
+      <div class="category__text">{{ item.name }}</div>
       <div class="category__control">
         <el-button
+          v-if="$abilities('category-update')"
           :loading="loading"
           @click.stop="() => $emit('edit', item)"
           size="mini"
@@ -23,6 +22,7 @@
 
         <div>
           <el-popconfirm
+            v-if="$abilities('category-remove')"
             @onConfirm="() => $emit('remove', item)"
             title="Удалить категорию?"
             confirm-button-text="Да"
