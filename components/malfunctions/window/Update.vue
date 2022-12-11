@@ -33,7 +33,7 @@
             class="col-5"
           >
             <el-input
-              v-model.trim="malfunction.name"
+              v-model="malfunction.name"
               size="mini"
               placeholder="Неисправность"
             />
@@ -44,14 +44,14 @@
             class="col-3"
           >
             <el-input
-              v-model.trim="malfunction.price"
+              v-model="malfunction.price"
               size="mini"
               placeholder="Цена"
             />
           </el-form-item>
           <el-form-item :prop="'malfunctions.' + idx + '.time'" class="col-2">
             <el-input
-              v-model.trim="malfunction.time"
+              v-model="malfunction.time"
               v-mask="'###'"
               size="mini"
               placeholder="Время"
