@@ -1,6 +1,6 @@
-const path = require('path')
+// const path = require('path')
 const moment = require('moment')
-const { imageLoader, rimraf } = require('../../utils/imageUploader')
+const { imageLoader } = require('../../utils/imageUploader')
 const Brand = require('../../models/repair/brand.model')
 
 /**
@@ -23,8 +23,8 @@ module.exports.create = async (req, res) => {
       logoPath = await imageLoader({
         basePath,
         fileName,
-        filePath: `/${brand._id}/${fileName}`,
-        savePath: `/${brand._id}/`,
+        filePath: `/${fileName}`,
+        savePath: '',
         bufferImage: req.files.image.data
       })
       const $set = {}
@@ -64,19 +64,19 @@ module.exports.update = async (req, res) => {
       }`
 
       // удаляем папку со старой картинкой
-      rimraf(path.resolve(__dirname, basePath + req.params.id))
+      // rimraf(path.resolve(__dirname, basePath + req.params.id))
       // грузим новую
       logoPath = await imageLoader({
         basePath,
         fileName,
-        filePath: `/${req.params.id}/${fileName}`,
-        savePath: `/${req.params.id}/`,
+        filePath: `/${fileName}`,
+        savePath: '',
         bufferImage: req.files.image.data
       })
     }
 
     if (!req.body.image || req.body.image === 'null') {
-      rimraf(path.resolve(__dirname, basePath + req.params.id))
+      // rimraf(path.resolve(__dirname, basePath + req.params.id))
       $set.image = ''
     }
 
@@ -103,7 +103,7 @@ module.exports.remove = async (req, res) => {
   try {
     // удаляем папку с картинкой
     // eslint-disable-next-line prettier/prettier
-    rimraf(path.resolve(__dirname, '../../static/site/images/brand/' + req.params.id))
+    // rimraf(path.resolve(__dirname, '../../static/site/images/brand/' + req.params.id))
 
     await Brand.deleteOne({ _id: req.params.id })
     res.status(200).json({ message: 'Бренд удален!' })

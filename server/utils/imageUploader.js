@@ -23,9 +23,9 @@ module.exports.imageLoader = async function({
   // TODO тут на всякий удалять папку
   const _savePath = path.resolve(__dirname, basePath + savePath)
   // отчищаем есть она есть
-  rimraf(_savePath)
+  // rimraf(_savePath)
   // создаем если ее нет
-  createDirectories(_savePath)
+  // createDirectories(_savePath)
 
   const buffer = bufferImage
   await fs.writeFileSync(`${_savePath}/${fileName}`, buffer, (err) => {
@@ -47,6 +47,7 @@ module.exports.rimraf = function(filePath) {
  * Создание папки
  * @param {String} pathname
  */
+// eslint-disable-next-line
 function createDirectories(pathname) {
   const __dirname = path.resolve()
   // eslint-disable-next-line no-useless-escape
