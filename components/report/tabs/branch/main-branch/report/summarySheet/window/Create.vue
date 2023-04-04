@@ -240,7 +240,7 @@ export default {
         console.error('Ошибка при попытке загрузки ексель файла.', e)
       } finally {
         this.loading = false
-        e.path[0].value = '' // отчищаем input file для повторной загрузки файла
+        e.target.value = '' // отчищаем input file для повторной загрузки файла
       }
     },
 
